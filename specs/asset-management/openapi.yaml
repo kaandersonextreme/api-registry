@@ -1,0 +1,4252 @@
+openapi: 3.0.3
+info:
+  title: Extreme Platform ONE REST API - Asset Management
+  description: >-
+    The Extreme Platform ONE™ Asset Management API provides comprehensive
+
+    automation and intelligent orchestration for enterprise network asset
+    lifecycle 
+
+    management, enabling seamless device inventory tracking, contract
+    management, 
+
+    and automated compliance monitoring across complex network infrastructures.
+  termsOfService: https://www.extremenetworks.com/company/legal/terms-of-use/
+  contact:
+    name: Extreme Networks Support
+    url: https://www.extremenetworks.com/support
+    email: support@extremenetworks.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 25.11.0
+servers:
+  - url: https://cloudapi.extremecloudiq.com/assets/v1
+    description: Extreme Platform ONE REST API - Assets
+tags:
+  - name: Device
+    description: >-
+      **Advanced Device Asset Management & Intelligent Inventory Control**
+
+
+      Comprehensive device asset management capabilities providing
+      intelligent  device discovery, automated inventory tracking, lifecycle
+      management,  and advanced analytics for enterprise network infrastructure
+      with  AI-powered optimization and predictive maintenance.
+
+
+      **Core Device Management:** - Real-time device discovery with automated
+      classification and tagging - Comprehensive device inventory with detailed
+      metadata and specifications   - Advanced device lifecycle tracking from
+      procurement to decommissioning - Intelligent device relationship mapping
+      and dependency analysis - Automated warranty tracking and maintenance
+      scheduling - Device performance monitoring with predictive analytics -
+      Enterprise-scale bulk operations with Excel import/export capabilities
+
+
+      **AI Intelligence:** ML-driven device categorization, predictive
+      failure  detection, automated optimization recommendations, intelligent
+      capacity planning
+  - name: Contract
+    description: >-
+      **Intelligent Contract Lifecycle Management & Automation**
+
+
+      Advanced contract management capabilities providing automated
+      contract  tracking, intelligent renewal management, compliance monitoring,
+      and  comprehensive vendor relationship optimization with AI-powered
+      analytics  and predictive contract intelligence.
+
+
+      **Contract Management Features:** - Automated contract lifecycle tracking
+      from inception to renewal - Intelligent renewal alerts and automated
+      notification systems - Comprehensive compliance monitoring and regulatory
+      adherence - Advanced contract analytics with cost optimization insights -
+      Vendor relationship management with performance tracking - Contract risk
+      assessment and mitigation recommendations - Enterprise-scale contract
+      portfolio management and reporting
+
+
+      **AI Enhancement:** Predictive contract analytics, automated
+      compliance  verification, intelligent cost optimization, smart renewal
+      recommendations
+  - name: Summary
+    description: >-
+      **Advanced Asset Summary & Firmware Management Operations**
+
+
+      Comprehensive asset summary and firmware management capabilities
+      providing  intelligent device lifecycle tracking, automated firmware
+      upgrade orchestration,  and centralized hardware lifecycle management with
+      AI-powered insights and  predictive maintenance scheduling.
+
+
+      **Core Summary Features:** - Real-time asset summary dashboards with
+      comprehensive metrics - Hardware lifecycle tracking with automated
+      warranty and EOL management - Firmware upgrade orchestration with
+      scheduling and rollback capabilities - Device history tracking with
+      detailed audit trails and compliance reporting - Bulk operations
+      management with batch processing and status monitoring - Integration with
+      ITSM and monitoring platforms for unified operations
+
+
+      **Firmware Management Intelligence:** - AI-driven firmware compatibility
+      analysis and recommendation engine - Predictive upgrade scheduling with
+      optimal maintenance window identification - Automated rollback
+      capabilities with intelligent failure detection - Multi-device
+      orchestration with dependency mapping and staged deployments - Real-time
+      upgrade monitoring with proactive issue detection and alerting
+paths:
+  /devices:
+    post:
+      tags:
+        - Device
+      summary: List Devices
+      description: >
+        List devices with pagination, sorting, search and optional filters.
+
+
+        The request body accepts **one of two mutually exclusive forms**:
+
+
+        **1. Filter by device IDs** — provide only `device_ids` (1–100 items).
+        No other fields may be present. The response contains exactly the
+        devices matching the supplied IDs.
+
+
+        **2. Filter by device attributes** — provide any combination of fields
+        from `ListDevicesRequestFilter`
+
+        (e.g. `classification`, `states`, `connection_states`, `site_ids`, etc.)
+        exactly as before.
+
+        All existing filter behaviour is unchanged.
+      operationId: listDevices
+      x-ai-intent: device-inventory-management
+      x-ai-purpose: Retrieve and filter device inventory for operational oversight and
+        network management
+      x-ai-usage: Use when AI systems need to query, analyze, or manage device
+        collections across network infrastructure
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/device_limit"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/search"
+      requestBody:
+        required: true
+        description: >
+          One of two mutually exclusive request forms:
+
+          - **`device_ids`** (array of Long, 1–100 items): when present, filters
+          by those device IDs only. No other fields may be provided.
+
+          - **ListDevicesRequestFilter fields** (`classification`, `states`,
+          `connection_states`, etc.): standard attribute-based filter used
+          exactly as before.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListDevicesRequestBody"
+            examples:
+              byDeviceIds:
+                summary: Filter by specific device IDs (only device_ids may be provided)
+                value:
+                  device_ids:
+                    - 1001
+                    - 1002
+                    - 1003
+              byFilter:
+                summary: Filter by device attributes
+                value:
+                  classification: SWITCH
+                  states:
+                    - MANAGED
+                    - UNMANAGED
+                  connection_states:
+                    - CONNECTED
+                  site_ids:
+                    - 1001
+                    - 1002
+                  os_versions:
+                    - 16.2.0.5
+                    - 16.1.3.2
+                  models:
+                    - X460-G2
+                    - X670-G2
+                  country_name:
+                    - United States
+                    - Canada
+                  managing_app:
+                    - XIQ
+                    - Cloud
+                  device_type:
+                    - Switch
+                  license_type:
+                    - PILOT
+                    - NAVIGATOR
+                  ip_address:
+                    - 192.168.1.10
+                    - 10.0.0.50
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedDevice"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /devices/export:
+    post:
+      tags:
+        - Device
+      summary: Export Devices List
+      description: Export the filtered devices list data in CSV format.
+      operationId: exportAssetsDeviceList
+      x-ai-intent: device-data-export
+      x-ai-purpose: Export device data for analytics, reporting, and downstream processing
+      x-ai-usage: Use when AI needs to extract device data for analysis, machine
+        learning, or integration with external systems
+      parameters:
+        - name: search
+          in: query
+          description: Search string to be used as a parameter for searching
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: Sort string in the format of "field:direction", e.g. "host_name-"
+            or "ip_address+"
+          required: false
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListDevicesRequestFilter"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: byte
+                description: CSV file content in base64-encoded byte format containing the
+                  exported device list data
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /devices/licenses:
+    get:
+      tags:
+        - Device
+      summary: Get License Information
+      description: Get information about licenses.
+      operationId: getLicenseInfo
+      x-ai-intent: license-compliance-monitoring
+      x-ai-purpose: Monitor and track license usage and compliance across device inventory
+      x-ai-usage: Use when AI systems need to analyze license utilization, compliance
+        status, and optimization opportunities
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Licenses"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /devices/column/filters:
+    post:
+      tags:
+        - Device
+      summary: List filters for columns
+      description: List all filter values for each column.
+      operationId: listColumnFilters
+      x-ai-intent: device-query-metadata
+      x-ai-purpose: Provide available filter options and data constraints for dynamic
+        query construction
+      x-ai-usage: Use when AI systems need to build intelligent queries and understand
+        available data dimensions for filtering
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ColumnFiltersRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ColumnFilters"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /devices/subscriptions/unmanaged:
+    get:
+      tags:
+        - Device
+      summary: Get count of UNMANAGED devices
+      description: Get count of UNMANAGED devices for each Device Type.
+      operationId: getUnmanagedDevicesCount
+      x-ai-intent: device-compliance-auditing
+      x-ai-purpose: Monitor unmanaged device inventory for compliance, security, and
+        lifecycle management
+      x-ai-usage: Use when AI systems need to identify unmanaged devices for automated
+        onboarding or security compliance
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: List of unmanaged device counts grouped by product type, device
+                  type, and license management type
+                items:
+                  $ref: "#/components/schemas/UnmanagedDevices"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /devices/productTypes:
+    post:
+      x-internal: false
+      tags:
+        - Device
+      summary: Get Product Types
+      description: Retrieve product types information filtered by OS types.
+      operationId: getProductTypes
+      x-ai-intent: device-classification-analysis
+      x-ai-purpose: Retrieve product type information for device categorization and
+        inventory management
+      x-ai-usage: Use when AI systems need to analyze product types, device models,
+        and firmware compatibility by OS type
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductTypesRequest"
+            example:
+              os_types:
+                - Switch Engine
+                - Fabric Engine
+                - Wireless
+                - TPME
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductTypesResponse"
+              example:
+                product_types:
+                  Switch Engine:
+                    - product_type: SwitchEngine_4220_4MW_8P_4X
+                      model: "4220"
+                      firmware_type: summit_arm
+                  Fabric Engine:
+                    - product_type: FabricEngine_5420M_24W_24S_4YE
+                      model: 5420M
+                      firmware_type: "5420"
+                  Wireless:
+                    - product_type: AP_120
+                      model: AP120
+                      firmware_type: AP120
+                  TPME:
+                    - product_type: TPME-S
+                      model: TPME-S
+                      firmware_type: TPME
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /devices/firmwareMetadatas:
+    post:
+      x-internal: false
+      tags:
+        - Device
+      summary: Get Device Firmware Metadatas
+      description: Retrieve compatible firmware metadata for specified product types
+        and firmware types.
+      operationId: getDeviceFirmwareMetadatas
+      x-ai-intent: firmware-compatibility-analysis
+      x-ai-purpose: Retrieve firmware metadata for device compatibility validation and
+        upgrade planning
+      x-ai-usage: Use when AI systems need to analyze firmware compatibility, plan
+        upgrades, or validate firmware deployment options
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FirmwareMetadatasRequest"
+            example:
+              os_types:
+                - Switch Engine
+                - Wireless
+              product_types:
+                - AP_120
+                - SwitchEngine_4220_4MW_8P_4X
+              firmware_types:
+                - summit_arm
+                - "5420"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FirmwareMetadatasResponse"
+              example:
+                firmware_metadatas:
+                  Fabric Engine:
+                    - firmware_id: 17
+                      firmware_name: 5420.8.10.0.0.voss
+                      firmware_type: "5420"
+                      scope: GLOBAL
+                      version: 8.10.0.0
+                      md5: 8f1dc79cb91b872d42034863c1eebed7
+                  AP_120:
+                    - firmware_id: 1182
+                      firmware_name: AP120-6.5r10.golden.img.S
+                      firmware_type: AP120
+                      scope: GLOBAL
+                      version: 6.5.10.0
+                      md5: null
+                  summit_arm:
+                    - firmware_id: 1396
+                      firmware_name: summit_arm-31.7.3.30.xos
+                      firmware_type: summit_arm
+                      scope: GLOBAL
+                      version: 31.7.3.30
+                      md5: cf644072451336874ba0d08a42b0ac54
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /devices/status/count:
+    get:
+      tags:
+        - Device
+      summary: Get Device Status Count
+      description: Retrieve count of devices grouped by their connection status.
+      operationId: getDeviceStatusCount
+      x-ai-intent: device-inventory-management
+      x-ai-purpose: Retrieve and filter device inventory for operational oversight and
+        network management
+      x-ai-usage: Use when AI systems need to query, analyze, or manage device
+        collections across network infrastructure
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceCount"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /devices/licenseCount:
+    post:
+      tags:
+        - Device
+      summary: Get License Count Per Location
+      description: Retrieve license count per location information for devices in the
+        inventory.
+      operationId: licenseCount
+      x-ai-intent: device-query-optimization
+      x-ai-purpose: Save intelligent filtering strategies for recurring device
+        analysis and monitoring
+      x-ai-usage: Use when AI systems need to persist optimized query patterns for
+        device inventory management
+      parameters:
+        - name: licenseTypes
+          in: query
+          description: Filter on specific license types to include in the count results.
+            Provide one or more license types (e.g., PILOT, LEGACY) to limit the
+            counts to those types.
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/ParamDeviceLicenseType"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LicenseInfoFilter"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseCount"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /contracts:
+    post:
+      tags:
+        - Contract
+      summary: List Filtered Contracts
+      description: List contracts with pagination, sorting and filtering options.
+      operationId: listContracts
+      x-ai-intent: contract-inventory-management
+      x-ai-purpose: Manage and track device contracts and licensing agreements for
+        compliance monitoring
+      x-ai-usage: Use when AI needs to analyze contract compliance, expiration
+        tracking, and lifecycle management
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/contractEndInDays"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContractFilter"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedContract"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /contracts/export:
+    get:
+      tags:
+        - Contract
+      summary: Export Contracts (Deprecated)
+      description: Deprecated. Use POST /assets/v1/contracts/export instead, which
+        supports full filter options. This endpoint will be removed in a future
+        release.
+      operationId: exportContracts
+      deprecated: true
+      parameters:
+        - name: contract_id
+          in: query
+          description: Comma-separated list of contract IDs. If not provided, all
+            contracts will be exported.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              pattern: ^[A-Za-z0-9]{18}$
+              minLength: 18
+              maxLength: 18
+          style: form
+          explode: false
+      responses:
+        "200":
+          description: Excel file.
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Contract
+      summary: Export Contracts with filters
+      description: Export contracts to Excel format with optional filters.
+      operationId: exportContractsPost
+      parameters:
+        - name: contract_id
+          in: query
+          description: Comma-separated list of contract IDs. If not provided, all
+            contracts will be exported.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              pattern: ^[A-Za-z0-9]{18}$
+              minLength: 18
+              maxLength: 18
+            example:
+              - 8102T000000Q37zQAC
+              - 810cX000007rK38QAF
+          style: form
+          explode: false
+        - name: contract_end_in_days
+          in: query
+          description: Filter contracts ending within the specified number of days from
+            today
+          required: false
+          schema:
+            minimum: 0
+            type: integer
+            format: int32
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContractFilter"
+      responses:
+        "200":
+          description: Excel file.
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /contracts/{contract_id}/lines:
+    get:
+      tags:
+        - Contract
+      summary: List Contract Lines
+      description: List contract lines by pagination.
+      operationId: listContractLines
+      x-ai-intent: contract-compliance-monitoring
+      x-ai-purpose: Enable detailed contract line-item analysis for license
+        compliance, cost optimization, and automated contract management
+        workflows
+      x-ai-usage: Use when AI systems need to analyze contract details, track license
+        utilization per line item, or automate compliance reporting
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/contract_id-string"
+        - $ref: "#/components/parameters/sort"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedContractLine"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /contracts/{contract_id}/export:
+    get:
+      tags:
+        - Contract
+      summary: Export Contract with Lines
+      description: Export a specific contract along with its lines to Excel format.
+      operationId: exportContractWithLines
+      x-ai-intent: contract-data-portability
+      x-ai-purpose: Enable offline analysis and sharing of contract data by exporting
+        contract details and line items to standard spreadsheet formats
+      x-ai-usage: Use when users need to perform custom analysis in Excel, share
+        contract details with external stakeholders, or archive contract
+        snapshots
+      parameters:
+        - $ref: "#/components/parameters/contract_id-string"
+      responses:
+        "200":
+          description: Returns an Excel file containing contract and line items data.
+          headers:
+            Content-Disposition:
+              description: 'Suggests a filename for download. Example: attachment;
+                filename="contract-<contract_id>.xlsx"'
+              schema:
+                type: string
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+                description: Binary Excel (XLSX) file content. The spreadsheet contains the
+                  contract metadata and its line items in tabular form. The
+                  response Content-Type is
+                  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                  - $ref: "#/components/schemas/ApiClientError"
+                  - $ref: "#/components/schemas/ApiError"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /contracts/filter:
+    get:
+      tags:
+        - Contract
+      summary: Get Contract Filters
+      description: Retrieve available contract filters for querying contracts.
+      operationId: getContractFilters
+      x-ai-intent: contract-inventory-management
+      x-ai-purpose: Provide users with available contract filters to enable efficient
+        contract querying and inventory management
+      x-ai-usage: Use when AI systems need to understand available contract filters
+        for building dynamic queries or providing filter options in user
+        interfaces
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContractFilterVo"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                  - $ref: "#/components/schemas/ApiClientError"
+                  - $ref: "#/components/schemas/ApiError"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /summary/firmwareStatus:
+    post:
+      x-internal: false
+      tags:
+        - Summary
+      summary: Get Firmware Status Count
+      description: Retrieves firmware status count information for devices.
+      operationId: getFirmwareStatusCount
+      x-ai-intent: firmware-status-count-retrieval
+      x-ai-purpose: Retrieve firmware status count for devices
+      x-ai-usage: Use when AI needs to fetch firmware status count
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeviceClassificationAndSiteFilter"
+      responses:
+        "200":
+          description: Firmware status count retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FirmwareStatusVo"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /summary/firmwareSummary:
+    post:
+      x-internal: false
+      tags:
+        - Summary
+      summary: Get Firmware Summary
+      description: Retrieves firmware summary information with pagination support.
+        This endpoint provides details about firmware summary for devices in the
+        inventory.
+      operationId: getFirmwareSummary
+      x-ai-intent: firmware-summary-retrieval
+      x-ai-purpose: Retrieve firmware summary details for devices with pagination.
+      x-ai-usage: Use when AI systems need to analyze firmware summary data.
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            default: 1
+          description: Page number for pagination.
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 500
+            default: 10
+          description: Number of items per page.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeviceFwSummaryRequestFilter"
+      responses:
+        "200":
+          description: The firmware summary response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceFirmwareSummaryVo"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /summary/firmwareUpgrade:
+    post:
+      x-internal: false
+      tags:
+        - Summary
+      summary: Initiate Firmware Upgrade
+      description: Initiates firmware upgrade process for devices based on filter
+        criteria. This endpoint allows scheduling or immediate execution of
+        firmware upgrades.
+      operationId: getFirmwareSummaryUpgrade
+      x-ai-intent: firmware-upgrade-initiation
+      x-ai-purpose: Automate firmware upgrade processes for devices.
+      x-ai-usage: Use when AI systems need to initiate firmware upgrades.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeviceFwUpgradeRequestFilter"
+      responses:
+        "200":
+          description: Firmware upgrade initiated successfully.
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "409":
+          $ref: "#/components/responses/409ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /summary/firmwareVersions:
+    post:
+      x-internal: false
+      tags:
+        - Summary
+      summary: Get Firmware Versions
+      description: Retrieves firmware versions information with pagination and
+        filtering support. This endpoint provides details about firmware
+        versions for devices in the inventory.
+      operationId: getFirmwareVersions
+      x-ai-intent: firmware-versions-retrieval
+      x-ai-purpose: Retrieve firmware version details for devices with pagination and
+        filtering.
+      x-ai-usage: Use when AI systems need to analyze firmware version data.
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            default: 1
+          description: Page number for pagination.
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 500
+            default: 10
+          description: Number of items per page.
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          description: "Sorting criteria in the format <code>field:direction</code> where
+            <code>direction</code> is <code>asc</code> or <code>desc</code>.
+            Common sortable fields for this endpoint include <code>model</code>
+            and <code>version</code> (for example: <code>model:asc</code>,
+            <code>version:desc</code>)."
+          example: model:asc,version:desc
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeviceFirmwareRequestFilter"
+      responses:
+        "200":
+          description: The firmware versions response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceFirmwareVersionsVo"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /summary/hardwareLifeCycle:
+    post:
+      x-internal: false
+      tags:
+        - Summary
+      summary: Get Hardware Lifecycle Summary
+      description: Retrieves hardware lifecycle summary information for devices in the
+        inventory. This endpoint provides details about the lifecycle stages of
+        hardware devices.
+      operationId: getHardwareSummary
+      x-ai-intent: hardware-lifecycle-summary
+      x-ai-purpose: Retrieve lifecycle summary details for hardware devices in the inventory.
+      x-ai-usage: Use when AI systems need to analyze hardware lifecycle data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeviceClassificationAndSiteFilter"
+      responses:
+        "200":
+          description: The hardware lifecycle summary response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HardwareLifeCycleVo"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /summary/history:
+    post:
+      x-internal: false
+      tags:
+        - Summary
+      summary: Get Device History
+      description: Retrieves device history with pagination, sorting, and search
+        capabilities. This endpoint provides historical data for device firmware
+        upgrades.
+      operationId: listDeviceHistory
+      x-ai-intent: device-history-retrieval
+      x-ai-purpose: Retrieve historical data for device firmware upgrades.
+      x-ai-usage: Use when AI systems need to analyze device history data.
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            default: 1
+          description: Page number for pagination (1-based indexing).
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 500
+            default: 10
+          description: Number of records per page.
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          description: >
+            Comma-separated list of fields to sort by. Each field can be
+            optionally suffixed with `+` (ascending) or `-` (descending). If no
+            suffix is provided, ascending order is used by default.
+          example: site_name-,updated_at+
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: "[a-zA-Z0-9 ._:%()-]+"
+            minLength: 3
+          description: Search keyword to filter device history (minimum 3 characters,
+            supports alphanumeric and special characters)
+      requestBody:
+        required: true
+        description: Filter criteria for device history including device type,
+          classification, status, etc.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListDeviceHistoryFilter"
+      responses:
+        "200":
+          description: The device history response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedDeviceHistoryVo"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /summary/history/column/filters:
+    post:
+      x-internal: false
+      tags:
+        - Summary
+      summary: Get History Column Filters
+      description: Retrieves available filter options for device history columns. This
+        endpoint provides unique values for each column in the device history
+        table.
+      operationId: listHistoryColumnFilters
+      x-ai-intent: history-column-filters-retrieval
+      x-ai-purpose: Retrieve filter options for device history columns.
+      x-ai-usage: Use when AI systems need to analyze or filter device history data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeviceHistoryRequestFilter"
+      responses:
+        "200":
+          description: The history column filters response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceUpgradeHistoryFiltersVo"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /summary/psirts/list:
+    post:
+      x-internal: false
+      tags:
+        - Summary
+      summary: List PSIRTs
+      description: Retrieves a paginated list of Product Security Incident Response
+        Team (PSIRT) entries. This endpoint provides details about PSIRTs for
+        devices in the inventory.
+      operationId: psirtsList
+      x-ai-intent: psirts-list-retrieval
+      x-ai-purpose: Retrieve PSIRT entries for devices with pagination.
+      x-ai-usage: Use when AI systems need to analyze PSIRT data.
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            default: 1
+          description: Page number for pagination.
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 100
+            default: 10
+          description: Number of items per page.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PsirtsFilter"
+      responses:
+        "200":
+          description: The PSIRTs list response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedDataPsirtListVo"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+components:
+  schemas:
+    DeviceIdsRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - device_ids
+      properties:
+        device_ids:
+          type: array
+          description: List of device IDs to filter (maximum 100)
+          minItems: 1
+          maxItems: 100
+          items:
+            type: integer
+            format: int64
+    DeviceClassificationFilter:
+      type: string
+      enum:
+        - WIRELESS
+        - SWITCH
+        - SDWAN
+        - ROUTER
+        - XIQ_SE
+        - APPLIANCE
+        - ALL
+        - UNKNOWN
+      title: Device Classification Filter
+      description: Enum representing the possible values of device classifications on
+        which we can filter
+      default: ALL
+    DeviceStateFilter:
+      type: string
+      enum:
+        - NEW
+        - MANAGED
+        - UNMANAGED
+      title: Device State Filter
+      description: Enum representing the possible values of device states on which we
+        can filter
+    DeviceConnectionStateFilter:
+      type: string
+      enum:
+        - CONNECTED
+        - DISCONNECTED
+      title: Device Connection State Filter
+      description: Enum representing the possible values of device connection states
+        on which we can filter
+    RequestDeviceType:
+      type: string
+      enum:
+        - Switch
+        - SDWAN
+        - Controller
+        - Router
+        - VGVA
+        - XIQ SE
+        - XMC
+        - Appliance
+        - Tunnel Concentrator
+        - Wireless
+        - Appliance Cluster
+        - Switch Stack
+        - Master
+        - Member
+        - Backup
+        - Wireless Controller
+        - SNMP Discovered
+        - Third-Party Management Engine
+        - Unknown
+      title: Device Type
+      description: Enum representing the possible types of devices
+      default: Unknown
+      example: Switch
+    DeviceLicenseType:
+      type: string
+      x-extensible-enum:
+        - Legacy
+        - Navigator
+        - Pilot
+        - Copilot
+        - Appliance
+        - Trial
+        - Not Applicable
+        - Unknown
+        - Not Licensed
+        - Standard Tier A
+        - Standard Tier B
+        - Standard Tier C
+        - Standard Tier D
+        - Standard Tier 3RD
+        - Advanced Tier A
+        - Advanced Tier B
+        - Advanced Tier C
+        - Advanced Tier D
+        - None
+        - XSW-MSP-DC-S-C
+        - XSW-MSP-BR-S-C
+        - EP1-SDW-ADV-L-S-C
+        - EP1-SDW-ADV-M-S-C
+        - EP1-SDW-ADV-S-S-C
+        - EP1-SDW-STD-L-S-C
+        - EP1-SDW-STD-M-S-C
+        - EP1-SDW-STD-S-S-C
+        - XSW-BR-XS-S
+        - XSW-BR-S-S
+        - XSW-BR-M-S
+        - XSW-DC-S-S
+        - XSW-DC-M-S
+        - XSW-DC-SR-L-S
+        - XSW-DC-LR-L-S
+        - XSW-BR-XS-HA-S
+        - XSW-BR-S-HA-S
+        - XSW-BR-M-HA-S
+        - XSW-DC-S-HA-S
+        - XSW-DC-M-HA-S
+        - XSW-DC-SR-HA-L-S
+        - XSW-DC-LR-HA-L-S
+      title: Device License Type
+      description: Enum representing the possible license types of a device
+      default: Trial
+    DeviceEndDate:
+      type: string
+      enum:
+        - END_OF_SALE
+        - END_OF_SOFTWARE_MAINTENANCE
+        - END_OF_SERVICE_LIFE
+      title: Device End Date Filter
+      description: Enum representing the possible values of device end dates on which
+        we can filter
+    ListDevicesRequestFilter:
+      type: object
+      additionalProperties: false
+      properties:
+        classification:
+          $ref: "#/components/schemas/DeviceClassificationFilter"
+        states:
+          type: array
+          description: Filter on device states
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/DeviceStateFilter"
+          example:
+            - MANAGED
+            - UNMANAGED
+        connection_states:
+          type: array
+          description: Filter on device connection states
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/DeviceConnectionStateFilter"
+          example:
+            - CONNECTED
+        site_ids:
+          type: array
+          description: Filter on the site ids where the devices are located
+          uniqueItems: true
+          items:
+            type: integer
+            format: int64
+          example:
+            - 1001
+            - 1002
+            - 1003
+        os_versions:
+          type: array
+          description: Filter on OS versions (expected in semantic version format-
+            MAJOR.MINOR.PATCH.BUILD).
+          uniqueItems: true
+          items:
+            type: string
+            maxLength: 32
+            pattern: ^\d+\.\d+\.\d+\.\d+$
+          example:
+            - 16.2.0.5
+            - 16.1.3.2
+            - 15.7.1.8
+        models:
+          type: array
+          description: Filter on device models
+          uniqueItems: true
+          items:
+            type: string
+            maxLength: 32
+          example:
+            - X460-G2
+            - X670-G2
+            - X440-G2
+        country_name:
+          type: array
+          description: Filter on country names where the devices are located
+          uniqueItems: true
+          items:
+            type: string
+            maxLength: 64
+          example:
+            - United States
+            - Canada
+            - United Kingdom
+        managing_app:
+          type: array
+          description: Managing app filter
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+              - Cloud
+              - XIQ SE
+              - Controller
+              - XIQ
+              - Locally
+              - TPME
+              - Unknown
+          example:
+            - Cloud
+            - XIQ
+            - Controller
+        device_type:
+          type: array
+          description: Filter on device type
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/RequestDeviceType"
+        license_type:
+          type: array
+          description: Filter on device license type
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/DeviceLicenseType"
+        end_date:
+          $ref: "#/components/schemas/DeviceEndDate"
+        ip_address:
+          type: array
+          description: Filter on ip address. IP address should be in valid IPv4 format.
+          uniqueItems: true
+          items:
+            type: string
+            format: ipv4
+            maxLength: 32
+          example:
+            - 192.168.1.10
+            - 10.0.0.50
+            - 172.16.1.100
+        feature_license:
+          type: array
+          description: Filter on feature license
+          uniqueItems: true
+          items:
+            type: string
+            maxLength: 32
+          example:
+            - ADVANCED_ROUTING
+            - SECURITY_SUITE
+            - QOS_PLUS
+        building_ids:
+          type: array
+          description: Filter on the building ids where the devices are located
+          uniqueItems: true
+          items:
+            type: integer
+            format: int64
+          example:
+            - 1001
+            - 1002
+            - 1003
+        floor_ids:
+          type: array
+          description: Filter on the floor ids where the devices are located
+          uniqueItems: true
+          items:
+            type: integer
+            format: int64
+          example:
+            - 1001
+            - 1002
+            - 1003
+        basic_info:
+          type: boolean
+          description: Return minimal device response
+          example: false
+          default: false
+        column_list:
+          type: array
+          description: >
+            Filter on the columns to be returned in the export csv. Allowed
+            values: Serial Number, MAC, Hostname, Device Type, Device Function,
+            State, Status, Site, Managed By, Model, Firmware, Country,
+            Subscription, Service Contract, End Of Sale Date, End Of Service
+            Date, GA Date, EOSM Date, Date Shipped, Date Available, MGT IP
+            Address, Feature License, Slot Unit Number
+          uniqueItems: true
+          items:
+            type: string
+          example:
+            - Hostname
+            - State
+            - Country
+            - Status
+            - MGT IP Address
+            - MAC
+        firmware_status:
+          type: string
+          description: Filter on device firmware upgrade status
+          enum:
+            - TOTAL_UPDATES
+            - EOVM
+            - SECURITY_VULNERABILITY
+          example: TOTAL_UPDATES
+        is_locally_managed:
+          type: boolean
+          description: Filter on whether the device is locally managed
+          example: true
+        switch_type:
+          type: string
+          description: Filter on switch type (applicable for switches)
+          enum:
+            - STANDALONE
+            - STACK
+        appliance_type:
+          type: string
+          description: Filter on appliance type (applicable for appliances)
+          enum:
+            - Standalone Appliance
+            - Appliance Cluster
+        serial_numbers:
+          type: array
+          description: Filter on device serial numbers. Serial numbers typically contain
+            alphanumeric characters and may include hyphens; max length 64.
+          uniqueItems: true
+          items:
+            type: string
+            maxLength: 64
+            pattern: ^[A-Za-z0-9-]+$
+          example:
+            - CN12345678
+            - FT98765432
+            - SN-ABC-12345
+        exclude_device_function:
+          type: array
+          description: Exclude device function
+          items:
+            type: string
+            enum:
+              - Tunnel Concentrator
+        unassigned_location:
+          type: boolean
+          description: Filter devices with unassigned location (no site, building, or floor)
+          example: true
+    ListDevicesRequestBody:
+      oneOf:
+        - $ref: "#/components/schemas/DeviceIdsRequest"
+        - $ref: "#/components/schemas/ListDevicesRequestFilter"
+    ResponseDeviceType:
+      type: string
+      enum:
+        - Switch
+        - SDWAN
+        - Controller
+        - Router
+        - VGVA
+        - XIQ SE
+        - XMC
+        - Appliance
+        - Tunnel Concentrator
+        - Wireless
+        - Appliance Cluster
+        - Switch Stack
+        - Master
+        - Member
+        - Backup
+        - Wireless Controller
+        - SNMP Discovered
+        - Third-Party Management Engine
+        - Unknown
+      title: Device Type
+      description: Enum representing the possible types of devices
+      default: Unknown
+      example: Switch
+    DeviceFunction:
+      type: string
+      enum:
+        - AP
+        - Switch Engine
+        - Fabric Engine
+        - EXOS
+        - VOSS
+        - XIQ SE
+        - Appliance
+        - Tunnel Concentrator
+        - Router
+        - Unknown
+      title: Device Function
+      description: Enum representing the function or role of a device
+      default: Unknown
+    DeviceState:
+      type: string
+      enum:
+        - New
+        - Managed
+        - Unmanaged
+        - Unknown
+        - Onboarded
+        - Provisioned
+      title: Device State
+      description: Enum representing the possible device states
+      x-enumDescriptions:
+        New: A NEW device was added
+        Managed: The device is MANAGED by a client app (XIQ, SDWAN etc)
+        Unmanaged: The device has been UNMANAGED by a client app (XIQ, SDWAN etc)
+        Unknown: The device status is UNKNOWN
+      default: New
+    DeviceManagingApp:
+      type: string
+      enum:
+        - Cloud
+        - XIQ SE
+        - Controller
+        - XIQ
+        - Locally
+        - TPME
+        - Unknown
+      title: Device Managing Application
+      description: Enum representing the names of possible applications that can
+        manage a device
+      default: Cloud
+    DeviceContract:
+      type: object
+      properties:
+        contract_id:
+          type: string
+          description: Contract Id
+          maxLength: 64
+        contract_end_dt:
+          type: string
+          description: "End of contract date. Format: ISO 8601 date (YYYY-MM-DD). Example:
+            2017-01-24"
+          format: date
+          example: 2017-01-24
+        contract_number:
+          type: string
+          description: Contract number
+          maxLength: 64
+          example: CN12345678
+    DeviceLifeCycle:
+      type: object
+      description: Device life cycle
+      properties:
+        end_of_sale_date:
+          type: string
+          description: "End of sale date. Format: ISO 8601 date (YYYY-MM-DD). Example:
+            2017-01-24"
+          format: date
+          example: 2017-01-24
+        end_of_service_date:
+          type: string
+          description: "End of service date. Format: ISO 8601 date (YYYY-MM-DD). Example:
+            2017-01-24"
+          format: date
+          example: 2017-01-24
+        ga_date:
+          type: string
+          description: "GA (General Availability) date. Format: ISO 8601 date
+            (YYYY-MM-DD). Example: 2017-01-24"
+          format: date
+          example: 2017-01-24
+        eosm_date:
+          type: string
+          description: "End of service maintenance (EOSM) date. Format: ISO 8601 date
+            (YYYY-MM-DD). Example: 2017-01-24"
+          format: date
+          example: 2017-01-24
+        ship_date:
+          type: string
+          description: "Ship date. Format: ISO 8601 date (YYYY-MM-DD). Example: 2017-01-24"
+          format: date
+          example: 2017-01-24
+        ship_to_customer_date:
+          type: string
+          description: "Ship to customer date. Format: ISO 8601 date (YYYY-MM-DD).
+            Example: 2017-01-24"
+          format: date
+          example: 2017-01-24
+    FeatureLicense:
+      type: string
+      enum:
+        - Premier
+        - MACsec
+        - UPLINK_4X10G
+        - UPLINK_8X10G
+        - UNKNOWN
+      title: Device Feature License
+      description: Enum representing the feature license of a device
+      default: UNKNOWN
+    DeviceStackType:
+      type: string
+      enum:
+        - Master
+        - Member
+        - Stack
+        - Backup
+        - Unknown
+      title: Device Stack Type
+      description: Enum representing the possible types of stack type of a device
+      default: Unknown
+      example: Master
+    MemberDevice:
+      type: object
+      description: Member device in a stack or ucp device
+      properties:
+        device_id:
+          type: integer
+          description: The id of the device
+          format: int64
+          example: 12345
+        created_at:
+          type: integer
+          format: int64
+          description: The creation time of the record, represented as milliseconds since
+            the Unix epoch (1970-01-01T00:00:00Z).
+          example: 1692624000000
+        updated_at:
+          type: integer
+          format: int64
+          description: The last update time of the record, represented as milliseconds
+            since the Unix epoch (1970-01-01T00:00:00Z).
+          example: 1692710400000
+        serial_number:
+          type: string
+          description: The serial number of the device
+          maxLength: 64
+          example: XN12345678
+        mac_address:
+          type: string
+          description: MAC address in hexadecimal format without separators (12 hex
+            digits, e.g. "aabbccddeeff").
+          minLength: 12
+          maxLength: 12
+          pattern: ^[0-9A-Fa-f]{12}$
+          example: aabbccddeeff
+        host_name:
+          type: string
+          description: The host name of the device
+          maxLength: 255
+          example: switch-floor2-east
+        owner_id:
+          type: integer
+          description: The id of the owner account that owns the device
+          format: int64
+          example: 101
+        msp_id:
+          type: integer
+          description: The id of the msp account that manages the device
+          default: 0
+          format: int64
+          example: 201
+        product_type:
+          type: string
+          description: The product type of the device, e.g., AP_230, BR_100, NX9600, etc.
+          maxLength: 32
+          example: X460-G2
+        type:
+          $ref: "#/components/schemas/ResponseDeviceType"
+        function:
+          $ref: "#/components/schemas/DeviceFunction"
+        admin_status:
+          $ref: "#/components/schemas/DeviceState"
+        os_version:
+          type: string
+          description: The firmware version of the device
+          maxLength: 32
+          example: 16.2.0.5
+        is_connected:
+          type: boolean
+          description: Is the device connected?
+          example: true
+        site_id:
+          type: integer
+          description: The id of the site where the device is located
+          format: int64
+          example: 1001
+        site_name:
+          type: string
+          description: The name of the site where the device is located
+          maxLength: 256
+          example: Corporate Headquarters
+        managing_app:
+          $ref: "#/components/schemas/DeviceManagingApp"
+        country_code:
+          type: integer
+          description: The country code where the device is located
+          format: int32
+          example: 1
+        country_name:
+          type: string
+          description: The country name where the device is located
+          maxLength: 128
+          example: United States
+        license_type:
+          $ref: "#/components/schemas/DeviceLicenseType"
+        device_contracts:
+          type: array
+          description: Device Contracts
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/DeviceContract"
+        device_life_cycle:
+          $ref: "#/components/schemas/DeviceLifeCycle"
+        ip_address:
+          type: string
+          description: IP address of the device. Format IPv4 address in dotted decimal
+            notation (e.g. "192.168.1.10"). If both IPv4 and IPv6 are supported,
+            update description accordingly.
+          format: ipv4
+          maxLength: 32
+          example: 192.168.1.10
+        feature_license:
+          $ref: "#/components/schemas/FeatureLicense"
+        is_locally_managed:
+          type: boolean
+          description: Filter on whether the device is locally managed
+          example: true
+        stack_type:
+          $ref: "#/components/schemas/DeviceStackType"
+        stack_no:
+          type: integer
+          description: The stack number of the device if the device is part of a stack
+          format: int32
+          example: 1
+        org_id:
+          type: integer
+          description: The organization id of the device
+          format: int64
+          example: 500001
+        eovm:
+          type: string
+          description: End of Version Maintenance (EOVM) date for the device in ISO 8601
+            format (e.g., "2025-12-31").
+          format: date
+          example: 2026-05-31
+    DeviceProgressStatus:
+      type: string
+      title: Device Progress Status Enumeration
+      description: >
+        Enumeration representing the progress status of a device operation.
+
+        Used to track and manage the lifecycle of device-related tasks.
+
+        Critical for workflow automation, monitoring, and operational
+        decision-making.
+      x-ai-usage: >
+        AI systems should interpret these statuses to monitor device operation
+        progress,
+
+        trigger alerts, and manage automated workflows.  Critical for ensuring
+        timely completion and handling of device tasks.
+      x-tags:
+        - device-management
+        - progress-tracking
+      enum:
+        - NOT_STARTED
+        - RUNNING
+        - COMPLETED
+        - FAILED
+        - STOPPING
+        - STOPPED
+      default: NOT_STARTED
+      example: RUNNING
+    DeviceProgressStatusCategory:
+      type: string
+      title: Device Progress Status Category Enumeration
+      description: >
+        Enumeration representing the category of a device operation.
+
+        Used to classify and manage different types of device-related tasks.
+
+        Critical for workflow automation, monitoring, and operational
+        decision-making.
+      x-ai-usage: >
+        AI systems should interpret these categories to monitor device operation
+        types,
+
+        trigger alerts, and manage automated workflows.  Critical for ensuring
+        proper handling of device tasks.
+      x-tags:
+        - device-management
+        - category-tracking
+      enum:
+        - DISCOVERY
+        - FIRMWARE_UPGRADE
+      default: DISCOVERY
+      example: DISCOVERY
+    Device:
+      type: object
+      required:
+        - device_id
+        - created_at
+        - updated_at
+        - serial_number
+        - mac_address
+        - host_name
+        - owner_id
+        - msp_id
+        - type
+        - function
+        - admin_status
+        - is_connected
+        - managing_app
+        - is_locally_managed
+      properties:
+        device_id:
+          type: integer
+          description: The id of the device
+          format: int64
+          example: 12345
+        created_at:
+          type: integer
+          format: int64
+          description: The creation time of the record, represented as milliseconds since
+            the Unix epoch (1970-01-01T00:00:00Z).
+          example: 1692624000000
+        updated_at:
+          type: integer
+          format: int64
+          description: The last update time of the record, represented as milliseconds
+            since the Unix epoch (1970-01-01T00:00:00Z).
+          example: 1692710400000
+        serial_number:
+          type: string
+          description: The serial number of the device
+          maxLength: 64
+          example: XN12345678
+        mac_address:
+          type: string
+          description: MAC address in hexadecimal format without separators (12 hex
+            digits, e.g. "aabbccddeeff").
+          minLength: 12
+          maxLength: 12
+          pattern: ^[0-9A-Fa-f]{12}$
+          example: aabbccddeeff
+        host_name:
+          type: string
+          description: The host name of the device
+          maxLength: 255
+          example: switch-floor2-east
+        owner_id:
+          type: integer
+          description: The id of the owner account that owns the device
+          format: int64
+          example: 101
+        msp_id:
+          type: integer
+          description: The id of the msp account that manages the device
+          default: 0
+          format: int64
+          example: 201
+        product_type:
+          type: string
+          description: The product type of the device, e.g., AP_230, BR_100, NX9600, etc.
+          maxLength: 32
+          example: X460-G2
+        type:
+          $ref: "#/components/schemas/ResponseDeviceType"
+        function:
+          $ref: "#/components/schemas/DeviceFunction"
+        admin_status:
+          $ref: "#/components/schemas/DeviceState"
+        os_version:
+          type: string
+          description: The firmware version of the device
+          maxLength: 32
+          example: 16.2.0.5
+        is_connected:
+          type: boolean
+          description: Is the device connected?
+          example: true
+        site_id:
+          type: integer
+          description: The id of the site where the device is located
+          format: int64
+          example: 1001
+        site_name:
+          type: string
+          description: The name of the site where the device is located
+          maxLength: 256
+          example: Corporate Headquarters
+        managing_app:
+          $ref: "#/components/schemas/DeviceManagingApp"
+        country_code:
+          type: integer
+          description: The country code where the device is located
+          format: int32
+          example: 1
+        country_name:
+          type: string
+          description: The country name where the device is located
+          maxLength: 128
+          example: United States
+        license_type:
+          $ref: "#/components/schemas/DeviceLicenseType"
+        device_contracts:
+          type: array
+          description: Device Contracts
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/DeviceContract"
+        device_life_cycle:
+          $ref: "#/components/schemas/DeviceLifeCycle"
+        ip_address:
+          type: string
+          description: IP address of the device. Format IPv4 address in dotted decimal
+            notation (e.g. "192.168.1.10"). If both IPv4 and IPv6 are supported,
+            update description accordingly.
+          format: ipv4
+          maxLength: 32
+          example: 192.168.1.10
+        feature_license:
+          $ref: "#/components/schemas/FeatureLicense"
+        is_locally_managed:
+          type: boolean
+          description: Filter on whether the device is locally managed
+          example: true
+        stack_type:
+          $ref: "#/components/schemas/DeviceStackType"
+        stack_no:
+          type: integer
+          description: The stack number of the device if the device is part of a stack
+          format: int32
+          example: 1
+        org_id:
+          type: integer
+          description: The organization id of the device
+          format: int64
+          example: 500001
+        eovm:
+          type: string
+          description: End of Version Maintenance (EOVM) date for the device in ISO 8601
+            format (e.g., "2025-12-31").
+          format: date
+          example: 2026-05-31
+        members:
+          type: array
+          description: The member devices if the device is a stack
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/MemberDevice"
+        device_status:
+          $ref: "#/components/schemas/DeviceProgressStatus"
+        device_status_category:
+          $ref: "#/components/schemas/DeviceProgressStatusCategory"
+        device_status_message:
+          type: string
+          description: The message describing the device status
+          maxLength: 256
+          example: Device is being provisioned
+    PagedDevice:
+      type: object
+      description: Paginated response containing device list with metadata
+      required:
+        - count
+        - page
+        - total_count
+        - total_pages
+      properties:
+        data:
+          type: array
+          description: List of devices matching the filter criteria.
+          items:
+            allOf:
+              - $ref: "#/components/schemas/Device"
+            title: Device
+            description: Represents a device with its configuration, status, and lifecycle
+              information.
+        page:
+          type: integer
+          format: int32
+          description: Current page number in the paginated results.
+        count:
+          type: integer
+          format: int32
+          description: Number of devices returned in the current page.
+        total_pages:
+          type: integer
+          format: int64
+          description: Total number of pages available.
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of devices across all pages.
+    ConstraintViolationError:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field name
+        message:
+          type: string
+          description: The detailed description
+    ApiClientError:
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: The short description of error
+        status:
+          type: integer
+          description: The status code of error
+          format: int32
+        detail:
+          type: string
+          description: The detailed description of error
+        violations:
+          type: array
+          description: List of constraint violations
+          items:
+            $ref: "#/components/schemas/ConstraintViolationError"
+    ApiError:
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: The short description of error
+        status:
+          type: integer
+          description: The status code of error
+          format: int32
+        detail:
+          type: string
+          description: The detailed description of error
+    Licenses:
+      type: object
+      title: LicenseVo
+      description: License information summary including managed device counts,
+        licensed device counts, and violation status
+      required:
+        - device_count
+        - has_non_ep1_licenses
+        - is_license_violation
+        - licensed_devices_count
+        - licenses_required_count
+        - managed_devices_count
+      properties:
+        device_count:
+          type: integer
+          description: Total count of devices in the system
+          format: int32
+          example: 42
+        managed_devices_count:
+          type: integer
+          description: Total number of devices currently managed
+          format: int32
+          example: 10
+        licensed_devices_count:
+          type: integer
+          description: Total number of devices covered by active licenses
+          format: int32
+          example: 8
+        is_license_violation:
+          type: boolean
+          description: Flag indicating if there is a license violation
+          example: true
+        licenses_required_count:
+          type: integer
+          description: Number of additional licenses required to have all managed devices
+            licensed
+          format: int32
+          example: 2
+        has_non_ep1_licenses:
+          type: boolean
+          description: Flag indicating if there are non-EP1 licenses present
+          example: false
+    DeviceColumnManagingApp:
+      type: string
+      enum:
+        - Cloud
+        - XIQ SE
+        - Locally
+        - TPME
+        - XIQ
+        - Controller
+    ColumnFiltersRequest:
+      type: object
+      properties:
+        classification:
+          $ref: "#/components/schemas/DeviceClassificationFilter"
+        states:
+          type: array
+          description: Filter on device states
+          items:
+            $ref: "#/components/schemas/DeviceStateFilter"
+          example:
+            - MANAGED
+            - UNMANAGED
+        managing_app:
+          type: array
+          description: Filter on managing app
+          items:
+            $ref: "#/components/schemas/DeviceColumnManagingApp"
+          example:
+            - Cloud
+            - XIQ SE
+        site_name:
+          type: array
+          description: Filter on the site names where the devices are located
+          items:
+            type: string
+          example:
+            - Bangalore
+            - San Jose Buildng
+        os_versions:
+          type: array
+          description: Filter on os versions
+          items:
+            type: string
+            maxLength: 32
+            example: 16.2.0.5
+          example:
+            - 16.2.0.5
+            - 16.1.3.2
+            - 15.7.1.8
+        product_type:
+          type: array
+          description: Filter on device product types
+          items:
+            type: string
+            maxLength: 32
+          example:
+            - X460-G2
+            - X670-G2
+            - X440-G2
+        country_name:
+          type: array
+          description: Country Name for the device filter
+          items:
+            type: string
+            maxLength: 64
+          example:
+            - United States
+            - Canada
+            - United Kingdom
+        license_type:
+          type: array
+          description: Filter on license type
+          items:
+            $ref: "#/components/schemas/DeviceLicenseType"
+        device_type:
+          type: array
+          description: Filter on device types
+          items:
+            $ref: "#/components/schemas/RequestDeviceType"
+        feature_license:
+          type: array
+          description: Filter on device feature license
+          items:
+            type: string
+            maxLength: 32
+          example:
+            - MACsec
+            - Premier
+        serial_numbers:
+          type: array
+          description: Filter on device serial number. Serial numbers typically contain
+            alphanumeric characters and may include hyphens; max length 64.
+          items:
+            type: string
+            maxLength: 64
+          example:
+            - CN12345678
+            - FT98765432
+            - SN-ABC-12345
+        exclude_device_function:
+          type: array
+          description: Exclude device function
+          items:
+            type: string
+            enum:
+              - Tunnel Concentrator
+        is_locally_managed:
+          type: boolean
+          description: Filter on whether the device is locally managed
+          example: true
+        switch_type:
+          type: string
+          description: Filter on switch type (applicable for switches)
+          enum:
+            - STANDALONE
+            - STACK
+        appliance_type:
+          type: string
+          description: Filter on appliance type (applicable for appliances)
+          enum:
+            - Standalone Appliance
+            - Appliance Cluster
+    ColumnFilters:
+      type: object
+      properties:
+        managed_by:
+          type: array
+          description: Unique data set of managing apps
+          items:
+            type: string
+        product_type:
+          type: array
+          description: Unique data set of product types
+          items:
+            type: string
+        os_version:
+          type: array
+          description: Unique data set of os versions
+          items:
+            type: string
+            description: OS version string; expected as numeric segments separated by dots
+              (e.g. 10.5.2.0)
+            pattern: ^[0-9]+(\.[0-9]+){3}$
+        admin_status:
+          type: array
+          description: Unique data set of admin statuses
+          items:
+            type: string
+            description: Administrative status of the device.
+        license_status:
+          type: array
+          description: Unique data set of license statuses
+          items:
+            type: string
+        license_type:
+          type: array
+          description: Unique data set of license types
+          items:
+            $ref: "#/components/schemas/DeviceLicenseType"
+          example:
+            - LEGACY
+        country_name:
+          type: array
+          description: Unique data set of country codes (ISO 3166-1 alpha-2 two-letter
+            country codes, e.g., "US", "CA", "GB").
+          items:
+            type: string
+            maxLength: 2
+          example:
+            - US
+            - CA
+            - GB
+        site_name:
+          type: array
+          description: Unique data set of site names
+          items:
+            type: string
+        classification:
+          $ref: "#/components/schemas/DeviceClassificationFilter"
+    LicenseManagement:
+      type: string
+      enum:
+        - CLOUD_MANAGED
+        - LOCALLY_MANAGED
+        - UNKNOWN
+      title: License Management
+      description: Enum representing the possible types of License Management
+      default: UNKNOWN
+    UnmanagedDevices:
+      type: object
+      required:
+        - product_type
+        - device_type
+        - license_management
+        - unmanaged_devices_count
+      properties:
+        product_type:
+          type: string
+          description: The product type of the device
+        device_type:
+          $ref: "#/components/schemas/ResponseDeviceType"
+        license_management:
+          $ref: "#/components/schemas/LicenseManagement"
+        unmanaged_devices_count:
+          type: integer
+          description: The count of unmanaged devices for each device type
+          format: int64
+    ProductTypesRequest:
+      type: object
+      required:
+        - os_types
+      properties:
+        os_types:
+          type: array
+          description: The OS types to filter product types. Supported OS types are Switch
+            Engine, Fabric Engine, Wireless, TPME
+          items:
+            type: string
+            enum:
+              - Switch Engine
+              - Fabric Engine
+              - Wireless
+              - TPME
+          example:
+            - Switch Engine
+            - Wireless
+    ProductTypesResponse:
+      type: object
+      description: Get product types response
+      properties:
+        product_types:
+          type: object
+          description: Map of OS type to list of product type information
+          additionalProperties:
+            type: array
+            items:
+              type: object
+              description: The product type information
+              required:
+                - product_type
+                - model
+                - firmware_type
+              properties:
+                product_type:
+                  type: string
+                  description: The product type identifier or name (e.g., X460-G2, AP4000). This
+                    is the canonical product type used by the platform to
+                    identify device families.
+                  example: SwitchEngine_7520_48XT_6C
+                model:
+                  type: string
+                  description: The device model identifier or designation associated with this
+                    product type (e.g., X460-G2, AP4000). This represents the
+                    specific hardware model within the product family.
+                  example: "7520"
+                firmware_type:
+                  type: string
+                  description: The firmware type or category for this product (e.g., IQE, EXOS,
+                    VOSS). Used to identify which firmware image family or
+                    update mechanism applies to devices of this model.
+                  example: onie
+          example:
+            Switch Engine:
+              - product_type: SwitchEngine_4220_4MW_8P_4X
+                model: "4220"
+                firmware_type: summit_arm
+            Wireless:
+              - product_type: AP_120
+                model: AP120
+                firmware_type: AP120
+    FirmwareMetadatasRequest:
+      type: object
+      properties:
+        os_types:
+          type: array
+          description: The OS types to filter firmware metadata. Supported OS types are
+            Switch Engine, Fabric Engine, Wireless, TPME
+          items:
+            type: string
+            enum:
+              - Switch Engine
+              - Fabric Engine
+              - Wireless
+              - TPME
+          nullable: true
+          example:
+            - Fabric Engine
+            - Wireless
+        product_types:
+          type: array
+          description: The product types to filter firmware metadata. Values are from the
+            product_type field of /productTypes response
+          items:
+            type: string
+          nullable: true
+          example:
+            - SwitchEngine_4220_4MW_8P_4X
+            - AP_650
+        firmware_types:
+          type: array
+          description: The firmware types to filter firmware metadata. Values are from the
+            firmware_type field of /productTypes response
+          items:
+            type: string
+          nullable: true
+          example:
+            - onie
+            - "5420"
+    DeviceFirmwareMetadata:
+      type: object
+      description: The device compatible firmware metadata
+      required:
+        - firmware_id
+        - firmware_name
+        - firmware_type
+        - scope
+        - version
+      properties:
+        firmware_id:
+          type: integer
+          format: int64
+          description: The firmware metadata ID
+          example: 17
+        firmware_name:
+          type: string
+          description: The firmware name
+          example: 5420.8.10.0.0.voss
+        firmware_type:
+          type: string
+          description: The firmware type
+          example: "5420"
+        scope:
+          type: string
+          description: The firmware availability scope
+          example: GLOBAL
+        version:
+          type: string
+          description: The firmware version
+          example: 8.10.0.0
+        md5:
+          type: string
+          nullable: true
+          description: The firmware md5 hash
+          example: 8f1dc79cb91b872d42034863c1eebed7
+    FirmwareMetadatasResponse:
+      type: object
+      description: Get device firmware metadatas response
+      properties:
+        firmware_metadatas:
+          type: object
+          description: Map where each key is a firmware type (or product type) and the
+            value is a list of compatible firmware metadata objects. For
+            example, keys might be firmware types like "STABLE", "BETA" or
+            product types like "Switch Engine" depending on the request filters.
+          additionalProperties:
+            type: array
+            items:
+              $ref: "#/components/schemas/DeviceFirmwareMetadata"
+          example:
+            AP_420:
+              - firmware_id: 1269
+                firmware_name: AP420-7.2r13.golden.img.S
+                firmware_type: AP420
+                scope: GLOBAL
+                version: 7.2.13.0
+                md5: null
+            onie:
+              - firmware_id: 575
+                firmware_name: onie-31.7.1.4.x86_64.xos
+                firmware_type: onie
+                scope: GLOBAL
+                version: 31.7.1.4
+                md5: 5d3434c748c663b8701f844a9f1877e4
+    DeviceCount:
+      type: object
+      required:
+        - online
+        - offline
+        - total
+      properties:
+        online:
+          type: integer
+          description: Number of devices (count) in Online State
+          format: int64
+          example: 10
+        total:
+          type: integer
+          description: Total number of devices (count)
+          format: int64
+          example: 15
+        offline:
+          type: integer
+          description: Number of devices (count) in Offline State
+          format: int64
+          example: 5
+    ParamDeviceLicenseType:
+      type: string
+      enum:
+        - LEGACY
+        - NAVIGATOR
+        - PILOT
+        - COPILOT
+        - APPLIANCE
+        - TRIAL
+        - NOT_REQUIRED
+        - UNKNOWN
+        - STANDARD_TIER_A
+        - STANDARD_TIER_B
+        - STANDARD_TIER_C
+        - STANDARD_TIER_D
+        - ADVANCED_TIER_A
+        - ADVANCED_TIER_B
+        - ADVANCED_TIER_C
+        - ADVANCED_TIER_D
+        - PRD_XSW_MSP_DC_S
+        - PRD_XSW_MSP_BR_S
+        - PRD_EP1_SDW_ADV_L_S_C
+        - PRD_EP1_SDW_ADV_M_S_C
+        - PRD_EP1_SDW_ADV_S_S_C
+        - PRD_EP1_SDW_STD_L_S_C
+        - PRD_EP1_SDW_STD_M_S_C
+        - PRD_EP1_SDW_STD_S_S_C
+        - NONE
+      title: Device License Type
+      description: Enum representing the possible license types of a device
+      default: PILOT
+    LicenseInfoFilter:
+      type: object
+      properties:
+        site_ids:
+          type: array
+          description: Filter on site ids
+          uniqueItems: true
+          items:
+            type: integer
+            format: int64
+          example:
+            - 1000001
+            - 1000002
+            - 1000003
+        building_ids:
+          type: array
+          description: Filter on the building ids where the devices are located
+          uniqueItems: true
+          items:
+            type: integer
+            format: int64
+          example:
+            - 500001
+            - 500002
+            - 500003
+    LicenseCount:
+      type: object
+      description: Response containing license counts per location hierarchy
+      properties:
+        sites:
+          type: array
+          description: >
+            Array of site objects, each representing a specific site and its
+            associated license counts.
+
+            Each site object contains a unique site ID and a map of license
+            types to their counts for that site.
+          items:
+            type: object
+            title: Site License Count
+            description: License count information for a specific site location.
+            properties:
+              site_id:
+                type: integer
+                format: int64
+                description: The unique identifier for the site.
+              license_count:
+                type: object
+                description: Map of license types to their counts for this site. Key is license
+                  type, value is the number of licenses.
+                additionalProperties:
+                  type: integer
+                  format: int32
+        buildings:
+          type: array
+          description: >
+            Array of building objects, each representing a specific building and
+            its associated license counts.
+
+            Each building object contains a unique building ID and a map of
+            license types to their counts for that building.
+          items:
+            type: object
+            title: Building License Count
+            description: License count information for a specific building location.
+            properties:
+              building_id:
+                type: integer
+                format: int64
+                description: The unique identifier for the building.
+              license_count:
+                type: object
+                description: Map of license types to their counts for this building. Key is
+                  license type, value is the number of licenses.
+                additionalProperties:
+                  type: integer
+                  format: int32
+        floors:
+          type: array
+          description: >
+            Array of floor objects, each representing a specific floor and its
+            associated license counts.
+
+            Each floor object contains a unique floor ID and a map of license
+            types to their counts for that floor.
+          items:
+            type: object
+            title: Floor License Count
+            description: License count information for a specific floor location.
+            properties:
+              floor_id:
+                type: integer
+                format: int64
+                description: The unique identifier for the floor.
+              license_count:
+                type: object
+                description: Map of license types to their counts for this floor. Key is license
+                  type, value is the number of licenses.
+                additionalProperties:
+                  type: integer
+                  format: int32
+        is_license_available:
+          type: object
+          description: Map indicating license availability for each license type across
+            all locations (sites, buildings, floors). Key is license type, value
+            is availability (true/false).
+          additionalProperties:
+            type: boolean
+    DeviceList:
+      type: object
+      description: Response containing list of devices without pagination.
+      required:
+        - count
+      properties:
+        data:
+          type: array
+          description: List of devices matching the filter device id criteria.
+          items:
+            allOf:
+              - $ref: "#/components/schemas/Device"
+            title: Device
+            description: Represents a device with its configuration, status, and lifecycle
+              information.
+        count:
+          type: integer
+          format: int32
+          description: Total number of devices matching the filter device id criteria.
+    EaType:
+      type: string
+      description: Enterprise Agreement (EA) type classification associated with the
+        contract
+      enum:
+        - ENTERPRISE_AGREEMENT
+        - MSC
+        - STANDARD
+        - ECA
+        - EVALUATION
+        - EA_TRUE_FORWARD_SVC
+        - EA_TRUE_FORWARD_SUB
+        - UNKNOWN
+      example: ENTERPRISE_AGREEMENT
+    ContractFilter:
+      type: object
+      properties:
+        status:
+          type: array
+          description: Contract status values for filtering
+          example:
+            - Active
+            - Cancelled
+            - Expired
+            - Inactive
+          items:
+            type: string
+            enum:
+              - Active
+              - Cancelled
+              - Expired
+              - Inactive
+        site:
+          type: array
+          items:
+            type: string
+          description: Site identifiers to filter contracts. Example values include
+            human-readable site names.
+          example:
+            - Headquarters Campus
+            - site-12345
+        partner:
+          type: array
+          items:
+            type: string
+          description: Partner identifiers to filter contracts. Example values include the
+            partner's display name.
+          example:
+            - Extreme Networks Partner Inc.
+            - partner-9876
+        start_date_range:
+          type: object
+          description: Filter contracts by a date range based on the contract start date.
+            Use after_date and/or before_date to define the range boundaries.
+          properties:
+            after_date:
+              type: string
+              pattern: ^(?!0000)\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
+              description: In this format YYYY-MM-DD
+              example: 2023-01-01
+            before_date:
+              type: string
+              pattern: ^(?!0000)\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
+              description: In this format YYYY-MM-DD
+              example: 2023-12-31
+            use_and_operator:
+              type: boolean
+              description: When true, both after_date and before_date must be satisfied. When
+                false, either condition can be satisfied.
+        ea_type:
+          type: array
+          description: Enterprise Agreement (EA) types to filter contracts. Represents the
+            agreement classification associated with the contract.
+          example:
+            - ENTERPRISE_AGREEMENT
+            - MSC
+            - STANDARD
+          items:
+            $ref: "#/components/schemas/EaType"
+    Contract:
+      type: object
+      properties:
+        created_at:
+          type: integer
+          description: Unix timestamp in milliseconds when the contract was created
+          format: int64
+          example: 1692624000000
+        updated_at:
+          type: integer
+          description: Unix timestamp in milliseconds when the contract was last updated
+          format: int64
+          example: 1692710400000
+        contract_id:
+          type: string
+          description: The contract unique identifier
+          maxLength: 255
+          example: 810cX000007rK37QAE
+        line_status:
+          type: string
+          description: The line status. Enumerated values represent the lifecycle state of
+            the contract line.
+          enum:
+            - Active
+            - Cancelled
+            - Pending
+            - Expired
+            - Inactive
+          maxLength: 255
+          example: Active
+        site:
+          type: string
+          description: The site
+          maxLength: 255
+          example: Headquarters Campus
+        partner:
+          type: string
+          description: The partner
+          maxLength: 255
+          example: Extreme Networks Partner Inc.
+        contract_type:
+          type: string
+          description: The contract type classification.
+          maxLength: 255
+          enum:
+            - MSP Customer Pool
+            - Partner Works Agreement
+            - ExtremeWorks
+            - Partner Works Plus Agreement
+            - Partner Works Plus
+            - Partner Works Plus - Software
+            - Evaluation Agreement
+            - Extreme Works
+            - ExtremeWorks - Software
+            - MSP Demo Pool
+          x-extensible-enum:
+            - Support and Maintenance
+            - Software Subscription
+            - Hardware Warranty
+          example: ExtremeWorks
+        contract_status:
+          type: array
+          description: |
+            List of contract status values to filter the results.
+            Example values include Active, Expired, and Cancelled.
+          items:
+            type: string
+            enum:
+              - Active
+              - Cancelled
+              - Expired
+              - Inactive
+          example:
+            - Active
+            - Cancelled
+            - Expired
+            - Inactive
+        contract_number:
+          type: string
+          description: Contract number assigned by the partner or system. Typically
+            structured as PREFIX-YYYY-#### (e.g., "EXT-SM-2024-9876").
+          maxLength: 255
+          example: 5-01776047
+        contract_start_dt:
+          type: string
+          description: The contract start date - example 2017-01-24
+          format: date
+          example: 2024-01-01
+        contract_end_dt:
+          type: string
+          description: The contract end date - example 2017-01-24
+          format: date
+          example: 2027-12-31
+        no_of_lines:
+          type: integer
+          description: Number of lines associated with the contract
+          format: int32
+          example: 15
+        ea_type:
+          type: array
+          description: Enterprise Agreement (EA) types to filter contracts
+          example:
+            - ENTERPRISE_AGREEMENT
+            - STANDARD
+            - UNKNOWN
+          items:
+            $ref: "#/components/schemas/EaType"
+    PagedContract:
+      type: object
+      required:
+        - count
+        - page
+        - total_count
+        - total_pages
+      properties:
+        data:
+          type: array
+          description: List of contract records matching the filter criteria
+          items:
+            $ref: "#/components/schemas/Contract"
+        page:
+          type: integer
+          format: int32
+          description: Current page number in the paginated results
+        count:
+          type: integer
+          format: int32
+          description: Number of contracts returned in the current page
+        total_pages:
+          type: integer
+          format: int64
+          description: Total number of pages available based on the limit and total count
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of contracts matching the filter criteria
+    ContractLine:
+      type: object
+      properties:
+        line_status:
+          type: string
+          description: The line status
+          enum:
+            - Active
+            - Cancelled
+            - Pending
+            - Expired
+            - Inactive
+          example: Active
+        line_start_dt:
+          type: string
+          description: The line start date - example 2017-01-24
+          pattern: ^(?!0000)\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
+        quantity:
+          type: integer
+          description: The number of lines
+          format: int32
+        serial_number:
+          type: string
+          description: "The serial number (1-64 characters). Allowed characters: letters,
+            digits, hyphen, underscore."
+          pattern: ^[A-Za-z0-9_-]{1,64}$
+          maxLength: 64
+        hardware_product:
+          type: string
+          description: The hardware product
+          maxLength: 255
+        service_product:
+          type: string
+          description: The service product
+          maxLength: 255
+        line_end_dt:
+          type: string
+          description: The line end date - example 2017-01-24
+          pattern: ^(?!0000)\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
+        contract_id:
+          type: string
+          description: The contract unique identifier (18 alphanumeric characters).
+          pattern: ^[A-Za-z0-9]{18}$
+          minLength: 18
+          maxLength: 18
+        line_number:
+          type: string
+          description: The line number
+          maxLength: 255
+        hardware_product_desc:
+          type: string
+          description: The hardware product description
+          maxLength: 512
+        service_product_desc:
+          type: string
+          description: The service product description
+          maxLength: 512
+    PagedContractLine:
+      type: object
+      description: Paginated response containing contract line items with metadata
+      required:
+        - count
+        - page
+        - total_count
+        - total_pages
+      properties:
+        data:
+          type: array
+          description: List of contract line items for the specified contract.
+          items:
+            allOf:
+              - $ref: "#/components/schemas/ContractLine"
+            title: Contract Line
+            description: Represents a single line item in a contract with product and
+              service details.
+        page:
+          type: integer
+          format: int32
+          description: Current page number in the paginated results.
+          maximum: 2147483647
+          minimum: 1
+        count:
+          type: integer
+          format: int32
+          description: Number of items returned in the current page.
+        total_pages:
+          type: integer
+          format: int64
+          description: Total number of pages available.
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of contract lines across all pages.
+    ContractFilterVo:
+      type: object
+      description: Available filter options for querying contracts, including partner
+        names, status values, and site identifiers
+      properties:
+        partner:
+          type: array
+          description: |
+            List of partner identifiers or names used to filter contract
+            records returned by the API.
+          items:
+            type: string
+          example:
+            - Extreme
+            - PartnerX
+        status:
+          type: array
+          description: |
+            List of contract status values to filter the results.
+            Example values include Active, Expired, and Cancelled.
+          items:
+            type: string
+            enum:
+              - Active
+              - Cancelled
+              - Expired
+              - Inactive
+          example:
+            - Active
+            - Cancelled
+            - Expired
+            - Inactive
+        site:
+          type: array
+          description: |
+            List of site identifiers or codes to filter contracts
+            by physical or logical deployment location.
+          items:
+            type: string
+          example:
+            - SITE-001
+            - SITE-002
+        ea_type:
+          type: array
+          description: Enterprise Agreement (EA) types to filter contracts. Represents the
+            agreement classification associated with the contract.
+          example:
+            - ENTERPRISE_AGREEMENT
+            - STANDARD
+            - UNKNOWN
+          items:
+            $ref: "#/components/schemas/EaType"
+    DeviceClassificationFilter1:
+      type: string
+      enum:
+        - WIRELESS
+        - SWITCH
+        - SDWAN
+        - ROUTER
+        - XIQ_SE
+        - APPLIANCE
+        - ALL
+        - UNKNOWN
+      title: Device Classification And Site Filter
+      description: Enum representing various device classifications for filtering purposes.
+      default: WIRELESS
+    DeviceClassificationAndSiteFilter:
+      type: object
+      title: Device Classification and Site Filter
+      description: >
+        Request schema for filtering hardware lifecycle data based on
+        classification,
+
+        site IDs, building IDs, and unassigned locations.
+      required:
+        - classification
+      properties:
+        classification:
+          $ref: "#/components/schemas/DeviceClassificationFilter1"
+        site_ids:
+          type: array
+          items:
+            type: integer
+            minimum: 1
+            format: int64
+          description: |
+            List of site IDs to filter the hardware lifecycle data.
+          example:
+            - 101
+            - 102
+            - 103
+        building_ids:
+          type: array
+          items:
+            type: integer
+            minimum: 1
+            format: int64
+          description: |
+            List of building IDs to filter the hardware lifecycle data.
+          example:
+            - 201
+            - 202
+        unassigned_location:
+          type: boolean
+          description: |
+            Indicates whether to include devices with unassigned locations.
+          example: true
+    FirmwareStatusVo:
+      type: object
+      properties:
+        total_updates:
+          type: integer
+          format: int32
+          description: Total updates is the addition of count in eovm and
+            security_vulnerability.
+          example: 3
+        eovm:
+          type: integer
+          format: int32
+          description: Number of firmware versions with End-of-Version-Maintenance (EOVM).
+            It gives the count of devices that are running on firmware versions
+            that have reached their end of version maintenance, indicating that
+            they may no longer receive updates or support from the manufacturer.
+          example: 1
+        security_vulnerability:
+          type: integer
+          format: int32
+          description: Number of devices running firmware versions with known security
+            vulnerabilities (CVEs).
+          example: 2
+      description: Represents the firmware status count information for devices.
+    DeviceFirmwareClassificationFilter:
+      type: string
+      title: Device Firmware Classification Filter
+      description: |
+        Enum representing various device classifications for firmware filtering.
+      enum:
+        - WIRELESS
+        - SWITCH
+        - SDWAN
+        - ROUTER
+        - XIQ_SE
+        - APPLIANCE
+        - UNKNOWN
+      example: WIRELESS
+      default: WIRELESS
+    DeviceFirmwareSummaryInfo2:
+      type: object
+      title: Device Firmware Summary Information
+      description: |
+        Schema for firmware summary information, including serial numbers and
+        the version to update to.
+      required:
+        - serial_numbers
+        - update_to_version
+      properties:
+        serial_numbers:
+          type: array
+          description: List of serial numbers for the devices to be upgraded. Each serial
+            number is expected to be an alphanumeric string and may include
+            hyphens. Typical formats include vendor prefixes like "SN12345" or
+            customer formats like "sn-67890".
+          uniqueItems: true
+          items:
+            type: string
+            maxLength: 64
+            pattern: ^[A-Za-z0-9-]+$
+          example:
+            - SN12345
+            - sn-67890
+        update_to_version:
+          type: string
+          description: Firmware version to update to. Expected core format is
+            MAJOR.MINOR.PATCH (for example "2.0.0"). The service also accepts
+            extended version strings that contain additional build or patch
+            labels (for example "33.5.2.118" or "33.4.1.15-patch1-1"). The
+            schema pattern enforces a numeric MAJOR.MINOR.PATCH prefix and
+            allows optional trailing labels.
+          pattern: ^\d+\.\d+\.\d+.*$
+          example: 2.0.0
+    DeviceFwSummaryRequestFilter:
+      type: object
+      title: Device Firmware Summary Request Filter
+      description: >
+        Request schema for filtering firmware summary data based on
+        classification
+
+        and serial numbers with versions.
+      required:
+        - classification
+        - data
+      properties:
+        classification:
+          $ref: "#/components/schemas/DeviceFirmwareClassificationFilter"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DeviceFirmwareSummaryInfo2"
+          description: >
+            List of serial numbers grouped by their target firmware version
+            (update_to_version).
+    DeviceFwSummaryDetailVo:
+      type: object
+      title: Firmware Summary Detail Information
+      description: >
+        Schema for firmware summary detail information, including host name,
+        model,
+
+        operating system, site name, and firmware versions.
+      required:
+        - host_name
+        - model
+        - operating_system
+        - current_firmware_version
+        - upgrade_firmware_version
+        - external_release_type
+      properties:
+        host_name:
+          type: string
+          description: Host name of the device.
+          example: 5420F-24P-4XE-SwitchEngine
+        model:
+          type: string
+          description: Model of the device.
+          example: SwitchEngine_5420F_24P_4XE
+        operating_system:
+          type: string
+          description: Operating system of the device.
+          example: SWITCH_ENGINE
+        site_name:
+          type: string
+          description: Site name where the device is located.
+          example: Site A
+        current_firmware_version:
+          type: string
+          description: "Current firmware version of the device. Expected format:
+            MAJOR.MINOR.PATCH with optional additional labels (e.g., 33.5.2.118
+            or 33.4.1.15-patch1-1)."
+          pattern: ^\d+\.\d+\.\d+.*$
+          example: 33.5.2.118
+        upgrade_firmware_version:
+          type: string
+          description: "Firmware version to upgrade to. Expected format: MAJOR.MINOR.PATCH
+            with optional additional labels (e.g., 33.4.1.15-patch1-1)."
+          pattern: ^\d+\.\d+\.\d+.*$
+          example: 33.4.1.15-patch1-1
+        external_release_type:
+          type: string
+          description: External release type of the firmware
+          example: Maintenance
+    DeviceMake:
+      type: string
+      title: Device Make
+      description: Represents different device makes.
+      enum:
+        - AP
+        - SWITCH
+        - SDWAN
+        - CONTROLLER
+        - ROUTER
+        - VGVA
+        - XIQ_SE
+        - XMC
+        - APPLIANCE
+        - TUNNEL_CONCENTRATOR
+        - WIRELESS
+        - APPLIANCE_CLUSTER
+        - SWITCH_STACK
+        - MASTER
+        - MEMBER
+        - BACKUP
+        - WIRELESS_CONTROLLER
+        - SNMP_DISCOVERED
+        - THIRD_PARTY_MANAGEMENT_ENGINE
+        - UNKNOWN
+      example: AP
+    DeviceFirmwareSummaryVo:
+      type: object
+      title: Firmware Summary Response
+      description: >
+        Response schema containing firmware summary data with pagination
+        details.
+
+        Provides firmware summary details for devices in the inventory.
+      x-ai-usage: >
+        AI systems should use this response to analyze firmware summary data and
+        generate insights.
+      required:
+        - data
+        - device_type
+        - is_locally_managed
+        - page
+        - count
+        - total_pages
+        - total_count
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DeviceFwSummaryDetailVo"
+        device_type:
+          allOf:
+            - $ref: "#/components/schemas/DeviceMake"
+          description: Device type (make) of the equipment. Enumerated values represent
+            common device categories such as WIRELESS, SWITCH, SDWAN, ROUTER,
+            etc. See the referenced `DeviceMake` schema for the canonical list
+            of device types.
+          example: WIRELESS
+        is_locally_managed:
+          type: boolean
+          description: Indicates whether the devices are locally managed.
+          example: true
+        page:
+          type: integer
+          format: int32
+          description: Current page number.
+          example: 1
+        count:
+          type: integer
+          format: int32
+          description: Number of items per page.
+          example: 10
+        total_pages:
+          type: integer
+          format: int64
+          description: Total number of pages.
+          example: 1
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of items.
+          example: 5
+    HistoryRequestTypeFilter:
+      type: string
+      title: History Request Type Filter
+      description: |
+        Enum representing various request types for firmware upgrade processes.
+      enum:
+        - SCHEDULE_LATER
+        - RESCHEDULE
+        - CANCEL
+        - RETRY
+        - SCHEDULE_NOW
+        - NEW
+      example: SCHEDULE_NOW
+    DeviceFirmwareSummaryInfo:
+      type: object
+      title: Device Firmware Summary Information
+      description: |
+        Schema for firmware summary information, including serial numbers and
+        the version to update to.
+      required:
+        - serial_numbers
+      properties:
+        serial_numbers:
+          type: array
+          description: List of serial numbers for the devices to be upgraded. Each serial
+            number is expected to be an alphanumeric string and may include
+            hyphens. Typical formats include vendor prefixes like "SN12345" or
+            customer formats like "sn-67890". The service treats serial numbers
+            as case-insensitive for matching purposes.
+          uniqueItems: true
+          items:
+            type: string
+            maxLength: 64
+            pattern: ^[A-Za-z0-9-]+$
+          example:
+            - SN12345
+            - sn-67890
+        update_to_version:
+          type: string
+          description: Firmware version to update to. Expected core format is
+            MAJOR.MINOR.PATCH (for example "2.0.0"). The service also accepts
+            extended version strings that contain additional build or patch
+            labels (for example "33.5.2.118" or "33.4.1.15-patch1-1"). The
+            schema pattern enforces a numeric MAJOR.MINOR.PATCH prefix and
+            allows optional trailing labels.
+          pattern: ^\d+\.\d+\.\d+.*$
+          example: 2.0.0
+    DeviceFwUpgradeRequestFilter:
+      type: object
+      title: Device Firmware Upgrade Request Filter
+      description: >
+        Request schema for initiating a firmware upgrade process based on
+        classification,
+
+        schedule time, timezone, request type, and device data.
+      required:
+        - classification
+        - request_type
+        - data
+      properties:
+        classification:
+          $ref: "#/components/schemas/DeviceFirmwareClassificationFilter"
+        schedule_time:
+          type: string
+          format: date-time
+          description: |
+            Scheduled time for the firmware upgrade.
+          example: 2026-02-12T17:17:06.424Z
+        timezone:
+          type: string
+          description: |
+            Timezone for the scheduled upgrade. Accepts IANA time zone names
+            (for example "America/New_York"), the literal "UTC", or UTC offset
+            strings such as "+05:30". The service validates this value against
+            Java's ZoneId (e.g. ZoneId.of(timezone)).
+          format: timezone
+          example: America/New_York
+        request_type:
+          $ref: "#/components/schemas/HistoryRequestTypeFilter"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DeviceFirmwareSummaryInfo"
+          description: >
+            List of devices with their serial numbers and firmware versions for
+            the upgrade.
+    DeviceFirmwareRequestFilter:
+      type: object
+      title: Device Firmware Request Filter
+      description: >
+        Request schema for filtering firmware versions data based on
+        classification,
+
+        serial numbers, and locally managed flag.
+      required:
+        - serial_numbers
+        - is_locally_managed
+      properties:
+        classification:
+          $ref: "#/components/schemas/DeviceFirmwareClassificationFilter"
+        serial_numbers:
+          type: array
+          items:
+            type: string
+            maxLength: 64
+            pattern: ^[A-Za-z0-9-]+$
+          description: |
+            List of serial numbers to filter the firmware versions data.
+          example:
+            - SN12345
+            - SN67890
+        is_locally_managed:
+          type: boolean
+          description: |
+            Indicates whether the devices are locally managed.
+          example: true
+    DeviceFirmwareVersionsVo:
+      type: object
+      title: Firmware Detail Information
+      description: >
+        Schema for firmware detail information, including model, OS, asset
+        count,
+
+        serial numbers, and firmware version details.
+      required:
+        - data
+        - page
+        - count
+        - total_pages
+        - total_count
+        - classification
+        - is_locally_managed
+      properties:
+        data:
+          type: array
+          description: List of firmware details.
+          items:
+            type: object
+            required:
+              - model
+              - operating_system
+              - num_of_assets
+              - serial_numbers
+              - firmware_version_info
+            properties:
+              model:
+                type: string
+                description: Device model.
+                example: SwitchEngine_5420F_24P_4XE
+              operating_system:
+                type: string
+                description: Operating system of the device.
+                example: ExtremeOS
+              num_of_assets:
+                type: integer
+                format: int32
+                description: Number of assets for the firmware.
+                example: 5
+              serial_numbers:
+                type: array
+                items:
+                  type: string
+                  maxLength: 64
+                  pattern: ^[A-Za-z0-9-]+$
+                description: List of serial numbers for the devices.
+                example:
+                  - SN12345
+                  - SN67890
+              firmware_version_info:
+                type: array
+                description: List of available firmware versions with download links, release
+                  notes, and security information.
+                items:
+                  type: object
+                  required:
+                    - version
+                    - download_link
+                    - release_notes_link
+                    - external_release_type
+                    - psirts_json
+                  properties:
+                    version:
+                      type: string
+                      description: Firmware version.
+                      pattern: ^[0-9]+\.[0-9]+\.[0-9]+.*$
+                      example: 1.0.0
+                    download_link:
+                      type: string
+                      format: uri
+                      description: Link to download the firmware.
+                      example: https://example.com/firmware/download
+                    release_notes_link:
+                      type: string
+                      format: uri
+                      description: Link to the release notes.
+                      example: https://example.com/firmware/release-notes
+                    external_release_type:
+                      type: string
+                      description: Release type of the firmware.
+                      example: Maintenance
+                    psirts_json:
+                      type: object
+                      description: Product Security Incident Response Team (PSIRT) information
+                        including security advisories and vulnerabilities.
+                      required:
+                        - psirts_details
+                      properties:
+                        psirts_details:
+                          type: array
+                          description: List of PSIRT security advisories associated with this firmware
+                            version.
+                          items:
+                            type: object
+                            required:
+                              - psirts_name
+                              - psirts_url
+                            properties:
+                              psirts_name:
+                                type: string
+                                description: Name of the PSIRT.
+                                example: PSIRT-001
+                              psirts_url:
+                                type: string
+                                format: uri
+                                description: URL providing details about the PSIRT.
+                                example: https://example.com/psirt-details
+                        total:
+                          type: integer
+                          format: int32
+                          description: Total number of PSIRTs.
+                          example: 1073741824
+        page:
+          type: integer
+          format: int32
+          description: Current page number.
+          example: 1
+        count:
+          type: integer
+          format: int32
+          description: Number of items per page.
+          example: 10
+        total_pages:
+          type: integer
+          format: int64
+          description: Total number of pages.
+          example: 1
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of items.
+          example: 5
+        classification:
+          type: string
+          description: Classification of the firmware (device category).
+          enum:
+            - WIRELESS
+            - SWITCH
+            - SDWAN
+            - ROUTER
+            - XIQ_SE
+            - APPLIANCE
+            - UNKNOWN
+          example: WIRELESS
+        is_locally_managed:
+          type: boolean
+          description: Indicates whether the devices are locally managed.
+          example: true
+    HardwareLifeCycleVo:
+      type: object
+      title: Hardware Lifecycle Summary Response
+      description: >
+        Response schema containing lifecycle summary information for hardware
+        devices.
+
+        Provides counts for different lifecycle stages such as end-of-sale,
+        end-of-software-maintenance, etc.
+      x-ai-usage: >
+        AI systems should use this response to analyze hardware lifecycle data
+        and generate insights.
+      required:
+        - end_of_sale_count
+        - end_of_software_maintenance_count
+        - end_of_service_life_count
+        - total_count
+      properties:
+        end_of_sale_count:
+          type: integer
+          format: int32
+          description: |
+            Count of devices that have reached the end-of-sale stage.
+          example: 5
+        end_of_software_maintenance_count:
+          type: integer
+          format: int32
+          description: >
+            Count of devices that have reached the end-of-software-maintenance
+            stage.
+          example: 3
+        end_of_service_life_count:
+          type: integer
+          format: int32
+          description: |
+            Count of devices that have reached the end-of-service-life stage.
+          example: 2
+        total_count:
+          type: integer
+          format: int32
+          description: >
+            Total number of devices matching the query criteria. This value
+            equals
+
+            the sum of the lifecycle-stage counts included in this response
+
+            (end_of_sale_count + end_of_software_maintenance_count +
+
+            end_of_service_life_count) and represents the number of distinct
+            devices
+
+            considered by the query and returned in this summary.
+          example: 10
+    FirmwareHistoryStatus:
+      type: string
+      title: Firmware History Status
+      description: Represents the status of firmware history during the upgrade process.
+      enum:
+        - Scheduled
+        - Upgrading
+        - Complete
+        - Failed
+      example: Scheduled
+    HistoryDeviceTypeFilter:
+      type: string
+      title: History Device Type Filter
+      description: Represents a device type used for filtering device history data.
+      enum:
+        - Wireless
+        - Switch
+        - Switch Stack
+      example: Wireless
+    ListDeviceHistoryFilter:
+      type: object
+      title: List Device History Filter
+      description: >
+        Request schema for filtering device history data based on status,
+        models,
+
+        device types, OS types, and site names.
+      properties:
+        status:
+          type: array
+          items:
+            $ref: "#/components/schemas/FirmwareHistoryStatus"
+          description: List of firmware history statuses for filtering.
+          example:
+            - Scheduled
+            - Complete
+        models:
+          type: array
+          items:
+            type: string
+          description: List of device models for filtering.
+          example:
+            - XR500
+            - XR600
+        device_type:
+          type: array
+          items:
+            $ref: "#/components/schemas/HistoryDeviceTypeFilter"
+          description: List of device types for filtering.
+          example:
+            - Wireless
+            - Switch
+        os_type:
+          type: array
+          items:
+            type: string
+          description: List of operating system types for filtering.
+          example:
+            - IQE
+            - EXOS
+        site_names:
+          type: array
+          items:
+            type: string
+          description: List of site names for filtering.
+          example:
+            - Site A
+            - Site B
+    DeviceHistoryVo:
+      type: object
+      title: Device History
+      description: Represents a view object for presenting device software upgrade
+        history information.
+      properties:
+        serial_number:
+          type: string
+          maxLength: 64
+          description: Serial number of the device.
+          example: SN1234567890
+        host_name:
+          type: string
+          maxLength: 255
+          description: Hostname of the device.
+          example: Device-123
+        status:
+          $ref: "#/components/schemas/FirmwareHistoryStatus"
+        details:
+          type: string
+          maxLength: 255
+          description: Additional details or error messages related to the device history
+            event.
+          example: Upgrade completed successfully.
+          nullable: true
+        start_time:
+          type: string
+          description: The start time of the firmware upgrade process. Date and time in
+            yyyy-MM-dd HH:mm:ss format
+          example: 2026-01-26 15:44:46
+          pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])
+            (0\d|1\d|2[0-3]):[0-5]\d:[0-5]\d$
+          nullable: true
+        end_time:
+          type: string
+          description: The end time of the firmware upgrade process. Date and time in
+            yyyy-MM-dd HH:mm:ss format
+          example: 2026-01-26 15:53:43
+          pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])
+            (0\d|1\d|2[0-3]):[0-5]\d:[0-5]\d$
+          nullable: true
+        model:
+          type: string
+          maxLength: 64
+          description: Model of the device.
+          example: XR500
+          nullable: true
+        device_type:
+          $ref: "#/components/schemas/DeviceMake"
+        operating_system:
+          type: string
+          maxLength: 32
+          description: Operating system of the device.
+          example: EXOS
+        update_to_version:
+          type: string
+          maxLength: 64
+          description: Firmware version to which the device was updated.
+          pattern: ^\d+\.\d+\.\d+.*$
+          example: 2.0.0
+        site_name:
+          type: string
+          maxLength: 256
+          description: Name of the site where the device is located.
+          example: Site A
+          nullable: true
+        external_release_type:
+          type: string
+          maxLength: 64
+          description: External release type of the firmware.
+          example: Maintenance
+          nullable: true
+        classification:
+          $ref: "#/components/schemas/DeviceFirmwareClassificationFilter"
+        timezone:
+          type: string
+          description: The timezone in IANA format (e.g., "America/New_York") or UTC,
+            indicating the timezone in which the device details are recorded.
+          example: UTC
+          nullable: true
+      required:
+        - serial_number
+        - host_name
+        - status
+        - device_type
+        - operating_system
+        - update_to_version
+        - classification
+    PagedDeviceHistoryVo:
+      type: object
+      title: Paginated Device History Response
+      description: |
+        Response schema containing paginated device history data.
+        Provides historical data for device firmware upgrades.
+      x-ai-usage: >
+        AI systems should use this response to analyze device history data and
+        generate insights.
+      example:
+        data:
+          - serial_number: SN12345
+            host_name: Device1
+            status: Complete
+            details: Upgrade successful
+            start_time: 2026-01-26 15:44:46
+            end_time: 2026-01-26 15:53:43
+            model: XR500
+            device_type: WIRELESS
+            operating_system: IQE
+            update_to_version: 12.0.0
+            site_name: Site A
+            external_release_type: Maintenance
+            classification: WIRELESS
+            timezone: UTC
+        page: 1
+        count: 10
+        total_pages: 1
+        total_count: 5
+      required:
+        - data
+        - page
+        - count
+        - total_pages
+        - total_count
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DeviceHistoryVo"
+        page:
+          type: integer
+          format: int32
+          description: Current page number.
+          example: 1
+        count:
+          type: integer
+          format: int32
+          description: Number of items per page.
+          example: 10
+        total_pages:
+          type: integer
+          format: int64
+          description: Total number of pages.
+          example: 1
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of items.
+          example: 5
+    DeviceHistoryRequestFilter:
+      type: object
+      title: Device History Request Filter
+      description: |
+        Request schema for filtering history column data based on status.
+      properties:
+        status:
+          type: array
+          items:
+            $ref: "#/components/schemas/FirmwareHistoryStatus"
+          description: List of firmware history statuses for filtering.
+          example:
+            - Scheduled
+            - Complete
+    DeviceUpgradeHistoryFiltersVo:
+      type: object
+      title: Device Upgrade History Filters Response
+      description: >
+        Response schema containing unique values for each column in the device
+        history table.
+
+        Provides filter options for device history data.
+      x-ai-usage: >
+        AI systems should use this response to analyze or filter device history
+        data.
+      required:
+        - status
+        - models
+        - device_type
+        - os_type
+        - site_name
+      properties:
+        status:
+          type: array
+          items:
+            type: string
+            enum:
+              - Scheduled
+              - Upgrading
+              - Complete
+              - Failed
+          description: Unique values for the status column.
+          example:
+            - Scheduled
+            - Complete
+        models:
+          type: array
+          items:
+            type: string
+          description: >-
+            Unique values for the models column. Model identifiers represent
+            device product models as stored in the product mapping metadata
+            (examples include platform family names and product codes). The
+            available set of models depends on your inventory and product
+            mappings.
+
+            If you want a single canonical list enforced by the API, consider
+            moving the model values to a shared enum components/schemas entry so
+            callers can rely on a fixed set.
+          example:
+            - XR500
+            - XR600
+            - XR600P
+            - VOSS7400
+            - SwitchEngine_5420F_24P_4XE
+            - XR100
+        device_type:
+          type: array
+          items:
+            type: string
+            enum:
+              - AP
+              - SWITCH
+              - SDWAN
+              - CONTROLLER
+              - ROUTER
+              - VGVA
+              - XIQ_SE
+              - XMC
+              - APPLIANCE
+              - TUNNEL_CONCENTRATOR
+              - WIRELESS
+              - APPLIANCE_CLUSTER
+              - SWITCH_STACK
+              - MASTER
+              - MEMBER
+              - BACKUP
+              - WIRELESS_CONTROLLER
+              - SNMP_DISCOVERED
+              - THIRD_PARTY_MANAGEMENT_ENGINE
+              - UNKNOWN
+          description: Unique values for the device type column. These are the supported
+            device type categories used across the platform.
+          example:
+            - WIRELESS
+            - SWITCH
+        os_type:
+          type: array
+          items:
+            type: string
+          description: Unique values for the OS type column.
+          example:
+            - ExtremeOS
+            - Linux
+        site_name:
+          type: array
+          items:
+            type: string
+          description: Unique values for the site name column.
+          example:
+            - Site A
+            - Site B
+    PsirtsFilter:
+      type: object
+      title: PSIRTs Filter
+      description: |
+        Request schema for filtering PSIRTs data based on OS version.
+      properties:
+        os_version:
+          type: array
+          items:
+            type: string
+            pattern: ^[0-9]+\.[0-9]+\.[0-9]+.*$
+          description: List of OS versions for filtering PSIRTs.
+          example:
+            - 33.5.2.118
+            - 33.4.1.15-patch1-1
+    PsirtListVo:
+      type: object
+      title: PSIRTs Information
+      description: >
+        Schema for PSIRTs information, including OS version, product type,
+        PSIRTs name,
+
+        URL, and product OS.
+      required:
+        - os_version
+        - product_type
+        - psirts_name
+        - psirts_url
+        - product_os
+      properties:
+        os_version:
+          type: string
+          maxLength: 64
+          description: OS version or OS identifier. Accepts either a semantic version-like
+            string (e.g., "33.5.2.118", "2.0.0") or an OS name/identifier (e.g.,
+            "EXOS", "ExtremeOS").
+          pattern: ^(?:\d+\.\d+\.\d+.*|[A-Za-z0-9 _.-]{1,64})$
+          example: EXOS
+        product_type:
+          type: string
+          description: Product type of the device.
+          example: Switch
+        psirts_name:
+          type: string
+          description: Name of the PSIRT.
+          example: PSIRT-1234
+        psirts_url:
+          type: string
+          format: uri
+          description: URL of the PSIRT.
+          example: https://example.com/psirt-1234
+        product_os:
+          type: string
+          description: Product OS of the device.
+          example: ExtremeOS
+    PagedDataPsirtListVo:
+      type: object
+      title: Paginated PSIRTs Response
+      description: |
+        Response schema containing paginated PSIRTs data.
+        Provides details about PSIRTs for devices in the inventory.
+      x-ai-usage: >
+        AI systems should use this response to analyze PSIRTs data and generate
+        insights.
+      example:
+        data:
+          - os_version: ExtremeOS
+            product_type: Switch
+            psirts_name: PSIRT-1234
+            psirts_url: https://example.com/psirt-1234
+            product_os: ExtremeOS
+        page: 1
+        count: 10
+        total_pages: 1
+        total_count: 5
+      required:
+        - data
+        - page
+        - count
+        - total_pages
+        - total_count
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/PsirtListVo"
+        page:
+          type: integer
+          format: int32
+          description: Current page number.
+          example: 1
+        count:
+          type: integer
+          format: int32
+          description: Number of items per page.
+          example: 10
+        total_pages:
+          type: integer
+          format: int64
+          description: Total number of pages.
+          example: 1
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of items.
+          example: 5
+  responses:
+    400ErrorResponse:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiClientError"
+    401ErrorResponse:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    403ErrorResponse:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    500ErrorResponse:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    409ErrorResponse:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+  parameters:
+    page:
+      name: page
+      in: query
+      description: Page number for pagination, starting from 1
+      required: false
+      schema:
+        minimum: 1
+        maximum: 2147483647
+        type: integer
+        format: int32
+        default: 1
+    device_limit:
+      name: limit
+      in: query
+      description: Page Size, min = 1, max = 500
+      required: false
+      schema:
+        maximum: 500
+        minimum: 1
+        type: integer
+        format: int32
+        default: 10
+    sort:
+      name: sort
+      in: query
+      description: "A comma-separated list of sort fields. Sort directions can
+        optionally be appended to each sort field. The sort direction can be
+        <ul> <li>either <code>+</code> or <code>:asc</code> for ascending
+        <li>either <code>-</code> or <code>:desc</code> for descending </ul>
+        <p>If no sort direction is specified, ascending is assumed. <p>The sort
+        fields are applied in the order they appear in the list.  <p>For
+        example, the following sort string sorts by <code>name</code> in
+        ascending order, then by <code>age</code> in descending order: <ul>
+        <li>sort=name,age- <li>sort=name:asc,age:desc <li>sort=name,age:desc
+        </ul> Please refer to the response schema's field descriptions to
+        identify the fields that support sorting."
+      required: false
+      schema:
+        type: string
+      example: contract_start_dt:asc,contract_end_dt:desc
+    search:
+      name: search
+      in: query
+      description: Search string to be used as a parameter for searching
+      required: false
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: Page Size, min = 1, max = 100
+      required: false
+      schema:
+        maximum: 100
+        minimum: 1
+        type: integer
+        format: int32
+        default: 10
+    contractEndInDays:
+      name: contract_end_in_days
+      in: query
+      description: Filter contracts ending within the specified number of days from today
+      required: false
+      schema:
+        minimum: 0
+        type: integer
+        format: int32
+    contract_id-string:
+      name: contract_id
+      description: The unique contract identifier. Must be exactly 18 alphanumeric
+        characters (letters and digits).
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9]{18}$
+        minLength: 18
+        maxLength: 18
+        example: ABC123DEF456GHI789
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Enter your API Key as a Bearer Token
+security:
+  - BearerAuth: []

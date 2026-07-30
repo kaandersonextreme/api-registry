@@ -405,6 +405,228 @@
         }
       ],
       "specFile": "specs/audit-log/openapi.yaml"
+    },
+    {
+      "id": "asset-management",
+      "title": "Extreme Platform ONE REST API - Asset Management",
+      "description": "The Extreme Platform ONE™ Asset Management API provides comprehensive\nautomation and intelligent orchestration for enterprise network asset lifecycle \nmanagement, enabling seamless device inventory tracking, contract management, \nand automated compliance monitoring across complex network infrastructures.",
+      "version": "25.11.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/assets/v1",
+      "tags": [
+        "Device",
+        "Contract",
+        "Summary"
+      ],
+      "endpoints": [
+        {
+          "path": "/devices",
+          "method": "POST",
+          "operationId": "listDevices",
+          "summary": "List Devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/export",
+          "method": "POST",
+          "operationId": "exportAssetsDeviceList",
+          "summary": "Export Devices List",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/licenses",
+          "method": "GET",
+          "operationId": "getLicenseInfo",
+          "summary": "Get License Information",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/column/filters",
+          "method": "POST",
+          "operationId": "listColumnFilters",
+          "summary": "List filters for columns",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/subscriptions/unmanaged",
+          "method": "GET",
+          "operationId": "getUnmanagedDevicesCount",
+          "summary": "Get count of UNMANAGED devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/productTypes",
+          "method": "POST",
+          "operationId": "getProductTypes",
+          "summary": "Get Product Types",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/firmwareMetadatas",
+          "method": "POST",
+          "operationId": "getDeviceFirmwareMetadatas",
+          "summary": "Get Device Firmware Metadatas",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/status/count",
+          "method": "GET",
+          "operationId": "getDeviceStatusCount",
+          "summary": "Get Device Status Count",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/licenseCount",
+          "method": "POST",
+          "operationId": "licenseCount",
+          "summary": "Get License Count Per Location",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/contracts",
+          "method": "POST",
+          "operationId": "listContracts",
+          "summary": "List Filtered Contracts",
+          "tags": [
+            "Contract"
+          ]
+        },
+        {
+          "path": "/contracts/export",
+          "method": "GET",
+          "operationId": "exportContracts",
+          "summary": "Export Contracts (Deprecated)",
+          "tags": [
+            "Contract"
+          ]
+        },
+        {
+          "path": "/contracts/export",
+          "method": "POST",
+          "operationId": "exportContractsPost",
+          "summary": "Export Contracts with filters",
+          "tags": [
+            "Contract"
+          ]
+        },
+        {
+          "path": "/contracts/{contract_id}/lines",
+          "method": "GET",
+          "operationId": "listContractLines",
+          "summary": "List Contract Lines",
+          "tags": [
+            "Contract"
+          ]
+        },
+        {
+          "path": "/contracts/{contract_id}/export",
+          "method": "GET",
+          "operationId": "exportContractWithLines",
+          "summary": "Export Contract with Lines",
+          "tags": [
+            "Contract"
+          ]
+        },
+        {
+          "path": "/contracts/filter",
+          "method": "GET",
+          "operationId": "getContractFilters",
+          "summary": "Get Contract Filters",
+          "tags": [
+            "Contract"
+          ]
+        },
+        {
+          "path": "/summary/firmwareStatus",
+          "method": "POST",
+          "operationId": "getFirmwareStatusCount",
+          "summary": "Get Firmware Status Count",
+          "tags": [
+            "Summary"
+          ]
+        },
+        {
+          "path": "/summary/firmwareSummary",
+          "method": "POST",
+          "operationId": "getFirmwareSummary",
+          "summary": "Get Firmware Summary",
+          "tags": [
+            "Summary"
+          ]
+        },
+        {
+          "path": "/summary/firmwareUpgrade",
+          "method": "POST",
+          "operationId": "getFirmwareSummaryUpgrade",
+          "summary": "Initiate Firmware Upgrade",
+          "tags": [
+            "Summary"
+          ]
+        },
+        {
+          "path": "/summary/firmwareVersions",
+          "method": "POST",
+          "operationId": "getFirmwareVersions",
+          "summary": "Get Firmware Versions",
+          "tags": [
+            "Summary"
+          ]
+        },
+        {
+          "path": "/summary/hardwareLifeCycle",
+          "method": "POST",
+          "operationId": "getHardwareSummary",
+          "summary": "Get Hardware Lifecycle Summary",
+          "tags": [
+            "Summary"
+          ]
+        },
+        {
+          "path": "/summary/history",
+          "method": "POST",
+          "operationId": "listDeviceHistory",
+          "summary": "Get Device History",
+          "tags": [
+            "Summary"
+          ]
+        },
+        {
+          "path": "/summary/history/column/filters",
+          "method": "POST",
+          "operationId": "listHistoryColumnFilters",
+          "summary": "Get History Column Filters",
+          "tags": [
+            "Summary"
+          ]
+        },
+        {
+          "path": "/summary/psirts/list",
+          "method": "POST",
+          "operationId": "psirtsList",
+          "summary": "List PSIRTs",
+          "tags": [
+            "Summary"
+          ]
+        }
+      ],
+      "specFile": "specs/asset-management/openapi.yaml"
     }
   ]
 }
