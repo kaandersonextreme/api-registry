@@ -1421,6 +1421,273 @@
         }
       ],
       "specFile": "specs/asset-management/openapi.yaml"
+    },
+    {
+      "id": "alert",
+      "title": "Extreme Platform ONE REST API - Alert",
+      "description": "The Extreme Platform ONE™ Alert API provides comprehensive monitoring and\nmanagement of network alerts, enabling proactive detection of issues across\nyour Extreme network infrastructure through configurable alert policies\nand intelligent rule-based alerting.\n\n**🔔 Intelligent Alert Management:**\n\n• **Real-Time Alert Monitoring** - Centralized visibility into network alerts\nwith filtering by severity, category, site, device, and acknowledgment status\nfor rapid issue identification and triage\n\n• **Flexible Alert Policies** - Global policies for organization-wide alerting\nwith optional site-specific policy overrides for customized alerting behavior\nper location\n\n• **Configurable Alert Rules** - Event-based and metric-based rules with\nmultiple trigger types (immediate, deferred, and repeated) to match your\noperational requirements\n\n• **Alert Analytics & Reporting** - Statistical analysis by device, location,\nseverity, and category with exportable reports for compliance and trending\n\n• **Alert Acknowledgment Workflow** - Track alert review status to coordinate\nteam response and filter out already-addressed alerts from active monitoring\n\n\n**🏢 Enterprise-Scale Operations:**\n\nBuilt for enterprise environments with support for multi-site deployments,\nhierarchical location-based alerting, bulk alert operations, and\ncomprehensive audit trails for large-scale network monitoring.",
+      "version": "25.11.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/alert/v1",
+      "tags": [
+        "Alert",
+        "Alert Policy",
+        "Metadata"
+      ],
+      "endpoints": [
+        {
+          "path": "/alerts",
+          "method": "GET",
+          "operationId": "listAlerts",
+          "summary": "List Alerts",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alerts",
+          "method": "POST",
+          "operationId": "listAlertsPost",
+          "summary": "List alerts with more supporting filters",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alerts/:acknowledge",
+          "method": "POST",
+          "operationId": "acknowledgeAlerts",
+          "summary": "Acknowledge Alerts",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alerts/:clear",
+          "method": "POST",
+          "operationId": "clearAlerts",
+          "summary": "Clear Alerts",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alerts/count-by-{group}",
+          "method": "GET",
+          "operationId": "countAlertsByGroup",
+          "summary": "Count Alerts by Group",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alerts/stats-by-device",
+          "method": "GET",
+          "operationId": "statsAlertsByDevice",
+          "summary": "Get Alert Statistics by Device",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alerts/stats-by-location",
+          "method": "GET",
+          "operationId": "statsAlertsByLocation",
+          "summary": "Get Alert Statistics by Location",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alerts/{deviceId}/stats",
+          "method": "GET",
+          "operationId": "alertCountStats",
+          "summary": "Get Device Alert Statistics",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alerts/reports",
+          "method": "POST",
+          "operationId": "createAlertReport",
+          "summary": "Create Alert Report",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alerts/reports/{id}",
+          "method": "GET",
+          "operationId": "downloadAlertReport",
+          "summary": "Download Alert Report",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-policies",
+          "method": "GET",
+          "operationId": "listAlertPolicies",
+          "summary": "List Alert Policies",
+          "tags": [
+            "Alert Policy"
+          ]
+        },
+        {
+          "path": "/alert-policies",
+          "method": "POST",
+          "operationId": "createAlertPolicy",
+          "summary": "Create Site Alert Policy",
+          "tags": [
+            "Alert Policy"
+          ]
+        },
+        {
+          "path": "/alert-policies/site-policies",
+          "method": "GET",
+          "operationId": "listAlertSitePolicies",
+          "summary": "List Site Alert Policies",
+          "tags": [
+            "Alert Policy"
+          ]
+        },
+        {
+          "path": "/alert-policies/{policyId}",
+          "method": "GET",
+          "operationId": "getAlertPolicy",
+          "summary": "Get Alert Policy",
+          "tags": [
+            "Alert Policy"
+          ]
+        },
+        {
+          "path": "/alert-policies/{policyId}",
+          "method": "PUT",
+          "operationId": "updateAlertPolicy",
+          "summary": "Update Site Alert Policy",
+          "tags": [
+            "Alert Policy"
+          ]
+        },
+        {
+          "path": "/alert-policies/{policyId}",
+          "method": "DELETE",
+          "operationId": "deleteAlertPolicy",
+          "summary": "Delete Site Alert Policy",
+          "tags": [
+            "Alert Policy"
+          ]
+        },
+        {
+          "path": "/alert-policies/available-sites",
+          "method": "GET",
+          "operationId": "listAvailableSites",
+          "summary": "List Available Sites",
+          "tags": [
+            "Alert Policy"
+          ]
+        },
+        {
+          "path": "/alert-policies/sites",
+          "method": "GET",
+          "operationId": "listSites",
+          "summary": "List Sites by Filter",
+          "tags": [
+            "Alert Policy"
+          ]
+        },
+        {
+          "path": "/alert-policies/{policyId}/rules",
+          "method": "GET",
+          "operationId": "queryAlertRules",
+          "summary": "List Alert Policy Rules",
+          "tags": [
+            "Alert Policy"
+          ]
+        },
+        {
+          "path": "/alert-policies/{policyId}/rules/{ruleId}",
+          "method": "GET",
+          "operationId": "getAlertRule",
+          "summary": "Get Alert Rule",
+          "tags": [
+            "Alert Policy"
+          ]
+        },
+        {
+          "path": "/alert-policies/{policyId}/rules/{ruleId}",
+          "method": "PUT",
+          "operationId": "updateAlertRule",
+          "summary": "Update Alert Rule",
+          "tags": [
+            "Alert Policy"
+          ]
+        },
+        {
+          "path": "/alert-policies/{policyId}/rules/{ruleId}/:enable",
+          "method": "POST",
+          "operationId": "enableAlertRule",
+          "summary": "Enable Alert Rule",
+          "tags": [
+            "Alert Policy"
+          ]
+        },
+        {
+          "path": "/alert-policies/{policyId}/rules/{ruleId}/:disable",
+          "method": "POST",
+          "operationId": "disableAlertRule",
+          "summary": "Disable Alert Rule",
+          "tags": [
+            "Alert Policy"
+          ]
+        },
+        {
+          "path": "/metadata/apps",
+          "method": "GET",
+          "operationId": "listAlertApps",
+          "summary": "List Alert Applications",
+          "tags": [
+            "Metadata"
+          ]
+        },
+        {
+          "path": "/metadata/categories",
+          "method": "GET",
+          "operationId": "listAlertCategories",
+          "summary": "List Alert Categories",
+          "tags": [
+            "Metadata"
+          ]
+        },
+        {
+          "path": "/metadata/message-types",
+          "method": "GET",
+          "operationId": "listAlertMessageTypes",
+          "summary": "List Alert Message Types",
+          "tags": [
+            "Metadata"
+          ]
+        },
+        {
+          "path": "/metadata/severities",
+          "method": "GET",
+          "operationId": "listAlertSeverities",
+          "summary": "List Alert Severities",
+          "tags": [
+            "Metadata"
+          ]
+        },
+        {
+          "path": "/metadata/source-types",
+          "method": "GET",
+          "operationId": "listAlertSourceTypes",
+          "summary": "List Alert Source Types",
+          "tags": [
+            "Metadata"
+          ]
+        }
+      ],
+      "specFile": "specs/alert/openapi.yaml"
     }
   ]
 }

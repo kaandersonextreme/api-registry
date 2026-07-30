@@ -1,0 +1,2773 @@
+openapi: 3.0.3
+info:
+  title: Extreme Platform ONE REST API - Alert
+  description: >-
+    The Extreme Platform ONE™ Alert API provides comprehensive monitoring and
+
+    management of network alerts, enabling proactive detection of issues across
+
+    your Extreme network infrastructure through configurable alert policies
+
+    and intelligent rule-based alerting.
+
+
+    **🔔 Intelligent Alert Management:**
+
+
+    • **Real-Time Alert Monitoring** - Centralized visibility into network
+    alerts
+
+    with filtering by severity, category, site, device, and acknowledgment
+    status
+
+    for rapid issue identification and triage
+
+
+    • **Flexible Alert Policies** - Global policies for organization-wide
+    alerting
+
+    with optional site-specific policy overrides for customized alerting
+    behavior
+
+    per location
+
+
+    • **Configurable Alert Rules** - Event-based and metric-based rules with
+
+    multiple trigger types (immediate, deferred, and repeated) to match your
+
+    operational requirements
+
+
+    • **Alert Analytics & Reporting** - Statistical analysis by device,
+    location,
+
+    severity, and category with exportable reports for compliance and trending
+
+
+    • **Alert Acknowledgment Workflow** - Track alert review status to
+    coordinate
+
+    team response and filter out already-addressed alerts from active monitoring
+
+
+
+    **🏢 Enterprise-Scale Operations:**
+
+
+    Built for enterprise environments with support for multi-site deployments,
+
+    hierarchical location-based alerting, bulk alert operations, and
+
+    comprehensive audit trails for large-scale network monitoring.
+  termsOfService: https://www.extremenetworks.com/company/legal/terms-of-use/
+  contact:
+    name: Extreme Networks Support
+    url: https://www.extremenetworks.com/support
+    email: support@extremenetworks.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 25.11.0
+servers:
+  - url: https://cloudapi.extremecloudiq.com/alert/v1
+    description: Extreme Platform ONE REST API - Alert
+tags:
+  - name: Alert
+    description: >-
+      **ExtremeCloud Generated Alerts**
+
+
+      The ExtremeCloud Generated Alert functionality provides comprehensive
+      monitoring, tracking, and reporting of system-generated alerts.
+
+
+      **Key Capabilities:**
+
+      - **Retrieve alerts** - Access existing alert records across the system
+
+      - **Create alerts** - Generate new alert records as needed
+
+      - **Acknowledge alerts** - Mark alerts as reviewed or addressed
+
+      - **Analytics and insights:**
+        - Aggregated counts by categories
+        - Statistical insights by device and location
+        - Device-specific statistics for granular visibility
+
+      - **Reporting:**
+        - Generate new alert reports
+        - Retrieve previously created reports for analysis or auditing
+
+
+      **Outcome:**
+
+      Provides end-to-end visibility, operational awareness, and data-driven
+      insights into alert activity across the environment.
+  - name: Alert Policy
+    description: >-
+      **ExtremeCloud Alert Policy Configuration**
+
+
+      The Alert Policy Configuration functionality offers full control over how
+      alerts are generated and managed through policy administration.
+
+
+      **Key Capabilities:**
+
+      - **Policy management:**
+        - Retrieve existing policies
+        - Create new policies
+        - View detailed information for individual policies
+        - Update policy configurations
+        - Delete policies that are no longer needed
+
+      - **Site-level visibility:**
+        - Access site-policy associations
+        - View available sites and those governed by policies
+
+      - **Rule-level control within policies:**
+        - Review individual rules
+        - Modify rule behavior
+        - Enable or disable rules as needed
+
+
+      **Outcome:**
+
+      Enables structured policy administration, flexible rule governance, and
+      clear insight into alert management across sites and devices.
+  - name: Metadata
+    description: >-
+      **Alert Metadata**
+
+
+      The Alert Metadata functionality provides structured reference information
+      for understanding and categorizing alerts, messages, and system events.
+
+
+      **Key Capabilities:**
+
+      - Retrieve standardized reference data for applications, classification
+      categories,
+        message types, severity levels, and source types
+
+      - Ensure consistent labeling, filtering, and prioritization of alerts
+
+      - Support accurate reporting and streamlined configuration
+
+      - Improve visibility into event origins, impact levels, and contextual
+      grouping
+
+
+      **Outcome:**
+
+      Enhances clarity, consistency, and effective management of alerting and
+      messaging workflows across the network.
+paths:
+  /alerts:
+    get:
+      tags:
+        - Alert
+      summary: List Alerts
+      description: Retrieves a paginated list of alerts filtered by time range,
+        severity, category, site, device, and acknowledgment status. Alerts
+        represent network events or metric threshold violations detected by the
+        alert policy rules.
+      operationId: listAlerts
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit-500"
+        - $ref: "#/components/parameters/startTime"
+        - $ref: "#/components/parameters/endTime"
+        - $ref: "#/components/parameters/order"
+        - $ref: "#/components/parameters/apps"
+        - $ref: "#/components/parameters/acknowledged"
+        - $ref: "#/components/parameters/categoryIds"
+        - $ref: "#/components/parameters/severityIds"
+        - $ref: "#/components/parameters/messageMetadataIds"
+        - $ref: "#/components/parameters/siteIds"
+        - $ref: "#/components/parameters/floorIds"
+        - $ref: "#/components/parameters/buildingIds"
+        - $ref: "#/components/parameters/sortField"
+        - $ref: "#/components/parameters/keyword"
+        - $ref: "#/components/parameters/sourceTypeIds"
+        - $ref: "#/components/parameters/deviceIds"
+        - $ref: "#/components/parameters/alertIds_list"
+        - $ref: "#/components/parameters/alertStatus"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedXiqAlert"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Alert
+      summary: List alerts with more supporting filters
+      description: POST request for listing alerts that can filter 30+ Site IDs and
+        other supported filters from the GET alerts API.
+      operationId: listAlertsPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/alertFilterRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedXiqAlert"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alerts/:acknowledge:
+    post:
+      tags:
+        - Alert
+      summary: Acknowledge Alerts
+      description: Marks one or more alerts as acknowledged. Acknowledged alerts
+        indicate that an operator has reviewed and noted the alert. This helps
+        teams track which alerts have been addressed and filter out
+        already-reviewed alerts from active monitoring views.
+      operationId: acknowledgeAlerts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/alertIds"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: The data in the current page
+                items:
+                  $ref: "#/components/schemas/XiqAlert"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alerts/:clear:
+    post:
+      tags:
+        - Alert
+      summary: Clear Alerts
+      description: Marks one or more alerts as inactive (cleared). Clearing an alert
+        sets its status to inactive, indicating it has been resolved or
+        dismissed. This helps teams remove resolved alerts from active
+        monitoring views.
+      operationId: clearAlerts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/alertIds"
+            example:
+              alert_ids:
+                - 029a4920e56145ea956436b1e1d58ffc
+                - 13b7c831f67256fb067547c2f2e69ggd
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: The list of cleared alerts
+                items:
+                  $ref: "#/components/schemas/XiqAlert"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alerts/count-by-{group}:
+    get:
+      tags:
+        - Alert
+      summary: Count Alerts by Group
+      description: Retrieves alert counts grouped by the specified dimension
+        (severity, category, or alert type). Useful for generating dashboards
+        and understanding the distribution of alerts across different
+        classifications.
+      operationId: countAlertsByGroup
+      parameters:
+        - $ref: "#/components/parameters/startTime"
+        - $ref: "#/components/parameters/endTime"
+        - $ref: "#/components/parameters/group"
+        - $ref: "#/components/parameters/acknowledged"
+        - $ref: "#/components/parameters/siteId"
+        - $ref: "#/components/parameters/siteIdsForCountByGroup"
+        - $ref: "#/components/parameters/apps"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/XiqAlertGroupCount"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alerts/stats-by-device:
+    get:
+      tags:
+        - Alert
+      summary: Get Alert Statistics by Device
+      description: Retrieves alert count statistics grouped by device. Useful for
+        identifying devices with the most alerts and prioritizing
+        troubleshooting efforts. Results can be filtered by time range,
+        severity, site, and acknowledgment status.
+      operationId: statsAlertsByDevice
+      parameters:
+        - $ref: "#/components/parameters/startTime"
+        - $ref: "#/components/parameters/endTime"
+        - $ref: "#/components/parameters/acknowledged"
+        - $ref: "#/components/parameters/apps"
+        - $ref: "#/components/parameters/severityIds"
+        - $ref: "#/components/parameters/siteIds"
+        - $ref: "#/components/parameters/alertStatus"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: A list of devices with their alert count statistics grouped by
+                  severity.
+                items:
+                  $ref: "#/components/schemas/CasAlertStatsByDevice"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alerts/stats-by-location:
+    get:
+      tags:
+        - Alert
+      summary: Get Alert Statistics by Location
+      description: Retrieves alert count statistics grouped by location hierarchy
+        (site, building, or floor). Useful for identifying locations with the
+        most alerts and understanding geographic distribution of network issues.
+      operationId: statsAlertsByLocation
+      parameters:
+        - $ref: "#/components/parameters/startTime"
+        - $ref: "#/components/parameters/endTime"
+        - $ref: "#/components/parameters/acknowledged"
+        - $ref: "#/components/parameters/locationType"
+        - $ref: "#/components/parameters/severityIds"
+        - $ref: "#/components/parameters/siteId"
+        - $ref: "#/components/parameters/alertStatus"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: A list of locations with their alert count statistics grouped by
+                  severity.
+                items:
+                  $ref: "#/components/schemas/CasAlertStatsByLocation"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alerts/{deviceId}/stats:
+    get:
+      tags:
+        - Alert
+      summary: Get Device Alert Statistics
+      description: Retrieves alert statistics for a specific device, including alert
+        counts aggregated by severity level and time-series data showing alert
+        trends over the specified time range.
+      operationId: alertCountStats
+      parameters:
+        - name: deviceId
+          in: path
+          description: The required device ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - $ref: "#/components/parameters/startTime"
+        - $ref: "#/components/parameters/endTime"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CasAlertCountStatsResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alerts/reports:
+    post:
+      tags:
+        - Alert
+      summary: Create Alert Report
+      description: Initiates generation of an alert report based on the specified
+        filters. The report is generated asynchronously and can be downloaded
+        using the returned report ID. Reports can be filtered by time range,
+        severity, category, site, device, and other criteria.
+      operationId: createAlertReport
+      parameters:
+        - $ref: "#/components/parameters/startTime"
+        - $ref: "#/components/parameters/endTime"
+        - $ref: "#/components/parameters/order"
+        - $ref: "#/components/parameters/apps"
+        - $ref: "#/components/parameters/acknowledged"
+        - $ref: "#/components/parameters/categoryIds"
+        - $ref: "#/components/parameters/severityIds"
+        - $ref: "#/components/parameters/messageMetadataIds"
+        - $ref: "#/components/parameters/siteIds"
+        - $ref: "#/components/parameters/sortField"
+        - $ref: "#/components/parameters/keyword"
+        - $ref: "#/components/parameters/sourceTypeIds"
+        - $ref: "#/components/parameters/deviceIds"
+        - $ref: "#/components/parameters/exportHeaders"
+        - $ref: "#/components/parameters/alertIds_list"
+        - $ref: "#/components/parameters/alertStatus"
+        - name: timeZoneOffset
+          in: query
+          description: "The time zone offset in minutes from UTC, used to localize
+            timestamps in the report. Range: -720 (UTC-12:00) to 840
+            (UTC+14:00). Examples: -480 for PST (UTC-8), 0 for UTC, 60 for CET
+            (UTC+1), 330 for IST (UTC+5:30)."
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: -720
+            maximum: 840
+            example: -480
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertReport"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alerts/reports/{id}:
+    get:
+      tags:
+        - Alert
+      summary: Download Alert Report
+      description: Downloads a previously generated alert report by its ID. The report
+        is returned as a binary file (CSV or Excel format based on the original
+        request).
+      operationId: downloadAlertReport
+      parameters:
+        - name: id
+          in: path
+          description: The report ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            example: 1234567890
+      responses:
+        "200":
+          description: OK. Returns the report as a binary file. The content is in CSV or
+            Excel format depending on the export headers specified when creating
+            the report.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+                description: The binary content of the report file (CSV or Excel format).
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alert-policies:
+    get:
+      tags:
+        - Alert Policy
+      summary: List Alert Policies
+      description: Retrieves all alert policies (global and site-specific) belonging
+        to the current user, including an overview of associated alert rules.
+        Each account has one global policy that applies to all sites, plus
+        optional site-specific policies that override the global policy for
+        designated sites.
+      operationId: listAlertPolicies
+      parameters:
+        - name: keyword
+          in: query
+          description: The keyword to filter, such as policy name or site name
+          required: false
+          schema:
+            type: string
+        - name: policyType
+          in: query
+          description: The policy type to filter, such as SITE or GLOBAL
+          required: false
+          schema:
+            $ref: "#/components/schemas/CasAlertPolicyType"
+        - name: displayRules
+          in: query
+          description: Display event & metric rules configured on the application. This
+            value is true by default.
+          required: false
+          schema:
+            type: boolean
+            default: true
+        - name: enable
+          in: query
+          description: Filter policy rules based on their enabled status. The default
+            value is empty. Note that this parameter has no effect if
+            displayRules is set to false, as rules will not be displayed in that
+            case.
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: The alert policies, encompassing both global and site policies, are
+                  associated with this user.
+                $ref: "#/components/schemas/CasListAlertPolicies"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Alert Policy
+      summary: Create Site Alert Policy
+      description: Creates a new site-based alert policy. Site policies override the
+        global policy for the assigned sites, allowing customized alerting
+        behavior per location. The global policy is created automatically for
+        each account and cannot be created via this endpoint.
+      operationId: createAlertPolicy
+      requestBody:
+        description: Site alert policy configuration including policy name and assigned
+          sites.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CasCreateAlertPolicyRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CasAlertPolicyAndRules"
+                description: The newly created alert policy.
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alert-policies/site-policies:
+    get:
+      tags:
+        - Alert Policy
+      summary: List Site Alert Policies
+      description: Retrieves a paginated list of site-based alert policies along with
+        their assigned sites. Optionally includes the event and metric rules
+        configured for each policy. Does not include the global policy.
+      operationId: listAlertSitePolicies
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit-500"
+        - name: sortField
+          in: query
+          description: The sort field
+          required: false
+          schema:
+            $ref: "#/components/schemas/CasAlertPolicySortField"
+        - $ref: "#/components/parameters/order"
+        - name: keyword
+          in: query
+          description: The keyword to filter by policy name or site name.
+          required: false
+          schema:
+            type: string
+            example: uae_policy
+        - name: displayRules
+          in: query
+          description: Display event & metric rules configured on the application. This
+            value is false by default.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: enable
+          in: query
+          description: Filter policy rules based on their enabled status. The default
+            value is empty. Note that this parameter has no effect if
+            displayRules is set to false, as rules will not be displayed in that
+            case.
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CasPagedAlertSitePolicy"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alert-policies/{policyId}:
+    get:
+      tags:
+        - Alert Policy
+      summary: Get Alert Policy
+      description: Retrieves detailed information for a specific alert policy,
+        including all configured alert rules with their trigger conditions,
+        severity levels, and enabled states.
+      operationId: getAlertPolicy
+      parameters:
+        - $ref: "#/components/parameters/policyId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CasAlertPolicyAndRules"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    put:
+      tags:
+        - Alert Policy
+      summary: Update Site Alert Policy
+      description: Updates a site-based alert policy's name and assigned sites. The
+        global policy cannot be modified through this endpoint. Use the
+        available-sites endpoint to get a list of sites that can be assigned to
+        a policy.
+      operationId: updateAlertPolicy
+      parameters:
+        - $ref: "#/components/parameters/policyId"
+      requestBody:
+        description: Updated site alert policy configuration.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CasUpdateAlertPolicyRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CasAlertPolicyAndRules"
+                description: The newly created alert policy.
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Alert Policy
+      summary: Delete Site Alert Policy
+      description: Permanently deletes a site-based alert policy and all its
+        associated alert rules. Sites previously assigned to this policy will
+        revert to using the global policy. The global policy cannot be deleted.
+      operationId: deleteAlertPolicy
+      parameters:
+        - $ref: "#/components/parameters/policyId"
+      responses:
+        "200":
+          description: OK
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alert-policies/available-sites:
+    get:
+      tags:
+        - Alert Policy
+      summary: List Available Sites
+      description: Retrieves sites that are available for assignment to a new
+        site-based alert policy. Sites already assigned to an existing site
+        policy are excluded from this list. Only sites using the global policy
+        are returned.
+      operationId: listAvailableSites
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/XiqAlertSite"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alert-policies/sites:
+    get:
+      tags:
+        - Alert Policy
+      summary: List Sites by Filter
+      description: Retrieves sites filtered by their alert policy assignment status.
+        Use the sitesFilter parameter to get sites with a specific policy, sites
+        using the global policy, or all sites.
+      operationId: listSites
+      parameters:
+        - name: sitesFilter
+          in: query
+          description: "Filter sites by alert policy assignment status. AVAILABLE: sites
+            without a site-specific alert policy assignment (they use the global
+            policy). UNAVAILABLE: sites with a site-specific alert policy
+            assignment. ALL: all sites, whether they use a site-specific policy
+            or the global policy."
+          schema:
+            $ref: "#/components/schemas/CasSitesFilter"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CasAlertSitesList"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alert-policies/{policyId}/rules:
+    get:
+      tags:
+        - Alert Policy
+      summary: List Alert Policy Rules
+      description: Retrieves alert rules for a specific policy, with optional
+        filtering by application, rule type (event or metric), rule status
+        (enabled or disabled), and keyword search. Rules define the conditions
+        that trigger alerts.
+      operationId: queryAlertRules
+      parameters:
+        - $ref: "#/components/parameters/policyId"
+        - name: app
+          in: query
+          description: The application code to filter rules by (e.g., 'XIQ', 'XSW', 'XUZ',
+            'XCA'). Use the listAlertApps API to retrieve all valid application
+            codes.
+          required: false
+          schema:
+            type: string
+            example: XIQ
+        - name: ruleType
+          in: query
+          description: The rule type to query
+          required: false
+          schema:
+            $ref: "#/components/schemas/CasAlertRuleType"
+        - name: ruleStatus
+          in: query
+          description: The rule status to query
+          required: false
+          schema:
+            $ref: "#/components/schemas/CasAlertRuleStatus"
+        - name: keyword
+          in: query
+          description: The rule name to query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CasAlertRulesOverview"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alert-policies/{policyId}/rules/{ruleId}:
+    get:
+      tags:
+        - Alert Policy
+      summary: Get Alert Rule
+      description: Retrieves detailed configuration for a specific alert rule,
+        including trigger type, severity, threshold settings, and enabled state.
+      operationId: getAlertRule
+      parameters:
+        - $ref: "#/components/parameters/policyId"
+        - $ref: "#/components/parameters/ruleId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertRule"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    put:
+      tags:
+        - Alert Policy
+      summary: Update Alert Rule
+      description: Updates an alert rule's configuration including severity, trigger
+        type, and threshold settings. Note that the rule's identifier may change
+        as a result of this operation; use the returned rule object for
+        subsequent operations.
+      operationId: updateAlertRule
+      parameters:
+        - $ref: "#/components/parameters/policyId"
+        - $ref: "#/components/parameters/ruleId"
+      requestBody:
+        description: Alert rule configuration including severity, trigger type, and
+          threshold settings.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqUpdateAlertRuleRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertRule"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alert-policies/{policyId}/rules/{ruleId}/:enable:
+    post:
+      tags:
+        - Alert Policy
+      summary: Enable Alert Rule
+      description: Enables an alert rule so it actively monitors for the configured
+        conditions and generates alerts when triggered. Note that the rule's
+        identifier may change as a result of this operation.
+      operationId: enableAlertRule
+      parameters:
+        - $ref: "#/components/parameters/policyId"
+        - $ref: "#/components/parameters/ruleId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertRule"
+                description: The updated alert rule status.
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /alert-policies/{policyId}/rules/{ruleId}/:disable:
+    post:
+      tags:
+        - Alert Policy
+      summary: Disable Alert Rule
+      description: Disables an alert rule so it stops monitoring and generating
+        alerts. The rule configuration is preserved and can be re-enabled later.
+        Note that the rule's identifier may change as a result of this
+        operation.
+      operationId: disableAlertRule
+      parameters:
+        - $ref: "#/components/parameters/policyId"
+        - $ref: "#/components/parameters/ruleId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertRule"
+                description: The updated alert rule status.
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /metadata/apps:
+    get:
+      tags:
+        - Metadata
+      summary: List Alert Applications
+      description: Retrieves the list of applications (e.g., XIQ, XCA, SD-WAN) that
+        support alerting. Use the returned app codes when filtering alerts or
+        configuring alert rules.
+      operationId: listAlertApps
+      parameters:
+        - $ref: "#/components/parameters/apps1"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AlertApp"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /metadata/categories:
+    get:
+      tags:
+        - Metadata
+      summary: List Alert Categories
+      description: Retrieves all available alert categories (e.g., Network, Security,
+        Hardware). Categories group related alert types and can be used to
+        filter alerts in list and report queries.
+      operationId: listAlertCategories
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AlertCategory"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /metadata/message-types:
+    get:
+      tags:
+        - Metadata
+      summary: List Alert Message Types
+      description: Retrieves all available alert message types. Message types define
+        specific alert conditions (e.g., "Device Offline", "High CPU Usage") and
+        are used when configuring alert rules.
+      operationId: listAlertMessageTypes
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AlertMessageType"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /metadata/severities:
+    get:
+      tags:
+        - Metadata
+      summary: List Alert Severities
+      description: Retrieves all available alert severity levels (e.g., Critical,
+        Major, Minor, Warning, Informational). Severities indicate the urgency
+        of alerts and can be used for filtering and prioritization.
+      operationId: listAlertSeverities
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AlertSeverity"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /metadata/source-types:
+    get:
+      tags:
+        - Metadata
+      summary: List Alert Source Types
+      description: Retrieves all available alert source types. Source types identify
+        the origin of alerts (e.g., Device, Client, Network Service) and can be
+        used to filter alerts by their source.
+      operationId: listAlertSourceTypes
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AlertSourceType"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+components:
+  schemas:
+    SortOrder:
+      type: string
+      description: "Sort order for results. ASC: ascending order (oldest to newest, or
+        lowest to highest based on the sort field). DESC: descending order
+        (newest to oldest, or highest to lowest based on the sort field)."
+      enum:
+        - ASC
+        - DESC
+    XiqAlertSortField:
+      type: string
+      description: "The field to sort alerts by. Valid values: TIMESTAMP = date-time
+        when the alert was detected, SEVERITY = alert severity level, SOURCE =
+        source device name, SITE = site name, APP = application code, CATEGORY =
+        alert category, MESSAGE_METADATA = alert message type, STATUS =
+        acknowledgment status, INACTIVE_TIMESTAMP = date-time when the alert
+        became inactive. Default sort field is TIMESTAMP when not specified."
+      enum:
+        - APP
+        - CATEGORY
+        - INACTIVE_TIMESTAMP
+        - MESSAGE_METADATA
+        - SEVERITY
+        - SITE
+        - SOURCE
+        - STATUS
+        - TIMESTAMP
+    Paged:
+      type: object
+      required:
+        - count
+        - page
+        - total_count
+        - total_pages
+      properties:
+        page:
+          type: integer
+          description: The current page number
+          format: int32
+          example: 1
+        count:
+          type: integer
+          description: The element count of the current page
+          format: int32
+          example: 10
+        total_pages:
+          type: integer
+          description: The total page number based on request page size
+          format: int32
+          example: 5
+        total_count:
+          type: integer
+          description: The total element count
+          format: int64
+          example: 43
+    XiqAlertSource:
+      type: object
+      description: The alert source info
+      properties:
+        source_type_id:
+          type: string
+          description: The alert source type ID. Use the listAlertSourceTypes API to
+            retrieve valid source type IDs.
+          example: "1"
+        source_name:
+          type: string
+          description: The alert source name
+        source_type:
+          type: string
+          description: The alert source type (e.g., 'Device', 'Client', 'Network
+            Service'). Use the listAlertSourceTypes API to retrieve all valid
+            source types.
+          example: Device
+        source_id:
+          type: string
+          description: The alert source ID (e.g., the device ID or client ID that
+            generated the alert).
+          example: "1001234567890"
+      required:
+        - source_type_id
+        - source_name
+        - source_type
+        - source_id
+    XiqAlertTag:
+      type: object
+      description: The tag for the alert
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The unique identifier for the tag metadata
+        name:
+          type: string
+          description: The tag display name
+        value:
+          type: string
+          description: The tag value
+        is_hidden:
+          type: boolean
+          description: If tag should be hidden from the user
+      required:
+        - id
+        - name
+        - value
+        - is_hidden
+    XiqAlert:
+      type: object
+      description: Represents a network alert generated when an alert rule's
+        conditions are met. Alerts capture event details, severity, source
+        device, location, and acknowledgment status.
+      properties:
+        id:
+          type: string
+          description: The unique identifier
+          example: 029a4920e56145ea956436b1e1d58ffc
+        owner_id:
+          type: integer
+          description: The owner ID
+          format: int64
+        timestamp:
+          type: string
+          description: The alert create time
+          format: date-time
+        inactive_timestamp:
+          type: string
+          description: The time when the alert was cleared (set to inactive).
+          format: date-time
+        status:
+          type: string
+          description: Optional. The alert status. Absent if not yet determined.
+          enum:
+            - active
+            - inactive
+          example: active
+        org_id:
+          type: integer
+          description: Optional. The organization identifier, present when the HIQ
+            (Hierarchical IQ) feature is enabled.
+          format: int64
+        app:
+          type: string
+          description: The application code identifier (e.g., 'XSW', 'XIQ', 'XUZ'). Use
+            the listAlertApps API to retrieve all valid application codes.
+          example: XSW
+        app_name:
+          type: string
+          description: Optional. The application display name (e.g., 'ExtremeCloud IQ',
+            'SD-WAN'). Absent if not configured for the application.
+        comment:
+          type: string
+          description: Optional. The comment associated with the alert. Absent if no
+            comment has been added.
+        message_metadata_id:
+          type: integer
+          format: int64
+          description: The identifier for the unique message type that corresponds to this
+            rule. If message_metadata_type is "EVENT", then this identifier
+            corresponds to the ID from the alerts metadata events API. If
+            message_metadata_type is "METRIC", then this identifier corresponds
+            to the ID from the alerts metadata metrics API.
+        message_metadata_type:
+          type: string
+          description: The type of the message. Used for getting the metadata API (e.g.,
+            'EVENT', 'METRIC').
+          enum:
+            - EVENT
+            - METRIC
+          example: EVENT
+        message_metadata_name:
+          type: string
+          description: Optional. The display name of the message type. Absent in some
+            alert configurations.
+        summary:
+          type: string
+          description: A high-level, text summary message of the event. Will be used to
+            construct an alert's description.
+        severity_id:
+          type: integer
+          format: int64
+          description: The alert severity ID.
+        severity_name:
+          type: string
+          description: The alert severity name (e.g., 'Critical', 'Major', 'Minor',
+            'Warning', 'Info').
+          example: Critical
+        category_id:
+          type: integer
+          format: int64
+          description: The alert category ID.
+        category_name:
+          type: string
+          description: The alert category name (e.g., 'Network Access', 'Application
+            Access', 'Service', 'Device'). Use the listAlertCategories API to
+            retrieve all valid category names.
+          example: Network Access
+        source:
+          $ref: "#/components/schemas/XiqAlertSource"
+        acknowledged:
+          type: boolean
+          description: Whether or not this alert has been acknowledged.
+        site_id:
+          type: integer
+          description: The site identifier.
+          format: int64
+        site_name:
+          type: string
+          description: The site name.
+        floor_id:
+          type: integer
+          description: Optional. The floor identifier. Absent if the device is not
+            associated with a specific floor.
+          format: int64
+        floor_name:
+          type: string
+          description: Optional. The floor name. Absent if the device is not associated
+            with a specific floor.
+        building_id:
+          type: integer
+          description: Optional. The building identifier. Absent if the device is not
+            associated with a specific building.
+          format: int64
+        building_name:
+          type: string
+          description: Optional. The building name. Absent if the device is not associated
+            with a specific building.
+        alert_policy_id:
+          type: integer
+          description: The alert policy identifier.
+          format: int64
+        alert_policy_name:
+          type: string
+          description: The alert policy name.
+        alert_rule_id:
+          type: integer
+          description: The alert rule identifier.
+          format: int64
+        acknowledged_username:
+          type: string
+          description: Optional. The login name of the user that acknowledged the alert.
+            Absent if the alert has not been acknowledged.
+        tags:
+          type: array
+          description: Additional information for the alert. The values correspond to the
+            object from the alerts/metadata/tags API.
+          items:
+            $ref: "#/components/schemas/XiqAlertTag"
+      required:
+        - id
+        - owner_id
+        - timestamp
+        - message_metadata_id
+        - message_metadata_type
+        - summary
+        - severity_id
+        - severity_name
+        - category_id
+        - category_name
+        - source
+        - acknowledged
+        - site_id
+        - site_name
+        - alert_policy_id
+        - alert_policy_name
+        - alert_rule_id
+        - tags
+    PagedXiqAlert:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/XiqAlert"
+    ConstraintViolationError:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field name
+        message:
+          type: string
+          description: The detailed description
+    ApiClientError:
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: The short description of error
+        status:
+          type: integer
+          description: The status code of error
+          format: int32
+        detail:
+          type: string
+          description: The detailed description of error
+        violations:
+          type: array
+          description: List of constraint violations
+          items:
+            $ref: "#/components/schemas/ConstraintViolationError"
+    ApiError:
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: The short description of error
+        status:
+          type: integer
+          description: The status code of error
+          format: int32
+        detail:
+          type: string
+          description: The detailed description of error
+    post_page:
+      description: Page number, min = 1
+      minimum: 1
+      type: integer
+      format: int32
+      default: 1
+    post_limit:
+      description: Page Size in number of records, min = 1, max = 500
+      maximum: 500
+      minimum: 1
+      type: integer
+      format: int32
+      default: 500
+    post_startTime:
+      description: The start time to query. <p>The format is defined by RFC 3339,
+        section 5.6, for example, <code>2026-01-26T10:10:30.000Z</code>.
+      type: string
+      format: date-time
+    post_endTime:
+      description: The end time to query. <p>The format is defined by RFC 3339,
+        section 5.6, for example, <code>2026-01-26T10:10:30.000Z</code>.
+      type: string
+      format: date-time
+    post_apps:
+      description: The application name list. Use the listAlertApps API to retrieve
+        all valid application codes.
+      type: array
+      example:
+        - XIQ
+      items:
+        type: string
+        description: The application code identifier (e.g., 'XIQ', 'XSW', 'XUZ', 'XCA').
+    post_acknowledged:
+      description: Default is null, which will return all alerts. Set it to false to
+        only return unacknowledged alerts. Otherwise, set it to true only return
+        acknowledged alerts.
+      type: boolean
+    post_categoryIds:
+      description: The alert category Ids to filter, use alert/metadata API to get
+        category information.
+      type: array
+      items:
+        type: integer
+        format: int64
+        description: The alert category ID.
+    post_severityIds:
+      description: The alert severity Ids to filter, use alert/metadata API to get
+        severity information.
+      type: array
+      items:
+        type: integer
+        format: int64
+        description: The alert severity ID.
+    post_messageMetadataIds:
+      description: The message metadata ID list to filter. Use the
+        /alert/metadata/events-by-category API for event type IDs or
+        /alert/metadata/metrics-by-metricset API for metric type IDs.
+      type: array
+      example:
+        - 100001
+      items:
+        type: integer
+        format: int64
+        description: The message metadata ID. Obtain valid IDs from the alerts metadata
+          events or metrics APIs.
+    post_siteIds:
+      description: The site ID list to filter.
+      type: array
+      items:
+        type: integer
+        format: int64
+        description: The site ID
+    post_floorIds:
+      description: The floor ID list to filter.
+      type: array
+      items:
+        type: integer
+        format: int64
+        description: The floor ID
+    post_buildingIds:
+      description: The building ID list to filter.
+      type: array
+      items:
+        type: integer
+        format: int64
+        description: The building ID
+    post_keyword:
+      description: The keyword to filter alerts by summary, severity, source, etc.
+      type: string
+      example: Device Disconnected
+    post_sourceTypeIds:
+      description: The alert sourceType Ids to filter, use alert/metadata API to get
+        sourceType information.
+      type: array
+      items:
+        type: integer
+        format: int64
+        description: The alert sourceType ID.
+    post_deviceIds:
+      description: The device Ids to filter.
+      type: array
+      items:
+        type: integer
+        format: int64
+        description: The alert device ID.
+    post_alertIds_list:
+      description: The alert Ids to filter. If alertIds is provided, all other filters
+        will be ignored except startTime and endTime.
+      type: array
+      items:
+        type: string
+        description: The alert ID.
+    post_alertStatus:
+      description: Filter alerts by their status. When omitted, all alerts are
+        returned. Value can be either "ACTIVE" or "INACTIVE".
+      type: string
+      enum:
+        - active
+        - inactive
+    alertFilterRequest:
+      type: object
+      description: The request object to acknowledge. All the fields are optional. Add
+        only those fields which are required.
+      properties:
+        page:
+          $ref: "#/components/schemas/post_page"
+        limit:
+          $ref: "#/components/schemas/post_limit"
+        startTime:
+          $ref: "#/components/schemas/post_startTime"
+        endTime:
+          $ref: "#/components/schemas/post_endTime"
+        order:
+          $ref: "#/components/schemas/SortOrder"
+        apps:
+          $ref: "#/components/schemas/post_apps"
+        acknowledged:
+          $ref: "#/components/schemas/post_acknowledged"
+        categoryIds:
+          $ref: "#/components/schemas/post_categoryIds"
+        severityIds:
+          $ref: "#/components/schemas/post_severityIds"
+        messageMetadataIds:
+          $ref: "#/components/schemas/post_messageMetadataIds"
+        siteIds:
+          $ref: "#/components/schemas/post_siteIds"
+        floorIds:
+          $ref: "#/components/schemas/post_floorIds"
+        buildingIds:
+          $ref: "#/components/schemas/post_buildingIds"
+        sortField:
+          $ref: "#/components/schemas/XiqAlertSortField"
+        keyword:
+          $ref: "#/components/schemas/post_keyword"
+        sourceTypeIds:
+          $ref: "#/components/schemas/post_sourceTypeIds"
+        deviceIds:
+          $ref: "#/components/schemas/post_deviceIds"
+        alertIds:
+          $ref: "#/components/schemas/post_alertIds_list"
+        status:
+          $ref: "#/components/schemas/post_alertStatus"
+    alertIds:
+      type: object
+      description: The request object to acknowledge.
+      properties:
+        alert_ids:
+          type: array
+          description: 'The alert ID list. Each alert ID must be a string enclosed in
+            double quotes, and multiple IDs must be comma-separated. For
+            example: ["029a4920e56145ea956436b1e1d58ffc",
+            "13b7c831f67256fb067547c2f2e69ggd"].'
+          minItems: 1
+          maxItems: 500
+          example:
+            - 029a4920e56145ea956436b1e1d58ffc
+            - 13b7c831f67256fb067547c2f2e69ggd
+          items:
+            type: string
+            description: The alert ID.
+    XiqAlertGroupQuery:
+      type: string
+      enum:
+        - SEVERITY
+        - CATEGORY
+        - ALERT_TYPE
+        - APPLICATION
+    XiqAlertGroupCount:
+      type: object
+      properties:
+        group_id:
+          type: integer
+          description: The group unique identifier.
+          format: int64
+        group_name:
+          type: string
+          description: "The group name. The value depends on the group type: for SEVERITY
+            groups, this is the severity name (e.g., 'Critical', 'Warning',
+            'Info', 'Major', 'Minor'); for CATEGORY groups, this is the category
+            name (e.g., 'Network Access', 'Device'); for ALERT_TYPE groups, this
+            is the alert type name; for APPLICATION groups, this is the
+            application code (e.g., 'XIQ', 'XSW')."
+        display_name:
+          type: string
+          description: "Optional. The group's display name for UI presentation. The value
+            depends on the group type: for SEVERITY groups, this is the severity
+            display name (e.g., 'Critical', 'Warning'); for CATEGORY groups,
+            this is the category display name (e.g., 'Network Access',
+            'Device'); for APPLICATION groups, this is the application display
+            name (e.g., 'ExtremeCloud IQ', 'SD-WAN'). May be absent for
+            ALERT_TYPE groups."
+        count:
+          type: integer
+          description: The count of alerts in this group (absolute number).
+          format: int64
+      description: The alert group count information. When the group is SEVERITY, the
+        group_id will be severity ID When the group is CATEGORY, the group_id
+        will be category ID When the group is ALERT_TYPE, the group_id will be
+        message metadata ID When the group is APPLICATION, the group_id will be
+        application ID.
+      required:
+        - group_id
+        - group_name
+        - count
+    CasLocationInfo:
+      type: object
+      description: The location information for the device including site, building,
+        and floor details.
+      properties:
+        floor_id:
+          type: integer
+          description: The floor ID where the device is located.
+          format: int64
+        floor_name:
+          type: string
+          description: The floor name where the device is located.
+        building_id:
+          type: integer
+          description: The building ID where the device is located.
+          format: int64
+        building_name:
+          type: string
+          description: The building name where the device is located.
+        site_id:
+          type: integer
+          description: The site ID where the device is located.
+          format: int64
+        site_name:
+          type: string
+          description: The site name where the device is located.
+    CasAlertStatsBySeverity:
+      type: object
+      description: Alert count statistics for a specific severity level.
+      properties:
+        severity_id:
+          type: integer
+          format: int64
+          description: The alert severity ID (e.g., 1=Critical, 2=Warning, 3=Info,
+            4=Major, 5=Minor). Use the listAlertSeverities API to retrieve all
+            valid severity IDs.
+          example: 1
+        severity_name:
+          type: string
+          description: The alert severity name (e.g., 'Critical', 'Major', 'Minor',
+            'Warning', 'Info'). Use the listAlertSeverities API to retrieve all
+            valid severity names.
+          example: Critical
+        count:
+          type: integer
+          description: The alert count of the severity.
+          format: int64
+      required:
+        - severity_id
+        - severity_name
+        - count
+    CasAlertStatsByDevice:
+      type: object
+      properties:
+        serial_number:
+          type: string
+          description: The device serial number.
+          example: 1452G-00686
+        location_info:
+          $ref: "#/components/schemas/CasLocationInfo"
+        stats:
+          type: array
+          description: The alert count of the specified severities of the device.
+          items:
+            $ref: "#/components/schemas/CasAlertStatsBySeverity"
+    AlertLocationType:
+      type: string
+      description: The location type.
+      enum:
+        - FLOOR
+        - BUILDING
+        - SITE
+    CasAlertStatsByLocation:
+      type: object
+      properties:
+        location_id:
+          type: integer
+          description: The location identifier.
+          format: int64
+        stats:
+          type: array
+          description: The alert count of the specified severities of the location.
+          items:
+            $ref: "#/components/schemas/CasAlertStatsBySeverity"
+        sub_locations:
+          type: array
+          description: The alert count of sub locations.
+          items:
+            $ref: "#/components/schemas/CasAlertStatsByLocation"
+    CasTimeSeriesAlertCount:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          description: The start of time range for the count
+          format: date-time
+        alerts:
+          type: array
+          items:
+            $ref: "#/components/schemas/CasAlertStatsBySeverity"
+      description: The object includes alert count by severity along a time range. If
+        the request contains a time range within a day, then range will be 10
+        minutes. If the request contains a time range between 1 day and 7 days,
+        then range will be 8 hours. If the request contains a time range between
+        7 days and 30 days, then range will be 24 hours/1 day. If the request
+        contains a time range between 30 days and 60 days, then range will be 3
+        days. If the request contains a time range between 60 days and 90 days,
+        then range will be 7 days.
+      required:
+        - alert_counts
+        - timestamp
+    CasAlertCountStatsResponse:
+      type: object
+      properties:
+        count_by_severity:
+          type: array
+          items:
+            $ref: "#/components/schemas/CasAlertStatsBySeverity"
+        alert_counts:
+          type: array
+          items:
+            $ref: "#/components/schemas/CasTimeSeriesAlertCount"
+      description: The object includes alert count by severity and same thing along a
+        time range.
+      required:
+        - alert_counts
+        - count_by_severity
+    XiqAlertReport:
+      type: object
+      description: ExtremeCloud IQ alert report
+      properties:
+        id:
+          type: integer
+          description: The alert report ID
+          format: int64
+    CasAlertPolicyType:
+      type: string
+      description: All available policy type GLOBAL and SITE.
+      enum:
+        - GLOBAL
+        - SITE
+    CasAlertSite:
+      type: object
+      properties:
+        site_id:
+          type: integer
+          description: The location unique identifier
+          format: int64
+        site_name:
+          type: string
+          description: The site name
+      description: The site information.
+      required:
+        - site_id
+        - site_name
+    CasAlertType:
+      type: string
+      enum:
+        - Event
+        - Metric
+      title: Alert Type
+      description: The alert type of the rules. 'Event' is used in
+        event_rules_overview for event-based alert rules triggered by specific
+        network events. 'Metric' is used in metric_rules_overview for
+        metric-based alert rules triggered when metrics exceed thresholds.
+    XiqAlertRuleOverview:
+      type: object
+      description: The overview for an alert rule. Detailed information is available
+        from the get alert rule API.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The unique identifier of this rule.
+        name:
+          type: string
+          description: The human-readable name of this rule. Corresponds to the
+            message_metadata_name from the get alert rule details API.
+        enabled:
+          type: boolean
+          description: Indicates whether this rule is in effect.
+      required:
+        - id
+        - name
+        - enabled
+    CasAlertEventRulesByCategory:
+      type: object
+      description: A category and overviews of the associated event-based alert rules.
+      properties:
+        category_id:
+          type: integer
+          format: int64
+          description: The unique identifier of the alert category.
+        category_name:
+          type: string
+          description: The name of the category grouping related event-based alert rules
+            (e.g., 'Network Access', 'Application Access', 'Service', 'Device').
+            Use the listAlertCategories API to retrieve all valid category
+            names.
+          example: Network Access
+        alert_type:
+          $ref: "#/components/schemas/CasAlertType"
+        rules:
+          type: array
+          items:
+            $ref: "#/components/schemas/XiqAlertRuleOverview"
+      required:
+        - category_id
+        - category_name
+        - alert_type
+        - rules
+    CasAlertMetricRulesByMetricset:
+      type: object
+      description: A metricset and overviews of the associated metric-based alert
+        rules. Each rule monitors a specific metric. The measurement unit for
+        each rule's threshold can be found via the alerts metadata metrics API.
+      properties:
+        metricset_id:
+          type: integer
+          format: int64
+          description: The unique identifier of the metricset.
+        metricset_name:
+          type: string
+          description: The name of the metricset grouping related metric-based alert rules
+            (e.g., 'CPU & Memory Usage', 'Power Consumption', 'AP Radio Usage').
+            Use the listAlertMetricsets API to retrieve all valid metricset
+            names.
+          example: CPU & Memory Usage
+        alert_type:
+          $ref: "#/components/schemas/CasAlertType"
+        rules:
+          type: array
+          items:
+            $ref: "#/components/schemas/XiqAlertRuleOverview"
+      required:
+        - metricset_id
+        - metricset_name
+        - alert_type
+        - rules
+    CasAlertRulesOverview:
+      type: object
+      description: All available application-based rules
+      properties:
+        app:
+          type: string
+          description: The app code identifier (e.g., 'XIQ', 'XSW', 'XUZ', 'XCA'). Use the
+            listAlertApps API to retrieve all valid application codes.
+          example: XIQ
+        app_name:
+          type: string
+          description: The application names, such as SD-WAN and XCloudIQ, can be visible
+            to users.
+        event_rules_overview:
+          type: array
+          description: A list of overviews of the event-based alert rules, grouped by
+            category.
+          items:
+            $ref: "#/components/schemas/CasAlertEventRulesByCategory"
+        metric_rules_overview:
+          type: array
+          description: A list of overviews of the metric-based alert rules, grouped by
+            metricset.
+          items:
+            $ref: "#/components/schemas/CasAlertMetricRulesByMetricset"
+    CasAlertPolicyAndRules:
+      type: object
+      description: Represents an alert policy with its complete rule configuration.
+        Includes policy metadata, assigned sites (for site policies), and all
+        alert rules organized by application.
+      properties:
+        id:
+          type: integer
+          description: The unique identifier
+          format: int64
+        owner_id:
+          type: integer
+          description: The owner ID
+          format: int64
+        org_id:
+          type: integer
+          description: The organization identifier, valid when enabling HIQ feature
+          format: int64
+        name:
+          type: string
+          description: The name of this policy
+        sites:
+          type: array
+          items:
+            $ref: "#/components/schemas/CasAlertSite"
+        rules_by_app:
+          type: array
+          description: The rules that the policy applied (if any).
+          items:
+            $ref: "#/components/schemas/CasAlertRulesOverview"
+      required:
+        - id
+        - owner_id
+        - org_id
+        - name
+    CasListAlertPolicies:
+      type: object
+      description: The alert policies belonging to this user
+      properties:
+        global_policy:
+          description: The global policy. Empty when includeGlobal is false.
+          $ref: "#/components/schemas/CasAlertPolicyAndRules"
+        site_policies:
+          type: array
+          description: A list of site policies.
+          items:
+            $ref: "#/components/schemas/CasAlertPolicyAndRules"
+    CasCreateAlertPolicyRequest:
+      type: object
+      description: The body of a create alert policy request.
+      properties:
+        name:
+          type: string
+          description: The alert policy name
+        site_ids:
+          type: array
+          description: The list of site IDs to be included in this policy. Use the
+            listSites API to retrieve valid site IDs.
+          minItems: 1
+          uniqueItems: true
+          example:
+            - 10012345678
+          items:
+            type: integer
+            format: int64
+      required:
+        - name
+        - site_ids
+    CasAlertPolicySortField:
+      type: string
+      description: All sortable fields on alert policies.
+      enum:
+        - POLICY_NAME
+    CasPagedAlertSitePolicy:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            site_policies:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/CasAlertPolicyAndRules"
+    CasUpdateAlertPolicyRequest:
+      type: object
+      description: The request body for updating an alert policy.
+      required:
+        - site_ids
+      properties:
+        name:
+          type: string
+          description: The alert policy name
+          minLength: 1
+          maxLength: 32
+        site_ids:
+          type: array
+          description: The list of site IDs to be included in this policy. The unique
+            identifier of a site to be assigned to this policy. Use the
+            listSites API to retrieve valid site IDs.
+          minItems: 1
+          maxItems: 2000
+          uniqueItems: true
+          example:
+            - 10012345678
+          items:
+            type: integer
+            format: int64
+            minimum: 1
+            description: The unique identifier of a site to be assigned to this policy.
+    XiqAlertSite:
+      type: object
+      properties:
+        site_id:
+          type: integer
+          description: The location unique identifier
+          format: int64
+          example: 10012345678
+        site_name:
+          type: string
+          description: The site name (alphanumeric characters, hyphens, and spaces
+            allowed; maximum 64 characters).
+          example: Branch-Office-NY
+      description: The site information.
+      required:
+        - site_id
+        - site_name
+      example:
+        site_id: 10012345678
+        site_name: Branch-Office-NY
+    CasSitesFilter:
+      description: "Filter sites by alert policy assignment status. AVAILABLE: sites
+        that do not have a site-specific policy assigned (they use the global
+        policy). UNAVAILABLE: sites that already have a site-specific policy
+        assigned. ALL: all sites regardless of policy assignment status."
+      enum:
+        - AVAILABLE
+        - UNAVAILABLE
+        - ALL
+    CasAlertSiteLinkPolicy:
+      type: object
+      properties:
+        site_id:
+          type: integer
+          description: The location unique identifier
+          format: int64
+        site_name:
+          type: string
+          description: The site name
+        policy_id:
+          type: integer
+          description: The policy unique identifier
+          format: int64
+        policy_name:
+          type: string
+          description: The policy name
+      description: The site information and a policy the site enforced.
+      required:
+        - site_id
+        - site_name
+        - policy_id
+        - policy_name
+    CasAlertSitesList:
+      type: object
+      description: Partition the sites based on availability.
+      properties:
+        available_sites:
+          type: array
+          items:
+            $ref: "#/components/schemas/CasAlertSite"
+        unavailable_sites:
+          type: array
+          items:
+            $ref: "#/components/schemas/CasAlertSiteLinkPolicy"
+    CasAlertRuleType:
+      type: string
+      description: Rule type to query
+      enum:
+        - EVENT
+        - METRIC
+        - ALL
+    CasAlertRuleStatus:
+      type: string
+      description: Rule status to query
+      enum:
+        - ENABLED
+        - DISABLED
+        - BOTH
+    XiqAlertRuleThresholdOperator:
+      type: string
+      description: 'Has value when message_metadata_type is "METRIC", otherwise empty.
+        The operator for comparing the metric value against the threshold. GT:
+        greater than, GE: greater than or equal to, EQ: equal to, LT: less than,
+        LE: less than or equal to, NE: not equal to.'
+      enum:
+        - GT
+        - GE
+        - EQ
+        - LT
+        - LE
+        - NE
+        - ""
+      example: GT
+    XiqAlertRule:
+      type: object
+      description: Represents an alert rule that defines conditions for triggering
+        alerts. Rules can be event-based (triggered by specific network events)
+        or metric-based (triggered when metrics exceed thresholds). Rules
+        support three trigger types - IMMEDIATE (alert instantly), DEFERRED
+        (alert after condition persists for a duration), and REPEATED (alert
+        when condition occurs multiple times within a time window).
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of this rule.
+          format: int64
+        message_metadata_id:
+          type: integer
+          format: int64
+          description: The identifier for the unique message type that corresponds to this
+            rule.  If message_metadata_type is "EVENT", then this identifier
+            corresponds to the ID from the alerts metadata events API. If
+            message_metadata_type is "METRIC", then this identifier corresponds
+            to the ID from the alerts metadata metrics API.
+        message_metadata_name:
+          type: string
+          description: The display name for the message. Can also be used as a display
+            name for this rule.
+        message_metadata_type:
+          type: string
+          description: The type of the alert message. EVENT rules are triggered by
+            specific network events; METRIC rules are triggered when a metric
+            crosses a threshold.
+          enum:
+            - EVENT
+            - METRIC
+          example: EVENT
+        description:
+          type: string
+          description: This is a description for the alert rule.
+        severity_id:
+          type: integer
+          format: int64
+          description: The severity identifier. The list of severities is available from
+            the alerts metadata severity API.
+        severity_name:
+          type: string
+          description: The display name for the alert severity.
+        trigger_type:
+          type: string
+          description: The configured trigger type of the rule. IMMEDIATE triggers
+            instantly, DEFERRED triggers after the condition persists for a
+            duration, REPEATED triggers when the condition occurs multiple times
+            within a time window.
+          enum:
+            - IMMEDIATE
+            - DEFERRED
+            - REPEATED
+          example: IMMEDIATE
+        is_enabled:
+          type: boolean
+          description: True if this rule is active and enabled.
+        duration:
+          type: integer
+          format: int32
+          description: Has value when trigger_type is "DEFERRED". The deferred duration,
+            in seconds.
+          example: 1
+        time_window:
+          type: integer
+          format: int32
+          description: Has value when trigger_type is "REPEATED". The time window to count
+            the number of repeated messages, in seconds.
+        count:
+          type: integer
+          format: int32
+          description: Has value when trigger_type is "REPEATED". The lower bound of the
+            number of messages required to trigger this rule.
+          example: 3
+        threshold:
+          type: number
+          format: double
+          description: Has value when message_metadata_type is "METRIC". The threshold
+            value for the metric in the unit specified by the unit field.
+        unit:
+          type: string
+          description: The unit of this threshold (e.g., '%', 'dBm', 'Mbps', 'ms').
+          example: "%"
+        operator:
+          $ref: "#/components/schemas/XiqAlertRuleThresholdOperator"
+      required:
+        - id
+        - message_metadata_id
+        - message_metadata_name
+        - message_metadata_type
+        - description
+        - severity_id
+        - severity_name
+        - trigger_type
+        - is_enabled
+    XiqUpdateAlertRuleRequest:
+      type: object
+      properties:
+        description:
+          type: string
+          description: This is a description for the alert rule.
+        severity_id:
+          type: integer
+          format: int64
+          description: The severity identifier. The list of severities is available from
+            the alerts metadata severity API.
+        trigger_type:
+          type: string
+          description: The configured trigger type of the rule. IMMEDIATE triggers
+            instantly, DEFERRED triggers after the condition persists for a
+            duration, REPEATED triggers when the condition occurs multiple times
+            within a time window.
+          enum:
+            - IMMEDIATE
+            - DEFERRED
+            - REPEATED
+          example: IMMEDIATE
+        duration:
+          type: integer
+          format: int32
+          description: Has value when trigger_type is "DEFERRED". The deferred duration,
+            in seconds.
+          example: 1
+        time_window:
+          type: integer
+          format: int32
+          description: Has value when trigger_type is "REPEATED". The time window to count
+            the number of repeated messages, in seconds.
+        count:
+          type: integer
+          format: int32
+          description: Has value when trigger_type is "REPEATED". The lower bound of the
+            number of messages required to trigger this rule.
+          example: 3
+        threshold:
+          type: number
+          format: double
+          description: Has value when message_metadata_type is "METRIC". The threshold
+            value for the metric. Common units include '%' (percentage), 'dBm'
+            (signal strength), 'Mbps' (throughput), 'ms' (latency). The
+            applicable unit is defined by the metric type and can be retrieved
+            from the alerts metadata metrics API.
+        operator:
+          $ref: "#/components/schemas/XiqAlertRuleThresholdOperator"
+    AlertApp:
+      type: object
+      description: Represents an Extreme platform application that supports alerting.
+        Each application has a code identifier used in API filters and a display
+        name for UI presentation.
+      properties:
+        app:
+          type: string
+          description: The application code identifier (e.g., XIQ, XCA, XSW). Use this
+            value when filtering alerts by application.
+          example: XIQ
+        app_name:
+          type: string
+          description: The human-readable application name for display purposes (e.g.,
+            ExtremeCloud IQ, ExtremeCloud Appliance, SD-WAN).
+      required:
+        - app
+        - app_name
+    AlertCategory:
+      type: object
+      description: Represents an alert category that groups related alert types.
+        Categories help organize alerts by functional area (e.g., Network,
+        Security, Hardware, Configuration).
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The alert category ID.
+        name:
+          type: string
+          description: The alert category name (e.g., 'Network Access', 'Application
+            Access', 'Service', 'Device'). Use the listAlertCategories API to
+            retrieve all valid category names.
+          example: Network Access
+      required:
+        - id
+        - name
+    AlertMessageType:
+      type: object
+      description: The Alert Message Type Model
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The alert message type ID.
+        name:
+          type: string
+          description: The alert message type name (e.g., 'Avg CPU Usage', 'Device
+            Offline', 'Maximum Consumed Power', 'Network Interface Down').
+          example: Device Offline
+      required:
+        - id
+        - name
+    AlertSeverity:
+      type: object
+      description: Represents an alert severity level used to classify the urgency and
+        impact of alerts. Common severities include Critical, Major, Minor,
+        Warning, and Informational.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The alert severity ID.
+        name:
+          type: string
+          description: The alert severity name (e.g., 'Critical', 'Major', 'Minor',
+            'Warning', 'Info').
+          example: Critical
+      required:
+        - id
+        - name
+    AlertSourceType:
+      type: object
+      description: The Alert Source Type Model
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The alert source type ID.
+        name:
+          type: string
+          description: The alert source type (e.g., 'Device', 'Client', 'Network
+            Service'). Use the listAlertSourceTypes API to retrieve all valid
+            source types.
+          example: Device
+      required:
+        - id
+        - name
+  responses:
+    400ErrorResponse:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiClientError"
+    401ErrorResponse:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    403ErrorResponse:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    500ErrorResponse:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+  parameters:
+    page:
+      name: page
+      in: query
+      description: Page number for pagination, starting from 1
+      required: false
+      schema:
+        minimum: 1
+        maximum: 2147483647
+        type: integer
+        format: int32
+        default: 1
+    limit-500:
+      name: limit
+      in: query
+      description: Page Size, min = 1, max = 500
+      required: false
+      schema:
+        maximum: 500
+        minimum: 1
+        type: integer
+        format: int32
+        default: 500
+    startTime:
+      name: startTime
+      in: query
+      description: The start time to query. <p>The format is defined by RFC 3339,
+        section 5.6, for example, <code>2024-02-22T10:00:00.000Z</code>.
+      required: false
+      schema:
+        type: string
+        format: date-time
+    endTime:
+      name: endTime
+      in: query
+      description: The end time to query. <p>The format is defined by RFC 3339,
+        section 5.6, for example, <code>2024-02-22T11:00:00.000Z</code>.
+      required: false
+      schema:
+        type: string
+        format: date-time
+    order:
+      name: order
+      in: query
+      description: The sort order (ascending by default)
+      required: false
+      schema:
+        $ref: "#/components/schemas/SortOrder"
+    apps:
+      name: apps
+      in: query
+      description: The application name list. Use the listAlertApps API to retrieve
+        all valid application codes.
+      required: false
+      schema:
+        type: array
+        example:
+          - XIQ
+        items:
+          type: string
+          description: The application code identifier (e.g., 'XIQ', 'XSW', 'XUZ', 'XCA').
+    acknowledged:
+      in: query
+      name: acknowledged
+      description: When omitted, all alerts are returned. Set to false to return only
+        unacknowledged alerts. Set to true to return only acknowledged alerts.
+      required: false
+      schema:
+        type: boolean
+    categoryIds:
+      in: query
+      description: The alert category Ids to filter, use alert/metadata API to get
+        category information.
+      name: categoryIds
+      required: false
+      schema:
+        type: array
+        description: The alert category ID list.
+        items:
+          type: integer
+          format: int64
+          description: The alert category ID.
+    severityIds:
+      in: query
+      description: The alert severity Ids to filter, use alert/metadata API to get
+        severity information.
+      name: severityIds
+      required: false
+      schema:
+        type: array
+        description: The alert severity ID list.
+        items:
+          type: integer
+          format: int64
+          description: The alert severity ID.
+    messageMetadataIds:
+      in: query
+      description: The message metadata ID list to filter. Use
+        /alert/metadata/events-by-category or
+        /alert/metadata/metrics-by-metricset APIs to get the message metadata
+        information.
+      name: messageMetadataIds
+      required: false
+      schema:
+        type: array
+        description: The message metadata ID list.
+        items:
+          type: integer
+          format: int64
+          description: The message metadata ID.
+    siteIds:
+      in: query
+      description: The site ID list to filter.
+      name: siteIds
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+          format: int64
+          description: The site ID
+    floorIds:
+      in: query
+      description: The floor ID list to filter.
+      name: floorIds
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+          format: int64
+          description: The floor ID
+    buildingIds:
+      in: query
+      description: The building ID list to filter.
+      name: buildingIds
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+          format: int64
+          description: The building ID
+    sortField:
+      name: sortField
+      in: query
+      description: The sort field
+      required: false
+      schema:
+        $ref: "#/components/schemas/XiqAlertSortField"
+    keyword:
+      name: keyword
+      in: query
+      description: The keyword to filter alerts by summary, severity, source, etc.
+      example: Device Disconnected
+      required: false
+      schema:
+        type: string
+    sourceTypeIds:
+      in: query
+      description: The alert sourceType Ids to filter, use alert/metadata API to get
+        sourceType information.
+      name: sourceTypeIds
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+          format: int64
+          description: The alert sourceType ID.
+    deviceIds:
+      in: query
+      description: The device Ids to filter.
+      name: deviceIds
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+          format: int64
+          description: The alert device ID.
+    alertIds_list:
+      in: query
+      description: The alert Ids to filter. If alertIds is provided, all other filters
+        will be ignored except startTime and endTime.
+      name: alertIds
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          description: The alert ID.
+    alertStatus:
+      in: query
+      name: status
+      description: Filter alerts by their status. When omitted, all alerts are
+        returned. Value can be either "active" or "inactive".
+      required: false
+      schema:
+        type: string
+        enum:
+          - active
+          - inactive
+    group:
+      name: group
+      in: path
+      description: The group to count from. If "APPLICATION" is selected, "apps" query
+        parameter will be ignored.
+      required: true
+      schema:
+        $ref: "#/components/schemas/XiqAlertGroupQuery"
+    siteId:
+      in: query
+      description: The site ID to filter.
+      name: siteId
+      required: false
+      schema:
+        type: integer
+        format: int64
+        description: The site ID
+    siteIdsForCountByGroup:
+      in: query
+      description: The site ID list to filter. If both [siteId] and [siteIds] list is
+        populated, then siteId takes precedence.
+      name: siteIds
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+          format: int64
+          description: The site ID
+    locationType:
+      in: query
+      name: locationType
+      description: The location type to count from. When locationType=BUILDING/FLOOR,
+        The siteId parameter must be provided. When locationType=SITE, siteId is
+        not a required parameter.
+      required: false
+      schema:
+        $ref: "#/components/schemas/AlertLocationType"
+    exportHeaders:
+      in: query
+      description: The column headers required in the export report. (e.g.,
+        'message_metadata_name', 'summary', 'severity_name', 'acknowledged',
+        'app', 'site_name', 'category_name', 'source', 'time', 'status').
+      name: columnHeaders
+      required: false
+      schema:
+        type: array
+        example:
+          - severity_name
+        items:
+          type: string
+          description: The column header for the export CSV file.
+          enum:
+            - message_metadata_name
+            - summary
+            - severity_name
+            - acknowledged
+            - app
+            - site_name
+            - category_name
+            - source
+            - time
+            - status
+    policyId:
+      in: path
+      name: policyId
+      description: The alert policy identifier. Must be a valid site policy ID; the
+        global policy cannot be deleted or modified via this parameter.
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+        example: 10012345678
+      required: true
+    ruleId:
+      name: ruleId
+      in: path
+      description: The alert rule identifier.
+      required: true
+      schema:
+        type: integer
+        format: int64
+    apps1:
+      name: apps
+      in: query
+      description: The application code list to filter by. Use the listAlertApps API
+        to retrieve all valid application codes.
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          description: The application code identifier (e.g., XIQ, XCA, XSW, XUZ).
+          example: XIQ
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Enter your API Key as a Bearer Token
+security:
+  - BearerAuth: []
