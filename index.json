@@ -4606,6 +4606,143 @@
       "specFile": "specs/extremecloud-sdwan/openapi.yaml"
     },
     {
+      "id": "extremecloud-msp",
+      "title": "ExtremeCloud MSP API",
+      "description": "ExtremeCloud MSP RESTful API for external and internal applications.",
+      "version": "2.9",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/msp/v1",
+      "tags": [
+        "MSP Login Workflow",
+        "Deployed - Data Centers",
+        "Customer Management",
+        "Billing [Beta]",
+        "Customer",
+        "Customer",
+        "License management - MSP",
+        "Admin Group Management"
+      ],
+      "endpoints": [
+        {
+          "path": "/msp-login-workflow",
+          "method": "POST",
+          "operationId": "iamLoginWorkflow",
+          "summary": "Login Workflow",
+          "tags": [
+            "MSP Login Workflow"
+          ]
+        },
+        {
+          "path": "/customer/v2/add",
+          "method": "POST",
+          "operationId": "createCustomerV2",
+          "summary": "Create a customer",
+          "tags": [
+            "Customer Management"
+          ]
+        },
+        {
+          "path": "/admingroups",
+          "method": "GET",
+          "operationId": "listUserGroups",
+          "summary": "List admin groups",
+          "tags": [
+            "Admin Group Management"
+          ]
+        },
+        {
+          "path": "/customer/v2/edit/{customerOwnerId}",
+          "method": "PATCH",
+          "operationId": "editCustomerV2",
+          "summary": "Edit a customer",
+          "tags": [
+            "Customer Management"
+          ]
+        },
+        {
+          "path": "/licenses-added-to-msp",
+          "method": "GET",
+          "operationId": "getLicensesAddedToMsp",
+          "summary": "Get hard-linked licenses to MSP",
+          "tags": [
+            "License management - MSP"
+          ]
+        },
+        {
+          "path": "/license/name-for-customers",
+          "method": "GET",
+          "operationId": "getSoftlinkLicenseNameFromDB",
+          "summary": "Get softlink license name of given accountIDs",
+          "tags": [
+            "License management - MSP"
+          ]
+        },
+        {
+          "path": "/license/customer-info",
+          "method": "GET",
+          "operationId": "getLicenseInfo",
+          "summary": "Get License Info for an MSP",
+          "tags": [
+            "License management - MSP"
+          ]
+        },
+        {
+          "path": "/deployments/datacenters",
+          "method": "GET",
+          "operationId": "getDataCenters",
+          "summary": "Get available data centers",
+          "tags": [
+            "Deployed - Data Centers"
+          ]
+        },
+        {
+          "path": "/customers/v2",
+          "method": "GET",
+          "operationId": "getUserAccountsV2",
+          "summary": "Get customer accounts v2",
+          "tags": [
+            "Customer"
+          ]
+        },
+        {
+          "path": "/customers/list",
+          "method": "GET",
+          "operationId": "getCustomerList",
+          "summary": "Get list of all available customers for MSP admin",
+          "tags": [
+            "Customer"
+          ]
+        },
+        {
+          "path": "/billing/monthly",
+          "method": "GET",
+          "operationId": "getMonthlyUsage",
+          "summary": "No summary",
+          "tags": [
+            "Billing [Beta]"
+          ]
+        },
+        {
+          "path": "/billing/daily",
+          "method": "GET",
+          "operationId": "getDailyUsage",
+          "summary": "No summary",
+          "tags": [
+            "Billing [Beta]"
+          ]
+        },
+        {
+          "path": "/customer/delete/{customerOwnerId}",
+          "method": "DELETE",
+          "operationId": "deleteCustomer",
+          "summary": "Delete a customer",
+          "tags": [
+            "Customer Management"
+          ]
+        }
+      ],
+      "specFile": "specs/extremecloud-msp/openapi.yaml"
+    },
+    {
       "id": "extremecloud-iq",
       "title": "ExtremeCloud IQ API",
       "description": "ExtremeCloud IQ RESTful API for external and internal applications.",
