@@ -489,6 +489,378 @@
       "specFile": "specs/site/openapi.yaml"
     },
     {
+      "id": "notification",
+      "title": "Extreme Platform ONE REST API - Notification",
+      "description": "The Extreme Platform ONE™ Notification API provides comprehensive management\nof notification subscriptions and delivery rules, enabling automated alerting\nacross multiple channels to keep your team informed of critical network events,\nsubscription lifecycle changes, and contract milestones.\n\n**📬 Multi-Channel Notification Delivery:**\n\n• **Email Notifications** - Configure email recipients for alert notifications\nwith built-in verification workflow to ensure delivery to valid addresses\n\n• **Webhook Integration** - Set up HTTP endpoints to receive real-time JSON\npayloads with optional HMAC signature verification for secure integrations\n\n• **ServiceNow Integration** - Automatically create incidents in ServiceNow\nwhen alerts trigger, streamlining IT service management workflows\n\n• **Mobile Push Notifications** - Deliver instant notifications to mobile\napplications via APNs (iOS) and FCM (Android) for on-the-go alerting\n\n\n**📋 Intelligent Notification Rules:**\n\n• **Subscription Lifecycle Rules** - Timeline-based and event-based triggers\nfor license expiration warnings, renewal reminders, and activation notifications\n\n• **Contract Lifecycle Rules** - Automated notifications for hardware support\ncontract milestones, warranty expirations, and renewal deadlines\n\n• **Flexible Rule Configuration** - Predefined system rules plus custom\nuser-defined rules with per-application filtering\n\n\n**🏢 Enterprise Management:**\n\nBuilt for enterprise environments with bulk operations for managing multiple\nsubscriptions, organization-wide notification policies, and comprehensive\naudit trails for compliance and operational visibility.",
+      "version": "25.11.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/notification/v1",
+      "tags": [
+        "Email Subscription",
+        "Webhook Subscription",
+        "ServiceNow Subscription",
+        "Email Notification",
+        "Webhook Notification",
+        "ServiceNow Notification",
+        "Notification Rules",
+        "Metadata",
+        "Mobile Push Notification"
+      ],
+      "endpoints": [
+        {
+          "path": "/email",
+          "method": "GET",
+          "operationId": "listEmailSubscriptions",
+          "summary": "List Email Subscriptions",
+          "tags": [
+            "Email Notification"
+          ]
+        },
+        {
+          "path": "/email",
+          "method": "POST",
+          "operationId": "createEmailSubscription",
+          "summary": "Create Email Subscription",
+          "tags": [
+            "Email Notification"
+          ]
+        },
+        {
+          "path": "/email/:delete",
+          "method": "POST",
+          "operationId": "deleteBulkAlertSubscriptionEmail",
+          "summary": "Bulk Delete Email Subscriptions",
+          "tags": [
+            "Email Notification"
+          ]
+        },
+        {
+          "path": "/email/:enable",
+          "method": "POST",
+          "operationId": "enableBulkEmailNotification",
+          "summary": "Bulk Enable/Disable Email Subscriptions",
+          "tags": [
+            "Email Notification"
+          ]
+        },
+        {
+          "path": "/email/{id}",
+          "method": "GET",
+          "operationId": "getEmailSubscription",
+          "summary": "Get Email Subscription",
+          "tags": [
+            "Email Notification"
+          ]
+        },
+        {
+          "path": "/email/{id}",
+          "method": "PUT",
+          "operationId": "updateEmailSubscription",
+          "summary": "Update Email Subscription",
+          "tags": [
+            "Email Notification"
+          ]
+        },
+        {
+          "path": "/email/{id}",
+          "method": "PATCH",
+          "operationId": "patchEmailSubscription",
+          "summary": "Patch Email Subscription",
+          "tags": [
+            "Email Notification"
+          ]
+        },
+        {
+          "path": "/email/{id}/:verify",
+          "method": "POST",
+          "operationId": "verifySubscriptionEmail",
+          "summary": "Send Verification Email",
+          "tags": [
+            "Email Notification"
+          ]
+        },
+        {
+          "path": "/email/:verify",
+          "method": "POST",
+          "operationId": "verifySubscriptionEmailsBulk",
+          "summary": "Bulk Send Verification Emails",
+          "tags": [
+            "Email Notification"
+          ]
+        },
+        {
+          "path": "/webhook",
+          "method": "GET",
+          "operationId": "listWebhookSubscriptions",
+          "summary": "List Webhook Subscriptions",
+          "tags": [
+            "Webhook Notification"
+          ]
+        },
+        {
+          "path": "/webhook",
+          "method": "POST",
+          "operationId": "createWebhookSubscription",
+          "summary": "Create Webhook Subscription",
+          "tags": [
+            "Webhook Notification"
+          ]
+        },
+        {
+          "path": "/webhook/:delete",
+          "method": "POST",
+          "operationId": "deleteBulkAlertSubscriptionWebhook",
+          "summary": "Bulk Delete Webhook Subscriptions",
+          "tags": [
+            "Webhook Notification"
+          ]
+        },
+        {
+          "path": "/webhook/:enable",
+          "method": "POST",
+          "operationId": "enableBulkWebhookNotification",
+          "summary": "Bulk Enable/Disable Webhook Subscriptions",
+          "tags": [
+            "Webhook Notification"
+          ]
+        },
+        {
+          "path": "/webhook/{id}",
+          "method": "GET",
+          "operationId": "getWebhookSubscription",
+          "summary": "Get Webhook Subscription",
+          "tags": [
+            "Webhook Notification"
+          ]
+        },
+        {
+          "path": "/webhook/{id}",
+          "method": "PUT",
+          "operationId": "updateWebhookSubscription",
+          "summary": "Update Webhook Subscription",
+          "tags": [
+            "Webhook Notification"
+          ]
+        },
+        {
+          "path": "/webhook/{id}",
+          "method": "PATCH",
+          "operationId": "patchWebhookSubscription",
+          "summary": "Patch Webhook Subscription",
+          "tags": [
+            "Webhook Notification"
+          ]
+        },
+        {
+          "path": "/servicenow",
+          "method": "GET",
+          "operationId": "listServiceNowSubscriptions",
+          "summary": "List ServiceNow Subscriptions",
+          "tags": [
+            "ServiceNow Notification"
+          ]
+        },
+        {
+          "path": "/servicenow",
+          "method": "POST",
+          "operationId": "createServiceNowSubscription",
+          "summary": "Create ServiceNow Subscription",
+          "tags": [
+            "ServiceNow Notification"
+          ]
+        },
+        {
+          "path": "/servicenow/:delete",
+          "method": "POST",
+          "operationId": "deleteBulkAlertSubscriptionServiceNow",
+          "summary": "Bulk Delete ServiceNow Subscriptions",
+          "tags": [
+            "ServiceNow Notification"
+          ]
+        },
+        {
+          "path": "/servicenow/:enable",
+          "method": "POST",
+          "operationId": "enableBulkServiceNowNotification",
+          "summary": "Bulk Enable/Disable ServiceNow Subscriptions",
+          "tags": [
+            "ServiceNow Notification"
+          ]
+        },
+        {
+          "path": "/servicenow/{id}",
+          "method": "GET",
+          "operationId": "getServiceNowSubscription",
+          "summary": "Get ServiceNow Subscription",
+          "tags": [
+            "ServiceNow Notification"
+          ]
+        },
+        {
+          "path": "/servicenow/{id}",
+          "method": "PUT",
+          "operationId": "updateServiceNowSubscription",
+          "summary": "Update ServiceNow Subscription",
+          "tags": [
+            "ServiceNow Notification"
+          ]
+        },
+        {
+          "path": "/servicenow/{id}",
+          "method": "PATCH",
+          "operationId": "patchServiceNowSubscription",
+          "summary": "Patch ServiceNow Subscription",
+          "tags": [
+            "ServiceNow Notification"
+          ]
+        },
+        {
+          "path": "/rules/contract",
+          "method": "GET",
+          "operationId": "listContractRules",
+          "summary": "List Contract Notification Rules",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/rules/contract",
+          "method": "POST",
+          "operationId": "createContractNotificationRule",
+          "summary": "Create Contract Notification Rule",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/rules/contract/:delete",
+          "method": "POST",
+          "operationId": "deleteBulkContractNotificationRules",
+          "summary": "Delete Contract notification rules in bulk",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/rules/contract/{id}",
+          "method": "GET",
+          "operationId": "getContractNotificationRule",
+          "summary": "Get a specific Contract notification rule",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/rules/contract/{id}",
+          "method": "PUT",
+          "operationId": "updateContractNotificationRule",
+          "summary": "Update Contract notification rule",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/rules/contract/{id}",
+          "method": "PATCH",
+          "operationId": "patchContractNotificationRule",
+          "summary": "Partial or full update Contract notification rule",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/rules/contract/summary",
+          "method": "GET",
+          "operationId": "getContractNotificationRuleSummary",
+          "summary": "Get recipient count for the notification rule",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/rules/subscription",
+          "method": "GET",
+          "operationId": "listSubscriptionRules",
+          "summary": "List Subscription Notification Rules",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/rules/subscription",
+          "method": "POST",
+          "operationId": "createSubscriptionNotificationRule",
+          "summary": "Create Subscription Notification Rule",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/rules/subscription/:delete",
+          "method": "POST",
+          "operationId": "deleteBulkSubscriptionNotificationRules",
+          "summary": "Delete Subscription notification rules in bulk",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/rules/subscription/{id}",
+          "method": "GET",
+          "operationId": "getSubscriptionNotificationRule",
+          "summary": "Get Subscription Notification Rule",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/rules/subscription/{id}",
+          "method": "PUT",
+          "operationId": "updateSubscriptionNotificationRule",
+          "summary": "Update Subscription Notification Rule",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/rules/subscription/{id}",
+          "method": "PATCH",
+          "operationId": "patchSubscriptionNotificationRule",
+          "summary": "Patch Subscription Notification Rule",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/rules/subscription/summary",
+          "method": "GET",
+          "operationId": "getSubscriptionNotificationRuleSummary",
+          "summary": "Get recipient count for the notification rule",
+          "tags": [
+            "Notification Rules"
+          ]
+        },
+        {
+          "path": "/metadata/timeline-rules",
+          "method": "GET",
+          "operationId": "listTimelineRules",
+          "summary": "List Timeline Rule Templates",
+          "tags": [
+            "Metadata"
+          ]
+        },
+        {
+          "path": "/metadata/event-rules",
+          "method": "GET",
+          "operationId": "listEventRules",
+          "summary": "List Event Rules",
+          "tags": [
+            "Metadata"
+          ]
+        }
+      ],
+      "specFile": "specs/notification/openapi.yaml"
+    },
+    {
       "id": "iam",
       "title": "Extreme Platform ONE REST API - IAM",
       "description": "Extreme Platform ONE™ IAM (Identity and Access Management) API allows users to manage organization setting, user profile, identities, roles, external Identity Providers (IDPs), Multi-Factor Authentication (MFA), API Keys, etc.",

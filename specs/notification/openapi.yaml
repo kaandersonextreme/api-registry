@@ -1,0 +1,3774 @@
+openapi: 3.0.3
+info:
+  title: Extreme Platform ONE REST API - Notification
+  description: >-
+    The Extreme Platform ONE™ Notification API provides comprehensive management
+
+    of notification subscriptions and delivery rules, enabling automated
+    alerting
+
+    across multiple channels to keep your team informed of critical network
+    events,
+
+    subscription lifecycle changes, and contract milestones.
+
+
+    **📬 Multi-Channel Notification Delivery:**
+
+
+    • **Email Notifications** - Configure email recipients for alert
+    notifications
+
+    with built-in verification workflow to ensure delivery to valid addresses
+
+
+    • **Webhook Integration** - Set up HTTP endpoints to receive real-time JSON
+
+    payloads with optional HMAC signature verification for secure integrations
+
+
+    • **ServiceNow Integration** - Automatically create incidents in ServiceNow
+
+    when alerts trigger, streamlining IT service management workflows
+
+
+    • **Mobile Push Notifications** - Deliver instant notifications to mobile
+
+    applications via APNs (iOS) and FCM (Android) for on-the-go alerting
+
+
+
+    **📋 Intelligent Notification Rules:**
+
+
+    • **Subscription Lifecycle Rules** - Timeline-based and event-based triggers
+
+    for license expiration warnings, renewal reminders, and activation
+    notifications
+
+
+    • **Contract Lifecycle Rules** - Automated notifications for hardware
+    support
+
+    contract milestones, warranty expirations, and renewal deadlines
+
+
+    • **Flexible Rule Configuration** - Predefined system rules plus custom
+
+    user-defined rules with per-application filtering
+
+
+
+    **🏢 Enterprise Management:**
+
+
+    Built for enterprise environments with bulk operations for managing multiple
+
+    subscriptions, organization-wide notification policies, and comprehensive
+
+    audit trails for compliance and operational visibility.
+  termsOfService: https://www.extremenetworks.com/company/legal/terms-of-use/
+  contact:
+    name: Extreme Networks Support
+    url: https://www.extremenetworks.com/support
+    email: support@extremenetworks.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 25.11.0
+servers:
+  - url: https://cloudapi.extremecloudiq.com/notification/v1
+    description: Extreme Platform ONE REST API - Notification
+tags:
+  - name: Email Subscription
+    description: Email Subscription Management
+  - name: Webhook Subscription
+    description: Webhook Subscription Management
+  - name: ServiceNow Subscription
+    description: ServiceNow Subscription Management
+  - name: Email Notification
+    description: >-
+      **Email Notification Management**
+
+
+      The Email Notification Management capabilities support the complete
+      lifecycle of email configurations within the system.
+
+
+      **Core Functions:**
+
+      - Retrieve all configured email records across rule types such as alert,
+      subscription, and contract
+
+      - View detailed information for an individual email configuration
+
+      - Create new email configurations for each rule type
+
+      - Fully update or partially modify existing configurations without
+      replacing the entire record
+
+      - Enable or remove specific email configurations through administrative
+      controls
+
+      - Validate email settings or identities via record-level or global
+      verification
+
+
+      **Outcome:**
+
+      Provides comprehensive control over the creation, validation, management,
+      and maintenance of email-based notifications.
+  - name: Webhook Notification
+    description: >-
+      **Webhook Notification Management**
+
+
+      Webhook Notification Management enables end-to-end control of webhook
+      configurations in the system.
+
+
+      **Key Functions:**
+
+      - Retrieve webhook configurations across alert, subscription, and contract
+      rule types
+
+      - Access detailed information for a specific webhook
+
+      - Create new webhook configurations per rule type
+
+      - Fully update or partially modify existing webhook settings
+
+      - Enable or remove webhooks as required
+
+
+      **Outcome:**
+
+      Ensures flexible configuration, controlled activation, and efficient
+      lifecycle management of webhook integrations.
+  - name: ServiceNow Notification
+    description: >-
+      **ServiceNow Notification Management**
+
+
+      ServiceNow Notification Management provides complete administration of
+      ServiceNow integration settings.
+
+
+      **Key Functions:**
+
+      - Retrieve integrations across alert, subscription, and contract rule
+      types
+
+      - View detailed configuration of a specific integration
+
+      - Create new integrations for each rule type
+
+      - Fully update or partially modify existing integrations
+
+      - Enable or remove integrations when necessary
+
+
+      **Outcome:**
+
+      Delivers flexible setup, controlled activation, and streamlined
+      maintenance of ServiceNow integrations.
+  - name: Notification Rules
+    description: >-
+      **Notification Rules Management**
+
+
+      Notification rule management supports contract-based and
+      subscription-based rule configurations.
+
+
+      **Key Functions:**
+
+      - Retrieve lists of existing rules
+
+      - Access detailed information for individual rules
+
+      - Create new rule definitions aligned with operational needs
+
+      - Fully update or partially modify rule logic
+
+      - Remove obsolete rules
+
+      - View summarized, aggregated insights for monitoring and analysis
+
+
+      **Outcome:**
+
+      Enables flexible rule creation, modification, governance, and visibility
+      across subscription and contract contexts.
+  - name: Metadata
+    description: >-
+      **Notification Rules Metadata**
+
+
+      Metadata access provides structured reference definitions for rule
+      behavior and event processing.
+
+
+      **Key Functions:**
+
+      - Retrieve predefined rule definitions for timeline processing and event
+      handling
+
+      - View rule conditions, triggers, and associated actions
+
+      - Support configuration consistency, troubleshooting, and auditing
+
+
+      **Outcome:**
+
+      Improves transparency, governance, and reliable interpretation of rule
+      execution.
+  - name: Mobile Push Notification
+    description: Mobile Push Notification Token Management
+paths:
+  /email:
+    get:
+      tags:
+        - Email Notification
+      summary: List Email Subscriptions
+      description: Retrieves a paginated list of email notification subscriptions.
+        Each subscription represents an email address configured to receive
+        alert notifications based on specified rules and filters.
+      operationId: listEmailSubscriptions
+      parameters:
+        - name: keyword
+          in: query
+          description: The keyword to filter email addresses. If blank then skip this
+            filter criteria.
+          required: false
+          schema:
+            type: string
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit-500"
+        - name: sortField
+          in: query
+          description: The sort field is the email address.
+          required: false
+          schema:
+            $ref: "#/components/schemas/CnsAlertEmailSortField"
+        - $ref: "#/components/parameters/order"
+        - $ref: "#/components/parameters/verified"
+        - $ref: "#/components/parameters/enable"
+        - $ref: "#/components/parameters/ruleType"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedXiqAlertEmailSubscription"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Email Notification
+      summary: Create Email Subscription
+      description: Creates one or more email notification subscriptions. Each
+        subscription associates an email address with alert configurations,
+        subscription rules, or contract rules. New email addresses require
+        verification before notifications are sent.
+      operationId: createEmailSubscription
+      requestBody:
+        description: Email subscription configuration including recipient addresses and
+          notification rules.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqCreateAlertEmailSubscriptionRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertEmailSubscriptionList"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /email/:delete:
+    post:
+      tags:
+        - Email Notification
+      summary: Bulk Delete Email Subscriptions
+      description: Deletes multiple email subscriptions in a single request. Returns a
+        summary of successful and failed deletions. Deleted subscriptions will
+        immediately stop receiving notifications.
+      operationId: deleteBulkAlertSubscriptionEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notificationIds"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqDeleteBulkAlertSubscriptionEmailResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /email/:enable:
+    post:
+      tags:
+        - Email Notification
+      summary: Bulk Enable/Disable Email Subscriptions
+      description: Enables or disables multiple email subscriptions in a single
+        request. Disabled subscriptions remain configured but will not receive
+        notifications until re-enabled.
+      operationId: enableBulkEmailNotification
+      parameters:
+        - $ref: "#/components/parameters/CnsNotificationEnabledField"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notificationIds"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqEnableBulkEmailNotificationResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+  /email/{id}:
+    get:
+      tags:
+        - Email Notification
+      summary: Get Email Subscription
+      description: Retrieves detailed information for a specific email subscription,
+        including its verification status, enabled state, and configured
+        notification rules.
+      operationId: getEmailSubscription
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertEmailSubscription"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    put:
+      tags:
+        - Email Notification
+      summary: Update Email Subscription
+      description: Fully replaces an existing email subscription configuration. All
+        fields in the request body will overwrite the current values. Use PATCH
+        for partial updates.
+      operationId: updateEmailSubscription
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: Complete email subscription configuration to replace the existing
+          subscription.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqUpdateAlertEmailSubscriptionRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertEmailSubscription"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    patch:
+      tags:
+        - Email Notification
+      summary: Patch Email Subscription
+      description: Partially updates an email subscription. Only the fields provided
+        in the request body will be modified; other fields retain their current
+        values.
+      operationId: patchEmailSubscription
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: Fields to update on the email subscription. Only provided fields
+          will be modified.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqPatchAlertEmailSubscriptionRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertEmailSubscription"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /email/{id}/:verify:
+    post:
+      tags:
+        - Email Notification
+      summary: Send Verification Email
+      description: Sends a verification email to the subscription's email address. The
+        recipient must click the verification link in the email to confirm
+        ownership. Unverified email addresses will not receive alert
+        notifications. This endpoint can be called again to resend the
+        verification email if the original expired or was not received.
+      operationId: verifySubscriptionEmail
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      responses:
+        "200":
+          description: OK
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /email/:verify:
+    post:
+      tags:
+        - Email Notification
+      summary: Bulk Send Verification Emails
+      description: Sends verification emails to multiple email subscriptions in a
+        single request. Each recipient must click their verification link to
+        confirm ownership. This is useful for re-sending verification emails to
+        multiple unverified addresses.
+      operationId: verifySubscriptionEmailsBulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notificationIds"
+      responses:
+        "200":
+          description: OK
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /webhook:
+    get:
+      tags:
+        - Webhook Notification
+      summary: List Webhook Subscriptions
+      description: Retrieves a paginated list of webhook notification subscriptions.
+        Each subscription represents an HTTP endpoint configured to receive
+        alert notification payloads via POST requests.
+      operationId: listWebhookSubscriptions
+      parameters:
+        - name: keyword
+          in: query
+          description: The keyword to filter webhook URL. If blank then skip this filter
+            criteria.
+          required: false
+          schema:
+            type: string
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit-500"
+        - name: sortField
+          in: query
+          description: The sort field is the webhook URL.
+          required: false
+          schema:
+            $ref: "#/components/schemas/CnsAlertWebhookSortField"
+        - $ref: "#/components/parameters/order"
+        - $ref: "#/components/parameters/enable"
+        - $ref: "#/components/parameters/ruleType"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedXiqAlertWebhookSubscription"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Webhook Notification
+      summary: Create Webhook Subscription
+      description: Creates one or more webhook notification subscriptions. Each
+        subscription configures an HTTPS endpoint to receive JSON payloads when
+        alerts match the specified rules. Optionally include a shared secret for
+        HMAC signature verification.
+      operationId: createWebhookSubscription
+      requestBody:
+        description: Webhook subscription configuration including endpoint URLs,
+          optional secrets, and notification rules.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqCreateAlertWebhookSubscriptionRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertWebhookSubscriptionList"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /webhook/:delete:
+    post:
+      tags:
+        - Webhook Notification
+      summary: Bulk Delete Webhook Subscriptions
+      description: Deletes multiple webhook subscriptions in a single request. Returns
+        a summary of successful and failed deletions. Deleted subscriptions will
+        immediately stop receiving notification payloads.
+      operationId: deleteBulkAlertSubscriptionWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notificationIds"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqDeleteBulkAlertSubscriptionWebhookResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /webhook/:enable:
+    post:
+      tags:
+        - Webhook Notification
+      summary: Bulk Enable/Disable Webhook Subscriptions
+      description: Enables or disables multiple webhook subscriptions in a single
+        request. Disabled subscriptions remain configured but will not receive
+        notification payloads until re-enabled.
+      operationId: enableBulkWebhookNotification
+      parameters:
+        - $ref: "#/components/parameters/CnsNotificationEnabledField"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notificationIds"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqEnableBulkWebhookNotificationResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+  /webhook/{id}:
+    get:
+      tags:
+        - Webhook Notification
+      summary: Get Webhook Subscription
+      description: Retrieves detailed information for a specific webhook subscription,
+        including its endpoint URL, enabled state, and configured notification
+        rules.
+      operationId: getWebhookSubscription
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertWebhookSubscription"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    put:
+      tags:
+        - Webhook Notification
+      summary: Update Webhook Subscription
+      description: Fully replaces an existing webhook subscription configuration. All
+        fields in the request body will overwrite the current values. Use PATCH
+        for partial updates.
+      operationId: updateWebhookSubscription
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: Complete webhook subscription configuration to replace the existing
+          subscription.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqUpdateAlertWebhookSubscriptionRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertWebhookSubscription"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    patch:
+      tags:
+        - Webhook Notification
+      summary: Patch Webhook Subscription
+      description: Partially updates a webhook subscription. Only the fields provided
+        in the request body will be modified; other fields retain their current
+        values.
+      operationId: patchWebhookSubscription
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: Fields to update on the webhook subscription. Only provided fields
+          will be modified.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqPatchAlertWebhookSubscriptionRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertWebhookSubscription"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /servicenow:
+    get:
+      tags:
+        - ServiceNow Notification
+      summary: List ServiceNow Subscriptions
+      description: Retrieves a paginated list of ServiceNow notification
+        subscriptions. Each subscription represents a ServiceNow instance
+        configured to receive alert notifications as incidents or events.
+      operationId: listServiceNowSubscriptions
+      parameters:
+        - name: keyword
+          in: query
+          description: The keyword to filter ServiceNow accounts. If blank then skip this
+            filter criteria.
+          required: false
+          schema:
+            type: string
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit-500"
+        - name: sortField
+          in: query
+          description: The sort field is the ServiceNow account email.
+          required: false
+          schema:
+            $ref: "#/components/schemas/CnsAlertServiceNowSortField"
+        - $ref: "#/components/parameters/order"
+        - $ref: "#/components/parameters/enable"
+        - $ref: "#/components/parameters/ruleType"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedXiqAlertServiceNowSubscription"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - ServiceNow Notification
+      summary: Create ServiceNow Subscription
+      description: Creates a new ServiceNow notification subscription. The
+        subscription connects to a ServiceNow instance using provided
+        credentials and creates incidents or events when alerts match the
+        specified rules.
+      operationId: createServiceNowSubscription
+      requestBody:
+        description: ServiceNow subscription configuration including instance URL,
+          credentials, and notification rules.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqCreateAlertServiceNowSubscriptionRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertServiceNowSubscriptionList"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /servicenow/:delete:
+    post:
+      tags:
+        - ServiceNow Notification
+      summary: Bulk Delete ServiceNow Subscriptions
+      description: Deletes multiple ServiceNow subscriptions in a single request.
+        Returns a summary of successful and failed deletions. Deleted
+        subscriptions will immediately stop creating incidents in ServiceNow.
+      operationId: deleteBulkAlertSubscriptionServiceNow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notificationIds1"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqDeleteBulkAlertSubscriptionServiceNowResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /servicenow/:enable:
+    post:
+      tags:
+        - ServiceNow Notification
+      summary: Bulk Enable/Disable ServiceNow Subscriptions
+      description: Enables or disables multiple ServiceNow subscriptions in a single
+        request. Disabled subscriptions remain configured but will not create
+        incidents in ServiceNow until re-enabled.
+      operationId: enableBulkServiceNowNotification
+      parameters:
+        - $ref: "#/components/parameters/CnsNotificationEnabledField"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notificationIds1"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqEnableBulkServiceNowNotificationResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+  /servicenow/{id}:
+    get:
+      tags:
+        - ServiceNow Notification
+      summary: Get ServiceNow Subscription
+      description: Retrieves detailed information for a specific ServiceNow
+        subscription, including its instance URL, enabled state, and configured
+        notification rules.
+      operationId: getServiceNowSubscription
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertServiceNowSubscription"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    put:
+      tags:
+        - ServiceNow Notification
+      summary: Update ServiceNow Subscription
+      description: Fully replaces an existing ServiceNow subscription configuration.
+        All fields in the request body will overwrite the current values. Use
+        PATCH for partial updates.
+      operationId: updateServiceNowSubscription
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: Complete ServiceNow subscription configuration to replace the
+          existing subscription.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqUpdateAlertServiceNowSubscriptionRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertServiceNowSubscription"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    patch:
+      tags:
+        - ServiceNow Notification
+      summary: Patch ServiceNow Subscription
+      description: Partially updates a ServiceNow subscription. Only the fields
+        provided in the request body will be modified; other fields retain their
+        current values.
+      operationId: patchServiceNowSubscription
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: Fields to update on the ServiceNow subscription. Only provided
+          fields will be modified.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqPatchAlertServiceNowSubscriptionRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqAlertServiceNowSubscription"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /rules/contract:
+    get:
+      tags:
+        - Notification Rules
+      summary: List Contract Notification Rules
+      description: Retrieves a paginated list of contract-based notification rules.
+        Contract rules define triggers for hardware support contract lifecycle
+        events such as warranty expiration, support renewal deadlines, and
+        contract activation notifications.
+      operationId: listContractRules
+      parameters:
+        - name: keyword
+          in: query
+          description: The keyword to filter Contract notification rules. If blank then
+            skip this filter criteria.
+          required: false
+          schema:
+            type: string
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit-500"
+        - name: sortField
+          in: query
+          description: The sort field is the Contract notification rule name.
+          required: false
+          schema:
+            $ref: "#/components/schemas/CnsNotificationRuleSortField"
+        - $ref: "#/components/parameters/order"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedXiqContractNotificationRules"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+    post:
+      tags:
+        - Notification Rules
+      summary: Create Contract Notification Rule
+      description: Creates a new contract-based notification rule. The rule can
+        include timeline-based triggers (e.g., notify 60 days before contract
+        expiration) and/or event-based triggers (e.g., notify when contract is
+        renewed). Rules can be associated with email, webhook, or ServiceNow
+        subscriptions.
+      operationId: createContractNotificationRule
+      requestBody:
+        description: Contract notification rule configuration including rule name,
+          applications, and selected timeline/event triggers.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqCreateContractNotificationRuleRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CnsContractNotificationRule"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "409":
+          $ref: "#/components/responses/409ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+  /rules/contract/:delete:
+    post:
+      tags:
+        - Notification Rules
+      summary: Delete Contract notification rules in bulk
+      description: Delete Contract notification rules by a list of provided IDs.
+      operationId: deleteBulkContractNotificationRules
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notificationRuleIds"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqDeleteBulkNotificationRulesResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+  /rules/contract/{id}:
+    get:
+      tags:
+        - Notification Rules
+      summary: Get a specific Contract notification rule
+      description: Get details for a specific Contract notification rule.
+      operationId: getContractNotificationRule
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CnsContractNotificationRule"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+    put:
+      tags:
+        - Notification Rules
+      summary: Update Contract notification rule
+      description: Update Contract notification rule.
+      operationId: updateContractNotificationRule
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: The payload of update Contract Notification Rule
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqUpdateContractNotificationRuleRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CnsContractNotificationRule"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "409":
+          $ref: "#/components/responses/409ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+    patch:
+      tags:
+        - Notification Rules
+      summary: Partial or full update Contract notification rule
+      description: Partial or full update Contract notification rule.
+      operationId: patchContractNotificationRule
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: The payload of Contract notification rule.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqPatchContractNotificationRuleRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CnsContractNotificationRule"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "409":
+          $ref: "#/components/responses/409ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+  /rules/contract/summary:
+    get:
+      tags:
+        - Notification Rules
+      summary: Get recipient count for the notification rule
+      description: Get recipient count for the Contract notification rule.
+      operationId: getContractNotificationRuleSummary
+      parameters:
+        - $ref: "#/components/parameters/notificationRuleIdInParameters"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqNotificationRuleSummary"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+  /rules/subscription:
+    get:
+      tags:
+        - Notification Rules
+      summary: List Subscription Notification Rules
+      description: Retrieves a paginated list of subscription-based notification
+        rules. Subscription rules define triggers for license and subscription
+        lifecycle events such as expiration warnings, renewal reminders, and
+        activation notifications.
+      operationId: listSubscriptionRules
+      parameters:
+        - name: keyword
+          in: query
+          description: The keyword to filter Subscription notification rules. If blank
+            then skip this filter criteria.
+          required: false
+          schema:
+            type: string
+        - $ref: "#/components/parameters/apps"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit-500"
+        - name: sortField
+          in: query
+          description: The sort field is the Subscription notification rule name.
+          required: false
+          schema:
+            $ref: "#/components/schemas/CnsNotificationRuleSortField"
+        - $ref: "#/components/parameters/order"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedXiqSubscriptionNotificationRules"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+    post:
+      tags:
+        - Notification Rules
+      summary: Create Subscription Notification Rule
+      description: Creates a new subscription-based notification rule. The rule can
+        include timeline-based triggers (e.g., notify 30 days before expiration)
+        and/or event-based triggers (e.g., notify when subscription is
+        activated). Rules can be associated with email, webhook, or ServiceNow
+        subscriptions.
+      operationId: createSubscriptionNotificationRule
+      requestBody:
+        description: Subscription notification rule configuration including rule name,
+          applications, and selected timeline/event triggers.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqCreateSubscriptionNotificationRuleRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CnsSubscriptionNotificationRule"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "409":
+          $ref: "#/components/responses/409ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+  /rules/subscription/:delete:
+    post:
+      tags:
+        - Notification Rules
+      summary: Delete Subscription notification rules in bulk
+      description: Delete Subscription notification rules by a list of provided IDs.
+      operationId: deleteBulkSubscriptionNotificationRules
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notificationRuleIds"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqDeleteBulkNotificationRulesResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+  /rules/subscription/{id}:
+    get:
+      tags:
+        - Notification Rules
+      summary: Get Subscription Notification Rule
+      description: Retrieves detailed information for a specific subscription
+        notification rule, including its timeline rules, event rules, and
+        associated applications.
+      operationId: getSubscriptionNotificationRule
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CnsSubscriptionNotificationRule"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+    put:
+      tags:
+        - Notification Rules
+      summary: Update Subscription Notification Rule
+      description: Fully replaces an existing subscription notification rule
+        configuration. All fields in the request body will overwrite the current
+        values. Use PATCH for partial updates.
+      operationId: updateSubscriptionNotificationRule
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: Complete subscription notification rule configuration to replace
+          the existing rule.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqUpdateSubscriptionNotificationRuleRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CnsSubscriptionNotificationRule"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "409":
+          $ref: "#/components/responses/409ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+    patch:
+      tags:
+        - Notification Rules
+      summary: Patch Subscription Notification Rule
+      description: Partially updates a subscription notification rule. Only the fields
+        provided in the request body will be modified; other fields retain their
+        current values.
+      operationId: patchSubscriptionNotificationRule
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: Fields to update on the subscription notification rule. Only
+          provided fields will be modified.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/XiqPatchSubscriptionNotificationRuleRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CnsSubscriptionNotificationRule"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "409":
+          $ref: "#/components/responses/409ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+  /rules/subscription/summary:
+    get:
+      tags:
+        - Notification Rules
+      summary: Get recipient count for the notification rule
+      description: Get recipient count for the Subscription notification rule.
+      operationId: getSubscriptionNotificationRuleSummary
+      parameters:
+        - $ref: "#/components/parameters/notificationRuleIdInParameters"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/XiqNotificationRuleSummary"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+  /metadata/timeline-rules:
+    get:
+      tags:
+        - Metadata
+      summary: List Timeline Rule Templates
+      description: Retrieves all available timeline rule templates. Timeline rules
+        define time-based notification triggers relative to subscription events
+        (e.g., "30 days before expiration", "7 days before renewal"). Use the
+        returned rule IDs when creating subscription or contract notification
+        rules.
+      operationId: listTimelineRules
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CnsRules"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+  /metadata/event-rules:
+    get:
+      tags:
+        - Metadata
+      summary: List Event Rules
+      description: List all Event rules.
+      operationId: listEventRules
+      parameters:
+        - name: rule_type
+          in: query
+          required: false
+          description: Indicates if the event rule is targeted for any rule.
+          schema:
+            $ref: "#/components/schemas/RuleType"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CnsRules"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+components:
+  schemas:
+    CnsAlertEmailSortFieldOld:
+      type: string
+      description: All available email notification sort fields.
+      enum:
+        - EMAIL_ADDRESS
+    SortOrder:
+      type: string
+      description: "Sort order for results. ASC: ascending order (oldest to newest, or
+        lowest to highest based on the sort field). DESC: descending order
+        (newest to oldest, or highest to lowest based on the sort field)."
+      enum:
+        - ASC
+        - DESC
+    Paged:
+      type: object
+      required:
+        - count
+        - page
+        - total_count
+        - total_pages
+      properties:
+        page:
+          type: integer
+          description: The current page number
+          format: int32
+          example: 1
+        count:
+          type: integer
+          description: The element count of the current page
+          format: int32
+          example: 10
+        total_pages:
+          type: integer
+          description: The total page number based on request page size
+          format: int32
+          example: 5
+        total_count:
+          type: integer
+          description: The total element count
+          format: int64
+          example: 43
+    XiqBaseEntityOld:
+      required:
+        - id
+        - create_time
+        - update_time
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier
+          format: int64
+        create_time:
+          type: string
+          description: The create time
+          format: date-time
+        update_time:
+          type: string
+          description: The last update time
+          format: date-time
+    CnsAlertPolicyOld:
+      type: object
+      properties:
+        policy_id:
+          type: integer
+          description: The policy identifier, used to identify policy id
+          format: int64
+        policy_name:
+          type: string
+          description: The name of the policy
+    CnsAlertSeverityOld:
+      type: object
+      properties:
+        severity_id:
+          type: integer
+          format: int64
+          description: The alert severity ID.
+        severity_name:
+          type: string
+          description: The alert severity name.
+    CnsAlertSiteOld:
+      type: object
+      properties:
+        site_id:
+          type: integer
+          description: The location unique identifier
+          format: int64
+        site_name:
+          type: string
+          description: The site name
+    CnsApplicationOld:
+      type: object
+      properties:
+        app:
+          type: string
+          description: The application name such as XSW, XIQ etc.
+        app_name:
+          type: string
+          description: The application display name which can be displayed to users such
+            as SD-WAN, XCloudIQ etc.
+    XiqAlertEmailSubscriptionOld:
+      allOf:
+        - $ref: "#/components/schemas/XiqBaseEntityOld"
+        - type: object
+          description: The email subscription data model
+          required:
+            - email
+            - is_email_verified
+            - subscribe_all_policies
+            - subscribe_all_severities
+            - subscribe_all_sites
+            - subscribe_all_apps
+          properties:
+            email:
+              type: string
+              format: email
+              description: The email address.
+            is_enabled:
+              type: boolean
+              description: Enable/disable alert notifications for an email.
+            is_email_verified:
+              type: boolean
+              description: The email address verified flag.
+            resend_email_after:
+              type: string
+              format: date-time
+              description: This field represents the time after for the user can resend a new
+                verification email.
+            subscribe_all_policies:
+              type: boolean
+              description: The all alert policies selected flag.
+            alert_policies:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsAlertPolicyOld"
+              description: This field represents the name of the policy to which this email
+                notification belongs to. This field is optional because it is
+                only needed when is_subscribe_all is false.
+            subscribe_all_severities:
+              type: boolean
+              description: The all severities selected flag.
+            severities:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsAlertSeverityOld"
+              description: This field represents the list of severities the email notification
+                belongs to.
+            subscribe_all_sites:
+              type: boolean
+              description: The all sites selected flag.
+            sites:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsAlertSiteOld"
+              description: This field represents the list of sites to which this email
+                notification belongs to.
+            subscribe_all_apps:
+              type: boolean
+              description: The all apps selected flag.
+            apps:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsApplicationOld"
+              description: The field represents the list of applications this email
+                notification belongs to.
+    PagedXiqAlertEmailSubscriptionOld:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/XiqAlertEmailSubscriptionOld"
+    ConstraintViolationError:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field name
+        message:
+          type: string
+          description: The detailed description
+    ApiClientError:
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: The short description of error
+        status:
+          type: integer
+          description: The status code of error
+          format: int32
+        detail:
+          type: string
+          description: The detailed description of error
+        violations:
+          type: array
+          description: List of constraint violations
+          items:
+            $ref: "#/components/schemas/ConstraintViolationError"
+    ApiError:
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: The short description of error
+        status:
+          type: integer
+          description: The status code of error
+          format: int32
+        detail:
+          type: string
+          description: The detailed description of error
+    XiqCreateAlertEmailSubscriptionRequest1:
+      type: object
+      description: The payload to create email subscription
+      required:
+        - email
+        - is_enabled
+        - subscribe_all_policies
+        - subscribe_all_apps
+        - subscribe_all_severities
+      properties:
+        email:
+          type: string
+          description: The email address.
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for an email.
+        subscribe_all_apps:
+          type: boolean
+          description: The all apps selected flag.
+        apps:
+          type: array
+          items:
+            type: string
+            description: The application name.
+          description: The application name list, e.g. XIQ, XSW, XUZ etc.
+        subscribe_all_policies:
+          type: boolean
+          description: The all alert policies selected flag.
+        alert_policy_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: The selected alert policy list. This field will be an empty
+            collection when is_subscribe_all is true.
+        subscribe_all_severities:
+          type: boolean
+          description: The all severities selected flag.
+        severity_ids:
+          type: array
+          description: The severity ID list.
+          items:
+            type: integer
+            format: int64
+            description: The alert severity ID.
+    subscriptionIdsOld:
+      type: object
+      description: The filter to get alert subscriptions
+      properties:
+        ids:
+          type: array
+          description: The subscription ID list
+          items:
+            type: integer
+            description: The subscription ID list
+            format: int64
+    XiqBulkOperationResultOld:
+      type: string
+      enum:
+        - PARTIAL_SUCCESS
+        - SUCCESS
+    XiqBulkDeleteEmailSubscriptionResultOld:
+      type: object
+      description: The result of bulk detele email susbscriptions.
+      properties:
+        ID:
+          type: integer
+          format: int64
+          description: The ID of email subscription.
+    XiqDeleteBulkAlertSubscriptionEmailResponseOld:
+      type: object
+      description: The result of a bulk delete for alert email subscriptions.
+      required:
+        - result
+      properties:
+        result:
+          type: string
+          description: The result of this bulk deletion (SUCCESS/PARTIAL_SUCCESS).
+          $ref: "#/components/schemas/XiqBulkOperationResultOld"
+          example: PARTIAL_SUCCESS
+        reason:
+          type: string
+          description: Indicate the reason of unresolved_deletion.
+          example: At least one ID not found.
+        unresolved_deletions:
+          type: array
+          description: This result will be shown when a bulk delete partially succeeds,
+            providing details of unsuccessful delete IDs and associated names.
+          items:
+            $ref: "#/components/schemas/XiqBulkDeleteEmailSubscriptionResultOld"
+    XiqUpdateAlertEmailSubscriptionRequestOld:
+      type: object
+      description: The payload to create email subscription
+      required:
+        - email
+        - is_enabled
+        - subscribe_all_policies
+        - subscribe_all_apps
+        - subscribe_all_severities
+      properties:
+        email:
+          type: string
+          description: The email address.
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for an email.
+        subscribe_all_apps:
+          type: boolean
+          description: The all apps selected flag.
+        apps:
+          type: array
+          items:
+            type: string
+            description: The application name.
+          description: The application name list, e.g. XIQ, XSW, XUZ etc.
+        subscribe_all_policies:
+          type: boolean
+          description: The all alert policies selected flag.
+        alert_policy_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: The selected alert policy list. This field will be an empty
+            collection when is_subscribe_all is true.
+        subscribe_all_severities:
+          type: boolean
+          description: The all severities selected flag.
+        severity_ids:
+          type: array
+          description: The severity ID list.
+          items:
+            type: integer
+            format: int64
+            description: The severity ID.
+    XiqPatchAlertEmailSubscriptionRequestOld:
+      type: object
+      description: The payload to update email subscription
+      properties:
+        email:
+          type: string
+          description: The email address.
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for an email.
+        subscribe_all_apps:
+          type: boolean
+          description: The all apps selected flag.
+        apps:
+          type: array
+          items:
+            type: string
+            description: The application name.
+          description: The application name list, e.g. XIQ, XSW, XUZ etc.
+        subscribe_all_sites:
+          type: boolean
+          description: The all sites selected flag.
+        site_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+            description: The site ID
+          description: The site ID list.
+        subscribe_all_policies:
+          type: boolean
+          description: The all alert policies selected flag.
+        alert_policy_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: The selected alert policy list. This field will be an empty
+            collection when is_subscribe_all is true.
+        subscribe_all_severities:
+          type: boolean
+          description: The all severities selected flag.
+        severity_ids:
+          type: array
+          description: The severity ID list.
+          items:
+            type: integer
+            format: int64
+            description: The severity ID.
+    CnsAlertWebhookSortFieldOld:
+      type: string
+      description: All available webhook notification sort fields.
+      enum:
+        - URL
+    XiqAlertWebhookSubscriptionOld:
+      allOf:
+        - $ref: "#/components/schemas/XiqBaseEntityOld"
+        - type: object
+          description: The webhook subscription data model
+          required:
+            - url
+            - subscribe_all_policies
+            - subscribe_all_severities
+            - subscribe_all_sites
+            - subscribe_all_apps
+          properties:
+            url:
+              type: string
+              format: uri
+              description: The webhook endpoint URL.
+            secret:
+              type: string
+              description: The auth secret for the webhook endpoint.
+            is_enabled:
+              type: boolean
+              description: Enable/disable alert notifications for a webhook endpoint.
+            subscribe_all_policies:
+              type: boolean
+              description: The all alert policies selected flag.
+            alert_policies:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsAlertPolicyOld"
+              description: This field represents the policy to which this email notification
+                belongs to. This field is optional because it is only needed
+                when is_subscribe_all is false.
+            is_active:
+              type: boolean
+              description: Active/Inactive alert notifications for a webhook endpoint.
+            subscribe_all_severities:
+              type: boolean
+              description: The all severities selected flag.
+            severities:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsAlertSeverityOld"
+              description: This field represents the list of severities the webhook
+                notification belongs to.
+            subscribe_all_sites:
+              type: boolean
+              description: The all sites selected flag.
+            sites:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsAlertSiteOld"
+              description: This field represents the list of sites to which this webhook
+                notification belongs to.
+            subscribe_all_apps:
+              type: boolean
+              description: The all apps selected flag.
+            apps:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsApplicationOld"
+              description: The field represents the list of applications this webhook
+                notification belongs to.
+    PagedXiqAlertWebhookSubscriptionOld:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/XiqAlertWebhookSubscriptionOld"
+    XiqCreateAlertWebhookSubscriptionRequestOld:
+      type: object
+      description: The payload to create webhook subscription
+      required:
+        - url
+        - is_enabled
+        - subscribe_all_policies
+        - subscribe_all_apps
+        - subscribe_all_severities
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The webhook endpoint URL.
+        secret:
+          type: string
+          description: The auth secret for the webhook endpoint.
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for a webhook url.
+        subscribe_all_apps:
+          type: boolean
+          description: The all apps selected flag.
+        apps:
+          type: array
+          items:
+            type: string
+            description: The application name.
+          description: The application name list, e.g. XIQ, XSW, XUZ etc.
+        subscribe_all_policies:
+          type: boolean
+          description: The all alert policies selected flag.
+        alert_policy_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: The selected alert policy list. This field will be an empty
+            collection when is_subscribe_all is true.
+        subscribe_all_severities:
+          type: boolean
+          description: The all severities selected flag.
+        severity_ids:
+          type: array
+          description: The severity ID list.
+          items:
+            type: integer
+            format: int64
+            description: The alert severity ID.
+    XiqBulkDeleteWebhookSubscriptionResultOld:
+      type: object
+      description: The result of bulk detele webhook susbscriptions.
+      properties:
+        ID:
+          type: integer
+          format: int64
+          description: The ID of webhook subscription.
+    XiqDeleteBulkAlertSubscriptionWebhookResponseOld:
+      type: object
+      description: The result of a bulk delete for alert webhook subscriptions.
+      required:
+        - result
+      properties:
+        result:
+          type: string
+          description: The result of this bulk deletion (SUCCESS/PARTIAL_SUCCESS).
+          $ref: "#/components/schemas/XiqBulkOperationResultOld"
+        reason:
+          type: string
+          description: Indicate the reason of unresolved_deletion.
+          example: At least one ID not found.
+        unresolved_deletions:
+          type: array
+          description: This result will be shown when a bulk delete partially succeeds,
+            providing details of unsuccessful delete IDs and associated names.
+          items:
+            $ref: "#/components/schemas/XiqBulkDeleteWebhookSubscriptionResultOld"
+    XiqUpdateAlertWebhookSubscriptionRequestOld:
+      type: object
+      description: The payload to create webhook subscription
+      required:
+        - url
+        - is_enabled
+        - subscribe_all_policies
+        - subscribe_all_apps
+        - subscribe_all_severities
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The webhook endpoint URL.
+        secret:
+          type: string
+          description: The auth secret for the webhook endpoint.
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for a webhook url.
+        subscribe_all_apps:
+          type: boolean
+          description: The all apps selected flag.
+        apps:
+          type: array
+          items:
+            type: string
+            description: The application name.
+          description: The application name list, e.g. XIQ, XSW, XUZ etc.
+        subscribe_all_policies:
+          type: boolean
+          description: The all alert policies selected flag.
+        alert_policy_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: The selected alert policy list. This field will be an empty
+            collection when is_subscribe_all is true.
+        subscribe_all_severities:
+          type: boolean
+          description: The all severities selected flag.
+        severity_ids:
+          type: array
+          description: The severity ID list.
+          items:
+            type: integer
+            format: int64
+            description: The severity ID.
+    XiqPatchAlertWebhookSubscriptionRequestOld:
+      type: object
+      description: The payload to update webhook subscription
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The webhook endpoint URL.
+        secret:
+          type: string
+          description: The auth secret for the webhook endpoint.
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for a webhook url.
+        subscribe_all_apps:
+          type: boolean
+          description: The all apps selected flag.
+        apps:
+          type: array
+          items:
+            type: string
+            description: The application name.
+          description: The application name list, e.g. XIQ, XSW, XUZ etc.
+        subscribe_all_sites:
+          type: boolean
+          description: The all sites selected flag.
+        site_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+            description: The site ID
+          description: The site ID list.
+        subscribe_all_policies:
+          type: boolean
+          description: The all alert policies selected flag.
+        alert_policy_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: The selected alert policy list. This field will be an empty
+            collection when is_subscribe_all is true.
+        subscribe_all_severities:
+          type: boolean
+          description: The all severities selected flag.
+        severity_ids:
+          type: array
+          description: The severity ID list.
+          items:
+            type: integer
+            format: int64
+            description: The severity ID.
+    CnsAlertServiceNowSortFieldOld:
+      type: string
+      description: All available ServiceNow notification sort fields.
+      enum:
+        - SERVICENOW_ACCOUNT_EMAIL
+    XiqAlertServiceNowSubscriptionOld:
+      allOf:
+        - $ref: "#/components/schemas/XiqBaseEntityOld"
+        - type: object
+          description: The ServiceNow subscription data model
+          required:
+            - servicenow_account_email
+            - subscribe_all_policies
+            - subscribe_all_severities
+            - subscribe_all_sites
+            - subscribe_all_apps
+          properties:
+            servicenow_account_email:
+              type: string
+              format: email
+              description: The ServiceNow account email.
+            is_enabled:
+              type: boolean
+              description: Enable/disable alert notifications for an ServiceNow.
+            subscribe_all_policies:
+              type: boolean
+              description: The all alert policies selected flag.
+            alert_policies:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsAlertPolicyOld"
+              description: This field represents the name of the policy to which this
+                ServiceNow notification belongs to. This field is optional
+                because it is only needed when is_subscribe_all is false.
+            subscribe_all_severities:
+              type: boolean
+              description: The all severities selected flag.
+            severities:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsAlertSeverityOld"
+              description: This field represents the list of severities the ServiceNow
+                notification belongs to.
+            subscribe_all_sites:
+              type: boolean
+              description: The all sites selected flag.
+            sites:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsAlertSiteOld"
+              description: This field represents the list of sites to which this ServiceNow
+                notification belongs to.
+            subscribe_all_apps:
+              type: boolean
+              description: The all apps selected flag.
+            apps:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsApplicationOld"
+              description: The field represents the list of applications this ServiceNow
+                notification belongs to.
+    PagedXiqAlertServiceNowSubscriptionOld:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/XiqAlertServiceNowSubscriptionOld"
+    XiqCreateAlertServiceNowSubscriptionRequestOld:
+      type: object
+      description: The payload to create ServiceNow subscription
+      required:
+        - servicenow_account_email
+        - is_enabled
+        - subscribe_all_policies
+        - subscribe_all_apps
+        - subscribe_all_severities
+      properties:
+        servicenow_account_email:
+          type: string
+          description: The ServiceNow account email which ends with @service-now.com .
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for an ServiceNow.
+        subscribe_all_apps:
+          type: boolean
+          description: The all apps selected flag.
+        apps:
+          type: array
+          items:
+            type: string
+            description: The application name.
+          description: The application name list, e.g. XIQ, XSW, XUZ etc.
+        subscribe_all_policies:
+          type: boolean
+          description: The all alert policies selected flag.
+        alert_policy_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: The selected alert policy list. This field will be an empty
+            collection when is_subscribe_all is true.
+        subscribe_all_severities:
+          type: boolean
+          description: The all severities selected flag.
+        severity_ids:
+          type: array
+          description: The severity ID list.
+          items:
+            type: integer
+            format: int64
+            description: The alert severity ID.
+    notificationIdsOld:
+      type: object
+      description: The filter to get alert subscriptions
+      properties:
+        ids:
+          type: array
+          description: The subscription ID list
+          items:
+            type: integer
+            description: The subscription ID list
+            format: int64
+    XiqBulkDeleteServiceNowSubscriptionResultOld:
+      type: object
+      description: The result of bulk detele ServiceNow susbscriptions.
+      properties:
+        ID:
+          type: integer
+          format: int64
+          description: The ID of ServiceNow subscription.
+    XiqDeleteBulkAlertSubscriptionServiceNowResponseOld:
+      type: object
+      description: The result of a bulk delete for alert ServiceNow subscriptions.
+      required:
+        - result
+      properties:
+        result:
+          type: string
+          description: The result of this bulk deletion (SUCCESS/PARTIAL_SUCCESS).
+          $ref: "#/components/schemas/XiqBulkOperationResultOld"
+          example: PARTIAL_SUCCESS
+        reason:
+          type: string
+          description: Indicate the reason of unresolved_deletion.
+          example: At least one ID not found.
+        unresolved_deletions:
+          type: array
+          description: This result will be shown when a bulk delete partially succeeds,
+            providing details of unsuccessful delete IDs and associated names.
+          items:
+            $ref: "#/components/schemas/XiqBulkDeleteServiceNowSubscriptionResultOld"
+    XiqUpdateAlertServiceNowSubscriptionRequestOld:
+      type: object
+      description: The payload to update ServiceNow subscription
+      required:
+        - servicenow_account_email
+        - is_enabled
+        - subscribe_all_policies
+        - subscribe_all_apps
+        - subscribe_all_severities
+      properties:
+        servicenow_account_email:
+          type: string
+          description: The ServiceNow account email which ends with @service-now.com .
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for ServiceNow account.
+        subscribe_all_apps:
+          type: boolean
+          description: The all apps selected flag.
+        apps:
+          type: array
+          items:
+            type: string
+            description: The application name.
+          description: The application name list, e.g. XIQ, XSW, XUZ etc.
+        subscribe_all_policies:
+          type: boolean
+          description: The all alert policies selected flag.
+        alert_policy_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: The selected alert policy list. This field will be an empty
+            collection when is_subscribe_all is true.
+        subscribe_all_severities:
+          type: boolean
+          description: The all severities selected flag.
+        severity_ids:
+          type: array
+          description: The severity ID list.
+          items:
+            type: integer
+            format: int64
+            description: The severity ID.
+    XiqPatchAlertServiceNowSubscriptionRequestOld:
+      type: object
+      description: The payload to update ServiceNow subscription
+      properties:
+        servicenow_account_email:
+          type: string
+          description: The ServiceNow account email which ends with @service-now.com .
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for a ServiceNow account.
+        subscribe_all_apps:
+          type: boolean
+          description: The all apps selected flag.
+        apps:
+          type: array
+          items:
+            type: string
+            description: The application name.
+          description: The application name list, e.g. XIQ, XSW, XUZ etc.
+        subscribe_all_sites:
+          type: boolean
+          description: The all sites selected flag.
+        site_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+            description: The site ID
+          description: The site ID list.
+        subscribe_all_policies:
+          type: boolean
+          description: The all alert policies selected flag.
+        alert_policy_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: The selected alert policy list. This field will be an empty
+            collection when is_subscribe_all is true.
+        subscribe_all_severities:
+          type: boolean
+          description: The all severities selected flag.
+        severity_ids:
+          type: array
+          description: The severity ID list.
+          items:
+            type: integer
+            format: int64
+            description: The severity ID.
+    CnsAlertEmailSortField:
+      type: string
+      description: All available email notification sort fields.
+      enum:
+        - EMAIL_ADDRESS
+    CnsNotificationRuleType:
+      type: string
+      description: All available email notification sort fields.
+      enum:
+        - ALERT
+        - CONTRACT
+        - SUBSCRIPTION
+    XiqBaseEntity:
+      required:
+        - id
+        - create_time
+        - update_time
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier
+          format: int64
+        create_time:
+          type: string
+          description: The create time
+          format: date-time
+        update_time:
+          type: string
+          description: The last update time
+          format: date-time
+    CnsAlertPolicy:
+      type: object
+      description: Represents an alert policy that defines conditions for triggering
+        alerts. Policies group related alert rules and can be subscribed to for
+        notifications.
+      properties:
+        policy_id:
+          type: integer
+          description: Unique identifier for the alert policy.
+          format: int64
+        policy_name:
+          type: string
+          description: Human-readable name of the alert policy (e.g., "Device Offline",
+            "High CPU Usage").
+    CnsAlertSeverity:
+      type: object
+      description: Represents an alert severity level used to classify the urgency of
+        alerts. Common severity levels include Critical, Major, Minor, Warning,
+        and Informational.
+      properties:
+        severity_id:
+          type: integer
+          format: int64
+          description: Unique identifier for the severity level.
+        severity_name:
+          type: string
+          description: Human-readable name of the severity level (e.g., "Critical",
+            "Major", "Minor", "Warning", "Informational").
+    CnsApplication:
+      type: object
+      properties:
+        app:
+          type: string
+          description: The application name such as XSW, XIQ etc.
+        app_name:
+          type: string
+          description: The application display name which can be displayed to users such
+            as SD-WAN, XCloudIQ etc.
+    CnsAlertSite:
+      type: object
+      properties:
+        site_id:
+          type: integer
+          description: The location unique identifier
+          format: int64
+        site_name:
+          type: string
+          description: The site name
+    CnsAlertNotificationRule:
+      type: object
+      properties:
+        subscribe_all_policies:
+          type: boolean
+          description: The all alert policies selected flag.
+        alert_policies:
+          type: array
+          items:
+            $ref: "#/components/schemas/CnsAlertPolicy"
+          description: This field represents the name of the policy to which this email
+            notification belongs to. This field is optional because it is only
+            needed when is_subscribe_all is false.
+        subscribe_all_severities:
+          type: boolean
+          description: The all severities selected flag.
+        severities:
+          type: array
+          items:
+            $ref: "#/components/schemas/CnsAlertSeverity"
+          description: This field represents the list of severities the email notification
+            belongs to.
+        subscribe_all_apps:
+          type: boolean
+          description: The all apps selected flag.
+        apps:
+          type: array
+          items:
+            $ref: "#/components/schemas/CnsApplication"
+          description: The field represents the list of applications this email
+            notification belongs to.
+        subscribe_all_sites:
+          type: boolean
+          description: The all sites selected flag.
+        sites:
+          type: array
+          items:
+            $ref: "#/components/schemas/CnsAlertSite"
+          description: This field represents the list of sites to which this email
+            notification belongs to.
+    CnsNotificationRule:
+      type: object
+      description: A notification rule that defines specific conditions or events that
+        trigger notifications. Rules can be associated with email, webhook, or
+        ServiceNow subscriptions.
+      properties:
+        rule_id:
+          type: integer
+          description: Unique identifier for the notification rule.
+          format: int64
+        rule_name:
+          type: string
+          description: Human-readable name describing the notification rule's purpose.
+    XiqAlertEmailSubscription:
+      allOf:
+        - $ref: "#/components/schemas/XiqBaseEntity"
+        - type: object
+          description: The Email Notification data model
+          required:
+            - emails
+            - is_email_verified
+          properties:
+            email:
+              type: string
+              format: email
+              description: The email address.
+            is_enabled:
+              type: boolean
+              description: Enable/disable Email notifications.
+            is_email_verified:
+              type: boolean
+              description: The email address verified flag.
+            resend_email_after:
+              type: string
+              format: date-time
+              description: This field represents the time after for the user can resend a new
+                verification email.
+            alert_configuration:
+              $ref: "#/components/schemas/CnsAlertNotificationRule"
+            contract_configuration:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsNotificationRule"
+            subscription_configuration:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsNotificationRule"
+    PagedXiqAlertEmailSubscription:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/XiqAlertEmailSubscription"
+    CnsAlertConfiguration:
+      type: object
+      description: Configuration for alert-based notifications. Defines which
+        applications, alert policies, and severity levels should trigger
+        notifications. At least one of the subscribe_all flags or specific ID
+        arrays should be populated.
+      properties:
+        subscribe_all_apps:
+          type: boolean
+          description: When true, subscribes to alerts from all available applications.
+            When false, use the apps array to specify individual applications.
+        apps:
+          type: array
+          items:
+            type: string
+            description: The application identifier.
+          description: List of application identifiers to subscribe to. Common values
+            include XIQ (ExtremeCloud IQ), XCA (ExtremeCloud Appliance), and
+            other Extreme platform applications. Ignored when subscribe_all_apps
+            is true.
+        subscribe_all_policies:
+          type: boolean
+          description: When true, subscribes to all alert policies. When false, use
+            alert_policy_ids to specify individual policies.
+        alert_policy_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: List of alert policy IDs to subscribe to. Ignored when
+            subscribe_all_policies is true.
+        subscribe_all_severities:
+          type: boolean
+          description: When true, subscribes to alerts of all severity levels. When false,
+            use severity_ids to specify individual severity levels.
+        severity_ids:
+          type: array
+          description: List of alert severity IDs to subscribe to (e.g., Critical, Major,
+            Minor, Warning, Informational). Ignored when
+            subscribe_all_severities is true.
+          items:
+            type: integer
+            format: int64
+            description: The alert severity ID.
+    CnsSubscriptionConfiguration:
+      description: Defines how subscription-based notifications are triggered and
+        specifies which subscription rule IDs initiate notifications.
+      type: object
+      properties:
+        rule_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: The selected subscription rule list. This field can be an empty
+            collection if not subscribing to any subscription.
+    CnsContractConfiguration:
+      description: Defines how contract-based notifications are triggered and
+        specifies which contract rule IDs initiate notifications.
+      type: object
+      properties:
+        rule_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: The selected contract rule list. This field can be an empty
+            collection if not subscribing to any contract.
+    XiqCreateAlertEmailSubscriptionRequest:
+      type: object
+      description: The payload to create email subscription
+      required:
+        - email
+        - is_enabled
+      properties:
+        emails:
+          type: array
+          items:
+            type: string
+            description: The email address.
+          description: Array of email recipients.
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for an email.
+        alert_configuration:
+          $ref: "#/components/schemas/CnsAlertConfiguration"
+        subscription_configuration:
+          $ref: "#/components/schemas/CnsSubscriptionConfiguration"
+        contract_configuration:
+          $ref: "#/components/schemas/CnsContractConfiguration"
+    XiqAlertEmailSubscriptionList:
+      type: object
+      description: The Email Notification list
+      properties:
+        data:
+          type: array
+          description: The data in the current page
+          items:
+            $ref: "#/components/schemas/XiqAlertEmailSubscription"
+    notificationIds:
+      type: object
+      description: The filter to get notifications
+      properties:
+        ids:
+          type: array
+          description: The notification ID list
+          items:
+            type: integer
+            description: The notification ID list
+            format: int64
+    XiqBulkOperationResult:
+      type: string
+      enum:
+        - PARTIAL_SUCCESS
+        - SUCCESS
+    XiqBulkDeleteEmailSubscriptionResult:
+      type: object
+      description: The result of bulk delete email notification.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The id of email notification.
+        name:
+          type: string
+          description: The email id.
+    XiqDeleteBulkAlertSubscriptionEmailResponse:
+      type: object
+      description: The result of a bulk delete for alert Email Notification.
+      required:
+        - result
+      properties:
+        result:
+          type: string
+          description: The result of this bulk deletion (SUCCESS/PARTIAL_SUCCESS).
+          $ref: "#/components/schemas/XiqBulkOperationResult"
+          example: PARTIAL_SUCCESS
+        reason:
+          type: string
+          description: Indicate the reason of unresolved_deletion.
+          example: At least one ID not found.
+        unresolved_deletions:
+          type: array
+          description: This result will be shown when a bulk delete partially succeeds,
+            providing details of unsuccessful delete IDs and associated names.
+          items:
+            $ref: "#/components/schemas/XiqBulkDeleteEmailSubscriptionResult"
+    XiqBulkEnableEmailNotificationResult:
+      type: object
+      description: The result of bulk enable / disable email notification.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The id of email notification.
+        name:
+          type: string
+          description: The email id.
+    XiqEnableBulkEmailNotificationResponse:
+      type: object
+      description: The result of a bulk enable / disable for alert email notification.
+      required:
+        - result
+      properties:
+        result:
+          type: string
+          description: The result of this bulk enable / disable (SUCCESS/PARTIAL_SUCCESS).
+          $ref: "#/components/schemas/XiqBulkOperationResult"
+          example: PARTIAL_SUCCESS
+        reason:
+          type: string
+          description: Indicate the reason of unresolved_deletion.
+          example: At least one ID not found.
+        unresolved_deletions:
+          type: array
+          description: This result will be shown when a bulk enable / disable partially
+            succeeds, providing details of unsuccessful enable / disable IDs and
+            associated names.
+          items:
+            $ref: "#/components/schemas/XiqBulkEnableEmailNotificationResult"
+    XiqUpdateAlertEmailSubscriptionRequest:
+      type: object
+      description: The payload to create email subscription
+      required:
+        - email
+        - is_enabled
+      properties:
+        email:
+          type: string
+          description: The email address.
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for an email.
+        alert_configuration:
+          $ref: "#/components/schemas/CnsAlertConfiguration"
+        subscription_configuration:
+          $ref: "#/components/schemas/CnsSubscriptionConfiguration"
+        contract_configuration:
+          $ref: "#/components/schemas/CnsContractConfiguration"
+    XiqPatchAlertEmailSubscriptionRequest:
+      type: object
+      description: The payload to update Email Notification
+      properties:
+        email:
+          type: string
+          description: The email address.
+        is_enabled:
+          type: boolean
+          description: Enable/disable Email Notification.
+        alert_configuration:
+          $ref: "#/components/schemas/CnsAlertConfiguration"
+        subscription_configuration:
+          $ref: "#/components/schemas/CnsSubscriptionConfiguration"
+        contract_configuration:
+          $ref: "#/components/schemas/CnsContractConfiguration"
+    CnsAlertWebhookSortField:
+      type: string
+      description: All available webhook notification sort fields.
+      enum:
+        - URL
+    XiqAlertWebhookSubscription:
+      allOf:
+        - $ref: "#/components/schemas/XiqBaseEntity"
+        - type: object
+          description: The webhook Notification data model
+          required:
+            - url
+          properties:
+            url:
+              type: string
+              format: uri
+              description: The webhook endpoint URL.
+            secret:
+              type: string
+              description: The auth secret for the webhook endpoint.
+            is_enabled:
+              type: boolean
+              description: Enable/disable Webhook notifications.
+            is_active:
+              type: boolean
+              description: Active/Inactive Webhook notifications.
+            alert_configuration:
+              $ref: "#/components/schemas/CnsAlertNotificationRule"
+            contract_configuration:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsNotificationRule"
+            subscription_configuration:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsNotificationRule"
+    PagedXiqAlertWebhookSubscription:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/XiqAlertWebhookSubscription"
+    CnsWebhook:
+      type: object
+      description: Configuration for a webhook endpoint that receives notification
+        payloads via HTTP POST requests.
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The HTTPS endpoint URL that will receive notification payloads.
+            Must be publicly accessible.
+        secret:
+          type: string
+          description: Optional shared secret used for HMAC signature verification. When
+            provided, each webhook request includes an X-Signature header
+            containing the HMAC-SHA256 signature of the payload, allowing the
+            receiver to verify request authenticity.
+    XiqCreateAlertWebhookSubscriptionRequest:
+      type: object
+      description: The payload to create Webhook Notification
+      required:
+        - url
+        - is_enabled
+      properties:
+        webhook_urls:
+          type: array
+          items:
+            $ref: "#/components/schemas/CnsWebhook"
+          description: Array of Webhook recipients.
+        is_enabled:
+          type: boolean
+          description: Enable/disable Webhook notifications.
+        alert_configuration:
+          $ref: "#/components/schemas/CnsAlertConfiguration"
+        subscription_configuration:
+          $ref: "#/components/schemas/CnsSubscriptionConfiguration"
+        contract_configuration:
+          $ref: "#/components/schemas/CnsContractConfiguration"
+    XiqAlertWebhookSubscriptionList:
+      type: object
+      description: The Webhook Notification list
+      properties:
+        data:
+          type: array
+          description: The data in the current page
+          items:
+            $ref: "#/components/schemas/XiqAlertWebhookSubscription"
+    XiqBulkDeleteWebhookSubscriptionResult:
+      type: object
+      description: The result of bulk delete webhook notification.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The id of webhook notification.
+        name:
+          type: string
+          description: The webhook url.
+    XiqDeleteBulkAlertSubscriptionWebhookResponse:
+      type: object
+      description: The result of a bulk delete for Webhook Notification.
+      required:
+        - result
+      properties:
+        result:
+          type: string
+          description: The result of this bulk deletion (SUCCESS/PARTIAL_SUCCESS).
+          $ref: "#/components/schemas/XiqBulkOperationResult"
+        reason:
+          type: string
+          description: Indicate the reason of unresolved_deletion.
+          example: At least one ID not found.
+        unresolved_deletions:
+          type: array
+          description: This result will be shown when a bulk delete partially succeeds,
+            providing details of unsuccessful delete IDs and associated names.
+          items:
+            $ref: "#/components/schemas/XiqBulkDeleteWebhookSubscriptionResult"
+    XiqBulkEnableWebhookNotificationResult:
+      type: object
+      description: The result of bulk enable / disable webhook notification.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The id of webhook notification.
+        name:
+          type: string
+          description: The webhook url.
+    XiqEnableBulkWebhookNotificationResponse:
+      type: object
+      description: The result of a bulk enable / disable for alert Webhook notification.
+      required:
+        - result
+      properties:
+        result:
+          type: string
+          description: The result of this bulk enable / disable (SUCCESS/PARTIAL_SUCCESS).
+          $ref: "#/components/schemas/XiqBulkOperationResult"
+          example: PARTIAL_SUCCESS
+        reason:
+          type: string
+          description: Indicate the reason of unresolved_deletion.
+          example: At least one ID not found.
+        unresolved_deletions:
+          type: array
+          description: This result will be shown when a bulk enable / disable partially
+            succeeds, providing details of unsuccessful enable / disable IDs and
+            associated names.
+          items:
+            $ref: "#/components/schemas/XiqBulkEnableWebhookNotificationResult"
+    XiqUpdateAlertWebhookSubscriptionRequest:
+      type: object
+      description: The payload to create webhook subscription
+      required:
+        - url
+        - is_enabled
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The webhook endpoint URL.
+        secret:
+          type: string
+          description: The auth secret for the webhook endpoint.
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for a webhook url.
+        alert_configuration:
+          $ref: "#/components/schemas/CnsAlertConfiguration"
+        subscription_configuration:
+          $ref: "#/components/schemas/CnsSubscriptionConfiguration"
+        contract_configuration:
+          $ref: "#/components/schemas/CnsContractConfiguration"
+    XiqPatchAlertWebhookSubscriptionRequest:
+      type: object
+      description: The payload to update webhook subscription
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The webhook endpoint URL.
+        secret:
+          type: string
+          description: The auth secret for the webhook endpoint.
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for a webhook url.
+        alert_configuration:
+          $ref: "#/components/schemas/CnsAlertConfiguration"
+        subscription_configuration:
+          $ref: "#/components/schemas/CnsSubscriptionConfiguration"
+        contract_configuration:
+          $ref: "#/components/schemas/CnsContractConfiguration"
+    CnsAlertServiceNowSortField:
+      type: string
+      description: All available ServiceNow notification sort fields.
+      enum:
+        - SERVICENOW_ACCOUNT_EMAIL
+    XiqAlertServiceNowSubscription:
+      allOf:
+        - $ref: "#/components/schemas/XiqBaseEntity"
+        - type: object
+          description: The ServiceNow Notification data model
+          required:
+            - servicenow_account_email
+          properties:
+            servicenow_account_email:
+              type: string
+              format: email
+              description: The ServiceNow account email.
+            is_enabled:
+              type: boolean
+              description: Enable/disable ServiceNow notification.
+            alert_configuration:
+              $ref: "#/components/schemas/CnsAlertNotificationRule"
+            contract_configuration:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsNotificationRule"
+            subscription_configuration:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsNotificationRule"
+    PagedXiqAlertServiceNowSubscription:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/XiqAlertServiceNowSubscription"
+    XiqCreateAlertServiceNowSubscriptionRequest:
+      type: object
+      description: The payload to create ServiceNow Notification
+      required:
+        - servicenow_account_emails
+        - is_enabled
+      properties:
+        servicenow_account_emails:
+          type: array
+          items:
+            type: string
+            description: The ServiceNow account email which ends with @service-now.com .
+          description: Array of ServiceNow recipients.
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for an ServiceNow.
+        alert_configuration:
+          $ref: "#/components/schemas/CnsAlertConfiguration"
+        subscription_configuration:
+          $ref: "#/components/schemas/CnsSubscriptionConfiguration"
+        contract_configuration:
+          $ref: "#/components/schemas/CnsContractConfiguration"
+    XiqAlertServiceNowSubscriptionList:
+      type: object
+      description: The ServiceNow Notification data model
+      properties:
+        data:
+          type: array
+          description: The data in the current page
+          items:
+            $ref: "#/components/schemas/XiqAlertServiceNowSubscription"
+    notificationIds1:
+      type: object
+      description: The filter to get ServiceNow Notification
+      properties:
+        ids:
+          type: array
+          description: The subscription ID list
+          items:
+            type: integer
+            description: The subscription ID list
+            format: int64
+    XiqBulkDeleteServiceNowSubscriptionResult:
+      type: object
+      description: The result of bulk delete ServiceNow notification.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The id of ServiceNow notification.
+        name:
+          type: string
+          description: The ServiceNow email.
+    XiqDeleteBulkAlertSubscriptionServiceNowResponse:
+      type: object
+      description: The result of a bulk delete for alert ServiceNow subscriptions.
+      required:
+        - result
+      properties:
+        result:
+          type: string
+          description: The result of this bulk deletion (SUCCESS/PARTIAL_SUCCESS).
+          $ref: "#/components/schemas/XiqBulkOperationResult"
+          example: PARTIAL_SUCCESS
+        reason:
+          type: string
+          description: Indicate the reason of unresolved_deletion.
+          example: At least one ID not found.
+        unresolved_deletions:
+          type: array
+          description: This result will be shown when a bulk delete partially succeeds,
+            providing details of unsuccessful delete IDs and associated names.
+          items:
+            $ref: "#/components/schemas/XiqBulkDeleteServiceNowSubscriptionResult"
+    XiqBulkEnableServiceNowNotificationResult:
+      type: object
+      description: The result of bulk enable / disable servicenow notification.
+      properties:
+        ID:
+          type: integer
+          format: int64
+          description: The ID of servicenow notification.
+        name:
+          type: string
+          description: The ServiceNow email.
+    XiqEnableBulkServiceNowNotificationResponse:
+      type: object
+      description: The result of a bulk enable / disable for alert servicenow notification.
+      required:
+        - result
+      properties:
+        result:
+          type: string
+          description: The result of this bulk enable / disable (SUCCESS/PARTIAL_SUCCESS).
+          $ref: "#/components/schemas/XiqBulkOperationResult"
+          example: PARTIAL_SUCCESS
+        reason:
+          type: string
+          description: Indicate the reason of unresolved_deletion.
+          example: At least one ID not found.
+        unresolved_deletions:
+          type: array
+          description: This result will be shown when a bulk enable / disable partially
+            succeeds, providing details of unsuccessful enable / disable IDs and
+            associated names.
+          items:
+            $ref: "#/components/schemas/XiqBulkEnableServiceNowNotificationResult"
+    XiqUpdateAlertServiceNowSubscriptionRequest:
+      type: object
+      description: The payload to update ServiceNow Notification
+      required:
+        - servicenow_account_email
+        - is_enabled
+      properties:
+        servicenow_account_email:
+          type: string
+          description: The ServiceNow account email which ends with @service-now.com .
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for ServiceNow account.
+        alert_configuration:
+          $ref: "#/components/schemas/CnsAlertConfiguration"
+        subscription_configuration:
+          $ref: "#/components/schemas/CnsSubscriptionConfiguration"
+        contract_configuration:
+          $ref: "#/components/schemas/CnsContractConfiguration"
+    XiqPatchAlertServiceNowSubscriptionRequest:
+      type: object
+      description: The payload to update ServiceNow Notification
+      properties:
+        servicenow_account_email:
+          type: string
+          description: The ServiceNow account email which ends with @service-now.com .
+        is_enabled:
+          type: boolean
+          description: Enable/disable alert notifications for a ServiceNow account.
+        alert_configuration:
+          $ref: "#/components/schemas/CnsAlertConfiguration"
+        subscription_configuration:
+          $ref: "#/components/schemas/CnsSubscriptionConfiguration"
+        contract_configuration:
+          $ref: "#/components/schemas/CnsContractConfiguration"
+    CnsNotificationRuleSortField:
+      type: string
+      description: All available notification rules sort fields.
+      enum:
+        - RULE_NAME
+    CnsNotificationRules:
+      type: object
+      properties:
+        rule_id:
+          type: integer
+          format: int64
+          description: The rule id.
+        rule_name:
+          type: string
+          description: The rule name.
+    CnsContractNotificationRule:
+      allOf:
+        - $ref: "#/components/schemas/XiqBaseEntity"
+        - type: object
+          properties:
+            rule_name:
+              type: string
+              description: The Contract notification rule name.
+            is_predefined:
+              type: boolean
+              description: The field indicates whether the notification rule is predefined or
+                user-defined.
+            timeline_rules:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsNotificationRules"
+              description: This field represents the list of timeline rules the notification
+                rule belongs to.
+            event_rules:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsNotificationRules"
+              description: This field represents the list of event rules notification rules
+                belongs to.
+    XiqContractNotificationRules:
+      allOf:
+        - type: object
+          description: The Contract notification rules data model
+          properties:
+            predefined_rule:
+              $ref: "#/components/schemas/CnsContractNotificationRule"
+            user_defined_rules:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/CnsContractNotificationRule"
+    PagedXiqContractNotificationRules:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/XiqContractNotificationRules"
+    XiqCreateContractNotificationRuleRequest:
+      type: object
+      description: The payload to create Contract Notification Rule
+      required:
+        - rule_name
+        - timeline_rule_ids
+      properties:
+        rule_name:
+          type: string
+          description: The Contract notification rule name.
+        force_update:
+          type: boolean
+          description: The Contract notification rule force update flag.
+        timeline_rule_ids:
+          type: array
+          description: The timeline rule ID list.
+          items:
+            type: integer
+            format: int64
+            description: The notification timeline rule ID.
+        event_rule_ids:
+          type: array
+          description: The event rule ID list.
+          items:
+            type: integer
+            format: int64
+            description: The event rule ID.
+    notificationRuleIds:
+      type: object
+      description: The list of notification rule IDs
+      properties:
+        ids:
+          type: array
+          description: The notification rule ID list
+          items:
+            type: integer
+            description: The notification rule ID list
+            format: int64
+    XiqBulkDeleteNotificationRulesResult:
+      type: object
+      description: The result of bulk delete rules.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The notification rule id.
+        name:
+          type: string
+          description: The notification rule name.
+    XiqDeleteBulkNotificationRulesResponse:
+      type: object
+      description: The result of a bulk delete for Contract notification rules.
+      required:
+        - result
+      properties:
+        result:
+          type: string
+          description: The result of this bulk deletion (SUCCESS/PARTIAL_SUCCESS).
+          $ref: "#/components/schemas/XiqBulkOperationResult"
+          example: PARTIAL_SUCCESS
+        reason:
+          type: string
+          description: Indicate the reason of unresolved_deletion.
+          example: At least one ID not found.
+        unresolved_deletions:
+          type: array
+          description: This result will be shown when a bulk delete partially succeeds,
+            providing details of unsuccessful delete IDs and associated names.
+          items:
+            $ref: "#/components/schemas/XiqBulkDeleteNotificationRulesResult"
+    XiqUpdateContractNotificationRuleRequest:
+      type: object
+      description: The payload to update Contract notification rule
+      required:
+        - rule_name
+        - timeline_rule_ids
+      properties:
+        rule_name:
+          type: string
+          description: The Contract notification rule name.
+        force_update:
+          type: boolean
+          description: The Contract notification rule force update flag.
+        timeline_rule_ids:
+          type: array
+          description: The timeline rule ID list.
+          items:
+            type: integer
+            format: int64
+            description: The notification timeline rule ID.
+        event_rule_ids:
+          type: array
+          description: The event rule ID list.
+          items:
+            type: integer
+            format: int64
+            description: The notification event rule ID.
+    XiqPatchContractNotificationRuleRequest:
+      type: object
+      description: The payload to update Contract notification rule
+      properties:
+        rule_name:
+          type: string
+          description: The Contract notification rule name.
+        force_update:
+          type: boolean
+          description: The Contract notification rule force update flag.
+        timeline_rule_ids:
+          type: array
+          description: The timeline rule ID list.
+          items:
+            type: integer
+            format: int64
+            description: The notification timeline rule ID.
+        event_rule_ids:
+          type: array
+          description: The event rule ID list.
+          items:
+            type: integer
+            format: int64
+            description: The notification event rule ID.
+    XiqNotificationRuleSummary:
+      allOf:
+        - type: object
+          description: The notification rules summary object.
+          properties:
+            recipient_count:
+              type: integer
+              format: int64
+              description: The notification rule recipient count.
+    CnsSubscriptionNotificationRule:
+      allOf:
+        - $ref: "#/components/schemas/XiqBaseEntity"
+        - type: object
+          description: A subscription-based notification rule that triggers notifications
+            based on subscription lifecycle events (e.g., expiration warnings,
+            renewals). Subscription rules can include timeline-based triggers
+            and event-based triggers.
+          properties:
+            rule_name:
+              type: string
+              description: Human-readable name for the subscription notification rule.
+            is_predefined:
+              type: boolean
+              description: Indicates whether this is a system-defined rule (true) or a custom
+                user-created rule (false). Predefined rules cannot be deleted
+                but can be enabled/disabled.
+            apps:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsApplication"
+              description: List of applications this rule applies to. Notifications will only
+                trigger for events from these applications.
+            timeline_rules:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsNotificationRules"
+              description: Timeline-based rules that trigger notifications at specific time
+                intervals (e.g., 30 days before subscription expiration, 7 days
+                before renewal).
+            event_rules:
+              type: array
+              items:
+                $ref: "#/components/schemas/CnsNotificationRules"
+              description: Event-based rules that trigger notifications when specific
+                subscription events occur (e.g., subscription activated,
+                subscription cancelled).
+    XiqSubscriptionNotificationRules:
+      allOf:
+        - type: object
+          description: The Subscription notification rules data model
+          properties:
+            predefined_rule:
+              $ref: "#/components/schemas/CnsSubscriptionNotificationRule"
+            user_defined_rules:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/CnsSubscriptionNotificationRule"
+    PagedXiqSubscriptionNotificationRules:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/XiqSubscriptionNotificationRules"
+    XiqCreateSubscriptionNotificationRuleRequest:
+      type: object
+      description: Request payload to create a new subscription notification rule. At
+        least one of timeline_rule_ids or event_rule_ids must be provided.
+      anyOf:
+        - required:
+            - timeline_rule_ids
+        - required:
+            - event_rule_ids
+      required:
+        - rule_name
+      properties:
+        rule_name:
+          type: string
+          description: Human-readable name for the subscription notification rule. Must be
+            unique within the organization.
+        force_update:
+          type: boolean
+          description: When true, allows updating an existing rule with the same name
+            instead of returning a conflict error. Default is false.
+        apps:
+          type: array
+          items:
+            type: string
+            description: Application identifier.
+          description: List of application identifiers this rule applies to (e.g., XIQ for
+            ExtremeCloud IQ, XCA for ExtremeCloud Appliance). If empty, the rule
+            applies to all applications.
+        timeline_rule_ids:
+          type: array
+          description: IDs of timeline rules to include. Timeline rules trigger
+            notifications at specific time intervals relative to subscription
+            events (e.g., 30 days before expiration).
+          items:
+            type: integer
+            format: int64
+            description: Timeline rule ID obtained from the metadata endpoint.
+        event_rule_ids:
+          type: array
+          description: IDs of event rules to include. Event rules trigger notifications
+            when specific subscription lifecycle events occur.
+          items:
+            type: integer
+            format: int64
+            description: Event rule ID obtained from the metadata endpoint.
+    XiqUpdateSubscriptionNotificationRuleRequest:
+      type: object
+      description: The payload to update Contract notification rule
+      anyOf:
+        - required:
+            - timeline_rule_ids
+        - required:
+            - event_rule_ids
+      required:
+        - rule_name
+      properties:
+        rule_name:
+          type: string
+          description: The Contract notification rule name.
+        force_update:
+          type: boolean
+          description: The Contract notification rule force update flag.
+        apps:
+          type: array
+          items:
+            type: string
+            description: The application name.
+          description: The application name list, e.g. XIQ, XSW, XUZ etc.
+        timeline_rule_ids:
+          type: array
+          description: The timeline rule ID list.
+          items:
+            type: integer
+            format: int64
+            description: The notification timeline rule ID.
+        event_rule_ids:
+          type: array
+          description: The event rule ID list.
+          items:
+            type: integer
+            format: int64
+            description: The notification event rule ID.
+    XiqPatchSubscriptionNotificationRuleRequest:
+      type: object
+      description: The payload to update Contract notification rule
+      properties:
+        rule_name:
+          type: string
+          description: The Contract notification rule name.
+        force_update:
+          type: boolean
+          description: The Contract notification rule force update flag.
+        apps:
+          type: array
+          items:
+            type: string
+            description: The application name.
+          description: The application name list, e.g. XIQ, XSW, XUZ etc.
+        timeline_rule_ids:
+          type: array
+          description: The timeline rule ID list.
+          items:
+            type: integer
+            format: int64
+            description: The notification timeline rule ID.
+        event_rule_ids:
+          type: array
+          description: The event rule ID list.
+          items:
+            type: integer
+            format: int64
+            description: The notification event rule ID.
+    CnsRules:
+      type: object
+      description: Metadata for a notification rule template. These are predefined
+        rule definitions that can be used when creating subscription or contract
+        notification rules.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the rule template. Use this ID when creating
+            notification rules.
+        name:
+          type: string
+          description: Internal name of the rule template used for programmatic reference.
+        display_name:
+          type: string
+          description: User-friendly name of the rule template suitable for display in UI.
+        summary:
+          type: string
+          description: Brief description of what this rule does and when it triggers
+            notifications.
+    RuleType:
+      type: string
+      description: Indicates if the event rule is targeted for any rule.
+      enum:
+        - CONTRACT
+        - SUBSCRIPTION
+    XiqCreatePushNotificationTokenRequest:
+      type: object
+      description: Request payload for registering a new mobile push notification
+        token. The token is obtained from APNs (iOS) or FCM (Android) and
+        associates the device with the authenticated user.
+      required:
+        - token
+        - device_id
+      properties:
+        token:
+          type: string
+          description: The push notification token obtained from the platform's push
+            notification service (APNs for iOS, FCM for Android).
+        device_id:
+          type: string
+          description: Unique identifier for the mobile device, typically the device's
+            UUID or a generated identifier from the mobile app.
+    CnsPushNotificationToken:
+      allOf:
+        - $ref: "#/components/schemas/XiqBaseEntity"
+        - type: object
+          description: Represents a mobile push notification token registered for a user's
+            device. Tokens are issued by push notification services (APNs for
+            iOS, FCM for Android) and used to deliver notifications to mobile
+            applications.
+          properties:
+            token:
+              type: string
+              description: The device push notification token issued by APNs (iOS) or FCM
+                (Android). This token uniquely identifies the app installation
+                on a specific device.
+            device_id:
+              type: string
+              description: Unique identifier for the mobile device, typically the device's
+                UUID or a generated identifier from the mobile app.
+            user_id:
+              type: string
+              description: The authenticated user's identifier associated with this token.
+            owner_id:
+              type: integer
+              format: int64
+              description: The organization or tenant ID that owns this token registration.
+            enabled:
+              type: boolean
+              description: Whether push notifications are enabled for this token. When false,
+                notifications will not be sent to this device.
+            issued_at:
+              type: string
+              description: Timestamp when the token was registered with the notification
+                service.
+              format: date-time
+            expired_at:
+              type: string
+              description: Timestamp when the token expires and should be refreshed. Expired
+                tokens will not receive notifications.
+              format: date-time
+  responses:
+    400ErrorResponse:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiClientError"
+    401ErrorResponse:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    403ErrorResponse:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    500ErrorResponse:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    409ErrorResponse:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+  parameters:
+    page:
+      name: page
+      in: query
+      description: Page number for pagination, starting from 1
+      required: false
+      schema:
+        minimum: 1
+        maximum: 2147483647
+        type: integer
+        format: int32
+        default: 1
+    limit-500:
+      name: limit
+      in: query
+      description: Page Size, min = 1, max = 500
+      required: false
+      schema:
+        maximum: 500
+        minimum: 1
+        type: integer
+        format: int32
+        default: 500
+    order:
+      name: order
+      in: query
+      description: The sort order (ascending by default)
+      required: false
+      schema:
+        $ref: "#/components/schemas/SortOrder"
+    verifiedOld:
+      in: query
+      name: verified
+      description: Default is null, which will return all email alerts. Set it to true
+        to only return verified email Ids. Otherwise, set it to false only
+        return unverified email Ids.
+      required: false
+      schema:
+        type: boolean
+    id-int64:
+      name: id
+      description: The unique identifier
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+    verified:
+      in: query
+      name: verified
+      description: Default is null, which will return all email alerts. Set it to true
+        to only return verified email Ids. Otherwise, set it to false only
+        return unverified email Ids.
+      required: false
+      schema:
+        type: boolean
+    enable:
+      in: query
+      name: enable
+      description: Default is null, which will return all email notifications. Set it
+        to true to only return enabled email notifications. Otherwise, set it to
+        false only return disabled email notifications.
+      required: false
+      schema:
+        type: boolean
+    ruleType:
+      in: query
+      name: rule_type
+      description: Default is null, which will return all the notifications; otherwise
+        returns notification which belongs to specific rule type.
+      required: false
+      schema:
+        $ref: "#/components/schemas/CnsNotificationRuleType"
+    CnsNotificationEnabledField:
+      name: enable
+      in: query
+      required: true
+      description: The boolean value of enabled field for the notification.
+      schema:
+        type: boolean
+    notificationRuleIdInParameters:
+      in: query
+      description: The rule Ids to filter.
+      name: ruleIds
+      required: true
+      schema:
+        type: array
+        description: The notification rule ID list
+        items:
+          type: integer
+          description: The notification rule ID list
+          format: int64
+    apps:
+      name: apps
+      in: query
+      description: The application name list, e.g. XIQ, XSW, XUZ etc.
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          description: The application name.
+    notificationToken:
+      in: path
+      name: token
+      required: true
+      description: The push notification token
+      schema:
+        type: string
+    CnsPushNotificationTokenEnabledField:
+      name: enable
+      in: query
+      required: true
+      description: The boolean value of enabled field for the notification token.
+      schema:
+        type: boolean
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Enter your API Key as a Bearer Token
+security:
+  - BearerAuth: []
