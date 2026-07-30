@@ -1,6 +1,239 @@
 {
   "apis": [
     {
+      "id": "webhooks",
+      "title": "Extreme Platform ONE REST API - Webhooks",
+      "description": "Extreme Platform ONE™ Webhooks API enables real-time event notifications and third-party integrations by allowing applications to subscribe to platform events and receive push notifications when events occur.",
+      "version": "25.11.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/webhooks/v1",
+      "tags": [
+        "Webhooks",
+        "Events",
+        "Deliveries",
+        "Event Types"
+      ],
+      "endpoints": [
+        {
+          "path": "/webhooks",
+          "method": "GET",
+          "operationId": "listWebhooks",
+          "summary": "List webhooks",
+          "tags": [
+            "Webhooks"
+          ]
+        },
+        {
+          "path": "/webhooks",
+          "method": "POST",
+          "operationId": "createWebhook",
+          "summary": "Create webhook",
+          "tags": [
+            "Webhooks"
+          ]
+        },
+        {
+          "path": "/webhooks/{webhookId}",
+          "method": "GET",
+          "operationId": "getWebhook",
+          "summary": "Get webhook details",
+          "tags": [
+            "Webhooks"
+          ]
+        },
+        {
+          "path": "/webhooks/{webhookId}",
+          "method": "PUT",
+          "operationId": "updateWebhook",
+          "summary": "Update webhook",
+          "tags": [
+            "Webhooks"
+          ]
+        },
+        {
+          "path": "/webhooks/{webhookId}",
+          "method": "DELETE",
+          "operationId": "deleteWebhook",
+          "summary": "Delete webhook",
+          "tags": [
+            "Webhooks"
+          ]
+        },
+        {
+          "path": "/webhooks/{webhookId}/test",
+          "method": "POST",
+          "operationId": "testWebhook",
+          "summary": "Test webhook",
+          "tags": [
+            "Webhooks"
+          ]
+        },
+        {
+          "path": "/webhooks/{webhookId}/deliveries",
+          "method": "GET",
+          "operationId": "listWebhookDeliveries",
+          "summary": "List webhook deliveries",
+          "tags": [
+            "Deliveries"
+          ]
+        },
+        {
+          "path": "/webhooks/{webhookId}/deliveries/{deliveryId}/retry",
+          "method": "POST",
+          "operationId": "retryDelivery",
+          "summary": "Retry webhook delivery",
+          "tags": [
+            "Deliveries"
+          ]
+        },
+        {
+          "path": "/event-types",
+          "method": "GET",
+          "operationId": "listEventTypes",
+          "summary": "List available event types",
+          "tags": [
+            "Event Types"
+          ]
+        },
+        {
+          "path": "/event-types/{eventTypeId}",
+          "method": "GET",
+          "operationId": "getEventType",
+          "summary": "Get event type schema",
+          "tags": [
+            "Event Types"
+          ]
+        }
+      ],
+      "specFile": "specs/webhooks/openapi.yaml"
+    },
+    {
+      "id": "tag-management",
+      "title": "Tag Management API",
+      "description": "# Tag Management System API\n\nThis specification defines the comprehensive REST API for managing tags, entities, associations, and policies in the Extreme Networks platform.\n\n## Overview\nThe Tag Management API provides a powerful and flexible system for organizing and categorizing resources through:\n- **Tags**: Lightweight labels that can be applied to entities for organization and filtering\n- **Entities**: The actual resources (devices, services, etc.) that can be tagged\n- **Associations**: Bidirectional relationships between tags and entities\n- **Policies**: Rule-based automation for tag management\n- **Attributes**: Key-value metadata attached to tags for enhanced functionality\n\n## Key Features\n- Bulk operations for creating, updating, and deleting tags and entities\n- Flexible search and filtering capabilities with pagination support\n- Policy-driven automation for tag lifecycle management\n- Rich attribute system for tag metadata\n- Owner-based multi-tenancy support\n- Comprehensive telemetry and monitoring\n\n## Authentication\nAll endpoints require proper authentication headers. Ensure you include valid credentials in your requests.\n\n## Rate Limiting\nAPI requests are subject to rate limiting. Monitor the response headers for rate limit information.\n",
+      "version": "1.0.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/tagging/v1",
+      "tags": [
+        "Tags",
+        "Entities",
+        "Policies",
+        "Associate",
+        "Attributes",
+        "Owner",
+        "Telemetry"
+      ],
+      "endpoints": [
+        {
+          "path": "/tags",
+          "method": "POST",
+          "operationId": "CreateTags",
+          "summary": "Create one or more tags with MCP-ready bulk operations",
+          "tags": [
+            "Tags"
+          ]
+        },
+        {
+          "path": "/tags/delete",
+          "method": "POST",
+          "operationId": "DeleteTags",
+          "summary": "Delete multiple tags",
+          "tags": [
+            "Tags"
+          ]
+        },
+        {
+          "path": "/tags/fetch",
+          "method": "POST",
+          "operationId": "FetchTags",
+          "summary": "Search and fetch tags",
+          "tags": [
+            "Tags"
+          ]
+        },
+        {
+          "path": "/tags/tagId/{tagId}",
+          "method": "PUT",
+          "operationId": "UpdateTagById",
+          "summary": "Update tag by ID",
+          "tags": [
+            "Tags"
+          ]
+        },
+        {
+          "path": "/tags/tagName/{tagName}",
+          "method": "PUT",
+          "operationId": "UpdateTagByName",
+          "summary": "Update tag by name",
+          "tags": [
+            "Tags"
+          ]
+        },
+        {
+          "path": "/tags/tagId/{tagId}/entities",
+          "method": "GET",
+          "operationId": "GetEntities",
+          "summary": "Get entities for a tag",
+          "tags": [
+            "Tags"
+          ]
+        },
+        {
+          "path": "/entities",
+          "method": "POST",
+          "operationId": "CreateEntities",
+          "summary": "Create entities",
+          "tags": [
+            "Entities"
+          ]
+        },
+        {
+          "path": "/entities/fetch",
+          "method": "POST",
+          "operationId": "FetchEntities",
+          "summary": "Search and fetch entities",
+          "tags": [
+            "Entities"
+          ]
+        },
+        {
+          "path": "/tags/tagId/entities/associate",
+          "method": "POST",
+          "operationId": "AssociateTagEntityById",
+          "summary": "Associate entities to tag",
+          "tags": [
+            "Associate"
+          ]
+        },
+        {
+          "path": "/tags/tagId/entities/disassociate",
+          "method": "POST",
+          "operationId": "DisassociateEntitiesByTagIds",
+          "summary": "Disassociate entities from tag",
+          "tags": [
+            "Associate"
+          ]
+        },
+        {
+          "path": "/tags/attributes",
+          "method": "POST",
+          "operationId": "CreateAttributes",
+          "summary": "Create tag attributes",
+          "tags": [
+            "Attributes"
+          ]
+        },
+        {
+          "path": "/policies",
+          "method": "POST",
+          "operationId": "CreatePolicies",
+          "summary": "Create policies",
+          "tags": [
+            "Policies"
+          ]
+        }
+      ],
+      "specFile": "specs/tag-management/openapi.yaml"
+    },
+    {
       "id": "subscriptions",
       "title": "Extreme Platform ONE REST API - Subscriptions & Licensing",
       "description": "The Extreme Platform ONE\u2122 License API provides comprehensive management of software licenses, subscriptions, and entitlements across your Extreme network infrastructure, enabling centralized visibility and control over all licensing aspects from trial activation through operational management.",
@@ -487,6 +720,103 @@
         }
       ],
       "specFile": "specs/site/openapi.yaml"
+    },
+    {
+      "id": "reporting",
+      "title": "Extreme Platform ONE REST API - Reporting",
+      "description": "Extreme Platform ONE™ Reporting API provides comprehensive reporting and analytics capabilities for generating, scheduling, and exporting reports on network performance, security, device health, and operational metrics.",
+      "version": "25.11.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/reporting/v1",
+      "tags": [
+        "Reports",
+        "Report Templates",
+        "Scheduled Reports",
+        "Report Data"
+      ],
+      "endpoints": [
+        {
+          "path": "/reports",
+          "method": "GET",
+          "operationId": "listReports",
+          "summary": "List all reports",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reports",
+          "method": "POST",
+          "operationId": "createReport",
+          "summary": "Create a new report",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reports/{reportId}",
+          "method": "GET",
+          "operationId": "getReport",
+          "summary": "Get report details",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reports/{reportId}",
+          "method": "DELETE",
+          "operationId": "deleteReport",
+          "summary": "Delete a report",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reports/{reportId}/download",
+          "method": "GET",
+          "operationId": "downloadReport",
+          "summary": "Download report",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/templates",
+          "method": "GET",
+          "operationId": "listTemplates",
+          "summary": "List report templates",
+          "tags": [
+            "Report Templates"
+          ]
+        },
+        {
+          "path": "/scheduled-reports",
+          "method": "GET",
+          "operationId": "listScheduledReports",
+          "summary": "List scheduled reports",
+          "tags": [
+            "Scheduled Reports"
+          ]
+        },
+        {
+          "path": "/scheduled-reports",
+          "method": "POST",
+          "operationId": "createScheduledReport",
+          "summary": "Schedule a report",
+          "tags": [
+            "Scheduled Reports"
+          ]
+        },
+        {
+          "path": "/metrics",
+          "method": "GET",
+          "operationId": "getMetrics",
+          "summary": "Get available metrics",
+          "tags": [
+            "Report Data"
+          ]
+        }
+      ],
+      "specFile": "specs/reporting/openapi.yaml"
     },
     {
       "id": "notification",
@@ -1398,6 +1728,38 @@
         }
       ],
       "specFile": "specs/device-lifecycle-management/openapi.yaml"
+    },
+    {
+      "id": "common-infrastructure",
+      "title": "Extreme Networks Common Infrastructure API",
+      "description": "# Common Infrastructure REST API\n\nThis comprehensive API provides access to the Common Infrastructure services for Extreme Networks' network management platform.\nThe API enables programmatic access to topology management, device management, service management, and network visualization capabilities.\n\n## Key Features\n- **Topology Management**: Retrieve and manage network topologies (physical, fabric, service layers)\n- **Device Management**: Access device information, interfaces, neighbors, and fabric details\n- **Service Management**: Manage L2/L3 VSN, VLAN, and VRF services\n- **User Preferences**: Store and retrieve user-specific preferences\n- **Real-time Updates**: WebSocket notifications for topology and device changes\n- **Service Probing**: VLAN service probe utilities for network validation\n\n## API Design\nThis API follows RESTful principles and supports JSON payloads. Most operations use POST methods with detailed criteria objects\nto provide flexible filtering and querying capabilities suitable for complex network topologies.\n\n## Authentication\nThis API is designed to be integrated with MCP (Model Context Protocol) servers and other automation tools.\nAuthentication and authorization should be handled at the infrastructure level.\n\n## MCP Server Integration\nThis API is optimized for MCP (Model Context Protocol) server integration with the following features:\n\n**AI-Friendly Design:**\n- Comprehensive endpoint descriptions with use cases and examples\n- Structured error responses for better error handling\n- Detailed parameter descriptions for automated API consumption\n- Response schemas optimized for AI interpretation\n\n**Automation Support:**\n- API Key authentication recommended for MCP servers\n- Asynchronous operations with proper status tracking\n- Bulk operations where applicable\n- Consistent data formats across endpoints\n\n**Rate Limiting Considerations:**\n- Recommended rate limit: 60 requests per minute\n- Burst allowance: 10 requests\n- Consider caching for topology and device data\n\n## Rate Limiting\nAPI calls should be rate-limited appropriately to prevent system overload, especially for large topology queries.\n",
+      "version": "3.0.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/nvo/v1",
+      "tags": [
+        "Topology Management",
+        "User Preferences",
+        "Custom logging",
+        "Device Management",
+        "Service Management",
+        "Service Probe Vlan",
+        "Schemas",
+        "General",
+        "Hide Node or Link Management",
+        "Unhide Node or Link Management",
+        "Tag Management"
+      ],
+      "endpoints": [
+        {
+          "path": "/retrieve-topology",
+          "method": "POST",
+          "operationId": "RetrieveTopology",
+          "summary": "Retrieve Network Topology",
+          "tags": [
+            "Topology Management"
+          ]
+        }
+      ],
+      "specFile": "specs/common-infrastructure/openapi.yaml"
     },
     {
       "id": "client",
