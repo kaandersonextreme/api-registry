@@ -1,0 +1,1715 @@
+openapi: 3.0.3
+info:
+  title: MetaStore Event API
+  version: 25.11.0
+  description: >
+    ## Overview
+
+    MetaStore is the event ingestion and query service for the ExtremeCloud
+    platform.
+
+    It stores enriched network device events that flow through the MetaFlow
+    telemetry
+
+    pipeline (devices → Kafka → MetaFlow enrichment → ClickHouse) and exposes
+    them
+
+    via this REST API.
+
+
+    Events originate from **access points, switches, routers, and security
+    devices**.
+
+    Each event carries device identity, location context (site/building/floor),
+
+    severity, and an `element_data` payload whose fields are
+    event-type-specific.
+
+
+    ## Intended Consumers
+
+    This API is designed for both human operators and **AI agents / MCP tool
+    hosts**.
+
+    AI agents should follow this workflow:
+
+
+    1. **Discover** — Call `GET /catalog` to understand data range and available
+    dimensions.
+
+    2. **Identify devices** — If you have a device name but not an ID, call `GET
+    /catalog/devices`.
+
+    3. **Understand event types** — Call `GET /events/types` to list known event
+    names,
+       then `GET /catalog/event-schema/{event_name}` to understand `element_data` fields.
+    4. **Aggregate first** — Use `GET /events/summary` or `GET /events/trends`
+    to answer
+       counting/trending questions efficiently before paging through raw events.
+    5. **Query raw events** — Use `GET /events` only when you need individual
+    event records.
+
+
+    ## MCP Integration
+
+    `GET /mcp/manifest` returns a machine-readable tool manifest that
+    MCP-compatible
+
+    hosts can use to auto-register this service as a tool provider.
+  contact:
+    name: MetaStore Team
+    email: metastore-support@extremenetworks.com
+  license:
+    name: Proprietary
+servers:
+  - url: https://cloudapi.extremecloudiq.com/metastore/v1
+    description: Extreme Platform ONE REST API - MetaStore
+tags:
+  - name: events
+    description: >
+      Raw event query endpoints. Use these when you need individual event
+      records.
+
+      For counting or trend questions, use the **analytics** endpoints instead.
+  - name: analytics
+    description: >
+      Aggregation and trend endpoints. Prefer these over raw event queries when
+
+      answering questions like "how many", "which is most", or "show me patterns
+      over time".
+  - name: catalog
+    description: >
+      Discovery and schema endpoints. AI agents should call these first to
+      understand
+
+      what data is available and how event payloads are structured before
+      querying.
+  - name: mcp
+    description: Machine-readable MCP tool manifest for AI agent registration.
+  - name: health
+    description: Service health and readiness probes.
+paths:
+  /events:
+    get:
+      summary: Query events
+      operationId: getEvents
+      tags:
+        - events
+      x-ai-agent-notes: >
+        Use this endpoint to retrieve **individual event records**. Apply
+        filters to
+
+        narrow results. If you only need counts or trends, use GET
+        /events/summary or
+
+        GET /events/trends instead — they are far more efficient for aggregation
+        questions.
+
+        If you have a device name but not a device_id, call GET /catalog/devices
+        first.
+      description: >
+        Retrieve a paginated list of network device events with optional
+        filtering.
+
+
+        **Filtering tips for AI agents:**
+
+        - Filter by `severities=Critical,Error` to focus on actionable issues.
+
+        - Use `start_time`/`end_time` (RFC3339) to scope a time window.
+
+        - Use `serial_numbers` or `device_ids` to target a specific device.
+
+        - Use `event_names` to target specific event types (get names from GET
+        /events/types).
+
+        - Use `product_types` to target a device category (access_point, switch,
+        router, security_device).
+
+        - Combine multiple filters — they apply with AND semantics.
+
+
+        **element_data** is a JSON string whose fields vary by event type.
+
+        Use GET /catalog/event-schema/{event_name} to understand what fields are
+        available.
+      parameters:
+        - name: event_names
+          in: query
+          description: Comma-separated event type names to filter by. Use GET
+            /events/types to discover valid values.
+          required: false
+          schema:
+            type: string
+            example: wifi.client.connection,switch.port.up
+        - name: severities
+          in: query
+          description: "Comma-separated severity levels to filter by. Valid values:
+            Critical, Error, Warning, Information."
+          required: false
+          schema:
+            type: string
+            example: Critical,Error
+        - name: device_ids
+          in: query
+          description: Comma-separated numeric device IDs. Use GET /catalog/devices to
+            resolve a hostname to a device_id. Returns 400 if any value is not a
+            valid integer.
+          required: false
+          schema:
+            type: string
+            example: 1001,1002,1003
+        - name: serial_numbers
+          in: query
+          description: Comma-separated device serial numbers to filter by
+          required: false
+          schema:
+            type: string
+            example: AP-FCW2140L0QD
+        - name: product_types
+          in: query
+          description: "Comma-separated device product categories. Valid values:
+            access_point, switch, router, security_device."
+          required: false
+          schema:
+            type: string
+            example: access_point,switch
+        - name: device_functions
+          in: query
+          description: "Comma-separated device role filters: wireless, switching, routing,
+            security"
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - wireless
+                - switching
+                - routing
+                - security
+            example:
+              - wireless
+              - switching
+          style: form
+          explode: false
+        - name: owner_ids
+          in: query
+          description: Comma-separated owner/tenant IDs to scope results
+          required: false
+          schema:
+            type: string
+            example: 1,2,3
+        - name: start_time
+          in: query
+          description: Start of the time range (RFC3339 format, e.g. 2026-05-01T00:00:00Z)
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: 2026-05-01T00:00:00Z
+        - name: end_time
+          in: query
+          description: End of the time range (RFC3339 format, e.g. 2026-05-07T23:59:59Z)
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: 2026-05-07T23:59:59Z
+        - name: limit
+          in: query
+          description: Maximum events to return (1–10000, default 100)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+            default: 100
+            example: 50
+        - name: offset
+          in: query
+          description: Events to skip for pagination (default 0)
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+            example: 0
+        - name: order_by
+          in: query
+          description: Field to sort results by
+          required: false
+          schema:
+            type: string
+            enum:
+              - timestamp
+              - event_name
+              - severity
+              - device_id
+              - serial_number
+              - host_name
+              - product_type
+              - device_function
+              - owner_id
+              - created_at
+            default: timestamp
+            example: timestamp
+        - name: order_dir
+          in: query
+          description: Sort direction
+          required: false
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+            default: DESC
+            example: DESC
+        - name: download
+          in: query
+          description: Set to "csv" to receive results as a CSV file download instead of
+            JSON
+          required: false
+          schema:
+            type: string
+            enum:
+              - csv
+        - name: payloadFormat
+          in: query
+          description: >
+            Format for element_data and raw_data fields. Case-insensitive.
+
+
+            - **String** (default): Returns element_data and raw_data as JSON
+            strings (backward compatible)
+
+            - **Object**: Returns element_data and raw_data as parsed JSON
+            objects (for AI agent integration)
+
+
+            Accepts any case variation (e.g., "string", "STRING", "object",
+            "OBJECT").
+
+
+            When download=csv is specified, element_data and raw_data are always
+            returned as strings
+
+            regardless of this parameter.
+          required: false
+          schema:
+            type: string
+            enum:
+              - String
+              - Object
+            default: String
+            example: Object
+      responses:
+        "200":
+          description: Events matching the query
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventsResponse"
+              examples:
+                success:
+                  summary: Critical events from an access point
+                  value:
+                    events:
+                      - id: event-123
+                        timestamp: 2024-01-15T10:30:00Z
+                        event_name: wifi.client.connection
+                        severity: Information
+                        device_id: 1001
+                        serial_number: FCW2140L0QD
+                        host_name: AccessPoint-Lobby
+                        ip_address: 192.168.1.100
+                        mac_address: 00:1b:54:12:34:56
+                        product_type: access_point
+                        device_function: wireless
+                        admin_state: enabled
+                        is_connected: true
+                        owner_id: 1
+                        site_id: 1001
+                        site_name: Corporate HQ
+                        building_id: 2001
+                        building_name: Building A
+                        floor_id: 3001
+                        floor_name: Floor 1
+                        element_data: '{"client_mac":"aa:bb:cc:dd:ee:ff","ssid":"Corporate-WiFi"}'
+                        raw_data: '{"original_source":"syslog","facility":"daemon"}'
+                        created_at: 2024-01-15T10:30:05Z
+                    total: 1
+                    limit: 100
+                    offset: 0
+        "400":
+          description: >
+            Invalid request parameters. Common causes:
+
+            - Invalid severity value (must be Critical, Error, Warning, or
+            Information)
+
+            - Invalid device_id (must be numeric)
+
+            - Invalid time range (start_time must be before end_time)
+
+            - Invalid limit (must be between 1 and 10000)
+
+            - Invalid offset (must be >= 0)
+
+            - Invalid payloadFormat (must be 'String' or 'Object')
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /events/types:
+    get:
+      summary: List available event types
+      operationId: getEventTypes
+      tags:
+        - events
+      x-ai-agent-notes: >
+        Call this to discover event type names before filtering with event_names
+        in GET /events.
+
+        Then use GET /catalog/event-schema/{event_name} to understand
+        element_data for each type.
+      description: Returns all distinct event type names currently stored in the system.
+      responses:
+        "200":
+          description: List of event type names
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventTypesResponse"
+              examples:
+                success:
+                  value:
+                    event_types:
+                      - HMChannelPowerChangeEvent
+                      - HMRadarChannelEvent
+                      - security.intrusion.detected
+                      - switch.port.down
+                      - switch.port.up
+                      - wifi.client.connection
+                      - wifi.client.disconnection
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /events/severities:
+    get:
+      summary: List available severity levels
+      operationId: getSeverityLevels
+      tags:
+        - events
+      description: Returns all distinct severity levels present in stored events,
+        ordered from most to least critical.
+      responses:
+        "200":
+          description: Severity levels
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SeverityLevelsResponse"
+              examples:
+                success:
+                  value:
+                    severity_levels:
+                      - Critical
+                      - Error
+                      - Warning
+                      - Information
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /events/{id}:
+    get:
+      summary: Get event by ID
+      operationId: getEventById
+      tags:
+        - events
+      description: Retrieve a single event record by its unique ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique event identifier
+          schema:
+            type: string
+            example: event-abc123
+        - name: payloadFormat
+          in: query
+          description: >
+            Format for element_data and raw_data fields. Case-insensitive.
+
+
+            - **String** (default): Returns element_data and raw_data as JSON
+            strings (backward compatible)
+
+            - **Object**: Returns element_data and raw_data as parsed JSON
+            objects (for AI agent integration)
+
+
+            Accepts any case variation (e.g., "string", "STRING", "object",
+            "OBJECT").
+          required: false
+          schema:
+            type: string
+            enum:
+              - String
+              - Object
+            default: String
+            example: Object
+      responses:
+        "200":
+          description: The requested event wrapped in an envelope object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventByIDResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /events/summary:
+    get:
+      summary: Summarize events by dimension
+      operationId: getEventSummary
+      tags:
+        - analytics
+      x-ai-agent-notes: |
+        This is the most efficient way to answer counting and ranking questions.
+        - "How many events by severity?" → group_by=severity
+        - "Which event types are most common?" → group_by=event_name
+        - "Which sites are noisiest?" → group_by=site_name
+        Always add start_time/end_time to scope the question to a time window.
+      description: >
+        Returns event counts grouped by a specified dimension, ordered by count
+        descending.
+
+
+        **Supported group_by values:**
+
+        | Value | Groups by |
+
+        |---|---|
+
+        | `severity` | Critical / Error / Warning / Information |
+
+        | `event_name` | Event type (e.g. switch.port.down) |
+
+        | `product_type` | Device category (access_point, switch, router) |
+
+        | `device_function` | Device role (wireless, switching, routing) |
+
+        | `site_name` | Site where events originated |
+
+        | `host_name` | Device hostname |
+      parameters:
+        - name: group_by
+          in: query
+          required: true
+          description: Dimension to group event counts by
+          schema:
+            type: string
+            enum:
+              - event_name
+              - severity
+              - product_type
+              - device_function
+              - site_name
+              - host_name
+            example: severity
+        - name: start_time
+          in: query
+          description: Start of time range (RFC3339, e.g. 2026-05-01T00:00:00Z)
+          schema:
+            type: string
+            format: date-time
+            example: 2026-05-01T00:00:00Z
+        - name: end_time
+          in: query
+          description: End of time range (RFC3339, e.g. 2026-05-07T23:59:59Z)
+          schema:
+            type: string
+            format: date-time
+            example: 2026-05-07T23:59:59Z
+        - name: limit
+          in: query
+          description: Maximum number of dimension groups to return (default 100, max 1000)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 1000
+            default: 100
+            example: 10
+      responses:
+        "200":
+          description: Grouped event counts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventSummaryResponse"
+              examples:
+                by_severity:
+                  summary: Event counts grouped by severity
+                  value:
+                    group_by: severity
+                    items:
+                      - dimension: Information
+                        count: 84231
+                      - dimension: Warning
+                        count: 12034
+                      - dimension: Error
+                        count: 3821
+                      - dimension: Critical
+                        count: 147
+                    total: 100233
+                by_event_name:
+                  summary: Top event types by volume
+                  value:
+                    group_by: event_name
+                    items:
+                      - dimension: wifi.client.connection
+                        count: 45000
+                      - dimension: wifi.client.disconnection
+                        count: 44500
+                      - dimension: switch.port.up
+                        count: 8700
+                    total: 98200
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /events/trends:
+    get:
+      summary: Get event trends over time
+      operationId: getEventTrends
+      tags:
+        - analytics
+      x-ai-agent-notes: >
+        Use this to answer time-based questions:
+
+        - "Show me events over the last 24 hours" → bucket=1h + last 24h time
+        range
+
+        - "Was there a spike last week?" → bucket=1d + last 7 day time range
+
+        - "When did the critical events start?" → look for Critical count
+        increase across buckets
+
+        Each bucket includes a per-severity breakdown so you can detect
+        escalation.
+      description: >
+        Returns event counts in fixed time buckets with a per-severity
+        breakdown.
+
+        Useful for detecting spikes, anomalies, or gradual escalation patterns.
+
+
+        | Bucket | Best for |
+
+        |---|---|
+
+        | `1h` | Same-day analysis, incident timelines |
+
+        | `6h` | 2–3 day views |
+
+        | `1d` | Weekly trends |
+
+        | `7d` | Monthly trends |
+      parameters:
+        - name: bucket
+          in: query
+          description: Time bucket size
+          schema:
+            type: string
+            enum:
+              - 1h
+              - 6h
+              - 1d
+              - 7d
+            default: 1h
+            example: 1h
+        - name: start_time
+          in: query
+          description: Start of time range (RFC3339)
+          schema:
+            type: string
+            format: date-time
+            example: 2026-05-06T00:00:00Z
+        - name: end_time
+          in: query
+          description: End of time range (RFC3339)
+          schema:
+            type: string
+            format: date-time
+            example: 2026-05-07T00:00:00Z
+      responses:
+        "200":
+          description: Time-bucketed event counts with severity breakdown
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventTrendsResponse"
+              examples:
+                hourly_spike:
+                  summary: Hourly trend showing a Critical spike
+                  value:
+                    bucket: 1h
+                    buckets:
+                      - bucket_start: 2026-05-07T08:00:00Z
+                        bucket_end: 2026-05-07T09:00:00Z
+                        count: 120
+                        by_severity:
+                          Critical: 0
+                          Error: 3
+                          Warning: 45
+                          Information: 72
+                      - bucket_start: 2026-05-07T09:00:00Z
+                        bucket_end: 2026-05-07T10:00:00Z
+                        count: 890
+                        by_severity:
+                          Critical: 42
+                          Error: 210
+                          Warning: 380
+                          Information: 258
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /catalog:
+    get:
+      summary: Get service catalog overview
+      operationId: getCatalog
+      tags:
+        - catalog
+      x-ai-agent-notes: |
+        Call this **first** before any other query to understand:
+        - How much data is available and what time range it covers
+        - How many event types and devices are represented
+        - Which filter dimensions, group_by values, and buckets are supported
+      description: >
+        Returns high-level metadata about the MetaStore service: data time
+        range,
+
+        event and device counts, and all supported query parameters.
+      responses:
+        "200":
+          description: Service catalog overview
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CatalogOverview"
+              examples:
+                success:
+                  value:
+                    service: MetaStore Event API
+                    description: Event ingestion and query service for network device events.
+                    data_range:
+                      earliest: 2026-01-01T00:00:00Z
+                      latest: 2026-05-07T10:45:00Z
+                      total_events: 42000000
+                    capabilities:
+                      - events
+                      - analytics
+                      - catalog
+                      - mcp
+                    filter_dimensions:
+                      - event_name
+                      - severity
+                      - device_id
+                      - serial_number
+                      - product_type
+                      - device_function
+                      - owner_id
+                      - site
+                      - building
+                      - floor
+                      - time_range
+                    supported_time_buckets:
+                      - 1h
+                      - 6h
+                      - 1d
+                      - 7d
+                    supported_group_by_keys:
+                      - event_name
+                      - severity
+                      - product_type
+                      - device_function
+                      - site_name
+                      - host_name
+                    event_type_count: 24
+                    device_count: 1842
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /catalog/devices:
+    get:
+      summary: Discover devices with event activity
+      operationId: getCatalogDevices
+      tags:
+        - catalog
+      x-ai-agent-notes: >
+        Use this to resolve a device name or type to a device_id before calling
+        GET /events.
+
+        Also answers: "Which devices are most active?", "Show me all access
+        points with events".
+
+        Results are ranked by event_count descending.
+      description: >
+        Returns devices that have recorded events, ranked by event volume. Use
+        this to
+
+        discover device IDs for use in GET /events filters, or to understand
+        which
+
+        devices are most active in the system.
+      parameters:
+        - name: product_type
+          in: query
+          description: Filter by device product type
+          schema:
+            type: string
+            enum:
+              - access_point
+              - switch
+              - router
+              - security_device
+            example: access_point
+        - name: device_function
+          in: query
+          description: Filter by device function role
+          schema:
+            type: string
+            enum:
+              - wireless
+              - switching
+              - routing
+              - security
+            example: wireless
+        - name: limit
+          in: query
+          description: Maximum devices to return (default 100, max 1000)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 1000
+            default: 100
+            example: 20
+      responses:
+        "200":
+          description: Devices with event activity, ranked by volume
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceCatalogResponse"
+              examples:
+                access_points:
+                  value:
+                    devices:
+                      - device_id: 1001
+                        serial_number: AP-FCW2140L0QD
+                        host_name: AccessPoint-Lobby
+                        product_type: access_point
+                        device_function: wireless
+                        site_name: Corporate HQ
+                        last_event_at: 2026-05-07T10:44:00Z
+                        event_count: 12045
+                    total: 1
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /catalog/event-schema/{event_name}:
+    get:
+      summary: Get element_data schema for an event type
+      operationId: getEventSchema
+      tags:
+        - catalog
+      x-ai-agent-notes: >
+        Call this to understand the structure of element_data for a specific
+        event type.
+
+        element_data is stored as an opaque JSON string — its fields are
+        event-type-specific.
+
+        Knowing the fields helps you interpret raw event payloads.
+
+        For unknown event types, a generic placeholder schema is returned (not a
+        404).
+      description: >
+        Returns the documented structure of `element_data` for a specific event
+        type,
+
+        including field names, types, descriptions, and example values. Also
+        lists the
+
+        typical severity and related event types for contextual understanding.
+      parameters:
+        - name: event_name
+          in: path
+          required: true
+          description: The event type name (use GET /events/types to get valid names)
+          schema:
+            type: string
+            example: wifi.client.connection
+      responses:
+        "200":
+          description: Event type schema documentation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventSchemaResponse"
+              examples:
+                wifi_connection:
+                  summary: Schema for wifi.client.connection
+                  value:
+                    event_name: wifi.client.connection
+                    description: Fired when a Wi-Fi client device successfully associates with an
+                      access point.
+                    category: wireless
+                    typical_severity: Information
+                    element_data_fields:
+                      - name: client_mac
+                        type: string
+                        description: MAC address of the connecting client device
+                        example: aa:bb:cc:dd:ee:ff
+                      - name: ssid
+                        type: string
+                        description: SSID (network name) the client connected to
+                        example: Corporate-WiFi
+                      - name: rssi
+                        type: integer
+                        description: Received signal strength indicator in dBm (e.g. -65)
+                    related_event_types:
+                      - wifi.client.disconnection
+                      - wifi.client.roam
+                    example_query: GET
+                      /metastore/v1/events?event_names=wifi.client.connection&limit=10&order_dir=DESC
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /mcp/manifest:
+    get:
+      summary: MCP tool manifest
+      operationId: getMCPManifest
+      tags:
+        - mcp
+      description: >
+        Returns a machine-readable manifest describing all available MCP tools
+        and their
+
+        input parameters. MCP-compatible hosts can fetch this endpoint to
+        auto-register
+
+        MetaStore as a tool provider. Follows MCP schema version 2025-03.
+
+
+        **Registered tools:** query_events, summarize_events, get_event_trends,
+
+        discover_devices, get_catalog, get_event_schema, list_event_types
+      responses:
+        "200":
+          description: MCP tool manifest
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MCPManifest"
+  /health:
+    get:
+      summary: Health check
+      operationId: healthCheck
+      tags:
+        - health
+      description: Returns 200 if the service is healthy and the ClickHouse connection
+        is live.
+      responses:
+        "200":
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+              examples:
+                healthy:
+                  value:
+                    status: healthy
+  /ready:
+    get:
+      summary: Readiness check
+      operationId: readinessCheck
+      tags:
+        - health
+      description: Returns 200 if the service is ready to accept requests.
+      responses:
+        "200":
+          description: Service is ready
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+              examples:
+                ready:
+                  value:
+                    status: ready
+components:
+  schemas:
+    Event:
+      type: object
+      description: >
+        A single network device event. The `element_data` field is an
+        event-type-specific
+
+        JSON string — use GET /catalog/event-schema/{event_name} to understand
+        its fields.
+      required:
+        - id
+        - timestamp
+        - event_name
+        - device_id
+      properties:
+        id:
+          type: string
+          description: Unique event identifier
+          example: event-abc123
+        timestamp:
+          type: string
+          format: date-time
+          description: When the event occurred on the device
+          example: 2026-05-07T10:30:00Z
+        event_name:
+          type: string
+          description: >
+            Event type name. The set of valid values grows with each NOS release
+            —
+
+            call GET /events/types for the live list from the current data
+            store.
+          x-known-values:
+            - AdDomainStateChange
+            - AuthenticationStateChange
+            - AutoSensePortStateChange
+            - CdpNeighborStateChange
+            - CertificateStateChange
+            - ChannelizedPortStateChange
+            - CoreFileCreated
+            - DhcpSnoopArpViolationAlarm
+            - DhcpSnoopDhcpViolationAlarm
+            - DhcpSnoopFingerprintingEvent
+            - DynamicServiceIsidEvent
+            - DynamicServiceIsidMemberEvent
+            - DynamicServiceVlanEvent
+            - DynamicServiceVlanPortEvent
+            - EdgeServiceStateChange
+            - ElrpLoopDetectEvent
+            - ElrpPortActionEvent
+            - FanStateChange
+            - InstantPortActionVlanInterfaceListEvent
+            - InstantPortMatchedDeviceEvent
+            - InterfaceStateChange
+            - IsisAdjacencyStateChange
+            - IsisAdjacencyV1StateChange
+            - LagMembersEvent
+            - LicenseStateChange
+            - LinkFlapDetectEvent
+            - LldpNeighborStateChange
+            - MacLockingLearnLimitReachedEvent
+            - MacLockingPortStateEvent
+            - MacLockingViolationEvent
+            - MlagPeerStateChange
+            - NodeAliasDbClearedEvent
+            - NodeAliasDbInterfaceClearedEvent
+            - NodeAliasDbPortClearedEvent
+            - NodeAliasDbUpdatedEvent
+            - OpticalModulesErrorAlarm
+            - OpticalModulesStateChange
+            - OspfNeighborStateChange
+            - PoeStateChange
+            - PsuStateChange
+            - PublicIpAddressEvent
+            - RadiusServerStateChange
+            - RebootEvent
+            - RoutePingProtectGwStateChange
+            - SaveConfigEvent
+            - SlppGuardPortStateChange
+            - SlppPortStateChange
+            - SnmpTrapEvent
+            - SshLoginFail
+            - StackNodeTransitionEvent
+            - StpPortStateChange
+            - SystemEvent
+            - TrapEvent
+            - TunnelStateChange
+            - UpdatedStaticConfigEvent
+            - UpgradeEvent
+            - VlanInterfaceStateChange
+            - VimConfigEvent
+            - VimStateChange
+          example: InterfaceStateChange
+        severity:
+          type: string
+          description: Severity level
+          enum:
+            - Critical
+            - Error
+            - Warning
+            - Information
+          example: Information
+        device_id:
+          type: integer
+          format: int64
+          minimum: 1
+          description: Numeric device identifier
+          example: 1001
+        serial_number:
+          type: string
+          description: Device serial number
+          example: AP-FCW2140L0QD
+        host_name:
+          type: string
+          description: Device hostname
+          example: AccessPoint-Lobby
+        ip_address:
+          type: string
+          description: Device management IP address
+          example: 192.168.1.100
+        mac_address:
+          type: string
+          description: Device MAC address in colon-separated lowercase format (e.g.
+            "00:1b:54:12:34:56")
+          pattern: ^([0-9a-f]{2}:){5}[0-9a-f]{2}$
+          example: 00:1b:54:12:34:56
+        product_type:
+          type: string
+          description: Device product category
+          enum:
+            - access_point
+            - switch
+            - router
+            - security_device
+          example: access_point
+        device_function:
+          type: string
+          description: Device role
+          enum:
+            - wireless
+            - switching
+            - routing
+            - security
+          example: wireless
+        admin_state:
+          type: string
+          description: Administrative state
+          enum:
+            - enabled
+            - disabled
+          example: enabled
+        is_connected:
+          type: boolean
+          description: Whether the device was connected at the time of the event
+          example: true
+        owner_id:
+          type: integer
+          format: int64
+          minimum: 1
+          description: Tenant/owner identifier
+          example: 1
+        site_id:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Site identifier (location hierarchy level 1)
+          example: 1001
+        site_name:
+          type: string
+          description: Human-readable site name
+          example: Corporate HQ
+        building_id:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Building identifier (location hierarchy level 2)
+          example: 2001
+        building_name:
+          type: string
+          description: Human-readable building name
+          example: Building A
+        floor_id:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Floor identifier (location hierarchy level 3)
+          example: 3001
+        floor_name:
+          type: string
+          description: Human-readable floor name
+          example: Floor 1
+        element_data:
+          type: string
+          description: >
+            Event-type-specific payload fields.
+
+
+            **Format depends on payloadFormat query parameter:**
+
+            - When payloadFormat=String (default): Returns as a JSON string
+            (backward compatible)
+
+            - When payloadFormat=Object: Returns as a parsed JSON object
+
+
+            Structure varies by event_name — use GET
+            /catalog/event-schema/{event_name}
+
+            to understand available fields for each event type.
+
+
+            Returns null if the event has no element data.
+          example: '{"client_mac":"aa:bb:cc:dd:ee:ff","ssid":"Corporate-WiFi","rssi":-65}'
+          x-conditional-type: |
+            When payloadFormat=Object, this field is returned as an object instead of a string.
+            Example object format: {"client_mac":"aa:bb:cc:dd:ee:ff","ssid":"Corporate-WiFi","rssi":-65}
+        raw_data:
+          type: string
+          description: >
+            Original raw event payload from Kafka.
+
+
+            **Format depends on payloadFormat query parameter:**
+
+            - When payloadFormat=String (default): Returns as a JSON string
+            (backward compatible)
+
+            - When payloadFormat=Object: Returns as a parsed JSON object
+
+
+            Returns null if the event has no raw data.
+          example: '{"timestamp":1683456605,"device_id":12345}'
+          x-conditional-type: >
+            When payloadFormat=Object, this field is returned as an object
+            instead of a string.
+
+            Example object format: {"timestamp":1683456605,"device_id":12345}
+        created_at:
+          type: string
+          format: date-time
+          description: When the event record was persisted to storage
+          example: 2026-05-07T10:30:05Z
+    EventByIDResponse:
+      type: object
+      required:
+        - event
+      description: Single event record returned by GET /events/{id}
+      properties:
+        event:
+          $ref: "#/components/schemas/Event"
+    EventsResponse:
+      type: object
+      required:
+        - events
+        - total
+        - limit
+        - offset
+      description: Paginated list of events
+      properties:
+        events:
+          type: array
+          items:
+            $ref: "#/components/schemas/Event"
+        total:
+          type: integer
+          format: int64
+          description: Total events matching the query (for pagination)
+          example: 42000
+        limit:
+          type: integer
+          description: Page size used for this response
+          example: 100
+        offset:
+          type: integer
+          description: Number of events skipped
+          example: 0
+    EventTypesResponse:
+      type: object
+      required:
+        - event_types
+      properties:
+        event_types:
+          type: array
+          items:
+            type: string
+          description: All distinct event type names in the store
+          example:
+            - wifi.client.connection
+            - switch.port.down
+            - security.intrusion.detected
+    SeverityLevelsResponse:
+      type: object
+      required:
+        - severity_levels
+      properties:
+        severity_levels:
+          type: array
+          items:
+            type: string
+          description: Severity levels present, ordered from most to least critical
+          example:
+            - Critical
+            - Error
+            - Warning
+            - Information
+    SummaryItem:
+      type: object
+      required:
+        - dimension
+        - count
+      description: A single aggregation result bucket
+      properties:
+        dimension:
+          type: string
+          description: The value of the group_by dimension for this bucket
+          example: Critical
+        count:
+          type: integer
+          format: int64
+          description: Number of events with this dimension value
+          example: 147
+    EventSummaryResponse:
+      type: object
+      required:
+        - group_by
+        - items
+        - total
+      description: Grouped event counts
+      properties:
+        group_by:
+          type: string
+          description: The dimension used for grouping
+          example: severity
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/SummaryItem"
+          description: Aggregation buckets ordered by count descending
+        total:
+          type: integer
+          format: int64
+          description: Grand total across all buckets
+          example: 100233
+    SeverityBreakdown:
+      type: object
+      description: Per-severity event counts within a time bucket
+      properties:
+        Critical:
+          type: integer
+          format: int64
+          description: Count of critical severity events in the time bucket
+          example: 42
+        Error:
+          type: integer
+          format: int64
+          description: Count of error severity events in the time bucket
+          example: 210
+        Warning:
+          type: integer
+          format: int64
+          description: Count of warning severity events in the time bucket
+          example: 380
+        Information:
+          type: integer
+          format: int64
+          description: Count of information severity events in the time bucket
+          example: 258
+    TrendBucket:
+      type: object
+      required:
+        - bucket_start
+        - bucket_end
+        - count
+        - by_severity
+      description: One time bucket in a trend response
+      properties:
+        bucket_start:
+          type: string
+          format: date-time
+          description: Start of this time bucket (inclusive)
+          example: 2026-05-07T09:00:00Z
+        bucket_end:
+          type: string
+          format: date-time
+          description: End of this time bucket (exclusive)
+          example: 2026-05-07T10:00:00Z
+        count:
+          type: integer
+          format: int64
+          description: Total events in this bucket
+          example: 890
+        by_severity:
+          $ref: "#/components/schemas/SeverityBreakdown"
+    EventTrendsResponse:
+      type: object
+      required:
+        - bucket
+        - buckets
+      description: Time-bucketed event counts with severity breakdown
+      properties:
+        bucket:
+          type: string
+          enum:
+            - 1h
+            - 6h
+            - 1d
+            - 7d
+          description: The bucket size used for this response
+          example: 1h
+        buckets:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrendBucket"
+          description: Ordered list of time buckets (ascending by bucket_start)
+    DataRange:
+      type: object
+      description: Temporal extent of stored events
+      properties:
+        earliest:
+          type: string
+          format: date-time
+          description: Timestamp of the oldest stored event
+          example: 2026-01-01T00:00:00Z
+        latest:
+          type: string
+          format: date-time
+          description: Timestamp of the most recent stored event
+          example: 2026-05-07T10:45:00Z
+        total_events:
+          type: integer
+          format: int64
+          description: Total number of events in the store
+          example: 42000000
+    CatalogOverview:
+      type: object
+      description: High-level service metadata for AI agent orientation
+      properties:
+        service:
+          type: string
+          description: The name of the MetaStore service
+          example: MetaStore Event API
+        description:
+          type: string
+        data_range:
+          $ref: "#/components/schemas/DataRange"
+        capabilities:
+          type: array
+          description: List of API capability categories available in this service
+          items:
+            type: string
+          example:
+            - events
+            - analytics
+            - catalog
+            - mcp
+        filter_dimensions:
+          type: array
+          items:
+            type: string
+          description: All dimensions that can be used as filter parameters in GET /events
+        supported_time_buckets:
+          type: array
+          items:
+            type: string
+          description: Valid values for the bucket parameter in GET /events/trends
+          example:
+            - 1h
+            - 6h
+            - 1d
+            - 7d
+        supported_group_by_keys:
+          type: array
+          items:
+            type: string
+          description: Valid values for the group_by parameter in GET /events/summary
+          example:
+            - event_name
+            - severity
+            - product_type
+            - device_function
+            - site_name
+            - host_name
+        event_type_count:
+          type: integer
+          description: Number of distinct event types currently in the store
+          example: 24
+        device_count:
+          type: integer
+          description: Number of distinct devices that have recorded events
+          example: 1842
+    DeviceCatalogItem:
+      type: object
+      required:
+        - device_id
+        - serial_number
+        - host_name
+        - product_type
+        - last_event_at
+        - event_count
+      description: A device with event activity statistics
+      properties:
+        device_id:
+          type: integer
+          format: int64
+          description: Numeric device ID — use in GET /events?device_ids=...
+          example: 1001
+        serial_number:
+          type: string
+          description: Unique serial number of the device
+          example: AP-FCW2140L0QD
+        host_name:
+          type: string
+          example: AccessPoint-Lobby
+        product_type:
+          type: string
+          description: Type of device product
+          example: access_point
+        device_function:
+          type: string
+          description: Functional role of the device
+          example: wireless
+        site_name:
+          type: string
+          example: Corporate HQ
+        last_event_at:
+          type: string
+          format: date-time
+          description: Timestamp of the most recent event from this device
+          example: 2026-05-07T10:44:00Z
+        event_count:
+          type: integer
+          format: int64
+          description: Total events from this device in the store
+          example: 12045
+    DeviceCatalogResponse:
+      type: object
+      required:
+        - devices
+        - total
+      properties:
+        devices:
+          type: array
+          items:
+            $ref: "#/components/schemas/DeviceCatalogItem"
+          description: Devices ranked by event_count descending
+        total:
+          type: integer
+          description: Number of devices returned
+          example: 42
+    EventSchemaField:
+      type: object
+      required:
+        - name
+        - type
+        - description
+      description: A single field within element_data for an event type
+      properties:
+        name:
+          type: string
+          description: Field name as it appears in the element_data JSON
+          example: client_mac
+        type:
+          type: string
+          description: Data type (string, integer, boolean, object, array)
+          example: string
+        description:
+          type: string
+          description: What this field represents
+          example: MAC address of the connecting client device
+        example:
+          type: string
+          description: Representative example value
+          example: aa:bb:cc:dd:ee:ff
+    EventSchemaResponse:
+      type: object
+      required:
+        - event_name
+        - description
+        - category
+        - typical_severity
+        - element_data_fields
+      description: Documented structure of element_data for a specific event type
+      properties:
+        event_name:
+          type: string
+          description: The name of the event type
+          example: wifi.client.connection
+        description:
+          type: string
+          description: What this event means and when it fires
+          example: Fired when a Wi-Fi client device successfully associates with an access
+            point.
+        category:
+          type: string
+          description: Logical category (wireless, switching, routing, security)
+          example: wireless
+        typical_severity:
+          type: string
+          description: The typical severity level for this event type
+          enum:
+            - Critical
+            - Error
+            - Warning
+            - Information
+          example: Information
+        element_data_fields:
+          type: array
+          items:
+            $ref: "#/components/schemas/EventSchemaField"
+          description: Documented fields within element_data for this event type
+        related_event_types:
+          type: array
+          items:
+            type: string
+          description: Other event types commonly seen alongside this one
+          example:
+            - wifi.client.disconnection
+            - wifi.client.roam
+        example_query:
+          type: string
+          description: Ready-to-use example API query for events of this type
+          example: GET
+            /metastore/v1/events?event_names=wifi.client.connection&limit=10&order_dir=DESC
+    MCPToolInputProperty:
+      type: object
+      properties:
+        type:
+          type: string
+          example: string
+        description:
+          type: string
+        enum:
+          type: array
+          items:
+            type: string
+        example:
+          type: string
+    MCPToolInputSchema:
+      type: object
+      description: JSON Schema defining the input parameters for this tool
+      properties:
+        type:
+          type: string
+          description: JSON Schema type, typically object
+          example: object
+        properties:
+          type: object
+          description: Map of input parameter names to their schema definitions
+          additionalProperties:
+            $ref: "#/components/schemas/MCPToolInputProperty"
+        required:
+          type: array
+          description: List of required input parameter names
+          items:
+            type: string
+    MCPTool:
+      type: object
+      required:
+        - name
+        - description
+        - input_schema
+      description: A single callable tool in the MCP manifest
+      properties:
+        name:
+          type: string
+          example: query_events
+        description:
+          type: string
+          description: When to use this tool and what it does
+        input_schema:
+          description: JSON Schema defining the input parameters for this tool
+          $ref: "#/components/schemas/MCPToolInputSchema"
+    MCPManifest:
+      type: object
+      required:
+        - schema_version
+        - name
+        - display_name
+        - description
+        - tools
+      description: MCP tool manifest for AI agent registration
+      properties:
+        schema_version:
+          type: string
+          description: MCP protocol schema version
+          example: 2025-03
+        name:
+          type: string
+          example: metastore
+        display_name:
+          type: string
+          example: MetaStore – Network Event Store
+        description:
+          type: string
+        base_url:
+          type: string
+          description: Base URL path for all tool endpoints
+          example: /metastore/v1
+        tools:
+          type: array
+          items:
+            $ref: "#/components/schemas/MCPTool"
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - code
+        - message
+      properties:
+        error:
+          type: string
+          example: Invalid request
+        code:
+          type: integer
+          example: 400
+        message:
+          type: string
+          description: Detailed error message with remediation hint
+          example: "invalid group_by value; allowed: event_name, severity, product_type,
+            device_function, site_name, host_name"
+    HealthResponse:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum:
+            - healthy
+            - ready
+          example: healthy
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Enter your API Key as a Bearer Token
+security:
+  - BearerAuth: []

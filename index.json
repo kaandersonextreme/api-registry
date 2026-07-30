@@ -1452,6 +1452,131 @@
       "specFile": "specs/notification/openapi.yaml"
     },
     {
+      "id": "metastore-event",
+      "title": "MetaStore Event API",
+      "description": "## Overview\nMetaStore is the event ingestion and query service for the ExtremeCloud platform.\nIt stores enriched network device events that flow through the MetaFlow telemetry\npipeline (devices → Kafka → MetaFlow enrichment → ClickHouse) and exposes them\nvia this REST API.\n\nEvents originate from **access points, switches, routers, and security devices**.\nEach event carries device identity, location context (site/building/floor),\nseverity, and an `element_data` payload whose fields are event-type-specific.\n\n## Intended Consumers\nThis API is designed for both human operators and **AI agents / MCP tool hosts**.\nAI agents should follow this workflow:\n\n1. **Discover** — Call `GET /catalog` to understand data range and available dimensions.\n2. **Identify devices** — If you have a device name but not an ID, call `GET /catalog/devices`.\n3. **Understand event types** — Call `GET /events/types` to list known event names,\n   then `GET /catalog/event-schema/{event_name}` to understand `element_data` fields.\n4. **Aggregate first** — Use `GET /events/summary` or `GET /events/trends` to answer\n   counting/trending questions efficiently before paging through raw events.\n5. **Query raw events** — Use `GET /events` only when you need individual event records.\n\n## MCP Integration\n`GET /mcp/manifest` returns a machine-readable tool manifest that MCP-compatible\nhosts can use to auto-register this service as a tool provider.\n",
+      "version": "25.11.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/metastore/v1",
+      "tags": [
+        "events",
+        "analytics",
+        "catalog",
+        "mcp",
+        "health"
+      ],
+      "endpoints": [
+        {
+          "path": "/events",
+          "method": "GET",
+          "operationId": "getEvents",
+          "summary": "Query events",
+          "tags": [
+            "events"
+          ]
+        },
+        {
+          "path": "/events/types",
+          "method": "GET",
+          "operationId": "getEventTypes",
+          "summary": "List available event types",
+          "tags": [
+            "events"
+          ]
+        },
+        {
+          "path": "/events/severities",
+          "method": "GET",
+          "operationId": "getSeverityLevels",
+          "summary": "List available severity levels",
+          "tags": [
+            "events"
+          ]
+        },
+        {
+          "path": "/events/{id}",
+          "method": "GET",
+          "operationId": "getEventById",
+          "summary": "Get event by ID",
+          "tags": [
+            "events"
+          ]
+        },
+        {
+          "path": "/events/summary",
+          "method": "GET",
+          "operationId": "getEventSummary",
+          "summary": "Summarize events by dimension",
+          "tags": [
+            "analytics"
+          ]
+        },
+        {
+          "path": "/events/trends",
+          "method": "GET",
+          "operationId": "getEventTrends",
+          "summary": "Get event trends over time",
+          "tags": [
+            "analytics"
+          ]
+        },
+        {
+          "path": "/catalog",
+          "method": "GET",
+          "operationId": "getCatalog",
+          "summary": "Get service catalog overview",
+          "tags": [
+            "catalog"
+          ]
+        },
+        {
+          "path": "/catalog/devices",
+          "method": "GET",
+          "operationId": "getCatalogDevices",
+          "summary": "Discover devices with event activity",
+          "tags": [
+            "catalog"
+          ]
+        },
+        {
+          "path": "/catalog/event-schema/{event_name}",
+          "method": "GET",
+          "operationId": "getEventSchema",
+          "summary": "Get element_data schema for an event type",
+          "tags": [
+            "catalog"
+          ]
+        },
+        {
+          "path": "/mcp/manifest",
+          "method": "GET",
+          "operationId": "getMCPManifest",
+          "summary": "MCP tool manifest",
+          "tags": [
+            "mcp"
+          ]
+        },
+        {
+          "path": "/health",
+          "method": "GET",
+          "operationId": "healthCheck",
+          "summary": "Health check",
+          "tags": [
+            "health"
+          ]
+        },
+        {
+          "path": "/ready",
+          "method": "GET",
+          "operationId": "readinessCheck",
+          "summary": "Readiness check",
+          "tags": [
+            "health"
+          ]
+        }
+      ],
+      "specFile": "specs/metastore-event/openapi.yaml"
+    },
+    {
       "id": "iam",
       "title": "Extreme Platform ONE REST API - IAM",
       "description": "Extreme Platform ONE\u2122 IAM (Identity and Access Management) API allows users to manage organization setting, user profile, identities, roles, external Identity Providers (IDPs), Multi-Factor Authentication (MFA), API Keys, etc.",
