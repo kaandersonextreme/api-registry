@@ -12,7 +12,8 @@ api-registry/
 │   └── ...
 ├── tools/                   # Utility scripts
 │   ├── search.js           # Search tool for finding APIs
-│   └── generate-index.js   # Auto-generate index.json
+│   ├── generate-index.js   # Auto-generate index.json
+│   └── generate-readmes.js # Auto-generate README.md files from OpenAPI specs
 ├── index.json              # Searchable catalog of all APIs
 └── README.md               # This file
 ```
@@ -83,7 +84,17 @@ specs/your-api-name/
 └── openapi.yaml
 ```
 
-### 3. Regenerate Index
+### 3. Generate README Documentation (Optional)
+
+```bash
+node tools/generate-readmes.js
+```
+
+This will automatically create `README.md` files for any APIs without documentation by:
+- Extracting key information from OpenAPI specs (title, description, endpoints, etc.)
+- Generating consistent, formatted documentation
+
+### 4. Regenerate Index
 
 ```bash
 node tools/generate-index.js
@@ -131,19 +142,32 @@ Once you've found the API you need, reference it in your code:
 
 ## 📚 Available APIs
 
-### Extreme Platform ONE REST API - Audit Log
-- **Version**: 25.11.0
-- **Base URL**: https://cloudapi.extremecloudiq.com/auditlog/v1
-- **Spec**: `specs/audit-log/openapi.yaml`
-- **Description**: Comprehensive tracking of user activities within Extreme Platform ONE
-- **Tags**: audit, compliance, user-activity, logging
-- **Endpoints**: 6 (search, export, metadata operations)
+The registry currently includes 13 comprehensive API specifications:
+
+- **Alert Management API** - Real-time network alert monitoring and management
+- **Asset Management API** - Device and asset lifecycle management
+- **Audit Log API** - User activity tracking and compliance logging
+- **Client API** - Client application management and configuration
+- **Common Infrastructure API** - Network topology and device management
+- **Device Lifecycle Management API** - Device provisioning and management
+- **IAM API** - Identity and access management
+- **Notification API** - Event notifications and alerting
+- **Reporting API** - Business intelligence and reporting
+- **Site Management API** - Multi-site deployment management
+- **Subscriptions & Licensing API** - License and subscription management
+- **Tag Management API** - Resource tagging and organization
+- **Webhooks API** - Real-time event notifications via webhooks
+
+Each API has comprehensive documentation including base URL, key features, endpoints, and support information available in their respective `README.md` files.
 
 ## 🚀 Quick Commands
 
 ```bash
 # Search for an API
 node tools/search.js "keyword"
+
+# Generate README documentation for all APIs
+node tools/generate-readmes.js
 
 # Regenerate index after adding new APIs
 node tools/generate-index.js
