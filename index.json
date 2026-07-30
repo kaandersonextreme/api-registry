@@ -819,6 +819,267 @@
       "specFile": "specs/reporting/openapi.yaml"
     },
     {
+      "id": "perfmonitor-infrastructure",
+      "title": "PerfMonitor Infrastructure API",
+      "description": "# Performance Monitor Infrastructure API for MCP Servers\n\nThis comprehensive API provides advanced network performance monitoring capabilities specifically optimized for MCP (Model Context Protocol) servers and automated monitoring systems.\nThe API enables sophisticated monitoring of device health, performance metrics, and network analytics across various network components with intelligent automation support.\n\n## MCP Server Integration Features\n- **Automated Performance Monitoring**: Continuous collection and analysis of network performance metrics\n- **Intelligent Alerting**: AI-driven anomaly detection and automated alert generation\n- **Time-Series Analytics**: Advanced time-series data processing for trend analysis and forecasting\n- **Real-time Health Monitoring**: Live device health status tracking with automated response capabilities\n- **Scalable Data Collection**: High-performance metric collection supporting thousands of devices\n- **Integration-Ready**: Designed for seamless integration with monitoring platforms and automation tools\n\n## Key Features\n- **Application Discovery**: List supported monitoring applications and their capabilities\n- **Metric Collection**: Retrieve time-series performance data from network devices with advanced filtering\n- **Device Health Analytics**: Monitor device health status and performance indicators with trend analysis\n- **Flexible Filtering**: Advanced filtering and pagination optimized for large-scale monitoring deployments\n- **Real-time Data**: Access to current and historical performance metrics with microsecond precision\n- **Bulk Operations**: Efficient batch processing for monitoring large network infrastructures\n\n## MCP Use Cases\n- **Infrastructure Monitoring**: Automated monitoring of switches, routers, and network devices\n- **Performance Optimization**: AI-driven performance analysis and optimization recommendations\n- **Capacity Planning**: Predictive analytics for network capacity planning and resource allocation\n- **Anomaly Detection**: Machine learning-based anomaly detection for proactive issue identification\n- **Compliance Monitoring**: Automated compliance tracking for SLA and performance requirements\n- **Integration Workflows**: Seamless integration with ITSM, SIEM, and automation platforms\n\n## Supported Applications\nCurrently supports monitoring for:\n- **Network Infrastructure**: Switches, routers, and network devices with full SNMP and telemetry support\n- **Device Stats**: CPU, memory, temperature, and power metrics with threshold monitoring\n- **Interface Stats**: Port utilization, errors, and performance data with trend analysis\n- **Wireless Stats**: Wireless device and interface monitoring with RF analytics\n- **Health Analytics**: Comprehensive device health scoring and predictive maintenance\n- **Usage Capacity Analytics**: Comprehensive usage and capacity monitoring across network infrastructure\n\n## Data Formats\nAll timestamps use ISO 8601 UTC format (e.g., \"2024-08-26T19:00:00Z\").\nPagination is supported across all list operations for efficient data retrieval.\nTime-series data includes microsecond precision for high-frequency monitoring.\n\n## Authentication\nThis API requires proper authentication and authorization. Contact your system administrator for access credentials.\n",
+      "version": "25.11.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/pm/v1",
+      "tags": [
+        "application management",
+        "metric capabilities",
+        "Metric Data",
+        "Device health data",
+        "Usage capacity data",
+        "Client health data"
+      ],
+      "endpoints": [
+        {
+          "path": "/applications",
+          "method": "GET",
+          "operationId": "GetApplications",
+          "summary": "Discover Supported Monitoring Applications for MCP Integration",
+          "tags": [
+            "application management"
+          ]
+        },
+        {
+          "path": "/metric-capabilities",
+          "method": "GET",
+          "operationId": "GetMetricCapabilities",
+          "summary": "Advanced Metric Capability Discovery for MCP Servers",
+          "tags": [
+            "metric capabilities"
+          ]
+        },
+        {
+          "path": "/metric-schema",
+          "method": "GET",
+          "operationId": "GetMetricSchema",
+          "summary": "Get the complete metric capability schema for all groups",
+          "tags": [
+            "metric capabilities"
+          ]
+        },
+        {
+          "path": "/metric-capabilities/{metricGroup}",
+          "method": "GET",
+          "operationId": "GetMetricCapabilityDetail",
+          "summary": "Get detailed metric capability for a specific metric group",
+          "tags": [
+            "metric capabilities"
+          ]
+        },
+        {
+          "path": "/metric-data",
+          "method": "POST",
+          "operationId": "RetrieveMetricData",
+          "summary": "Advanced Time-Series Metric Retrieval for MCP Servers",
+          "tags": [
+            "Metric Data"
+          ]
+        },
+        {
+          "path": "/analytics/device-health",
+          "method": "POST",
+          "operationId": "RetrieveDeviceHealthData",
+          "summary": "Advanced Device Health Analytics for MCP Servers",
+          "tags": [
+            "Device health data"
+          ]
+        },
+        {
+          "path": "/analytics/device-health/port-stats",
+          "method": "POST",
+          "operationId": "RetrieveDeviceHealthPortStats",
+          "summary": "Retrieve aggregated port statistics for a device",
+          "tags": [
+            "Device health data"
+          ]
+        },
+        {
+          "path": "/analytics/device-health/port-stats-summary",
+          "method": "POST",
+          "operationId": "RetrieveDeviceHealthPortStatsSummary",
+          "summary": "Retrieve per-port statistics summary for a device",
+          "tags": [
+            "Device health data"
+          ]
+        },
+        {
+          "path": "/analytics/device-health/wireless",
+          "method": "POST",
+          "operationId": "RetrieveWirelessDeviceHealthData",
+          "summary": "Wireless Device Health Analytics for MCP Servers",
+          "tags": [
+            "Wireless device health data"
+          ]
+        },
+        {
+          "path": "/analytics/device-health/wireless/access-points",
+          "method": "POST",
+          "operationId": "RetrieveWirelessAccessPoints",
+          "summary": "Retrieve neighboring wireless access points for a device",
+          "tags": [
+            "Wireless device health data"
+          ]
+        },
+        {
+          "path": "/analytics/device-health/wireless/interface-graph",
+          "method": "POST",
+          "operationId": "RetrieveWirelessInterfaceGraph",
+          "summary": "Retrieve wireless interface time-series graph data for a device",
+          "tags": [
+            "Wireless device health data"
+          ]
+        },
+        {
+          "path": "/analytics/device-health/wireless/interfaces",
+          "method": "POST",
+          "operationId": "RetrieveWirelessInterfaces",
+          "summary": "Retrieve wireless interface details for a device",
+          "tags": [
+            "Wireless device health data"
+          ]
+        },
+        {
+          "path": "/analytics/device-health/wireless/wired-interfaces",
+          "method": "POST",
+          "operationId": "RetrieveWirelessWiredInterfaces",
+          "summary": "Retrieve wired interface details for a wireless device",
+          "tags": [
+            "Wireless device health data"
+          ]
+        },
+        {
+          "path": "/analytics/usage-capacity",
+          "method": "POST",
+          "operationId": "RetrieveUsageCapacityData",
+          "summary": "Advanced Usage and Capacity Analytics for MCP Servers",
+          "tags": [
+            "Usage capacity data"
+          ]
+        },
+        {
+          "path": "/analytics/client-health",
+          "method": "POST",
+          "operationId": "RetrieveClientHealthData",
+          "summary": "Advanced Client Health Analytics for MCP Servers",
+          "tags": [
+            "Client health data"
+          ]
+        },
+        {
+          "path": "/analytics/client-health/history",
+          "method": "POST",
+          "operationId": "RetrieveHistoricalClientHealthData",
+          "summary": "Historical Client Session Data at Network/Site Level",
+          "tags": [
+            "Client health data"
+          ]
+        },
+        {
+          "path": "/analytics/client-health/stats",
+          "method": "POST",
+          "operationId": "RetrieveClientHealthStatsData",
+          "summary": "Client Health Stats Time-Series Data for MCP Servers",
+          "tags": [
+            "Client health data"
+          ]
+        },
+        {
+          "path": "/analytics/client-health/wireless",
+          "method": "POST",
+          "operationId": "RetrieveWirelessClientHealthData",
+          "summary": "Advanced Client Health Analytics for MCP Servers",
+          "tags": [
+            "Client health data for wireless devices"
+          ]
+        },
+        {
+          "path": "/analytics/client-health/wireless/filter-metadata",
+          "method": "POST",
+          "operationId": "RetrieveWirelessClientHealthMetadata",
+          "summary": "Advanced Client Health Analytics Metadata for MCP Servers",
+          "tags": [
+            "Client health data values for wireless devices"
+          ]
+        },
+        {
+          "path": "/analytics/client-health/wireless/issue",
+          "method": "POST",
+          "operationId": "RetrieveWirelessClientIssueDetails",
+          "summary": "Client Issue Details for Wireless Devices",
+          "tags": [
+            "Client health data for wireless devices"
+          ]
+        },
+        {
+          "path": "/analytics/client-trail/roaming",
+          "method": "POST",
+          "operationId": "RetrieveClientTrailRoamingData",
+          "summary": "Client Trail Roaming Data for AI and MCP Servers",
+          "tags": [
+            "Client trail data"
+          ]
+        },
+        {
+          "path": "/analytics/client-trail/connectivity-experience",
+          "method": "POST",
+          "operationId": "RetrieveClientTrailConnectivityExperience",
+          "summary": "Client Trail Connectivity Experience for AI and MCP Servers",
+          "tags": [
+            "Client trail data"
+          ]
+        },
+        {
+          "path": "/analytics/usage-capacity/wireless",
+          "method": "POST",
+          "operationId": "RetrieveWirelessUsageCapacityData",
+          "summary": "Wireless Usage Capacity Analytics for MCP Servers",
+          "tags": [
+            "Usage capacity data"
+          ]
+        },
+        {
+          "path": "/analytics/dashboard",
+          "method": "POST",
+          "operationId": "GetDashboardData",
+          "summary": "Dashboard Summary and Grid Data",
+          "tags": [
+            "dashboard"
+          ]
+        },
+        {
+          "path": "/analytics/client-health/client-trail/wired",
+          "method": "POST",
+          "operationId": "RetrieveWiredClientTrail",
+          "summary": "Retrieve wired client trail data",
+          "tags": [
+            "Client health data"
+          ]
+        },
+        {
+          "path": "/analytics/client-health/qos-data/wireless",
+          "method": "POST",
+          "operationId": "RetrieveWirelessClientQosChartData",
+          "summary": "Retrieve wireless client QOS chart data",
+          "tags": [
+            "client-health"
+          ]
+        },
+        {
+          "path": "/analytics/ip-routing/devices/{device_id}",
+          "method": "GET",
+          "operationId": "GetDeviceIpRoutingAnalytics",
+          "summary": "Retrieve IPv4 routing details for a specific device",
+          "tags": [
+            "IP Routing Analytics"
+          ]
+        }
+      ],
+      "specFile": "specs/perfmonitor-infrastructure/openapi.yaml"
+    },
+    {
       "id": "notification",
       "title": "Extreme Platform ONE REST API - Notification",
       "description": "The Extreme Platform ONE\u2122 Notification API provides comprehensive management\nof notification subscriptions and delivery rules, enabling automated alerting\nacross multiple channels to keep your team informed of critical network events,\nsubscription lifecycle changes, and contract milestones.\n\n**\ud83d\udcec Multi-Channel Notification Delivery:**\n\n\u2022 **Email Notifications** - Configure email recipients for alert notifications\nwith built-in verification workflow to ensure delivery to valid addresses\n\n\u2022 **Webhook Integration** - Set up HTTP endpoints to receive real-time JSON\npayloads with optional HMAC signature verification for secure integrations\n\n\u2022 **ServiceNow Integration** - Automatically create incidents in ServiceNow\nwhen alerts trigger, streamlining IT service management workflows\n\n\u2022 **Mobile Push Notifications** - Deliver instant notifications to mobile\napplications via APNs (iOS) and FCM (Android) for on-the-go alerting\n\n\n**\ud83d\udccb Intelligent Notification Rules:**\n\n\u2022 **Subscription Lifecycle Rules** - Timeline-based and event-based triggers\nfor license expiration warnings, renewal reminders, and activation notifications\n\n\u2022 **Contract Lifecycle Rules** - Automated notifications for hardware support\ncontract milestones, warranty expirations, and renewal deadlines\n\n\u2022 **Flexible Rule Configuration** - Predefined system rules plus custom\nuser-defined rules with per-application filtering\n\n\n**\ud83c\udfe2 Enterprise Management:**\n\nBuilt for enterprise environments with bulk operations for managing multiple\nsubscriptions, organization-wide notification policies, and comprehensive\naudit trails for compliance and operational visibility.",
