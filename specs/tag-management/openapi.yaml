@@ -1,0 +1,638 @@
+openapi: 3.0.3
+info:
+  title: Tag Management API
+  description: >
+    # Tag Management System API
+
+
+    This specification defines the comprehensive REST API for managing tags,
+    entities, associations, and policies in the Extreme Networks platform.
+
+
+    ## Overview
+
+    The Tag Management API provides a powerful and flexible system for
+    organizing and categorizing resources through:
+
+    - **Tags**: Lightweight labels that can be applied to entities for
+    organization and filtering
+
+    - **Entities**: The actual resources (devices, services, etc.) that can be
+    tagged
+
+    - **Associations**: Bidirectional relationships between tags and entities
+
+    - **Policies**: Rule-based automation for tag management
+
+    - **Attributes**: Key-value metadata attached to tags for enhanced
+    functionality
+
+
+    ## Key Features
+
+    - Bulk operations for creating, updating, and deleting tags and entities
+
+    - Flexible search and filtering capabilities with pagination support
+
+    - Policy-driven automation for tag lifecycle management
+
+    - Rich attribute system for tag metadata
+
+    - Owner-based multi-tenancy support
+
+    - Comprehensive telemetry and monitoring
+
+
+    ## Authentication
+
+    All endpoints require proper authentication headers. Ensure you include
+    valid credentials in your requests.
+
+
+    ## Rate Limiting
+
+    API requests are subject to rate limiting. Monitor the response headers for
+    rate limit information.
+  contact:
+    name: Extreme Networks API Support
+    url: https://www.extremenetworks.com/support
+    email: api-support@extremenetworks.com
+  license:
+    name: Apache License 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  version: 1.0.0
+  x-mcp-server-optimized: true
+  x-mcp-capabilities:
+    bulk-operations: true
+    automated-workflows: true
+    real-time-integration: true
+    compliance-automation: true
+    relationship-management: true
+  x-mcp-use-cases:
+    - infrastructure-discovery
+    - asset-management
+    - compliance-automation
+    - cmdb-synchronization
+    - policy-enforcement
+    - lifecycle-management
+  x-mcp-performance:
+    recommended-batch-size: 500
+    max-batch-size: 1000
+    supports-pagination: true
+    supports-deep-fetch: true
+    indexing-optimized: true
+  x-mcp-integration-patterns:
+    event-driven: true
+    scheduled-automation: true
+    webhook-support: false
+    streaming-support: true
+servers:
+  - url: https://cloudapi.extremecloudiq.com/tagging/v1
+    description: Extreme Platform ONE REST API - Tagging
+tags:
+  - name: Tags
+    description: >
+      **Tag Management Operations**
+
+
+      Tags are lightweight labels used to categorize and organize entities
+      within the system. Each tag has:
+
+      - A unique name within the owner's scope
+
+      - A type (manual, auto, or system-generated)
+
+      - A service owner identifier
+
+      - Optional attributes for additional metadata
+
+
+      Use these endpoints to create, read, update, and delete tags, as well as
+      manage their relationships with entities.
+  - name: Entities
+    description: >
+      **Entity Management Operations**
+
+
+      Entities represent the actual resources (devices, services, applications,
+      etc.) that can be tagged. Each entity has:
+
+      - A unique identifier (CSID) from the creating service
+
+      - A human-readable name
+
+      - A type classification
+
+      - Optional metadata as a JSON blob
+
+      - A service owner identifier
+
+
+      Use these endpoints to manage entities and their tag associations.
+  - name: Policies
+    description: >
+      **Policy Management Operations**
+
+
+      Policies define automated rules for tag management based on criteria
+      matching. They enable:
+
+      - Automatic tag assignment based on entity properties
+
+      - Tag lifecycle automation
+
+      - Compliance enforcement
+
+      - Dynamic tag updates based on changing conditions
+
+
+      Policies use a flexible criteria system supporting complex logical
+      conditions.
+  - name: Associate
+    description: >
+      **Tag-Entity Association Operations**
+
+
+      Association operations manage the many-to-many relationships between tags
+      and entities. Features include:
+
+      - Bulk association and disassociation operations
+
+      - Bidirectional relationship management
+
+      - Validation of association constraints
+
+      - Audit trail for association changes
+
+
+      Associations can be created from either the tag side or the entity side.
+  - name: Attributes
+    description: >
+      **Tag Attribute Management**
+
+
+      Attributes provide a key-value metadata system for tags, enabling:
+
+      - Extended tag information storage
+
+      - Custom properties for specific use cases
+
+      - Searchable metadata for advanced filtering
+
+      - Structured data attachment to tags
+
+
+      Attributes support create, read, update, and delete operations with
+      validation.
+  - name: Owner
+    description: >
+      **Owner-based Operations**
+
+
+      Owner-based operations provide multi-tenant capabilities by scoping
+      operations to specific service owners. Features:
+
+      - Bulk operations scoped to owner
+
+      - Data isolation between owners
+
+      - Administrative operations
+
+      - Cleanup and maintenance tasks
+  - name: Telemetry
+    description: |
+      **Telemetry and Monitoring**
+
+      Telemetry endpoints provide insights into system usage and performance:
+      - Usage statistics and metrics
+      - Performance monitoring data
+      - System health indicators
+      - Usage patterns and trends
+paths:
+  /tags:
+    post:
+      tags:
+        - Tags
+      summary: Create one or more tags with MCP-ready bulk operations
+      description: >
+        **Create Tags for MCP Server Integration**
+
+
+        Creates one or more tags in the system with comprehensive support for
+        MCP (Model Context Protocol) servers and automation systems.
+
+        This endpoint is optimized for bulk operations, automated workflows, and
+        integration scenarios.
+
+
+        **MCP Server Features:**
+
+        - **Idempotent Operations**: Safe for automated retry scenarios and
+        batch processing
+
+        - **Atomic Transactions**: All tags succeed or fail together, ensuring
+        data consistency
+
+        - **Rich Error Context**: Detailed error messages for automated error
+        handling and recovery
+
+        - **Bulk Optimization**: Efficient processing of large tag sets
+        (recommended: 100-500 per request)
+
+        - **Integration Patterns**: Designed for CMDB sync, infrastructure
+        discovery, and compliance automation
+
+
+        **Core Features:**
+
+        - Bulk creation of multiple tags in a single request
+
+        - Automatic validation of tag names and properties
+
+        - Support for hierarchical tag relationships via parent field
+
+        - Automatic owner isolation and multi-tenancy
+
+        - Comprehensive response metadata for tracking and auditing
+
+
+        **Tag Properties:**
+
+        - `name`: Unique tag identifier within the owner scope (required, max 64
+        chars)
+
+        - `type`: Tag classification ["auto", "manual", "policy", "provisional"]
+        (required)
+
+        - `serviceOwner`: Service ownership ["edge", "network", "iam", "system",
+        "asset"] (required)
+
+        - `description`: Human-readable description of the tag's purpose
+        (optional)
+
+        - `access`: Access level control ["read", "write", "admin"] (optional,
+        default: "read")
+
+        - `parent`: Optional parent tag ID for hierarchical organization (UUID
+        format)
+
+
+        **MCP Use Cases:**
+
+        - **Infrastructure Auto-Discovery**: Automatically tag discovered
+        network devices, servers, and services
+
+        - **Compliance Automation**: Bulk creation of regulatory, security, and
+        policy compliance tags
+
+        - **Resource Classification**: Systematic categorization during cloud
+        migration or datacenter consolidation
+
+        - **CI/CD Integration**: Automated tagging during deployment pipelines
+        and environment provisioning
+
+        - **CMDB Synchronization**: Import tags from external configuration
+        management databases
+
+        - **Lifecycle Management**: Automated tag creation during resource
+        provisioning and decommissioning
+
+
+        **Validation Rules:**
+
+        - Tag names must be unique within the owner scope
+
+        - Names can contain alphanumeric characters, hyphens, and underscores
+
+        - Maximum name length is 64 characters
+
+        - ServiceOwner must be a valid registered service
+
+
+        **Use Cases:**
+
+        - Initial setup of tag taxonomy
+
+        - Bulk import of tags from external systems
+
+        - Dynamic tag creation based on discovered resources
+
+        - Hierarchical tag structure establishment
+      operationId: CreateTags
+      x-mcp-operation-type: bulk-create
+      x-mcp-automation-friendly: true
+      x-mcp-recommended-batch-size: 500
+      x-mcp-idempotent: true
+      x-mcp-use-cases:
+        - infrastructure-discovery
+        - compliance-automation
+        - asset-lifecycle-management
+      requestBody:
+        required: true
+        description: Array of tag objects to create
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  type:
+                    type: string
+                    enum: [auto, manual, policy, provisional]
+                  serviceOwner:
+                    type: string
+                  description:
+                    type: string
+                  access:
+                    type: string
+                  parent:
+                    type: string
+      responses:
+        "200":
+          description: Tags created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+  /tags/delete:
+    post:
+      tags:
+        - Tags
+      summary: Delete multiple tags
+      operationId: DeleteTags
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tagIds:
+                  type: array
+                  items:
+                    type: string
+                tagNames:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: Tags deleted successfully
+  /tags/fetch:
+    post:
+      tags:
+        - Tags
+      summary: Search and fetch tags
+      operationId: FetchTags
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                search:
+                  type: object
+                pagination:
+                  type: object
+                deepFetch:
+                  type: boolean
+      responses:
+        "200":
+          description: Tags fetched successfully
+  /tags/tagId/{tagId}:
+    put:
+      tags:
+        - Tags
+      summary: Update tag by ID
+      operationId: UpdateTagById
+      parameters:
+        - name: tagId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Tag updated successfully
+  /tags/tagName/{tagName}:
+    put:
+      tags:
+        - Tags
+      summary: Update tag by name
+      operationId: UpdateTagByName
+      parameters:
+        - name: tagName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Tag updated successfully
+  /tags/tagId/{tagId}/entities:
+    get:
+      tags:
+        - Tags
+      summary: Get entities for a tag
+      operationId: GetEntities
+      parameters:
+        - name: tagId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Entities retrieved successfully
+  /entities:
+    post:
+      tags:
+        - Entities
+      summary: Create entities
+      operationId: CreateEntities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+      responses:
+        "200":
+          description: Entities created successfully
+  /entities/fetch:
+    post:
+      tags:
+        - Entities
+      summary: Search and fetch entities
+      operationId: FetchEntities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Entities fetched successfully
+  /tags/tagId/entities/associate:
+    post:
+      tags:
+        - Associate
+      summary: Associate entities to tag
+      operationId: AssociateTagEntityById
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Entities associated successfully
+  /tags/tagId/entities/disassociate:
+    post:
+      tags:
+        - Associate
+      summary: Disassociate entities from tag
+      operationId: DisassociateEntitiesByTagIds
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Entities disassociated successfully
+  /tags/attributes:
+    post:
+      tags:
+        - Attributes
+      summary: Create tag attributes
+      operationId: CreateAttributes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Attributes created successfully
+  /policies:
+    post:
+      tags:
+        - Policies
+      summary: Create policies
+      operationId: CreatePolicies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Policies created successfully
+components:
+  schemas:
+    tagInfoList:
+      type: array
+      items:
+        type: object
+    response:
+      type: object
+    paginationRequest:
+      type: object
+    entitiesResponse:
+      type: object
+    tagsEntitiesAssociationByTagId:
+      type: object
+  headers:
+    X-Span-Id:
+      schema:
+        type: string
+    X-Trace-Id:
+      schema:
+        type: string
+  responses:
+    BadRequestError:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            type: object
+    NotFoundError:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+    TooManyRequestsError:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            type: object
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - BearerAuth: []
