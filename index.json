@@ -1730,6 +1730,2498 @@
       "specFile": "specs/device-lifecycle-management/openapi.yaml"
     },
     {
+      "id": "config-state",
+      "title": "Config State Service.",
+      "description": "This specification provides details of the API exposed by Config State service.",
+      "version": "1.0.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/configstate/v1",
+      "tags": [
+        "AssetAccount",
+        "AssetAllOfLldpNeighborXmedInventory",
+        "AssetAuthenticationConfig",
+        "AssetAuthenticationPortSettingConfig",
+        "AssetAuthenticationState",
+        "AssetAutoSenseFabricAttach",
+        "AssetAutoSenseGlobal",
+        "AssetAutoSenseIsis",
+        "AssetAutoSensePort",
+        "AssetCdpNeighbor",
+        "AssetCdpPortsConfig",
+        "AssetDevice",
+        "AssetDeviceConnectionDetail",
+        "AssetDeviceConnectionDetailPhysicalStack",
+        "AssetDeviceConnectionDetailStackInfo",
+        "AssetDhcpRelayVlanConfig",
+        "AssetDhcpRelayVlanServerConfig",
+        "AssetDhcpRelayVrfConfig",
+        "AssetDhcpRelayVrfServerConfig",
+        "AssetDhcpRelayVrfState",
+        "AssetDhcpSnoopConfig",
+        "AssetDhcpSnoopDynamicVlansConfig",
+        "AssetDhcpSnoopPortsConfig",
+        "AssetDhcpSnoopVlansConfig",
+        "AssetDnsConfig",
+        "AssetDnsVrfServerConfig",
+        "AssetElrpConfig",
+        "AssetElrpDynamicVlanConfig",
+        "AssetElrpVlanConfig",
+        "AssetFabricAttachConfig",
+        "AssetFabricAttachConfigPort",
+        "AssetFabricAttachConfigZeroTouchClient",
+        "AssetFabricAttachState",
+        "AssetFabricAttachStateDiscoveryElement",
+        "AssetFabricAttachStateVlanAssignment",
+        "AssetFeTunnelConfig",
+        "AssetIgmpVlanConfig",
+        "AssetIgmpVrConfig",
+        "AssetInstantPortActionConfig",
+        "AssetInstantPortConfig",
+        "AssetInstantPortDeviceTypesConfig",
+        "AssetInstantPortMatchConditionConfig",
+        "AssetInstantPortProfileConfig",
+        "AssetInterIsisUnicastFibState",
+        "AssetInterface",
+        "AssetInterfaceIpAddress",
+        "AssetInterfaceVlanMap",
+        "AssetInterfaceVlanProperties",
+        "AssetIpArpState",
+        "AssetIsidMacFdbState",
+        "AssetIsisAdjacency",
+        "AssetIsisCircuitConfig",
+        "AssetIsisCircuitSpbmSetting",
+        "AssetIsisCircuitState",
+        "AssetIsisGlobalConfig",
+        "AssetIsisGlobalState",
+        "AssetIsisL2MultiAreaIsidList",
+        "AssetIsisL2RedistributeMultiAreaSnoop",
+        "AssetIsisL3AcceptPolicyConfig",
+        "AssetIsisL3Redistribute",
+        "AssetIsisL3RedistributeMultiAreaIsidRedist",
+        "AssetIsisLspState",
+        "AssetIsisMulticastFibState",
+        "AssetIsisMulticastRouteState",
+        "AssetIsisRedistributeMultiArea",
+        "AssetIsisRedistributeMultiAreaStaticIsid",
+        "AssetIsisUnicastFibState",
+        "AssetL2VsnCvlanConfig",
+        "AssetL2VsnSuniConfig",
+        "AssetL2VsnSuniConfigEndPoint",
+        "AssetL2VsnSuniState",
+        "AssetL2VsnSuniStateMemberIntfs",
+        "AssetL2VsnTuniConfig",
+        "AssetL2VsnTuniConfigMemberIntf",
+        "AssetL3VsnConfig",
+        "AssetL3VsnIsidListConfig",
+        "AssetLagConfig",
+        "AssetLagConfigMemberPort",
+        "AssetLagState",
+        "AssetLagStateMemberPort",
+        "AssetLldpConfig",
+        "AssetLldpDot1PortProtocolVlan",
+        "AssetLldpDot1VlanObject",
+        "AssetLldpNeighborFabricAttach",
+        "AssetLldpNeighborFabricAttachVlanIsidMap",
+        "AssetLldpNeighborManagementAddressList",
+        "AssetLldpNeighborState",
+        "AssetLldpNeighborXmed",
+        "AssetLldpNeighborXmedPoePd",
+        "AssetLldpNeighborXmedPoePse",
+        "AssetLldpNeighborXmedPolicy",
+        "AssetLldpNeighborZtf",
+        "AssetLldpNeighborZtfTunnelGroup",
+        "AssetLldpPortAdvertiseSettingsConfig",
+        "AssetLldpPortConfig",
+        "AssetLldpPortMedPolicySettingsConfig",
+        "AssetLocation",
+        "AssetMacLockingConfig",
+        "AssetMlagPeerConfig",
+        "AssetMlagPeerCounters",
+        "AssetMlagPeerState",
+        "AssetMlagPortState",
+        "AssetMulticastFibInterface",
+        "AssetNeighDiscState",
+        "AssetNetworkToNetworkInterface",
+        "AssetNodeAliasConfig",
+        "AssetNodeAliasPortConfig",
+        "AssetNtpConfig",
+        "AssetNtpServerConfig",
+        "AssetPoePowerConfig",
+        "AssetPoePowerPortsConfig",
+        "AssetPoePowerPortsState",
+        "AssetPoePowerSlotSettingsConfig",
+        "AssetPolicyGlobal",
+        "AssetPortCapabilities",
+        "AssetPortConfig",
+        "AssetPortLldpLocation",
+        "AssetPortMacLockingConfig",
+        "AssetPortState",
+        "AssetPortsGlobalConfig",
+        "AssetRadiusServerConfig",
+        "AssetRadiusServerHostConfig",
+        "AssetRadiusServerSecureProfilesConfig",
+        "AssetRsmltLocalInstanceState",
+        "AssetRsmltRemoteInstanceState",
+        "AssetRsmltVlanInstanceConfig",
+        "AssetSlot",
+        "AssetSlppConfig",
+        "AssetSlppPortConfig",
+        "AssetSlppVlanConfig",
+        "AssetSnmpAccessConfig",
+        "AssetSnmpGlobalConfig",
+        "AssetSnmpGroupConfig",
+        "AssetSnmpTrapReceiverConfig",
+        "AssetSnmpV1V2Config",
+        "AssetSnmpV3AccessConfig",
+        "AssetSnmpV3Config",
+        "AssetSnmpV3TrapReceiverConfig",
+        "AssetSnmpViewConfig",
+        "AssetSntpConfig",
+        "AssetSntpServerConfig",
+        "AssetSpbmCfmGlobal",
+        "AssetSpbmGlobalSettingsConfig",
+        "AssetSpbmInstance",
+        "AssetSsidConfig",
+        "AssetSsidState",
+        "AssetStormControlPortConfig",
+        "AssetStpDomainState",
+        "AssetStpGlobalConfig",
+        "AssetStpInterfaceSettingsConfig",
+        "AssetStpPortStateEntry",
+        "AssetStpProtocolSettingsConfig",
+        "AssetStpVlanSettingsConfig",
+        "AssetSysCapabilities",
+        "AssetSyslogConfig",
+        "AssetSyslogServerConfig",
+        "AssetSystemSettings",
+        "AssetTimeZoneConfig",
+        "AssetUrlCapabilities",
+        "AssetVim",
+        "AssetVlanConfig",
+        "AssetVlanConfigIpArpLearnFrom",
+        "AssetVlanMacFdbState",
+        "AssetVlanState",
+        "AssetVlanStateMemberInterfaces",
+        "AssetVrfConfig",
+        "AssetVrfProtectedRouteGateway",
+        "AssetVrfRouteConfig",
+        "AssetVrfRouteState",
+        "AssetVrfState",
+        "AssetVrfVlanConfig",
+        "AssetVrrpConfig",
+        "AssetVrrpState",
+        "AssetVrrpVirtualIpAddressConfig",
+        "AssetVrrpVirtualIpAddressState",
+        "AssetWirelessInterface",
+        "AssetWirelessInterfaceState",
+        "InferredArea",
+        "InferredBoundaryDetails",
+        "InferredCluster",
+        "InferredCustomerVlanUni",
+        "InferredDevice",
+        "InferredDeviceFaDetail",
+        "InferredDeviceSpbmDetail",
+        "InferredDiscoveryStatusError",
+        "InferredFabric",
+        "InferredFabricAttachDomain",
+        "InferredFabricAttachPort",
+        "InferredFabricAttachVlan",
+        "InferredFabricLink",
+        "InferredFabricLinkFaDetail",
+        "InferredFabricTopology",
+        "InferredGlobalSpbmDetails",
+        "InferredGroupInfo",
+        "InferredInterface",
+        "InferredInterfaceVlanMap",
+        "InferredIsisDetails",
+        "InferredIsisRemoteDetails",
+        "InferredL2Access",
+        "InferredL2Service",
+        "InferredL2ServiceEndPoint",
+        "InferredL3Access",
+        "InferredL3GatewayInterface",
+        "InferredL3Service",
+        "InferredL3ServiceEndPoint",
+        "InferredLag",
+        "InferredLldpEdgeDeviceGrouping",
+        "InferredPhysicalLink",
+        "InferredPhysicalTopology",
+        "InferredPort",
+        "InferredPortErrorStats",
+        "InferredPortInOutStats",
+        "InferredPortLagMemberMap",
+        "InferredPortUtilizationInfo",
+        "InferredPrimaryPrivateVlan",
+        "InferredPrivateVlanDomain",
+        "InferredPrivateVlanInterface",
+        "InferredSecondaryPrivateVlan",
+        "InferredSlot",
+        "InferredSwitchedVlanUni",
+        "InferredTag",
+        "InferredTagCriteria",
+        "InferredTagElement",
+        "InferredTagOuterElement",
+        "InferredTransparentVlanUni",
+        "InferredUserLink",
+        "InferredVlan",
+        "InferredVlanService",
+        "InferredVrf",
+        "InferredVrfService",
+        "InferredVrrpInstance",
+        "InferredWirelessInterface",
+        "InferredWirelessInterfaceErrorStats",
+        "InferredWirelessInterfaceInOutStats",
+        "InferredWirelessInterfaceUtilizationInfo",
+        "IntentAutoSenseFabricAttach",
+        "IntentAutoSenseGlobal",
+        "IntentAutoSenseIsis",
+        "IntentDevice",
+        "IntentIsisCircuitConfig",
+        "IntentIsisCircuitSpbmSetting",
+        "IntentIsisGlobalConfig",
+        "IntentL2VsnCvlanConfig",
+        "IntentL2VsnSuniConfig",
+        "IntentL2VsnTuniConfig",
+        "IntentSpbmGlobalSettingsConfig",
+        "IntentSpbmInstance",
+        "IntentVlanConfig"
+      ],
+      "endpoints": [
+        {
+          "path": "/retrieve-asset-account",
+          "method": "POST",
+          "operationId": "retrieveAssetAccount",
+          "summary": "No summary",
+          "tags": [
+            "AssetAccount"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-all-of-lldp-neighbor-xmed-inventory",
+          "method": "POST",
+          "operationId": "retrieveAssetAllOfLldpNeighborXmedInventory",
+          "summary": "No summary",
+          "tags": [
+            "AssetAllOfLldpNeighborXmedInventory"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-authentication-config",
+          "method": "POST",
+          "operationId": "retrieveAssetAuthenticationConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetAuthenticationConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-authentication-port-setting-config",
+          "method": "POST",
+          "operationId": "retrieveAssetAuthenticationPortSettingConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetAuthenticationPortSettingConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-authentication-state",
+          "method": "POST",
+          "operationId": "retrieveAssetAuthenticationState",
+          "summary": "No summary",
+          "tags": [
+            "AssetAuthenticationState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-auto-sense-fabric-attach",
+          "method": "POST",
+          "operationId": "retrieveAssetAutoSenseFabricAttach",
+          "summary": "No summary",
+          "tags": [
+            "AssetAutoSenseFabricAttach"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-auto-sense-global",
+          "method": "POST",
+          "operationId": "retrieveAssetAutoSenseGlobal",
+          "summary": "No summary",
+          "tags": [
+            "AssetAutoSenseGlobal"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-auto-sense-isis",
+          "method": "POST",
+          "operationId": "retrieveAssetAutoSenseIsis",
+          "summary": "No summary",
+          "tags": [
+            "AssetAutoSenseIsis"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-auto-sense-port",
+          "method": "POST",
+          "operationId": "retrieveAssetAutoSensePort",
+          "summary": "No summary",
+          "tags": [
+            "AssetAutoSensePort"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-cdp-neighbor",
+          "method": "POST",
+          "operationId": "retrieveAssetCdpNeighbor",
+          "summary": "No summary",
+          "tags": [
+            "AssetCdpNeighbor"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-cdp-ports-config",
+          "method": "POST",
+          "operationId": "retrieveAssetCdpPortsConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetCdpPortsConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-device",
+          "method": "POST",
+          "operationId": "retrieveAssetDevice",
+          "summary": "No summary",
+          "tags": [
+            "AssetDevice"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-device-connection-detail",
+          "method": "POST",
+          "operationId": "retrieveAssetDeviceConnectionDetail",
+          "summary": "No summary",
+          "tags": [
+            "AssetDeviceConnectionDetail"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-device-connection-detail-physical-stack",
+          "method": "POST",
+          "operationId": "retrieveAssetDeviceConnectionDetailPhysicalStack",
+          "summary": "No summary",
+          "tags": [
+            "AssetDeviceConnectionDetailPhysicalStack"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-device-connection-detail-stack-info",
+          "method": "POST",
+          "operationId": "retrieveAssetDeviceConnectionDetailStackInfo",
+          "summary": "No summary",
+          "tags": [
+            "AssetDeviceConnectionDetailStackInfo"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-dhcp-relay-vlan-config",
+          "method": "POST",
+          "operationId": "retrieveAssetDhcpRelayVlanConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetDhcpRelayVlanConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-dhcp-relay-vlan-server-config",
+          "method": "POST",
+          "operationId": "retrieveAssetDhcpRelayVlanServerConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetDhcpRelayVlanServerConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-dhcp-relay-vrf-config",
+          "method": "POST",
+          "operationId": "retrieveAssetDhcpRelayVrfConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetDhcpRelayVrfConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-dhcp-relay-vrf-server-config",
+          "method": "POST",
+          "operationId": "retrieveAssetDhcpRelayVrfServerConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetDhcpRelayVrfServerConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-dhcp-relay-vrf-state",
+          "method": "POST",
+          "operationId": "retrieveAssetDhcpRelayVrfState",
+          "summary": "No summary",
+          "tags": [
+            "AssetDhcpRelayVrfState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-dhcp-snoop-config",
+          "method": "POST",
+          "operationId": "retrieveAssetDhcpSnoopConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetDhcpSnoopConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-dhcp-snoop-dynamic-vlans-config",
+          "method": "POST",
+          "operationId": "retrieveAssetDhcpSnoopDynamicVlansConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetDhcpSnoopDynamicVlansConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-dhcp-snoop-ports-config",
+          "method": "POST",
+          "operationId": "retrieveAssetDhcpSnoopPortsConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetDhcpSnoopPortsConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-dhcp-snoop-vlans-config",
+          "method": "POST",
+          "operationId": "retrieveAssetDhcpSnoopVlansConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetDhcpSnoopVlansConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-dns-config",
+          "method": "POST",
+          "operationId": "retrieveAssetDnsConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetDnsConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-dns-vrf-server-config",
+          "method": "POST",
+          "operationId": "retrieveAssetDnsVrfServerConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetDnsVrfServerConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-elrp-config",
+          "method": "POST",
+          "operationId": "retrieveAssetElrpConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetElrpConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-elrp-dynamic-vlan-config",
+          "method": "POST",
+          "operationId": "retrieveAssetElrpDynamicVlanConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetElrpDynamicVlanConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-elrp-vlan-config",
+          "method": "POST",
+          "operationId": "retrieveAssetElrpVlanConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetElrpVlanConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-fabric-attach-config",
+          "method": "POST",
+          "operationId": "retrieveAssetFabricAttachConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetFabricAttachConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-fabric-attach-config-port",
+          "method": "POST",
+          "operationId": "retrieveAssetFabricAttachConfigPort",
+          "summary": "No summary",
+          "tags": [
+            "AssetFabricAttachConfigPort"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-fabric-attach-config-zero-touch-client",
+          "method": "POST",
+          "operationId": "retrieveAssetFabricAttachConfigZeroTouchClient",
+          "summary": "No summary",
+          "tags": [
+            "AssetFabricAttachConfigZeroTouchClient"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-fabric-attach-state",
+          "method": "POST",
+          "operationId": "retrieveAssetFabricAttachState",
+          "summary": "No summary",
+          "tags": [
+            "AssetFabricAttachState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-fabric-attach-state-discovery-element",
+          "method": "POST",
+          "operationId": "retrieveAssetFabricAttachStateDiscoveryElement",
+          "summary": "No summary",
+          "tags": [
+            "AssetFabricAttachStateDiscoveryElement"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-fabric-attach-state-vlan-assignment",
+          "method": "POST",
+          "operationId": "retrieveAssetFabricAttachStateVlanAssignment",
+          "summary": "No summary",
+          "tags": [
+            "AssetFabricAttachStateVlanAssignment"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-fe-tunnel-config",
+          "method": "POST",
+          "operationId": "retrieveAssetFeTunnelConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetFeTunnelConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-igmp-vlan-config",
+          "method": "POST",
+          "operationId": "retrieveAssetIgmpVlanConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetIgmpVlanConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-igmp-vr-config",
+          "method": "POST",
+          "operationId": "retrieveAssetIgmpVrConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetIgmpVrConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-instant-port-action-config",
+          "method": "POST",
+          "operationId": "retrieveAssetInstantPortActionConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetInstantPortActionConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-instant-port-config",
+          "method": "POST",
+          "operationId": "retrieveAssetInstantPortConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetInstantPortConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-instant-port-device-types-config",
+          "method": "POST",
+          "operationId": "retrieveAssetInstantPortDeviceTypesConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetInstantPortDeviceTypesConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-instant-port-match-condition-config",
+          "method": "POST",
+          "operationId": "retrieveAssetInstantPortMatchConditionConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetInstantPortMatchConditionConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-instant-port-profile-config",
+          "method": "POST",
+          "operationId": "retrieveAssetInstantPortProfileConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetInstantPortProfileConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-inter-isis-unicast-fib-state",
+          "method": "POST",
+          "operationId": "retrieveAssetInterIsisUnicastFibState",
+          "summary": "No summary",
+          "tags": [
+            "AssetInterIsisUnicastFibState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-interface",
+          "method": "POST",
+          "operationId": "retrieveAssetInterface",
+          "summary": "No summary",
+          "tags": [
+            "AssetInterface"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-interface-ip-address",
+          "method": "POST",
+          "operationId": "retrieveAssetInterfaceIpAddress",
+          "summary": "No summary",
+          "tags": [
+            "AssetInterfaceIpAddress"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-interface-vlan-map",
+          "method": "POST",
+          "operationId": "retrieveAssetInterfaceVlanMap",
+          "summary": "No summary",
+          "tags": [
+            "AssetInterfaceVlanMap"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-interface-vlan-properties",
+          "method": "POST",
+          "operationId": "retrieveAssetInterfaceVlanProperties",
+          "summary": "No summary",
+          "tags": [
+            "AssetInterfaceVlanProperties"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-ip-arp-state",
+          "method": "POST",
+          "operationId": "retrieveAssetIpArpState",
+          "summary": "No summary",
+          "tags": [
+            "AssetIpArpState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isid-mac-fdb-state",
+          "method": "POST",
+          "operationId": "retrieveAssetIsidMacFdbState",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsidMacFdbState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-adjacency",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisAdjacency",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisAdjacency"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-circuit-config",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisCircuitConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisCircuitConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-circuit-spbm-setting",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisCircuitSpbmSetting",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisCircuitSpbmSetting"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-circuit-state",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisCircuitState",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisCircuitState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-global-config",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisGlobalConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisGlobalConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-global-state",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisGlobalState",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisGlobalState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-l2-multi-area-isid-list",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisL2MultiAreaIsidList",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisL2MultiAreaIsidList"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-l2-redistribute-multi-area-snoop",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisL2RedistributeMultiAreaSnoop",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisL2RedistributeMultiAreaSnoop"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-l3-accept-policy-config",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisL3AcceptPolicyConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisL3AcceptPolicyConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-l3-redistribute",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisL3Redistribute",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisL3Redistribute"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-l3-redistribute-multi-area-isid-redist",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisL3RedistributeMultiAreaIsidRedist",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisL3RedistributeMultiAreaIsidRedist"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-lsp-state",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisLspState",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisLspState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-multicast-fib-state",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisMulticastFibState",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisMulticastFibState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-multicast-route-state",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisMulticastRouteState",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisMulticastRouteState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-redistribute-multi-area",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisRedistributeMultiArea",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisRedistributeMultiArea"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-redistribute-multi-area-static-isid",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisRedistributeMultiAreaStaticIsid",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisRedistributeMultiAreaStaticIsid"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-isis-unicast-fib-state",
+          "method": "POST",
+          "operationId": "retrieveAssetIsisUnicastFibState",
+          "summary": "No summary",
+          "tags": [
+            "AssetIsisUnicastFibState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-l2-vsn-cvlan-config",
+          "method": "POST",
+          "operationId": "retrieveAssetL2VsnCvlanConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetL2VsnCvlanConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-l2-vsn-suni-config",
+          "method": "POST",
+          "operationId": "retrieveAssetL2VsnSuniConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetL2VsnSuniConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-l2-vsn-suni-config-end-point",
+          "method": "POST",
+          "operationId": "retrieveAssetL2VsnSuniConfigEndPoint",
+          "summary": "No summary",
+          "tags": [
+            "AssetL2VsnSuniConfigEndPoint"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-l2-vsn-suni-state",
+          "method": "POST",
+          "operationId": "retrieveAssetL2VsnSuniState",
+          "summary": "No summary",
+          "tags": [
+            "AssetL2VsnSuniState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-l2-vsn-suni-state-member-intfs",
+          "method": "POST",
+          "operationId": "retrieveAssetL2VsnSuniStateMemberIntfs",
+          "summary": "No summary",
+          "tags": [
+            "AssetL2VsnSuniStateMemberIntfs"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-l2-vsn-tuni-config",
+          "method": "POST",
+          "operationId": "retrieveAssetL2VsnTuniConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetL2VsnTuniConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-l2-vsn-tuni-config-member-intf",
+          "method": "POST",
+          "operationId": "retrieveAssetL2VsnTuniConfigMemberIntf",
+          "summary": "No summary",
+          "tags": [
+            "AssetL2VsnTuniConfigMemberIntf"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-l3-vsn-config",
+          "method": "POST",
+          "operationId": "retrieveAssetL3VsnConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetL3VsnConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-l3-vsn-isid-list-config",
+          "method": "POST",
+          "operationId": "retrieveAssetL3VsnIsidListConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetL3VsnIsidListConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lag-config",
+          "method": "POST",
+          "operationId": "retrieveAssetLagConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetLagConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lag-config-member-port",
+          "method": "POST",
+          "operationId": "retrieveAssetLagConfigMemberPort",
+          "summary": "No summary",
+          "tags": [
+            "AssetLagConfigMemberPort"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lag-state",
+          "method": "POST",
+          "operationId": "retrieveAssetLagState",
+          "summary": "No summary",
+          "tags": [
+            "AssetLagState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lag-state-member-port",
+          "method": "POST",
+          "operationId": "retrieveAssetLagStateMemberPort",
+          "summary": "No summary",
+          "tags": [
+            "AssetLagStateMemberPort"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-config",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-dot1-port-protocol-vlan",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpDot1PortProtocolVlan",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpDot1PortProtocolVlan"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-dot1-vlan-object",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpDot1VlanObject",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpDot1VlanObject"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-neighbor-fabric-attach",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpNeighborFabricAttach",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpNeighborFabricAttach"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-neighbor-fabric-attach-vlan-isid-map",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpNeighborFabricAttachVlanIsidMap",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpNeighborFabricAttachVlanIsidMap"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-neighbor-management-address-list",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpNeighborManagementAddressList",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpNeighborManagementAddressList"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-neighbor-state",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpNeighborState",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpNeighborState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-neighbor-xmed",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpNeighborXmed",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpNeighborXmed"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-neighbor-xmed-poe-pd",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpNeighborXmedPoePd",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpNeighborXmedPoePd"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-neighbor-xmed-poe-pse",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpNeighborXmedPoePse",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpNeighborXmedPoePse"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-neighbor-xmed-policy",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpNeighborXmedPolicy",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpNeighborXmedPolicy"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-neighbor-ztf",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpNeighborZtf",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpNeighborZtf"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-neighbor-ztf-tunnel-group",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpNeighborZtfTunnelGroup",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpNeighborZtfTunnelGroup"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-port-advertise-settings-config",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpPortAdvertiseSettingsConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpPortAdvertiseSettingsConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-port-config",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpPortConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpPortConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-lldp-port-med-policy-settings-config",
+          "method": "POST",
+          "operationId": "retrieveAssetLldpPortMedPolicySettingsConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetLldpPortMedPolicySettingsConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-location",
+          "method": "POST",
+          "operationId": "retrieveAssetLocation",
+          "summary": "No summary",
+          "tags": [
+            "AssetLocation"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-mac-locking-config",
+          "method": "POST",
+          "operationId": "retrieveAssetMacLockingConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetMacLockingConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-mlag-peer-config",
+          "method": "POST",
+          "operationId": "retrieveAssetMlagPeerConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetMlagPeerConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-mlag-peer-counters",
+          "method": "POST",
+          "operationId": "retrieveAssetMlagPeerCounters",
+          "summary": "No summary",
+          "tags": [
+            "AssetMlagPeerCounters"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-mlag-peer-state",
+          "method": "POST",
+          "operationId": "retrieveAssetMlagPeerState",
+          "summary": "No summary",
+          "tags": [
+            "AssetMlagPeerState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-mlag-port-state",
+          "method": "POST",
+          "operationId": "retrieveAssetMlagPortState",
+          "summary": "No summary",
+          "tags": [
+            "AssetMlagPortState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-multicast-fib-interface",
+          "method": "POST",
+          "operationId": "retrieveAssetMulticastFibInterface",
+          "summary": "No summary",
+          "tags": [
+            "AssetMulticastFibInterface"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-neigh-disc-state",
+          "method": "POST",
+          "operationId": "retrieveAssetNeighDiscState",
+          "summary": "No summary",
+          "tags": [
+            "AssetNeighDiscState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-network-to-network-interface",
+          "method": "POST",
+          "operationId": "retrieveAssetNetworkToNetworkInterface",
+          "summary": "No summary",
+          "tags": [
+            "AssetNetworkToNetworkInterface"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-node-alias-config",
+          "method": "POST",
+          "operationId": "retrieveAssetNodeAliasConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetNodeAliasConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-node-alias-port-config",
+          "method": "POST",
+          "operationId": "retrieveAssetNodeAliasPortConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetNodeAliasPortConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-ntp-config",
+          "method": "POST",
+          "operationId": "retrieveAssetNtpConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetNtpConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-ntp-server-config",
+          "method": "POST",
+          "operationId": "retrieveAssetNtpServerConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetNtpServerConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-poe-power-config",
+          "method": "POST",
+          "operationId": "retrieveAssetPoePowerConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetPoePowerConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-poe-power-ports-config",
+          "method": "POST",
+          "operationId": "retrieveAssetPoePowerPortsConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetPoePowerPortsConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-poe-power-ports-state",
+          "method": "POST",
+          "operationId": "retrieveAssetPoePowerPortsState",
+          "summary": "No summary",
+          "tags": [
+            "AssetPoePowerPortsState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-poe-power-slot-settings-config",
+          "method": "POST",
+          "operationId": "retrieveAssetPoePowerSlotSettingsConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetPoePowerSlotSettingsConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-policy-global",
+          "method": "POST",
+          "operationId": "retrieveAssetPolicyGlobal",
+          "summary": "No summary",
+          "tags": [
+            "AssetPolicyGlobal"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-port-capabilities",
+          "method": "POST",
+          "operationId": "retrieveAssetPortCapabilities",
+          "summary": "No summary",
+          "tags": [
+            "AssetPortCapabilities"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-port-config",
+          "method": "POST",
+          "operationId": "retrieveAssetPortConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetPortConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-port-lldp-location",
+          "method": "POST",
+          "operationId": "retrieveAssetPortLldpLocation",
+          "summary": "No summary",
+          "tags": [
+            "AssetPortLldpLocation"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-port-mac-locking-config",
+          "method": "POST",
+          "operationId": "retrieveAssetPortMacLockingConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetPortMacLockingConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-port-state",
+          "method": "POST",
+          "operationId": "retrieveAssetPortState",
+          "summary": "No summary",
+          "tags": [
+            "AssetPortState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-ports-global-config",
+          "method": "POST",
+          "operationId": "retrieveAssetPortsGlobalConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetPortsGlobalConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-radius-server-config",
+          "method": "POST",
+          "operationId": "retrieveAssetRadiusServerConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetRadiusServerConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-radius-server-host-config",
+          "method": "POST",
+          "operationId": "retrieveAssetRadiusServerHostConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetRadiusServerHostConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-radius-server-secure-profiles-config",
+          "method": "POST",
+          "operationId": "retrieveAssetRadiusServerSecureProfilesConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetRadiusServerSecureProfilesConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-rsmlt-local-instance-state",
+          "method": "POST",
+          "operationId": "retrieveAssetRsmltLocalInstanceState",
+          "summary": "No summary",
+          "tags": [
+            "AssetRsmltLocalInstanceState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-rsmlt-remote-instance-state",
+          "method": "POST",
+          "operationId": "retrieveAssetRsmltRemoteInstanceState",
+          "summary": "No summary",
+          "tags": [
+            "AssetRsmltRemoteInstanceState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-rsmlt-vlan-instance-config",
+          "method": "POST",
+          "operationId": "retrieveAssetRsmltVlanInstanceConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetRsmltVlanInstanceConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-slot",
+          "method": "POST",
+          "operationId": "retrieveAssetSlot",
+          "summary": "No summary",
+          "tags": [
+            "AssetSlot"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-slpp-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSlppConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSlppConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-slpp-port-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSlppPortConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSlppPortConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-slpp-vlan-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSlppVlanConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSlppVlanConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-snmp-access-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSnmpAccessConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSnmpAccessConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-snmp-global-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSnmpGlobalConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSnmpGlobalConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-snmp-group-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSnmpGroupConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSnmpGroupConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-snmp-trap-receiver-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSnmpTrapReceiverConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSnmpTrapReceiverConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-snmp-v1-v2-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSnmpV1V2Config",
+          "summary": "No summary",
+          "tags": [
+            "AssetSnmpV1V2Config"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-snmp-v3-access-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSnmpV3AccessConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSnmpV3AccessConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-snmp-v3-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSnmpV3Config",
+          "summary": "No summary",
+          "tags": [
+            "AssetSnmpV3Config"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-snmp-v3-trap-receiver-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSnmpV3TrapReceiverConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSnmpV3TrapReceiverConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-snmp-view-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSnmpViewConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSnmpViewConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-sntp-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSntpConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSntpConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-sntp-server-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSntpServerConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSntpServerConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-spbm-cfm-global",
+          "method": "POST",
+          "operationId": "retrieveAssetSpbmCfmGlobal",
+          "summary": "No summary",
+          "tags": [
+            "AssetSpbmCfmGlobal"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-spbm-global-settings-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSpbmGlobalSettingsConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSpbmGlobalSettingsConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-spbm-instance",
+          "method": "POST",
+          "operationId": "retrieveAssetSpbmInstance",
+          "summary": "No summary",
+          "tags": [
+            "AssetSpbmInstance"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-ssid-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSsidConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSsidConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-ssid-state",
+          "method": "POST",
+          "operationId": "retrieveAssetSsidState",
+          "summary": "No summary",
+          "tags": [
+            "AssetSsidState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-storm-control-port-config",
+          "method": "POST",
+          "operationId": "retrieveAssetStormControlPortConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetStormControlPortConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-stp-domain-state",
+          "method": "POST",
+          "operationId": "retrieveAssetStpDomainState",
+          "summary": "No summary",
+          "tags": [
+            "AssetStpDomainState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-stp-global-config",
+          "method": "POST",
+          "operationId": "retrieveAssetStpGlobalConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetStpGlobalConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-stp-interface-settings-config",
+          "method": "POST",
+          "operationId": "retrieveAssetStpInterfaceSettingsConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetStpInterfaceSettingsConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-stp-port-state-entry",
+          "method": "POST",
+          "operationId": "retrieveAssetStpPortStateEntry",
+          "summary": "No summary",
+          "tags": [
+            "AssetStpPortStateEntry"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-stp-protocol-settings-config",
+          "method": "POST",
+          "operationId": "retrieveAssetStpProtocolSettingsConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetStpProtocolSettingsConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-stp-vlan-settings-config",
+          "method": "POST",
+          "operationId": "retrieveAssetStpVlanSettingsConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetStpVlanSettingsConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-sys-capabilities",
+          "method": "POST",
+          "operationId": "retrieveAssetSysCapabilities",
+          "summary": "No summary",
+          "tags": [
+            "AssetSysCapabilities"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-syslog-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSyslogConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSyslogConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-syslog-server-config",
+          "method": "POST",
+          "operationId": "retrieveAssetSyslogServerConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetSyslogServerConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-system-settings",
+          "method": "POST",
+          "operationId": "retrieveAssetSystemSettings",
+          "summary": "No summary",
+          "tags": [
+            "AssetSystemSettings"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-time-zone-config",
+          "method": "POST",
+          "operationId": "retrieveAssetTimeZoneConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetTimeZoneConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-url-capabilities",
+          "method": "POST",
+          "operationId": "retrieveAssetUrlCapabilities",
+          "summary": "No summary",
+          "tags": [
+            "AssetUrlCapabilities"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vim",
+          "method": "POST",
+          "operationId": "retrieveAssetVim",
+          "summary": "No summary",
+          "tags": [
+            "AssetVim"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vlan-config",
+          "method": "POST",
+          "operationId": "retrieveAssetVlanConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetVlanConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vlan-config-ip-arp-learn-from",
+          "method": "POST",
+          "operationId": "retrieveAssetVlanConfigIpArpLearnFrom",
+          "summary": "No summary",
+          "tags": [
+            "AssetVlanConfigIpArpLearnFrom"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vlan-mac-fdb-state",
+          "method": "POST",
+          "operationId": "retrieveAssetVlanMacFdbState",
+          "summary": "No summary",
+          "tags": [
+            "AssetVlanMacFdbState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vlan-state",
+          "method": "POST",
+          "operationId": "retrieveAssetVlanState",
+          "summary": "No summary",
+          "tags": [
+            "AssetVlanState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vlan-state-member-interfaces",
+          "method": "POST",
+          "operationId": "retrieveAssetVlanStateMemberInterfaces",
+          "summary": "No summary",
+          "tags": [
+            "AssetVlanStateMemberInterfaces"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vrf-config",
+          "method": "POST",
+          "operationId": "retrieveAssetVrfConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetVrfConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vrf-protected-route-gateway",
+          "method": "POST",
+          "operationId": "retrieveAssetVrfProtectedRouteGateway",
+          "summary": "No summary",
+          "tags": [
+            "AssetVrfProtectedRouteGateway"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vrf-route-config",
+          "method": "POST",
+          "operationId": "retrieveAssetVrfRouteConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetVrfRouteConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vrf-route-state",
+          "method": "POST",
+          "operationId": "retrieveAssetVrfRouteState",
+          "summary": "No summary",
+          "tags": [
+            "AssetVrfRouteState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vrf-state",
+          "method": "POST",
+          "operationId": "retrieveAssetVrfState",
+          "summary": "No summary",
+          "tags": [
+            "AssetVrfState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vrf-vlan-config",
+          "method": "POST",
+          "operationId": "retrieveAssetVrfVlanConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetVrfVlanConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vrrp-config",
+          "method": "POST",
+          "operationId": "retrieveAssetVrrpConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetVrrpConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vrrp-state",
+          "method": "POST",
+          "operationId": "retrieveAssetVrrpState",
+          "summary": "No summary",
+          "tags": [
+            "AssetVrrpState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vrrp-virtual-ip-address-config",
+          "method": "POST",
+          "operationId": "retrieveAssetVrrpVirtualIpAddressConfig",
+          "summary": "No summary",
+          "tags": [
+            "AssetVrrpVirtualIpAddressConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-vrrp-virtual-ip-address-state",
+          "method": "POST",
+          "operationId": "retrieveAssetVrrpVirtualIpAddressState",
+          "summary": "No summary",
+          "tags": [
+            "AssetVrrpVirtualIpAddressState"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-wireless-interface",
+          "method": "POST",
+          "operationId": "retrieveAssetWirelessInterface",
+          "summary": "No summary",
+          "tags": [
+            "AssetWirelessInterface"
+          ]
+        },
+        {
+          "path": "/retrieve-asset-wireless-interface-state",
+          "method": "POST",
+          "operationId": "retrieveAssetWirelessInterfaceState",
+          "summary": "No summary",
+          "tags": [
+            "AssetWirelessInterfaceState"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-area",
+          "method": "POST",
+          "operationId": "retrieveInferredArea",
+          "summary": "No summary",
+          "tags": [
+            "InferredArea"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-boundary-details",
+          "method": "POST",
+          "operationId": "retrieveInferredBoundaryDetails",
+          "summary": "No summary",
+          "tags": [
+            "InferredBoundaryDetails"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-cluster",
+          "method": "POST",
+          "operationId": "retrieveInferredCluster",
+          "summary": "No summary",
+          "tags": [
+            "InferredCluster"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-customer-vlan-uni",
+          "method": "POST",
+          "operationId": "retrieveInferredCustomerVlanUni",
+          "summary": "No summary",
+          "tags": [
+            "InferredCustomerVlanUni"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-device",
+          "method": "POST",
+          "operationId": "retrieveInferredDevice",
+          "summary": "No summary",
+          "tags": [
+            "InferredDevice"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-device-fa-detail",
+          "method": "POST",
+          "operationId": "retrieveInferredDeviceFaDetail",
+          "summary": "No summary",
+          "tags": [
+            "InferredDeviceFaDetail"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-device-spbm-detail",
+          "method": "POST",
+          "operationId": "retrieveInferredDeviceSpbmDetail",
+          "summary": "No summary",
+          "tags": [
+            "InferredDeviceSpbmDetail"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-discovery-status-error",
+          "method": "POST",
+          "operationId": "retrieveInferredDiscoveryStatusError",
+          "summary": "No summary",
+          "tags": [
+            "InferredDiscoveryStatusError"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-fabric",
+          "method": "POST",
+          "operationId": "retrieveInferredFabric",
+          "summary": "No summary",
+          "tags": [
+            "InferredFabric"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-fabric-attach-domain",
+          "method": "POST",
+          "operationId": "retrieveInferredFabricAttachDomain",
+          "summary": "No summary",
+          "tags": [
+            "InferredFabricAttachDomain"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-fabric-attach-port",
+          "method": "POST",
+          "operationId": "retrieveInferredFabricAttachPort",
+          "summary": "No summary",
+          "tags": [
+            "InferredFabricAttachPort"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-fabric-attach-vlan",
+          "method": "POST",
+          "operationId": "retrieveInferredFabricAttachVlan",
+          "summary": "No summary",
+          "tags": [
+            "InferredFabricAttachVlan"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-fabric-link",
+          "method": "POST",
+          "operationId": "retrieveInferredFabricLink",
+          "summary": "No summary",
+          "tags": [
+            "InferredFabricLink"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-fabric-link-fa-detail",
+          "method": "POST",
+          "operationId": "retrieveInferredFabricLinkFaDetail",
+          "summary": "No summary",
+          "tags": [
+            "InferredFabricLinkFaDetail"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-fabric-topology",
+          "method": "POST",
+          "operationId": "retrieveInferredFabricTopology",
+          "summary": "No summary",
+          "tags": [
+            "InferredFabricTopology"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-global-spbm-details",
+          "method": "POST",
+          "operationId": "retrieveInferredGlobalSpbmDetails",
+          "summary": "No summary",
+          "tags": [
+            "InferredGlobalSpbmDetails"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-group-info",
+          "method": "POST",
+          "operationId": "retrieveInferredGroupInfo",
+          "summary": "No summary",
+          "tags": [
+            "InferredGroupInfo"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-interface",
+          "method": "POST",
+          "operationId": "retrieveInferredInterface",
+          "summary": "No summary",
+          "tags": [
+            "InferredInterface"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-interface-vlan-map",
+          "method": "POST",
+          "operationId": "retrieveInferredInterfaceVlanMap",
+          "summary": "No summary",
+          "tags": [
+            "InferredInterfaceVlanMap"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-isis-details",
+          "method": "POST",
+          "operationId": "retrieveInferredIsisDetails",
+          "summary": "No summary",
+          "tags": [
+            "InferredIsisDetails"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-isis-remote-details",
+          "method": "POST",
+          "operationId": "retrieveInferredIsisRemoteDetails",
+          "summary": "No summary",
+          "tags": [
+            "InferredIsisRemoteDetails"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-l2-access",
+          "method": "POST",
+          "operationId": "retrieveInferredL2Access",
+          "summary": "No summary",
+          "tags": [
+            "InferredL2Access"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-l2-service",
+          "method": "POST",
+          "operationId": "retrieveInferredL2Service",
+          "summary": "No summary",
+          "tags": [
+            "InferredL2Service"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-l2-service-end-point",
+          "method": "POST",
+          "operationId": "retrieveInferredL2ServiceEndPoint",
+          "summary": "No summary",
+          "tags": [
+            "InferredL2ServiceEndPoint"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-l3-access",
+          "method": "POST",
+          "operationId": "retrieveInferredL3Access",
+          "summary": "No summary",
+          "tags": [
+            "InferredL3Access"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-l3-gateway-interface",
+          "method": "POST",
+          "operationId": "retrieveInferredL3GatewayInterface",
+          "summary": "No summary",
+          "tags": [
+            "InferredL3GatewayInterface"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-l3-service",
+          "method": "POST",
+          "operationId": "retrieveInferredL3Service",
+          "summary": "No summary",
+          "tags": [
+            "InferredL3Service"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-l3-service-end-point",
+          "method": "POST",
+          "operationId": "retrieveInferredL3ServiceEndPoint",
+          "summary": "No summary",
+          "tags": [
+            "InferredL3ServiceEndPoint"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-lag",
+          "method": "POST",
+          "operationId": "retrieveInferredLag",
+          "summary": "No summary",
+          "tags": [
+            "InferredLag"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-lldp-edge-device-grouping",
+          "method": "POST",
+          "operationId": "retrieveInferredLldpEdgeDeviceGrouping",
+          "summary": "No summary",
+          "tags": [
+            "InferredLldpEdgeDeviceGrouping"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-physical-link",
+          "method": "POST",
+          "operationId": "retrieveInferredPhysicalLink",
+          "summary": "No summary",
+          "tags": [
+            "InferredPhysicalLink"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-physical-topology",
+          "method": "POST",
+          "operationId": "retrieveInferredPhysicalTopology",
+          "summary": "No summary",
+          "tags": [
+            "InferredPhysicalTopology"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-port",
+          "method": "POST",
+          "operationId": "retrieveInferredPort",
+          "summary": "No summary",
+          "tags": [
+            "InferredPort"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-port-error-stats",
+          "method": "POST",
+          "operationId": "retrieveInferredPortErrorStats",
+          "summary": "No summary",
+          "tags": [
+            "InferredPortErrorStats"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-port-in-out-stats",
+          "method": "POST",
+          "operationId": "retrieveInferredPortInOutStats",
+          "summary": "No summary",
+          "tags": [
+            "InferredPortInOutStats"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-port-lag-member-map",
+          "method": "POST",
+          "operationId": "retrieveInferredPortLagMemberMap",
+          "summary": "No summary",
+          "tags": [
+            "InferredPortLagMemberMap"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-port-utilization-info",
+          "method": "POST",
+          "operationId": "retrieveInferredPortUtilizationInfo",
+          "summary": "No summary",
+          "tags": [
+            "InferredPortUtilizationInfo"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-primary-private-vlan",
+          "method": "POST",
+          "operationId": "retrieveInferredPrimaryPrivateVlan",
+          "summary": "No summary",
+          "tags": [
+            "InferredPrimaryPrivateVlan"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-private-vlan-domain",
+          "method": "POST",
+          "operationId": "retrieveInferredPrivateVlanDomain",
+          "summary": "No summary",
+          "tags": [
+            "InferredPrivateVlanDomain"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-private-vlan-interface",
+          "method": "POST",
+          "operationId": "retrieveInferredPrivateVlanInterface",
+          "summary": "No summary",
+          "tags": [
+            "InferredPrivateVlanInterface"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-secondary-private-vlan",
+          "method": "POST",
+          "operationId": "retrieveInferredSecondaryPrivateVlan",
+          "summary": "No summary",
+          "tags": [
+            "InferredSecondaryPrivateVlan"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-slot",
+          "method": "POST",
+          "operationId": "retrieveInferredSlot",
+          "summary": "No summary",
+          "tags": [
+            "InferredSlot"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-switched-vlan-uni",
+          "method": "POST",
+          "operationId": "retrieveInferredSwitchedVlanUni",
+          "summary": "No summary",
+          "tags": [
+            "InferredSwitchedVlanUni"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-tag",
+          "method": "POST",
+          "operationId": "retrieveInferredTag",
+          "summary": "No summary",
+          "tags": [
+            "InferredTag"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-tag-criteria",
+          "method": "POST",
+          "operationId": "retrieveInferredTagCriteria",
+          "summary": "No summary",
+          "tags": [
+            "InferredTagCriteria"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-tag-element",
+          "method": "POST",
+          "operationId": "retrieveInferredTagElement",
+          "summary": "No summary",
+          "tags": [
+            "InferredTagElement"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-tag-outer-element",
+          "method": "POST",
+          "operationId": "retrieveInferredTagOuterElement",
+          "summary": "No summary",
+          "tags": [
+            "InferredTagOuterElement"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-transparent-vlan-uni",
+          "method": "POST",
+          "operationId": "retrieveInferredTransparentVlanUni",
+          "summary": "No summary",
+          "tags": [
+            "InferredTransparentVlanUni"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-user-link",
+          "method": "POST",
+          "operationId": "retrieveInferredUserLink",
+          "summary": "No summary",
+          "tags": [
+            "InferredUserLink"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-vlan",
+          "method": "POST",
+          "operationId": "retrieveInferredVlan",
+          "summary": "No summary",
+          "tags": [
+            "InferredVlan"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-vlan-service",
+          "method": "POST",
+          "operationId": "retrieveInferredVlanService",
+          "summary": "No summary",
+          "tags": [
+            "InferredVlanService"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-vrf",
+          "method": "POST",
+          "operationId": "retrieveInferredVrf",
+          "summary": "No summary",
+          "tags": [
+            "InferredVrf"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-vrf-service",
+          "method": "POST",
+          "operationId": "retrieveInferredVrfService",
+          "summary": "No summary",
+          "tags": [
+            "InferredVrfService"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-vrrp-instance",
+          "method": "POST",
+          "operationId": "retrieveInferredVrrpInstance",
+          "summary": "No summary",
+          "tags": [
+            "InferredVrrpInstance"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-wireless-interface",
+          "method": "POST",
+          "operationId": "retrieveInferredWirelessInterface",
+          "summary": "No summary",
+          "tags": [
+            "InferredWirelessInterface"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-wireless-interface-error-stats",
+          "method": "POST",
+          "operationId": "retrieveInferredWirelessInterfaceErrorStats",
+          "summary": "No summary",
+          "tags": [
+            "InferredWirelessInterfaceErrorStats"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-wireless-interface-in-out-stats",
+          "method": "POST",
+          "operationId": "retrieveInferredWirelessInterfaceInOutStats",
+          "summary": "No summary",
+          "tags": [
+            "InferredWirelessInterfaceInOutStats"
+          ]
+        },
+        {
+          "path": "/retrieve-inferred-wireless-interface-utilization-info",
+          "method": "POST",
+          "operationId": "retrieveInferredWirelessInterfaceUtilizationInfo",
+          "summary": "No summary",
+          "tags": [
+            "InferredWirelessInterfaceUtilizationInfo"
+          ]
+        },
+        {
+          "path": "/retrieve-intent-auto-sense-fabric-attach",
+          "method": "POST",
+          "operationId": "retrieveIntentAutoSenseFabricAttach",
+          "summary": "No summary",
+          "tags": [
+            "IntentAutoSenseFabricAttach"
+          ]
+        },
+        {
+          "path": "/retrieve-intent-auto-sense-global",
+          "method": "POST",
+          "operationId": "retrieveIntentAutoSenseGlobal",
+          "summary": "No summary",
+          "tags": [
+            "IntentAutoSenseGlobal"
+          ]
+        },
+        {
+          "path": "/retrieve-intent-auto-sense-isis",
+          "method": "POST",
+          "operationId": "retrieveIntentAutoSenseIsis",
+          "summary": "No summary",
+          "tags": [
+            "IntentAutoSenseIsis"
+          ]
+        },
+        {
+          "path": "/retrieve-intent-device",
+          "method": "POST",
+          "operationId": "retrieveIntentDevice",
+          "summary": "No summary",
+          "tags": [
+            "IntentDevice"
+          ]
+        },
+        {
+          "path": "/retrieve-intent-isis-circuit-config",
+          "method": "POST",
+          "operationId": "retrieveIntentIsisCircuitConfig",
+          "summary": "No summary",
+          "tags": [
+            "IntentIsisCircuitConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-intent-isis-circuit-spbm-setting",
+          "method": "POST",
+          "operationId": "retrieveIntentIsisCircuitSpbmSetting",
+          "summary": "No summary",
+          "tags": [
+            "IntentIsisCircuitSpbmSetting"
+          ]
+        },
+        {
+          "path": "/retrieve-intent-isis-global-config",
+          "method": "POST",
+          "operationId": "retrieveIntentIsisGlobalConfig",
+          "summary": "No summary",
+          "tags": [
+            "IntentIsisGlobalConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-intent-l2-vsn-cvlan-config",
+          "method": "POST",
+          "operationId": "retrieveIntentL2VsnCvlanConfig",
+          "summary": "No summary",
+          "tags": [
+            "IntentL2VsnCvlanConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-intent-l2-vsn-suni-config",
+          "method": "POST",
+          "operationId": "retrieveIntentL2VsnSuniConfig",
+          "summary": "No summary",
+          "tags": [
+            "IntentL2VsnSuniConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-intent-l2-vsn-tuni-config",
+          "method": "POST",
+          "operationId": "retrieveIntentL2VsnTuniConfig",
+          "summary": "No summary",
+          "tags": [
+            "IntentL2VsnTuniConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-intent-spbm-global-settings-config",
+          "method": "POST",
+          "operationId": "retrieveIntentSpbmGlobalSettingsConfig",
+          "summary": "No summary",
+          "tags": [
+            "IntentSpbmGlobalSettingsConfig"
+          ]
+        },
+        {
+          "path": "/retrieve-intent-spbm-instance",
+          "method": "POST",
+          "operationId": "retrieveIntentSpbmInstance",
+          "summary": "No summary",
+          "tags": [
+            "IntentSpbmInstance"
+          ]
+        },
+        {
+          "path": "/retrieve-intent-vlan-config",
+          "method": "POST",
+          "operationId": "retrieveIntentVlanConfig",
+          "summary": "No summary",
+          "tags": [
+            "IntentVlanConfig"
+          ]
+        }
+      ],
+      "specFile": "specs/config-state/openapi.yaml"
+    },
+    {
       "id": "common-infrastructure",
       "title": "Extreme Networks Common Infrastructure API",
       "description": "# Common Infrastructure REST API\n\nThis comprehensive API provides access to the Common Infrastructure services for Extreme Networks' network management platform.\nThe API enables programmatic access to topology management, device management, service management, and network visualization capabilities.\n\n## Key Features\n- **Topology Management**: Retrieve and manage network topologies (physical, fabric, service layers)\n- **Device Management**: Access device information, interfaces, neighbors, and fabric details\n- **Service Management**: Manage L2/L3 VSN, VLAN, and VRF services\n- **User Preferences**: Store and retrieve user-specific preferences\n- **Real-time Updates**: WebSocket notifications for topology and device changes\n- **Service Probing**: VLAN service probe utilities for network validation\n\n## API Design\nThis API follows RESTful principles and supports JSON payloads. Most operations use POST methods with detailed criteria objects\nto provide flexible filtering and querying capabilities suitable for complex network topologies.\n\n## Authentication\nThis API is designed to be integrated with MCP (Model Context Protocol) servers and other automation tools.\nAuthentication and authorization should be handled at the infrastructure level.\n\n## MCP Server Integration\nThis API is optimized for MCP (Model Context Protocol) server integration with the following features:\n\n**AI-Friendly Design:**\n- Comprehensive endpoint descriptions with use cases and examples\n- Structured error responses for better error handling\n- Detailed parameter descriptions for automated API consumption\n- Response schemas optimized for AI interpretation\n\n**Automation Support:**\n- API Key authentication recommended for MCP servers\n- Asynchronous operations with proper status tracking\n- Bulk operations where applicable\n- Consistent data formats across endpoints\n\n**Rate Limiting Considerations:**\n- Recommended rate limit: 60 requests per minute\n- Burst allowance: 10 requests\n- Consider caching for topology and device data\n\n## Rate Limiting\nAPI calls should be rate-limited appropriately to prevent system overload, especially for large topology queries.\n",
