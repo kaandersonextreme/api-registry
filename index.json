@@ -1400,6 +1400,389 @@
       "specFile": "specs/device-lifecycle-management/openapi.yaml"
     },
     {
+      "id": "common-infrastructure",
+      "title": "Extreme Networks Common Infrastructure API",
+      "description": "# Common Infrastructure REST API\n\nThis comprehensive API provides access to the Common Infrastructure services for Extreme Networks' network management platform. \nThe API enables programmatic access to topology management, device management, service management, and network visualization capabilities.\n\n## Key Features\n- **Topology Management**: Retrieve and manage network topologies (physical, fabric, service layers)\n- **Device Management**: Access device information, interfaces, neighbors, and fabric details\n- **Service Management**: Manage L2/L3 VSN, VLAN, and VRF services\n- **User Preferences**: Store and retrieve user-specific preferences\n- **Real-time Updates**: WebSocket notifications for topology and device changes\n- **Service Probing**: VLAN service probe utilities for network validation\n\n## API Design\nThis API follows RESTful principles and supports JSON payloads. Most operations use POST methods with detailed criteria objects\nto provide flexible filtering and querying capabilities suitable for complex network topologies.\n\n## Authentication\nThis API is designed to be integrated with MCP (Model Context Protocol) servers and other automation tools.\nAuthentication and authorization should be handled at the infrastructure level.\n\n## MCP Server Integration\nThis API is optimized for MCP (Model Context Protocol) server integration with the following features:\n\n**AI-Friendly Design:**\n- Comprehensive endpoint descriptions with use cases and examples\n- Structured error responses for better error handling\n- Detailed parameter descriptions for automated API consumption\n- Response schemas optimized for AI interpretation\n\n**Automation Support:**\n- API Key authentication recommended for MCP servers\n- Asynchronous operations with proper status tracking\n- Bulk operations where applicable\n- Consistent data formats across endpoints\n\n**Rate Limiting Considerations:**\n- Recommended rate limit: 60 requests per minute\n- Burst allowance: 10 requests\n- Consider caching for topology and device data\n\n## Rate Limiting\nAPI calls should be rate-limited appropriately to prevent system overload, especially for large topology queries.\n",
+      "version": "3.0.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/nvo/v1",
+      "tags": [
+        "Topology Management",
+        "User Preferences",
+        "Custom logging",
+        "Device Management",
+        "Service Management",
+        "Service Probe Vlan",
+        "Schemas",
+        "General",
+        "Hide Node or Link Management",
+        "Unhide Node or Link Management",
+        "Tag Management"
+      ],
+      "endpoints": [
+        {
+          "path": "/retrieve-topology",
+          "method": "POST",
+          "operationId": "RetrieveTopology",
+          "summary": "Retrieve Network Topology",
+          "tags": [
+            "Topology Management"
+          ]
+        },
+        {
+          "path": "/retrieve-topology/device",
+          "method": "POST",
+          "operationId": "RetrieveTopologyDevices",
+          "summary": "Retrieve Device Topology Data",
+          "tags": [
+            "Topology Management"
+          ]
+        },
+        {
+          "path": "/retrieve-topology/link",
+          "method": "POST",
+          "operationId": "RetrieveTopologyLinks",
+          "summary": "Retrieve Link Topology Data",
+          "tags": [
+            "Topology Management"
+          ]
+        },
+        {
+          "path": "/hide",
+          "method": "POST",
+          "operationId": "Hide",
+          "summary": "Hide Node or Link",
+          "tags": [
+            "Hide Node or Link Management"
+          ]
+        },
+        {
+          "path": "/unhide",
+          "method": "POST",
+          "operationId": "Unhide",
+          "summary": "Unhide Node or Link",
+          "tags": [
+            "Unhide Node or Link Management"
+          ]
+        },
+        {
+          "path": "/group",
+          "method": "GET",
+          "operationId": "GetGroupHierarchy",
+          "summary": "Get Group Hierarchy",
+          "tags": [
+            "Topology Management"
+          ]
+        },
+        {
+          "path": "/tags",
+          "method": "GET",
+          "operationId": "GetTags",
+          "summary": "Retrieve Tags",
+          "tags": [
+            "Tag Management"
+          ]
+        },
+        {
+          "path": "/tags",
+          "method": "POST",
+          "operationId": "CreateTag",
+          "summary": "Create a new tag",
+          "tags": [
+            "Tag Management"
+          ]
+        },
+        {
+          "path": "/tags",
+          "method": "PUT",
+          "operationId": "UpdateTag",
+          "summary": "Update a tag",
+          "tags": [
+            "Tag Management"
+          ]
+        },
+        {
+          "path": "/tags",
+          "method": "DELETE",
+          "operationId": "DeleteTags",
+          "summary": "Delete a tag",
+          "tags": [
+            "Tag Management"
+          ]
+        },
+        {
+          "path": "/tags/entities",
+          "method": "POST",
+          "operationId": "AssociateTagEntities",
+          "summary": "Associate tags with entities",
+          "tags": [
+            "Tag Management"
+          ]
+        },
+        {
+          "path": "/tags/entities",
+          "method": "DELETE",
+          "operationId": "DisAssociateTagEntities",
+          "summary": "Disassociate tags from nodes",
+          "tags": [
+            "Tag Management"
+          ]
+        },
+        {
+          "path": "/user/preferences",
+          "method": "GET",
+          "operationId": "GetUserPreferences",
+          "summary": "getUserPreferences",
+          "tags": [
+            "User Preferences"
+          ]
+        },
+        {
+          "path": "/user/preferences",
+          "method": "POST",
+          "operationId": "CreateUserPreferences",
+          "summary": "postUserPreferences",
+          "tags": [
+            "User Preferences"
+          ]
+        },
+        {
+          "path": "/user/preferences",
+          "method": "DELETE",
+          "operationId": "DeleteUserPreferences",
+          "summary": "deleteUserPreferences",
+          "tags": [
+            "User Preferences"
+          ]
+        },
+        {
+          "path": "/custom-positions",
+          "method": "POST",
+          "operationId": "UpdateCustomPosition",
+          "summary": "Update the Custom Position",
+          "tags": [
+            "Topology Management"
+          ]
+        },
+        {
+          "path": "/custom-positions",
+          "method": "DELETE",
+          "operationId": "DeleteCustomPosition",
+          "summary": "Delete custom positions",
+          "tags": [
+            "Topology Management"
+          ]
+        },
+        {
+          "path": "/device/physical/link",
+          "method": "GET",
+          "operationId": "getDevicePhysicalLinkDetails",
+          "summary": "Get Physical Link Details",
+          "tags": [
+            "Device Management"
+          ]
+        },
+        {
+          "path": "/device/fabric/link",
+          "method": "GET",
+          "operationId": "getDeviceFabricLinkDetails",
+          "summary": "Get device fabric link details",
+          "tags": [
+            "Device Management"
+          ]
+        },
+        {
+          "path": "/device/ports",
+          "method": "GET",
+          "operationId": "getDeviceInterfaceDetails",
+          "summary": "Get device interface details",
+          "tags": [
+            "Device Management"
+          ]
+        },
+        {
+          "path": "/device/lldp-cdp-neighbors",
+          "method": "GET",
+          "operationId": "getDeviceLLDPNeighbors",
+          "summary": "Get LLDP neighbors",
+          "tags": [
+            "Device Management"
+          ]
+        },
+        {
+          "path": "/device/ssids",
+          "method": "GET",
+          "operationId": "getDeviceSSIDs",
+          "summary": "Get Device SSIDs",
+          "tags": [
+            "Device Management"
+          ]
+        },
+        {
+          "path": "/device/physical",
+          "method": "GET",
+          "operationId": "getDevicePhysicalDetails",
+          "summary": "Get device physical details",
+          "tags": [
+            "Device Management"
+          ]
+        },
+        {
+          "path": "/device/fabric",
+          "method": "GET",
+          "operationId": "getDeviceFabricDetails",
+          "summary": "Get device fabric details",
+          "tags": [
+            "Device Management"
+          ]
+        },
+        {
+          "path": "/device/sync",
+          "method": "POST",
+          "operationId": "clearDeviceInconsistencies",
+          "summary": "Sync the managed devices to clear the device inconsistencies",
+          "tags": [
+            "Device Management"
+          ]
+        },
+        {
+          "path": "/retrieve-services",
+          "method": "POST",
+          "operationId": "RetrieveServices",
+          "summary": "Retrieve brief/details of L2 Vsn,L3 Vsn, Vlan and Vrf services",
+          "tags": [
+            "Service Management"
+          ]
+        },
+        {
+          "path": "/services/retrieve-vlans",
+          "method": "POST",
+          "operationId": "RetrieveVlanServices",
+          "summary": "Retrieve brief/details of Vlan Services",
+          "tags": [
+            "Service Management"
+          ]
+        },
+        {
+          "path": "/services/retrieve-vrfs",
+          "method": "POST",
+          "operationId": "RetrieveVrfServices",
+          "summary": "Retrieve brief/details of Vrf Services",
+          "tags": [
+            "Service Management"
+          ]
+        },
+        {
+          "path": "/services/retrieve-l2s",
+          "method": "POST",
+          "operationId": "RetrieveL2Services",
+          "summary": "Retrieve brief/details of L2 Services",
+          "tags": [
+            "Service Management"
+          ]
+        },
+        {
+          "path": "/services/retrieve-l3s",
+          "method": "POST",
+          "operationId": "RetrieveL3Services",
+          "summary": "Retrieve brief/details of L3 Services",
+          "tags": [
+            "Service Management"
+          ]
+        },
+        {
+          "path": "/schemas",
+          "method": "GET",
+          "operationId": "GetSchemas",
+          "summary": "Get schemas",
+          "tags": [
+            "Schemas"
+          ]
+        },
+        {
+          "path": "/supported-schemas",
+          "method": "GET",
+          "operationId": "GetSupportedSchema",
+          "summary": "Get supported schemas",
+          "tags": [
+            "Schemas"
+          ]
+        },
+        {
+          "path": "/suggestions",
+          "method": "GET",
+          "operationId": "GetSuggestions",
+          "summary": "Get suggestions",
+          "tags": [
+            "General"
+          ]
+        },
+        {
+          "path": "/refresh/group",
+          "method": "POST",
+          "operationId": "RefreshGroupTopology",
+          "summary": "Refresh Group Topology",
+          "tags": [
+            "Topology Management"
+          ]
+        },
+        {
+          "path": "/custom-logging",
+          "method": "GET",
+          "operationId": "GetCustomLogging",
+          "summary": "Retrieve the custom logging configuration",
+          "tags": [
+            "Custom logging"
+          ]
+        },
+        {
+          "path": "/custom-logging",
+          "method": "POST",
+          "operationId": "CreateCustomLogging",
+          "summary": "Create the custom logging",
+          "tags": [
+            "Custom logging"
+          ]
+        },
+        {
+          "path": "/custom-logging",
+          "method": "DELETE",
+          "operationId": "ResetCustomLogging",
+          "summary": "Reset the custom logging",
+          "tags": [
+            "Custom logging"
+          ]
+        },
+        {
+          "path": "/utilities/service-probe-vlan/start",
+          "method": "POST",
+          "operationId": "StartServiceProbeVLAN",
+          "summary": "Start VLAN Service Probe Operation",
+          "tags": [
+            "Service Probe Vlan"
+          ]
+        },
+        {
+          "path": "/utilities/service-probe-vlan/stop",
+          "method": "POST",
+          "operationId": "StopServiceProbeVLAN",
+          "summary": "Stop Service Probe VLAN",
+          "tags": [
+            "Service Probe Vlan"
+          ]
+        },
+        {
+          "path": "/utilities/service-probe-vlan/probe-data",
+          "method": "GET",
+          "operationId": "GetServiceProbeVLANData",
+          "summary": "Get Service Probe VLAN Data",
+          "tags": [
+            "Service Probe Vlan"
+          ]
+        }
+      ],
+      "specFile": "specs/common-infrastructure/openapi.yaml"
+    },
+    {
       "id": "client",
       "title": "Extreme Platform ONE REST API - Client",
       "description": "Platform Client Service (PCS) API provides client cache details and wireless/wired client health grid information.",
