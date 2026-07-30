@@ -1,0 +1,74 @@
+{
+  "apis": [
+    {
+      "id": "audit-log",
+      "title": "Extreme Platform ONE REST API - Audit Log",
+      "description": "Extreme Platform ONE™ Audit Log API provides comprehensive tracking of user activities within Extreme Platform ONE, ensuring transparency, traceability, and accountability across all applications.",
+      "version": "25.11.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/auditlog/v1",
+      "tags": [
+        "audit",
+        "compliance",
+        "user-activity",
+        "logging"
+      ],
+      "endpoints": [
+        {
+          "path": "/user-activities",
+          "method": "GET",
+          "operationId": "searchUserActivities",
+          "summary": "Search user activity audit logs",
+          "tags": [
+            "User Activity Audit Logs"
+          ]
+        },
+        {
+          "path": "/user-activities/export",
+          "method": "GET",
+          "operationId": "exportUserActivities",
+          "summary": "Export user activity audit logs",
+          "tags": [
+            "User Activity Audit Logs"
+          ]
+        },
+        {
+          "path": "/my-activities",
+          "method": "GET",
+          "operationId": "searchMyActivities",
+          "summary": "Search my activity audit logs",
+          "tags": [
+            "User Activity Audit Logs"
+          ]
+        },
+        {
+          "path": "/user-apps",
+          "method": "GET",
+          "operationId": "listUserApps",
+          "summary": "List supported applications",
+          "tags": [
+            "Audit Log Metadata"
+          ]
+        },
+        {
+          "path": "/categories",
+          "method": "GET",
+          "operationId": "listCategories",
+          "summary": "List supported categories",
+          "tags": [
+            "Audit Log Metadata"
+          ]
+        },
+        {
+          "path": "/user-operations",
+          "method": "GET",
+          "operationId": "listUserOperations",
+          "summary": "List supported user operations",
+          "tags": [
+            "Audit Log Metadata"
+          ]
+        }
+      ],
+      "specFile": "specs/audit-log/openapi.yaml"
+    }
+  ]
+}

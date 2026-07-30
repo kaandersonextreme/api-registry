@@ -1,0 +1,597 @@
+openapi: 3.0.3
+info:
+  title: Extreme Platform ONE REST API - Audit Log
+  description: Extreme Platform ONE&trade; Audit Log API provides comprehensive
+    tracking of user activities within Extreme Platform ONE, ensuring
+    transparency, traceability, and accountability across all applications.
+  termsOfService: https://www.extremenetworks.com/company/legal/terms-of-use/
+  contact:
+    name: Extreme Networks Support
+    url: https://www.extremenetworks.com/support
+    email: support@extremenetworks.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 25.11.0
+servers:
+  - url: https://cloudapi.extremecloudiq.com/auditlog/v1
+    description: Extreme Platform ONE REST API - Audit Log
+security:
+  - BearerAuth: []
+tags:
+  - name: User Activity Audit Logs
+    description: Operations for querying, filtering, and exporting user activity audit logs
+  - name: Audit Log Metadata
+    description: The metadata used in audit logs
+paths:
+  /user-activities:
+    get:
+      summary: Search user activity audit logs
+      description: Search user activity audit logs based on the query parameters.
+      operationId: searchUserActivities
+      tags:
+        - User Activity Audit Logs
+      parameters:
+        - $ref: "#/components/parameters/pageToken"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/q"
+        - $ref: "#/components/parameters/apps"
+        - $ref: "#/components/parameters/startTime"
+        - $ref: "#/components/parameters/endTime"
+        - in: query
+          name: operationNames
+          description: Filter by specific operation names to retrieve only audit logs
+            matching these operations
+          required: false
+          schema:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        - in: query
+          name: categories
+          description: Filter by audit log categories to narrow results to specific
+            operational domains
+          required: false
+          schema:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        - in: query
+          name: sortField
+          description: The field name to sort results by
+          required: false
+          schema:
+            type: string
+            enum:
+              - timestamp
+            default: timestamp
+        - in: query
+          name: customerIds
+          description: Filter by specific customer IDs to retrieve audit logs associated
+            with MSP. Ignored for non-MSP callers.
+          required: false
+          explode: false
+          schema:
+            type: array
+            uniqueItems: true
+            items:
+              type: integer
+              format: int64
+        - $ref: "#/components/parameters/order-desc"
+      responses:
+        "200":
+          description: User activity audit logs retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenPagedCalsUserActivity"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /user-activities/export:
+    get:
+      summary: Export user activity audit logs
+      description: Export user activity audit logs based on the query parameters.
+      operationId: exportUserActivities
+      tags:
+        - User Activity Audit Logs
+      parameters:
+        - $ref: "#/components/parameters/q"
+        - $ref: "#/components/parameters/apps"
+        - $ref: "#/components/parameters/startTime"
+        - $ref: "#/components/parameters/endTime"
+        - name: fields
+          in: query
+          description: Specify which fields to include in the exported CSV file
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/CalsUserActivityField"
+        - in: query
+          name: operationNames
+          description: Filter by specific operation names to retrieve only audit logs
+            matching these operations
+          required: false
+          schema:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        - in: query
+          name: categories
+          description: Filter by audit log categories to narrow results to specific
+            operational domains
+          required: false
+          schema:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        - in: query
+          name: sortField
+          description: The field name to sort results by
+          required: false
+          schema:
+            type: string
+            enum:
+              - timestamp
+            default: timestamp
+        - $ref: "#/components/parameters/order-desc"
+      responses:
+        "200":
+          description: User activity audit logs exported successfully
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+                description: Set to 'attachment; filename="auditlog.csv"' for CSV format.
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /my-activities:
+    get:
+      summary: Search my activity audit logs
+      description: Search my activity audit logs based on the query parameters.
+      operationId: searchMyActivities
+      tags:
+        - User Activity Audit Logs
+      parameters:
+        - $ref: "#/components/parameters/pageToken"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/q"
+        - $ref: "#/components/parameters/apps"
+        - $ref: "#/components/parameters/startTime"
+        - $ref: "#/components/parameters/endTime"
+        - in: query
+          name: operationNames
+          description: Filter by specific operation names to retrieve only audit logs
+            matching these operations
+          required: false
+          schema:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        - in: query
+          name: categories
+          description: Filter by audit log categories to narrow results to specific
+            operational domains
+          required: false
+          schema:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        - in: query
+          name: sortField
+          description: The field name to sort results by
+          required: false
+          schema:
+            type: string
+            enum:
+              - timestamp
+            default: timestamp
+        - $ref: "#/components/parameters/order-desc"
+      responses:
+        "200":
+          description: My activity audit logs retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenPagedCalsUserActivity"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /user-apps:
+    get:
+      summary: List supported applications
+      description: List supported applications that generate audit logs.
+      operationId: listUserApps
+      tags:
+        - Audit Log Metadata
+      responses:
+        "200":
+          description: Supported applications list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CalsUserApp"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /categories:
+    get:
+      summary: List supported categories
+      description: List supported categories.
+      operationId: listCategories
+      tags:
+        - Audit Log Metadata
+      responses:
+        "200":
+          description: Supported categories list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CalsCategory"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /user-operations:
+    get:
+      summary: List supported user operations
+      description: List supported user operations.
+      operationId: listUserOperations
+      tags:
+        - Audit Log Metadata
+      responses:
+        "200":
+          description: Supported user operations list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CalsUserOperation"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+components:
+  schemas:
+    TokenPaged:
+      type: object
+      properties:
+        nextPageToken:
+          type: string
+          description: The page token to get the next page elements, the value is null or
+            empty if this is the last page
+          format: string
+          maxLength: 64
+        count:
+          type: integer
+          description: The element count of the current page
+          format: int32
+    CalsUserActivity:
+      type: object
+      description: Represents a user activity audit log entry
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the audit log
+          maxLength: 32
+        timestamp:
+          type: string
+          format: date-time
+          description: The timestamp when the audited operation occurred
+        user_name:
+          type: string
+          description: The username of the person who performed the operation
+        email:
+          type: string
+          description: The email address of the user who performed the operation
+        operation_name:
+          type: string
+          description: The technical identifier for the type of operation performed
+        operation_title:
+          type: string
+          description: The human-readable display name for the operation
+        operation_summary:
+          type: string
+          description: A textual summary describing what was changed or affected by the
+            operation
+        operation_context:
+          type: object
+          description: Additional contextual information about the operation as key-value
+            pairs
+        operation_result:
+          type: string
+          description: The outcome status of the operation
+          enum:
+            - SUCCESS
+            - FAILURE
+            - DENIED
+        duration_ms:
+          type: integer
+          format: int64
+          description: "Operation duration, Unit: millisecond"
+        app_name:
+          type: string
+          description: The name of the application where the operation was performed
+          maxLength: 32
+        category:
+          type: string
+          description: The functional category classifying the type of operation
+        client_ip:
+          type: string
+          description: The IP address from which the operation was initiated
+          maxLength: 32
+        country:
+          type: string
+          description: The country associated with the client IP address
+        tags:
+          type: array
+          description: Custom tags associated with the audit log for categorization and
+            filtering
+          items:
+            type: string
+            description: A tag value for filtering or categorizing the audit log
+        org_name:
+          type: string
+          description: The organization name of the user who performed the operation
+    TokenPagedCalsUserActivity:
+      allOf:
+        - $ref: "#/components/schemas/TokenPaged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/CalsUserActivity"
+    ConstraintViolationError:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field name
+        message:
+          type: string
+          description: The detailed description
+    ApiClientError:
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: The short description of error
+        status:
+          type: integer
+          description: The status code of error
+          format: int32
+        detail:
+          type: string
+          description: The detailed description of error
+        violations:
+          type: array
+          description: List of constraint violations
+          items:
+            $ref: "#/components/schemas/ConstraintViolationError"
+    ApiError:
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: The short description of error
+        status:
+          type: integer
+          description: The status code of error
+          format: int32
+        detail:
+          type: string
+          description: The detailed description of error
+    CalsUserActivityField:
+      type: string
+      description: Enumeration of available fields that can be included when exporting
+        user activity audit logs
+      enum:
+        - TIMESTAMP
+        - USERNAME
+        - EMAIL
+        - CATEGORY
+        - STATUS
+        - DESCRIPTION
+        - APPLICATION
+        - ORGANIZATION
+    CalsUserApp:
+      type: object
+      description: Represents an application that generates audit logs
+      properties:
+        name:
+          type: string
+          description: The unique identifier name of the application
+    CalsCategory:
+      type: object
+      description: The audit log category.
+      required:
+        - name
+        - title
+      properties:
+        name:
+          type: string
+          description: The audit log category name used internally.
+          maxLength: 128
+        title:
+          type: string
+          description: The audit log category title to display.
+          maxLength: 128
+    CalsUserOperation:
+      type: object
+      description: The user operation.
+      properties:
+        name:
+          type: string
+          description: The user operation name.
+          maxLength: 128
+        title:
+          type: string
+          description: The localized user-friendly display name of the user operation.
+          maxLength: 128
+  responses:
+    400ErrorResponse:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiClientError"
+    401ErrorResponse:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    403ErrorResponse:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    500ErrorResponse:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+  parameters:
+    pageToken:
+      name: pageToken
+      in: query
+      description: Token-based pagination query parameter to return results from a
+        previously run search.  <p> Setting this parameter will execute a search
+        with the same parameters used previously and all other parameters will
+        be ignored. <p> If this query parameter is unspecified or invalid, the
+        first page of results will be returned.
+      required: false
+      schema:
+        type: string
+        maxLength: 64
+    limit:
+      name: limit
+      in: query
+      description: Page Size, min = 1, max = 100
+      required: false
+      schema:
+        maximum: 100
+        minimum: 1
+        type: integer
+        format: int32
+        default: 10
+    q:
+      name: q
+      in: query
+      description: The query keyword for full text search
+      required: false
+      schema:
+        type: string
+        maxLength: 128
+    apps:
+      name: apps
+      in: query
+      description: The application name list, e.g. XIQ, XSW, XUZ, etc.
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          description: The application name.
+    startTime:
+      name: startTime
+      in: query
+      description: The start time to query. <p>The format is defined by RFC 3339,
+        section 5.6, for example, <code>2024-02-22T10:00:00.000Z</code>.
+      required: false
+      schema:
+        type: string
+        format: date-time
+    endTime:
+      name: endTime
+      in: query
+      description: The end time to query. <p>The format is defined by RFC 3339,
+        section 5.6, for example, <code>2024-02-22T11:00:00.000Z</code>.
+      required: false
+      schema:
+        type: string
+        format: date-time
+    order-desc:
+      name: order
+      in: query
+      description: The sort order (descending by default)
+      required: false
+      schema:
+        type: string
+        enum:
+          - ASC
+          - DESC
+        default: DESC
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Enter your API Key as a Bearer Token
