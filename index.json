@@ -1,6 +1,133 @@
 {
   "apis": [
     {
+      "id": "tagging",
+      "title": "Tag Management API",
+      "description": "# Tag Management System API\n\nThis specification defines the comprehensive REST API for managing tags, entities, associations, and policies in the Extreme Networks platform.\n\n## Overview\nThe Tag Management API provides a powerful and flexible system for organizing and categorizing resources through:\n- **Tags**: Lightweight labels that can be applied to entities for organization and filtering\n- **Entities**: The actual resources (devices, services, etc.) that can be tagged\n- **Associations**: Bidirectional relationships between tags and entities\n- **Policies**: Rule-based automation for tag management\n- **Attributes**: Key-value metadata attached to tags for enhanced functionality\n\n## Key Features\n- Bulk operations for creating, updating, and deleting tags and entities\n- Flexible search and filtering capabilities with pagination support\n- Policy-driven automation for tag lifecycle management\n- Rich attribute system for tag metadata\n- Owner-based multi-tenancy support\n- Comprehensive telemetry and monitoring\n\n## Authentication\nAll endpoints require proper authentication headers. Ensure you include valid credentials in your requests.\n\n## Rate Limiting\nAPI requests are subject to rate limiting. Monitor the response headers for rate limit information.\n",
+      "version": "1.0.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/tagging/v1",
+      "tags": [
+        "Tags",
+        "Entities",
+        "Policies",
+        "Associate",
+        "Attributes",
+        "Owner",
+        "Telemetry"
+      ],
+      "endpoints": [
+        {
+          "path": "/tags",
+          "method": "POST",
+          "operationId": "CreateTags",
+          "summary": "Create one or more tags with MCP-ready bulk operations",
+          "tags": [
+            "Tags"
+          ]
+        },
+        {
+          "path": "/tags/delete",
+          "method": "POST",
+          "operationId": "DeleteTags",
+          "summary": "Delete multiple tags in a single request",
+          "tags": [
+            "Tags"
+          ]
+        },
+        {
+          "path": "/tags/fetch",
+          "method": "POST",
+          "operationId": "FetchTags",
+          "summary": "Advanced tag search and retrieval with MCP server optimization",
+          "tags": [
+            "Tags"
+          ]
+        },
+        {
+          "path": "/tags/tagId/{tagId}",
+          "method": "PUT",
+          "operationId": "UpdateTagById",
+          "summary": "Update tags by tagId",
+          "tags": [
+            "Tags"
+          ]
+        },
+        {
+          "path": "/tags/tagName/{tagName}",
+          "method": "PUT",
+          "operationId": "UpdateTagByName",
+          "summary": "Update tag by tagName",
+          "tags": [
+            "Tags"
+          ]
+        },
+        {
+          "path": "/entities",
+          "method": "POST",
+          "operationId": "CreateEntities",
+          "summary": "Create one or more entities with MCP-optimized bulk operations",
+          "tags": [
+            "Entities"
+          ]
+        },
+        {
+          "path": "/entities/delete",
+          "method": "POST",
+          "operationId": "DeleteEntitiesByIdsOrNames",
+          "summary": "Deletes multiple entities based on their IDs or names.",
+          "tags": [
+            "Entities"
+          ]
+        },
+        {
+          "path": "/entities/fetch",
+          "method": "POST",
+          "operationId": "FetchEntities",
+          "summary": "Advanced entity search and retrieval with MCP server optimization",
+          "tags": [
+            "Entities"
+          ]
+        },
+        {
+          "path": "/policies/fetch",
+          "method": "POST",
+          "operationId": "GetPolicies",
+          "summary": "Fetch policy based on search criteria.",
+          "tags": [
+            "Policies"
+          ]
+        },
+        {
+          "path": "/policies",
+          "method": "POST",
+          "operationId": "CreatePolicies",
+          "summary": "Create new policies with MCP automation and rule engine support",
+          "tags": [
+            "Policies"
+          ]
+        },
+        {
+          "path": "/telemetry/fetch",
+          "method": "POST",
+          "operationId": "FetchTelemetry",
+          "summary": "Fetch telemetry data",
+          "tags": [
+            "Telemetry"
+          ]
+        },
+        {
+          "path": "/tags/tagName/{tagName}/attributes",
+          "method": "POST",
+          "operationId": "AddAttributesByTagName",
+          "summary": "Add rich metadata attributes to tags with MCP-optimized data enrichment",
+          "tags": [
+            "Attributes"
+          ]
+        }
+      ],
+      "specFile": "specs/tagging/openapi.yaml"
+    },
+    {
       "id": "subscriptions",
       "title": "Extreme Platform ONE REST API - Subscriptions & Licensing",
       "description": "The Extreme Platform ONE™ License API provides comprehensive management of software licenses, subscriptions, and entitlements across your Extreme network infrastructure, enabling centralized visibility and control over all licensing aspects from trial activation through operational management.",
