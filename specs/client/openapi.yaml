@@ -1,0 +1,2546 @@
+openapi: 3.0.3
+info:
+  title: Extreme Platform ONE REST API - Client
+  description: Platform Client Service (PCS) API provides client cache details and
+    wireless/wired client health grid information.
+  termsOfService: https://www.extremenetworks.com/company/legal/terms-of-use/
+  contact:
+    name: Extreme Networks Support
+    url: https://www.extremenetworks.com/support
+    email: support@extremenetworks.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 25.11.0
+servers:
+  - url: https://cloudapi.extremecloudiq.com/client/v1
+    description: Extreme Platform ONE REST API - Client
+tags:
+  - name: Client Details
+    description: Client details and health information
+  - name: Dashboard
+    description: Client health dashboard
+  - name: Routing Details
+    description: Device routing details
+paths:
+  /wireless/details/{client_uuid}:
+    get:
+      tags:
+        - Client Details
+      summary: Get Wireless Client Details Info
+      description: Retrieves detailed information about a wireless client using the
+        client UUID from the grid response.
+      operationId: getWirelessClientDetailsInfo
+      parameters:
+        - $ref: "#/components/parameters/clientId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WirelessClientDetails"
+              example:
+                device_connected: false
+                device_id: 7778185882009
+                os_type: unknown
+                ip_address: 192.168.120.50
+                mac_address: 8899AA000204
+                device_location_names: "||"
+                device_location_id: -1
+                alias: ""
+                user: 8899AA000204
+                connection_to: host name
+                connection_time: 1774356520000
+                vlan: 1
+                cwp_used: 2
+                user_profile: user-profile
+                ssid: ssid5
+                radio: 2.4G
+                wifi_protocol: 802.11b
+                channel: 8
+                client_hostname: host name
+                client_type: WING
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /wired/details/{client_uuid}:
+    get:
+      tags:
+        - Client Details
+      summary: Get Wired Client Details Info
+      description: Retrieves detailed information about a wired client using the
+        client UUID from the grid response.
+      operationId: getWiredClientDetailsInfo
+      parameters:
+        - $ref: "#/components/parameters/clientId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WiredClientDetails"
+              example:
+                connection_type: 2
+                connection_status: true
+                start_time: 1774359148008
+                end_time: 0
+                device_id: 7778185883928
+                device_mac: AC4DD9FF1C00
+                device_host_name: Stack
+                device_location_name: site | building | floor
+                device_location_id: -1
+                device_os_version: 33.5.1.6)
+                associate_if_index: -1
+                if_name: 1:1
+                associate_if_name: 1:1
+                associate_lag_master_if_name: ""
+                client_hostname: DESKTOP-775EPGT
+                client_os_name: Windows 10
+                client_mac: E4FD8C988800
+                client_ip: 10.234.153.136
+                client_ipv6: ""
+                vlan: 153
+                vlan_ip_pairs:
+                  "153": []
+                instant_port_device_type: ""
+                user_profile_name: ""
+                port_name: 1:1
+                auth_method: N/A
+                nac_profile: ""
+                auth_client_nac_details: ""
+                auth_type: N/A
+                auth_username: ""
+                client_type: WIRED
+                dhcp_lease_time: 86400
+                dhcp_server_port_number: 1:1
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /wired:
+    post:
+      tags:
+        - Dashboard
+      summary: Wired client data
+      description: Returns the client data of Wired devices based on the provided filters.
+      operationId: getWiredClientData
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/KeywordWired"
+        - name: connection_status
+          in: query
+          description: Connection Status
+          required: false
+          schema:
+            type: string
+            enum:
+              - CONNECTED
+              - DISCONNECTED
+        - name: sort_field
+          in: query
+          description: Sort Field
+          required: false
+          schema:
+            type: string
+            default: MAC
+            enum:
+              - CONNECTION_STATUS
+              - CLIENT_HOSTNAME
+              - SITE
+              - BUILDING
+              - FLOOR
+              - IPV4
+              - IPV6
+              - PORT_NUMBER
+              - SWITCH_NAME
+              - OPERATING_SYSTEM
+              - MAC
+              - USERNAME
+              - INSTANT_PORT_PROFILE
+        - $ref: "#/components/parameters/order"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WiredClientHealthGridRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedWired"
+              example:
+                page: 1
+                count: 1
+                total_pages: 1
+                total_count: 1
+                data:
+                  - device_id: 7778185883343
+                    site: Corporate HQ
+                    building: Building A
+                    floor: Floor 2
+                    connection_status: CONNECTED
+                    client_hostname: DESKTOP-ABC123
+                    client_ip: 192.168.1.100
+                    ipv4: 192.168.1.100
+                    ipv6: 2001:0db8:85a3::8a2e:0370:7334
+                    port_number: 1:1
+                    switch_name: 5420F-8W-16P-4XE-SwitchEngine
+                    mac: E4FD8C985C00
+                    vlan: 153
+                    operating_system: Windows 10
+                    username: john.doe
+                    instant_port_profile: Employee-Wired-Profile
+                    client_id: 7778185873882
+                    client_uuid: 886fe194-2e54-4a45-b994-514081d802f4
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /wired/grid:
+    post:
+      deprecated: true
+      tags:
+        - Dashboard
+      summary: Wired client health grid
+      description: Returns the client health grid of Wired devices based on the
+        provided filters.
+      operationId: getWiredClientHealthGrid
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/KeywordWired"
+        - name: connection_status
+          in: query
+          description: Connection Status
+          required: false
+          schema:
+            type: string
+            enum:
+              - CONNECTED
+              - DISCONNECTED
+        - name: sort_field
+          in: query
+          description: Sort Field
+          required: false
+          schema:
+            type: string
+            default: MAC
+            enum:
+              - CONNECTION_STATUS
+              - CLIENT_HOSTNAME
+              - SITE
+              - BUILDING
+              - FLOOR
+              - IPV4
+              - IPV6
+              - PORT_NUMBER
+              - SWITCH_NAME
+              - OPERATING_SYSTEM
+              - MAC
+              - USERNAME
+              - INSTANT_PORT_PROFILE
+        - $ref: "#/components/parameters/order"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WiredClientHealthGridRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedWired"
+              example:
+                page: 1
+                count: 1
+                total_pages: 1
+                total_count: 1
+                data:
+                  - device_id: 7778185883343
+                    site: Corporate HQ
+                    building: Building A
+                    floor: Floor 2
+                    connection_status: CONNECTED
+                    client_hostname: DESKTOP-ABC123
+                    client_ip: 192.168.1.100
+                    ipv4: 192.168.1.100
+                    ipv6: 2001:0db8:85a3::8a2e:0370:7334
+                    port_number: 1:1
+                    switch_name: 5420F-8W-16P-4XE-SwitchEngine
+                    mac: E4FD8C985C00
+                    vlan: 153
+                    operating_system: Windows 10
+                    username: john.doe
+                    instant_port_profile: Employee-Wired-Profile
+                    client_id: 7778185873882
+                    client_uuid: 886fe194-2e54-4a45-b994-514081d802f4
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /wireless:
+    post:
+      tags:
+        - Dashboard
+      summary: Wireless client data
+      description: Returns the client data of Wireless devices based on the provided
+        filters.
+      operationId: getWirelessClientData
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/KeywordWireless"
+        - name: connection_status
+          in: query
+          description: Connection Status
+          required: false
+          schema:
+            type: string
+            enum:
+              - CONNECTED
+              - DISCONNECTED
+        - name: include_unassigned
+          in: query
+          description: Whether to include unassigned devices
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: sort_field
+          in: query
+          description: Sort Field
+          required: false
+          schema:
+            type: string
+            default: CLIENT_MAC
+            enum:
+              - OPERATING_SYSTEM
+              - FREQUENCY
+              - SSID
+              - CONNECTION_STATUS
+              - ALIAS
+              - CLIENT_MAC
+              - CATEGORY_ASSIGNMENT
+              - USER_PROFILE
+              - CLIENT_IP
+              - CONNECTED_DEVICE_MAC
+              - ENCRYPTION
+              - IPV4
+              - IPV6
+              - VLAN
+              - RSSI
+              - SNR
+              - CLIENT_DEVICE_ID
+              - AUTHENTICATION
+              - CLIENT_TYPE
+        - $ref: "#/components/parameters/order"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WirelessClientHealthGridRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedWireless"
+              example:
+                page: 1
+                count: 1
+                total_pages: 1
+                total_count: 1
+                data:
+                  - connection_status: CONNECTED
+                    vlan: 1
+                    association_duration: 7
+                    authentication_response_time: 7
+                    alias: alias
+                    client_device_id: 4947804263874
+                    client_device_uuid: 6c3e1201-73c5-42c9-a6ab-48d237ce8118
+                    client_id: 4947804263874
+                    client_uuid: 6c3e1201-73c5-42c9-a6ab-48d237ce8118
+                    client_hostname: host name
+                    client_ip: 192.168.129.39
+                    ipv4: 192.168.129.39
+                    ipv6: fe80::250:56ff:fe9b:1c8e
+                    operating_system: Windows NT 6.1
+                    device_id: 4947802425261
+                    connected_device_mac: AB0000000001
+                    last_session_start_time: 1774330134895
+                    roaming_time: 3
+                    rssi: -27
+                    snr: 69
+                    ssid: ssid4
+                    username: 1123CB00014E
+                    user_profile: user-profile
+                    floor: Rijen_site_building 1_floor 1
+                    building: Rijen_site_building 1
+                    site: Rijen_site
+                    encryption: WEP
+                    mlo_mode: STR
+                    authentication: WPA-PSK
+                    category_assignment: WIRELESS
+                    slowness: 0
+                    ipv4_warning: true
+                    is_mlo: true
+                    mlo_bands:
+                      - "2.4"
+                    client_mac: 1123CB00014E
+                    frequency: 5 GHz
+                    client_type: WIRELESS
+                    make: Intel
+                    model: Aspire E 15
+                    serial_no: "123456789"
+                    status: online
+                    xvs_added_at: 1774330134891
+                    xvs_last_seen: 1774330134895
+                    xiq_connected: true
+                    is_xvs_client: true
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /wireless/grid:
+    post:
+      deprecated: true
+      tags:
+        - Dashboard
+      summary: Wireless client health grid
+      description: Returns the client health grid of Wireless devices based on the
+        provided filters.
+      operationId: getWirelessClientHealthGrid
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/KeywordWireless"
+        - name: connection_status
+          in: query
+          description: Connection Status
+          required: false
+          schema:
+            type: string
+            enum:
+              - CONNECTED
+              - DISCONNECTED
+        - name: include_unassigned
+          in: query
+          description: Whether to include unassigned devices
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: sort_field
+          in: query
+          description: Sort Field
+          required: false
+          schema:
+            type: string
+            default: CLIENT_MAC
+            enum:
+              - OPERATING_SYSTEM
+              - FREQUENCY
+              - SSID
+              - CONNECTION_STATUS
+              - ALIAS
+              - CLIENT_MAC
+              - CATEGORY_ASSIGNMENT
+              - USER_PROFILE
+              - CLIENT_IP
+              - CONNECTED_DEVICE_MAC
+              - ENCRYPTION
+              - IPV4
+              - IPV6
+              - VLAN
+              - RSSI
+              - SNR
+              - CLIENT_DEVICE_ID
+              - AUTHENTICATION
+              - CLIENT_TYPE
+        - $ref: "#/components/parameters/order"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WirelessClientHealthGridRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedWireless"
+              example:
+                page: 1
+                count: 1
+                total_pages: 1
+                total_count: 1
+                data:
+                  - connection_status: CONNECTED
+                    vlan: 1
+                    association_duration: 7
+                    authentication_response_time: 7
+                    alias: alias
+                    client_device_id: 4947804263874
+                    client_device_uuid: 6c3e1201-73c5-42c9-a6ab-48d237ce8118
+                    client_id: 4947804263874
+                    client_uuid: 6c3e1201-73c5-42c9-a6ab-48d237ce8118
+                    client_hostname: host name
+                    client_ip: 192.168.129.39
+                    ipv4: 192.168.129.39
+                    ipv6: fe80::250:56ff:fe9b:1c8e
+                    operating_system: Windows NT 6.1
+                    device_id: 4947802425261
+                    connected_device_mac: AB0000000001
+                    last_session_start_time: 1774330134895
+                    roaming_time: 3
+                    rssi: -27
+                    snr: 69
+                    ssid: ssid4
+                    username: 1123CB00014E
+                    user_profile: user-profile
+                    floor: Rijen_site_building 1_floor 1
+                    building: Rijen_site_building 1
+                    site: Rijen_site
+                    encryption: WEP
+                    mlo_mode: STR
+                    authentication: WPA-PSK
+                    category_assignment: WIRELESS
+                    slowness: 0
+                    ipv4_warning: true
+                    is_mlo: true
+                    mlo_bands:
+                      - "2.4"
+                    client_mac: 1123CB00014E
+                    frequency: 5 GHz
+                    client_type: WIRELESS
+                    make: Intel
+                    model: Aspire E 15
+                    serial_no: "123456789"
+                    status: online
+                    xvs_added_at: 1774330134891
+                    xvs_last_seen: 1774330134895
+                    xiq_connected: true
+                    is_xvs_client: true
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /mac-lookup:
+    post:
+      tags:
+        - Client Details
+      summary: Lookup clients by MAC addresses
+      description: Lookup and retrieve basic client information based on a list of MAC
+        addresses (max 100). It support both wired and wireless clients.
+      operationId: lookupClientsByMacAddress
+      requestBody:
+        description: Request body containing the list of MAC addresses to lookup
+          (hexadecimal format without separators)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientMacLookupRequest"
+            example:
+              mac_addresses:
+                - E4FD8C988800
+                - 1123CB00014E
+                - FFFFFFFFFFFF
+        required: true
+      responses:
+        "200":
+          description: Successfully retrieved client information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientMacLookupResponse"
+              example:
+                total_count: 3
+                found_count: 2
+                clients:
+                  - client_id: 7778185873882
+                    client_uuid: 886fe194-2e54-4a45-b994-514081d802f4
+                    mac: E4FD8C985C00
+                    client_type: WIRED
+                    connection_status: CONNECTED
+                    client_hostname: DESKTOP-ABC123
+                    operating_system: Windows 10
+                    username: john.doe
+                    client_ip: 192.168.1.100
+                    ipv4: 192.168.1.100
+                    ipv6: ""
+                    vlan: 153
+                    site: Corporate HQ
+                    building: Building A
+                    floor: Floor 2
+                    device_id: 7778185883343
+                    connected_device_mac: AC4DD9FF1C00
+                  - client_id: 4947804263874
+                    client_uuid: 6c3e1201-73c5-42c9-a6ab-48d237ce8118
+                    mac: 1123CB00014E
+                    client_type: WIRELESS
+                    connection_status: CONNECTED
+                    client_hostname: iPhone-12
+                    operating_system: iOS 15
+                    username: john.doe
+                    client_ip: 192.168.129.39
+                    ipv4: 192.168.129.39
+                    ipv6: fe80::250:56ff:fe9b:1c8e
+                    vlan: 100
+                    site: Corporate HQ
+                    building: Building A
+                    floor: Floor 2
+                    device_id: 4947802425261
+                    connected_device_mac: AB0000000001
+                not_found:
+                  - FFFFFFFFFFFF
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /devices/{device_id}/monitor/ipv4-routing:
+    get:
+      tags:
+        - Routing Details
+      summary: Get device IPv4 routing information
+      description: Retrieves IPv4 routing information for a specific device with
+        pagination support. Returns routing details including destination, VLAN
+        information, route origin, status, metrics, next hop details, and ping
+        protection settings.
+      operationId: getDeviceIpv4Routing
+      parameters:
+        - $ref: "#/components/parameters/deviceId"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
+        - name: sort_field
+          in: query
+          description: Sort Field
+          required: false
+          schema:
+            type: string
+            enum:
+              - DESTINATION
+              - VLAN_ID
+              - VLAN_NAME
+              - ROUTE_ORIGIN
+              - STATUS
+              - METRIC
+              - AGE
+              - ROUTE_TYPE_PRIORITY
+              - ROUTING_INSTANCE
+              - ISID_ID
+              - ISID_NAME
+              - NEXTHOP_IPV4_ADDRESS
+              - NEXTHOP_DEVICE_ID
+              - NEXTHOP_HOST_NAME
+              - PING_PROTECTION_ENABLED
+              - PING_PROTECTION_STATE
+              - PING_PROTECTION_LAST_UPTIME
+              - PING_PROTECTION_LAST_DOWNTIME
+        - $ref: "#/components/parameters/order"
+      responses:
+        "200":
+          description: Successfully retrieved device IPv4 routing information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceIpv4RoutingResponse"
+              example:
+                page: 1
+                count: 1
+                total_pages: 1
+                total_count: 2
+                data:
+                  - earliest_refresh_time: 2026-02-10 10:30:29.131
+                    latest_refresh_time: 2026-02-10 10:30:29.131
+                    latest_refresh_timestamp: 1770719429131
+                    ipv4_routing_details:
+                      - destination: 0.0.0.0/0
+                        vlan_id: 1
+                        vlan_name: Default
+                        route_origin: BOOTP
+                        status: UP
+                        metric: 1
+                        age: 5929
+                        route_type_priority: "5000"
+                        routing_instance: VR-Default
+                        isid_id: 0
+                        isid_name: ""
+                        nexthop_ipv4_address: 10.234.63.254
+                        nexthop_device_id: 0
+                        nexthop_host_name: ""
+                        ping_protection_enabled: false
+                        ping_protection_state: UNKNOWN
+                        ping_protection_last_uptime: 0
+                        ping_protection_last_downtime: 0
+                      - destination: 10.234.63.0/24
+                        vlan_id: 1
+                        vlan_name: Default
+                        route_origin: DIRECT
+                        status: UP
+                        metric: 1
+                        age: 5930
+                        route_type_priority: "10"
+                        routing_instance: VR-Default
+                        isid_id: 0
+                        isid_name: ""
+                        nexthop_ipv4_address: 10.234.63.203
+                        nexthop_device_id: 167941815665597
+                        nexthop_host_name: 4220-12P-4X-SwitchEngine
+                        ping_protection_enabled: false
+                        ping_protection_state: UNKNOWN
+                        ping_protection_last_uptime: 0
+                        ping_protection_last_downtime: 0
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "404":
+          $ref: "#/components/responses/404ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /wired/health-filter-metadata:
+    post:
+      tags:
+        - Dashboard
+      summary: Wired client health filter metadata
+      description: Returns the client health filter metadata of Wired devices.
+      operationId: getWiredClientHealthFilterMetadata
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WiredClientHealthFilterMetadataRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WiredClientHealthFilterMetadataResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /rtts-support:
+    post:
+      tags:
+        - Client Details
+      summary: Check RTTS support for multiple clients
+      description: Checks if Route Table Tracking Support (RTTS) is supported for a
+        list of clients. Takes client details including clientId, deviceId, and
+        connectionStatus, and returns whether RTTS is supported for each client.
+        Maximum 500 clients can be validated in a single request.
+      operationId: checkRttsSupport
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RttsSupportRequest"
+            examples:
+              mixedClients:
+                summary: Mixed client request
+                value:
+                  clients:
+                    - client_uuid: 886fe194-2e54-4a45-b994-514081d802f4
+                      device_id: 167941815665597
+                      connection_status: CONNECTED
+                    - client_uuid: 886fe194-2e54-4a45-b994-514081d802f3
+                      device_id: 167941815665599
+                      connection_status: DISCONNECTED
+      responses:
+        "200":
+          description: Successfully checked RTTS support for all clients
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RttsSupportResponse"
+              examples:
+                mixedResponse:
+                  summary: Mixed RTTS support response
+                  value:
+                    clients:
+                      - client_uuid: 886fe194-2e54-4a45-b994-514081d802f4
+                        rtts_supported: true
+                      - client_uuid: 886fe194-2e54-4a45-b994-514081d802f3
+                        rtts_supported: false
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "404":
+          $ref: "#/components/responses/404ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+components:
+  schemas:
+    WirelessClientType:
+      type: string
+      description: Type of wireless client device technology
+      enum:
+        - WIRELESS
+        - WI-FI
+        - THREAD
+        - WING
+        - UNKNOWN
+      example: WI-FI
+    WirelessClientDetails:
+      type: object
+      description: Detailed information about a wireless client device including
+        connection status, signal quality, network configuration, and location
+      required:
+        - device_connected
+        - device_id
+        - mac_address
+        - connection_time
+        - client_type
+      properties:
+        device_connected:
+          type: boolean
+          description: Indicates whether the client device is currently connected to the
+            network (true = connected, false = disconnected)
+          example: true
+        device_id:
+          type: integer
+          format: int64
+          description: Unique identifier of the access point device the client is
+            connected to
+          example: 12345
+        os_type:
+          type: string
+          description: Operating system type of the client device (e.g., Windows, macOS,
+            iOS, Android, Linux)
+          maxLength: 64
+          example: iOS 16
+        ip_address:
+          type: string
+          description: IPv4 address assigned to the client in dotted-decimal notation (can
+            be empty if no IP assigned)
+          example: 192.168.1.100
+        mac_address:
+          type: string
+          description: MAC address of the client device in hexadecimal format without
+            separators (12 hex characters)
+          pattern: ^[0-9A-Fa-f]{12}$
+          example: 1123CB00014E
+        device_location_names:
+          type: string
+          description: Hierarchical location path of the access point in format
+            'Site/Building/Floor'
+          maxLength: 512
+          example: Corporate HQ/Building A/Floor 2
+        device_location_id:
+          type: integer
+          format: int64
+          description: Unique identifier of the location where the access point is deployed
+          example: 1001
+        alias:
+          type: string
+          description: User-defined friendly name or alias for the client device
+          maxLength: 128
+          example: John's iPhone
+        user:
+          type: string
+          description: Username of the authenticated user associated with this client
+            connection
+          maxLength: 128
+          example: john.doe@company.com
+        connection_to:
+          type: string
+          description: Name or identifier of the access point the client is connected to
+          maxLength: 255
+          example: AP-Floor2-East
+        connection_time:
+          type: integer
+          format: int64
+          description: Time when the client established connection, represented as
+            milliseconds since the Unix epoch (1970-01-01T00:00:00Z)
+          minimum: 0
+          example: 1692624000000
+        vlan:
+          type: integer
+          format: int32
+          description: VLAN identifier the client is assigned to (valid range 1-4094)
+          minimum: 1
+          maximum: 4094
+          example: 100
+        cwp_used:
+          type: integer
+          format: int32
+          description: The Captive Web Portal used
+          example: 1
+        user_profile:
+          type: string
+          description: Name of the user profile or policy applied to this client connection
+          maxLength: 128
+          example: Employee-WiFi
+        ssid:
+          type: string
+          description: Service Set Identifier (SSID) / WiFi network name the client is
+            connected to
+          maxLength: 32
+          example: Corp-WiFi-5G
+        radio:
+          type: string
+          description: Radio interface type and band (e.g., wifi0 for 2.4GHz, wifi1 for
+            5GHz, wifi2 for 6GHz)
+          maxLength: 32
+          example: wifi1
+        wifi_protocol:
+          type: string
+          description: WiFi protocol version used by the client (e.g., 802.11ax, 802.11ac,
+            802.11n, WiFi 6E)
+          maxLength: 32
+          example: 802.11ax
+        channel:
+          type: integer
+          format: int32
+          description: Wireless channel number the client is operating on (2.4GHz - 1-14,
+            5GHz - 36-165, 6GHz - 1-233)
+          minimum: 1
+          maximum: 233
+          example: 36
+        client_hostname:
+          type: string
+          description: Hostname of the client device as reported by DHCP or DNS
+          maxLength: 255
+          example: iPhone-John
+        client_type:
+          $ref: "#/components/schemas/WirelessClientType"
+        encryption_method:
+          type: string
+          description: Encryption method used for the wireless connection (e.g., WPA2,
+            WPA3, Open)
+          maxLength: 32
+          example: WPA3
+        auth:
+          type: string
+          description: Authentication method used for the wireless connection (e.g., PSK,
+            EAP, Open)
+          maxLength: 32
+          example: EAP
+        nac_details:
+          type: string
+          description: Network Access Control details or posture information for the
+            client device
+          maxLength: 512
+          example: Sample NAC details
+        nac_profile:
+          type: string
+          description: Network Access Control profile applied to the client device
+          maxLength: 512
+          example: Sample NAC profile
+        vlan_ip_sort_pair:
+          type: string
+          description: String representation of the VLAN to IP address mapping for the
+            client (e.g., '100 10.10.10.10')
+          maxLength: 512
+          example: 100 10.10.10.10
+    ConstraintViolationError:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field name
+        message:
+          type: string
+          description: The detailed description
+    ApiClientError:
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: The short description of error
+        status:
+          type: integer
+          description: The status code of error
+          format: int32
+        detail:
+          type: string
+          description: The detailed description of error
+        violations:
+          type: array
+          description: List of constraint violations
+          items:
+            $ref: "#/components/schemas/ConstraintViolationError"
+    ApiError:
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: The short description of error
+        status:
+          type: integer
+          description: The status code of error
+          format: int32
+        detail:
+          type: string
+          description: The detailed description of error
+    WiredClientDetails:
+      type: object
+      description: Detailed information about a wired client device connected to a
+        network switch, including connection status, port information, VLAN
+        assignment, authentication details, and switch location
+      required:
+        - connection_type
+        - connection_status
+        - client_mac
+        - client_type
+      properties:
+        connection_type:
+          type: integer
+          format: int32
+          description: Type of connection 2 for wired clients -1 for Unknown
+          enum:
+            - 2
+            - -1
+          example: 2
+        connection_status:
+          type: boolean
+          description: Current connection status of the client (true = connected, false =
+            disconnected)
+          example: true
+        start_time:
+          type: integer
+          format: int64
+          description: Time when the client connection started, represented as
+            milliseconds since the Unix epoch (1970-01-01T00:00:00Z)
+          minimum: 0
+          example: 1692624000000
+        end_time:
+          type: integer
+          format: int64
+          description: Time when the client connection ended, represented as milliseconds
+            since the Unix epoch (1970-01-01T00:00:00Z). Value is 0 for active
+            connections
+          minimum: 0
+          example: 0
+        device_id:
+          type: integer
+          format: int64
+          description: Unique identifier of the network switch device the client is
+            connected to
+          example: 12345
+        device_mac:
+          type: string
+          description: MAC address of the network switch in hexadecimal format without
+            separators (12 hex characters)
+          pattern: ^[0-9A-Fa-f]{12}$
+          example: AB0000000001
+        device_host_name:
+          type: string
+          description: Hostname of the network switch device
+          maxLength: 255
+          example: switch-floor2-east
+        device_location_name:
+          type: string
+          description: Hierarchical location path of the switch in format
+            'Site/Building/Floor'
+          maxLength: 512
+          example: Corporate HQ/Building A/Floor 2
+        device_location_id:
+          type: integer
+          format: int64
+          description: Unique identifier of the location where the switch is deployed
+          example: 1001
+        device_os_version:
+          type: string
+          description: Firmware/OS version running on the network switch
+          maxLength: 32
+          example: 33.5.1.6
+        associate_if_index:
+          type: integer
+          format: int32
+          description: Interface index of the device interface (AP or Switch port) that a
+            client is connected/associated to.
+          example: 1001
+        if_name:
+          type: string
+          description: Name of the network interface on the switch
+          maxLength: 64
+          example: GigabitEthernet1/0/1
+        associate_if_name:
+          type: string
+          description: Associated interface name where the client is physically connected
+          maxLength: 64
+          example: 1:1
+        associate_lag_master_if_name:
+          type: string
+          description: Name of the LAG (Link Aggregation Group) master interface if the
+            port is part of a LAG
+          maxLength: 64
+          example: lag.0.1
+        client_hostname:
+          type: string
+          description: Hostname of the client device as reported by DHCP or DNS
+          maxLength: 255
+          example: DESKTOP-ABC123
+        client_os_name:
+          type: string
+          description: Operating system name of the client device
+          maxLength: 64
+          example: Windows 10
+        client_mac:
+          type: string
+          description: MAC address of the client device in hexadecimal format without
+            separators (12 hex characters)
+          pattern: ^[0-9A-Fa-f]{12}$
+          example: 1122334455AA
+        client_ip:
+          type: string
+          description: IPv4 address assigned to the client in dotted-decimal notation (can
+            be empty if no IP assigned)
+          example: 192.168.1.100
+        client_ipv6:
+          type: string
+          description: IPv6 address assigned to the client in standard notation (can be
+            empty if no IPv6 assigned)
+          example: 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+        vlan:
+          type: integer
+          format: int32
+          description: VLAN identifier the client is assigned to (valid range 1-4094)
+          minimum: 1
+          maximum: 4094
+          example: 100
+        vlan_ip_pairs:
+          type: object
+          description: Map of VLAN IDs to their associated IP addresses (both IPv4 and IPv6)
+          additionalProperties:
+            type: array
+            description: List of IP addresses associated with the VLAN
+            items:
+              type: string
+              description: IP address (IPv4 or IPv6)
+              example: 192.168.1.100
+          example:
+            "100":
+              - 192.168.1.100
+              - 2001:db8::1
+            "200":
+              - 10.0.0.50
+        instant_port_device_type:
+          type: string
+          description: Type of device detected by instant port classification (e.g.,
+            Phone, Camera, Printer, IP Phone)
+          maxLength: 64
+          example: IP Phone
+        user_profile_name:
+          type: string
+          description: Name of the user profile or policy applied to this client connection
+          maxLength: 128
+          example: Employee-Wired
+        port_name:
+          type: string
+          description: Physical port name on the switch where the client is connected
+          maxLength: 64
+          example: Port 1:1
+        auth_method:
+          type: string
+          description: Authentication method used for the client connection
+          enum:
+            - N/A
+            - CWP
+            - OPEN
+            - WEP-OPEN
+            - WEP-SHARED
+            - WPA-PSK
+            - WPA2-PSK
+            - WPA-802.1X
+            - WPA2-802.1X
+            - WPA-AUTO-PSK
+            - WPA-AUTO-802.1X
+            - DYNAMIC-WEP
+            - 802.1X
+            - WPA3_SAE
+            - WPA3-802.1X
+            - OWE
+            - THREAD_PSKD
+            - MAC
+            - WPA3-SAE-EXT
+          maxLength: 64
+          example: 802.1X
+        nac_profile:
+          type: string
+          description: Network Access Control (NAC) profile applied to the client
+          maxLength: 128
+          example: Corporate-NAC
+        auth_client_nac_details:
+          type: string
+          description: Detailed NAC authentication information and client security posture
+          maxLength: 512
+          example: Compliant - AV Updated
+        auth_type:
+          type: string
+          description: Type of authentication protocol (e.g., EAP-TLS, EAP-PEAP, RADIUS)
+          maxLength: 64
+          example: EAP-TLS
+        auth_username:
+          type: string
+          description: Username used for authentication
+          maxLength: 128
+          example: john.doe@company.com
+        client_type:
+          type: string
+          description: Category or type of client device (typically "wired" for wired
+            clients, or "unknown" if type cannot be determined)
+          maxLength: 64
+          example: wired
+        dhcp_lease_time:
+          type: integer
+          format: int32
+          description: DHCP lease duration in seconds
+          minimum: 0
+          example: 86400
+        dhcp_server_port_number:
+          type: string
+          description: Port number or identifier of the DHCP server on the switch
+          maxLength: 64
+          example: 1:2
+    SortOrder:
+      type: string
+      description: "Sort order for results. ASC: ascending order (oldest to newest, or
+        lowest to highest based on the sort field). DESC: descending order
+        (newest to oldest, or highest to lowest based on the sort field)."
+      enum:
+        - ASC
+        - DESC
+    WiredClientHealthGridRequest:
+      type: object
+      description: Request parameters for filtering and querying wired client health
+        grid data
+      properties:
+        site_ids:
+          type: array
+          description: List of site identifiers to filter wired clients by specific
+            locations
+          items:
+            type: integer
+            format: int64
+            description: Unique identifier of a site
+            example: 1001
+          example:
+            - 1001
+            - 1002
+            - 1003
+        device_ids:
+          type: array
+          description: List of network device (switch) identifiers to filter clients
+            connected to specific switches
+          items:
+            type: integer
+            format: int64
+            description: Unique identifier of a network switch device
+            example: 12345
+          example:
+            - 12345
+            - 12346
+        managed_by:
+          type: array
+          description: List of management sources to filter clients by how they are
+            managed (allowed values -"ALL", "THIRD_PARTY_WIRED", "CLOUD_WIRED")
+          items:
+            type: string
+            description: Management source of the client
+            enum:
+              - ALL
+              - CLOUD_WIRED
+              - THIRD_PARTY_WIRED
+            example: THIRD_PARTY_WIRED
+          example:
+            - CLOUD_WIRED
+            - THIRD_PARTY_WIRED
+        operating_system:
+          type: array
+          description: List of operating systems to filter clients by their OS (e.g.,
+            "Windows", "macOS", "Linux")
+          items:
+            type: string
+            description: Operating system of the client (e.g., "Windows", "macOS", "Linux")
+            example: Windows
+          example:
+            - Windows
+            - macOS
+        building_ids:
+          type: array
+          description: List of building identifiers to filter wired clients by specific
+            buildings
+          items:
+            type: integer
+            format: int64
+            description: Unique identifier of a building
+            example: 12345
+          example:
+            - 12345
+            - 12346
+        floor_ids:
+          type: array
+          description: List of floor identifiers to filter wired clients by specific floors
+          items:
+            type: integer
+            format: int64
+            description: Unique identifier of a floor
+            example: 12345
+          example:
+            - 12345
+            - 12346
+    Paged:
+      type: object
+      required:
+        - count
+        - page
+        - total_count
+        - total_pages
+      properties:
+        page:
+          type: integer
+          description: Current page number (1-based indexing)
+          format: int32
+          minimum: 1
+        count:
+          type: integer
+          description: Number of items returned in the current page
+          format: int32
+          minimum: 0
+        total_pages:
+          type: integer
+          description: Total number of pages available
+          format: int32
+          minimum: 0
+        total_count:
+          type: integer
+          description: Total number of items across all pages
+          format: int32
+          minimum: 0
+    WiredDataInner:
+      type: object
+      description: Response for Wired Client Grid
+      properties:
+        device_id:
+          type: integer
+          format: int64
+          description: The device to which client is connected
+          example: 7778185883343
+        site:
+          type: string
+          description: The site where the client is located
+          maxLength: 256
+          example: Corporate HQ
+        building:
+          type: string
+          description: The building where the client is located
+          maxLength: 256
+          example: Building A
+        floor:
+          type: string
+          description: The floor where the client is located
+          maxLength: 256
+          example: Floor 2
+        connection_status:
+          type: string
+          description: The current connection status of the client
+          enum:
+            - CONNECTED
+            - DISCONNECTED
+          example: CONNECTED
+        client_hostname:
+          type: string
+          description: The hostname of the client
+          maxLength: 255
+          example: DESKTOP-ABC123
+        client_ip:
+          type: string
+          description: The IP address of the client (IPv4 or IPv6, can be empty if no IP
+            assigned)
+          example: 192.168.1.100
+        ipv4:
+          type: string
+          description: The IPv4 address assigned to the client in dotted-decimal notation
+            (can be empty if no IP assigned)
+          example: 192.168.1.100
+        ipv6:
+          type: string
+          description: The IPv6 address assigned to the client in standard notation (can
+            be empty if no IPv6 assigned)
+          example: 2001:0db8:85a3::8a2e:0370:7334
+        port_number:
+          type: string
+          description: The port number on which the device is connected
+          maxLength: 64
+          example: 1:1
+        switch_name:
+          type: string
+          description: The switch name of the connected device
+          maxLength: 255
+          example: 5420F-8W-16P-4XE-SwitchEngine
+        mac:
+          type: string
+          description: The MAC address of the client device in hexadecimal format without
+            separators (12 hex characters)
+          pattern: ^[0-9A-Fa-f]{12}$
+          example: E4FD8C985C00
+        vlan:
+          type: integer
+          format: int32
+          description: The VLAN ID (valid range 1-4094)
+          minimum: 1
+          maximum: 4094
+          example: 153
+        operating_system:
+          type: string
+          description: The operating system of the client device
+          maxLength: 64
+          example: Windows 10
+        username:
+          type: string
+          description: The username of the client
+          maxLength: 128
+          example: john.doe
+        instant_port_profile:
+          type: string
+          description: The Instant Port Profile type assignment to client
+          maxLength: 128
+          example: Employee-Wired-Profile
+        client_id:
+          type: integer
+          format: int64
+          description: The client ID
+          example: 7778185873882
+        client_uuid:
+          type: string
+          description: The unique identifier for the client
+          format: uuid
+          example: 886fe194-2e54-4a45-b994-514081d802f4
+        device_managed_by:
+          type: string
+          description: The device management type (e.g., 'XIQ', 'XIQ-SE')
+          maxLength: 128
+          example: XIQ
+        device_managed_by_name:
+          type: string
+          description: Hostname of the device (e.g., '10.10.10.10')
+          maxLength: 128
+          example: 10.10.10.10
+    PagedWired:
+      description: Paginated response containing wired client health grid data with
+        connection information
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: Array of wired client health grid records
+              items:
+                $ref: "#/components/schemas/WiredDataInner"
+    WirelessClientHealthGridRequest:
+      type: object
+      description: Request parameters for filtering and querying wireless client
+        health grid data with advanced filtering capabilities
+      properties:
+        site_ids:
+          type: array
+          description: List of site identifiers to filter wireless clients by specific
+            locations
+          items:
+            type: integer
+            format: int64
+            description: Unique identifier of a site
+            example: 1001
+          example:
+            - 1001
+            - 1002
+            - 1003
+        device_ids:
+          type: array
+          description: List of access point device identifiers to filter clients connected
+            to specific APs
+          items:
+            type: integer
+            format: int64
+            description: Unique identifier of an access point device
+            example: 12345
+          example:
+            - 12345
+            - 12346
+        number_filter:
+          type: array
+          description: List of numeric filters
+          items:
+            type: object
+            properties:
+              column_name:
+                type: string
+                description: |
+                  The column name to apply the filter on. Supported columns:
+                  - RSSI
+                  - SNR
+                enum:
+                  - RSSI
+                  - SNR
+                example: RSSI
+              filter_type:
+                type: string
+                description: |
+                  The type of numeric filter to apply:
+                  - GT: Greater Than
+                  - GTE: Greater Than or Equal
+                  - LT: Less Than
+                  - LTE: Less Than or Equal
+                  - EQ: Equal
+                  - NEQ: Not Equal
+                  - BTW: Between (uses min and max values)
+                  - BLANK: Field is blank/null
+                  - NOT_BLANK: Field is not blank/null
+                enum:
+                  - GT
+                  - GTE
+                  - LT
+                  - LTE
+                  - EQ
+                  - NEQ
+                  - BTW
+                  - BLANK
+                  - NOT_BLANK
+                default: GT
+                example: GT
+              value:
+                type: number
+                description: >
+                  The value to compare against for the filter (used for GT, GTE,
+                  LT, LTE, EQ, NEQ).
+
+                  Units:
+                    - For RSSI: dBm
+                    - For SNR: dB
+                    The unit should match the column_name value.
+                format: double
+              min:
+                type: number
+                description: |
+                  The minimum value for the BTW (Between) filter type.
+                  Units:
+                    - For RSSI: dBm
+                    - For SNR: dB
+                  The unit should match the column_name value.
+                format: double
+              max:
+                type: number
+                description: |
+                  The maximum value for the BTW (Between) filter type.
+                  Units:
+                    - For RSSI: dBm
+                    - For SNR: dB
+                  The unit should match the column_name value.
+                format: double
+        alias:
+          type: array
+          description: List of client device aliases to filter by user-defined friendly
+            names
+          items:
+            type: string
+            description: Client device alias/friendly name
+            maxLength: 128
+            example: John's Laptop
+          example:
+            - John's Laptop
+            - Conference Room iPad
+        auth_methods:
+          type: array
+          description: List of authentication methods to filter clients (e.g., 802.1X,
+            PSK, Open)
+          items:
+            type: string
+            description: Authentication method name
+            enum:
+              - N/A
+              - CWP
+              - OPEN
+              - WEP-OPEN
+              - WEP-SHARED
+              - WPA-PSK
+              - WPA2-PSK
+              - WPA-802.1X
+              - WPA2-802.1X
+              - WPA-AUTO-PSK
+              - WPA-AUTO-802.1X
+              - DYNAMIC-WEP
+              - 802.1X
+              - WPA3_SAE
+              - WPA3-802.1X
+              - OWE
+              - THREAD_PSKD
+              - MAC
+              - WPA3-SAE-EXT
+            example: WPA2-802.1X
+          example:
+            - WPA2-802.1X
+            - 802.1X
+        encryption_methods:
+          type: array
+          description: List of encryption methods to filter clients (e.g., AES, TKIP, WEP)
+          items:
+            type: string
+            description: Encryption method name
+            enum:
+              - N/A
+              - AES
+              - TKIP
+              - WEP
+              - NON
+              - CCMP
+              - KEYGUARD
+              - WEP128
+              - WEP64
+              - WAPI
+              - GCMP256
+              - NONE
+              - PAP
+              - MsCHAP
+              - EAP-MD5
+              - EAP-TLS
+              - PEAP
+              - TTLS
+              - TTLS-INNER-TUNNEL
+              - PEAP-INNER-TUNNEL
+              - EAP-FAST
+              - EAP-LEAP
+              - EAP-RSA
+              - EAP-SIM
+              - EAP-AKA
+              - EAP-TEAP
+            example: AES
+          example:
+            - AES
+            - TKIP
+        operating_systems:
+          type: array
+          description: List of operating systems to filter clients by device OS
+          items:
+            type: string
+            description: Operating system name (e.g., Windows 10, iOS 16, Android 13, macOS)
+            maxLength: 64
+            example: Windows 10
+          example:
+            - Windows 10
+            - iOS 16
+        ssids:
+          type: array
+          description: List of SSIDs (WiFi network names) to filter clients connected to
+            specific wireless networks
+          items:
+            type: string
+            description: SSID / WiFi network name
+            maxLength: 32
+            example: Corp-WiFi-5G
+          example:
+            - Corp-WiFi-5G
+            - Guest-WiFi
+        user_profiles:
+          type: array
+          description: List of user profile names to filter clients by applied policy
+            profiles
+          items:
+            type: string
+            description: User profile or policy name
+            maxLength: 128
+            example: Employee-WiFi
+          example:
+            - Employee-WiFi
+            - Guest-Profile
+        frequency:
+          type: array
+          description: List of frequency bands to filter clients (2.4GHz, 5GHz, 6GHz,
+            Thread, Wired)
+          items:
+            type: string
+            description: Frequency band or connection type
+            enum:
+              - 2.4 GHz
+              - 5 GHz
+              - 6 GHz
+              - Thread
+              - Wired
+            example: 5 GHz
+          example:
+            - 5 GHz
+            - 6 GHz
+        category_assignments:
+          type: array
+          description: List of device categories to filter clients by device type
+            classification
+          items:
+            type: string
+            description: Device category (e.g., Laptop, Smartphone, Tablet, IoT Device)
+            maxLength: 64
+            example: Smartphone
+          example:
+            - Smartphone
+            - Laptop
+        client_type:
+          type: array
+          description: List of client device types to filter by (WI-FI, THREAD, or WING)
+          items:
+            type: string
+            description: Type of wireless client device technology
+            enum:
+              - WIRELESS
+              - WI-FI
+              - THREAD
+              - WING
+              - UNKNOWN
+            example: WI-FI
+          example:
+            - WI-FI
+            - THREAD
+    WirelessDataInner:
+      type: object
+      description: Wireless client health grid record
+      properties:
+        connection_status:
+          type: string
+          description: The current connection status of the wireless client
+          enum:
+            - CONNECTED
+            - DISCONNECTED
+          example: CONNECTED
+        vlan:
+          type: integer
+          format: int32
+          description: The VLAN ID
+          minimum: 1
+          maximum: 4094
+          example: 100
+        association_duration:
+          type: integer
+          format: int32
+          description: The association duration in milliseconds
+          minimum: 0
+          example: 7
+        authentication_response_time:
+          type: integer
+          format: int32
+          description: The authentication response time in milliseconds
+          minimum: 0
+          example: 7
+        alias:
+          type: string
+          description: The alias of the client
+          maxLength: 128
+          example: alias
+        client_device_id:
+          type: integer
+          format: int64
+          description: The client device ID
+          example: 4947804263874
+        client_device_uuid:
+          type: string
+          description: Universally unique identifier (UUID) for the client device
+          format: uuid
+          example: 6c3e1201-73c5-42c9-a6ab-48d237ce8118
+        client_id:
+          type: integer
+          format: int64
+          description: The client ID
+          example: 4947804263874
+        client_uuid:
+          type: string
+          description: The unique identifier for the client
+          format: uuid
+          example: 6c3e1201-73c5-42c9-a6ab-48d237ce8118
+        client_hostname:
+          type: string
+          description: The hostname of the client
+          maxLength: 255
+          example: host name
+        client_ip:
+          type: string
+          description: The IP address of the client (can be empty if no IP assigned)
+          example: 192.168.129.39
+        ipv4:
+          type: string
+          description: The IPv4 address assigned to the client (can be empty if no IP
+            assigned)
+          example: 192.168.129.39
+        ipv6:
+          type: string
+          description: The IPv6 address assigned to the client (can be empty if no IPv6
+            assigned)
+          example: fe80::250:56ff:fe9b:1c8e
+        operating_system:
+          type: string
+          description: The operating system of the client device
+          maxLength: 64
+          example: Windows NT 6.1
+        device_id:
+          type: integer
+          format: int64
+          description: The device ID
+          example: 4947802425261
+        connected_device_mac:
+          type: string
+          description: The MAC address of the connected device in hexadecimal format
+            without separators
+          pattern: ^[0-9A-Fa-f]{12}$
+          example: AB0000000001
+        last_session_start_time:
+          type: integer
+          format: int64
+          description: The start time of the last session
+          example: 1774330134895
+        roaming_time:
+          type: integer
+          format: int32
+          description: The roaming time in milliseconds
+          minimum: 0
+          example: 3
+        rssi:
+          type: integer
+          format: int32
+          description: Received signal strength indicator of the client's connection
+          example: -27
+        snr:
+          type: integer
+          format: int32
+          description: Signal-to-noise ratio of the client's connection in dB
+          example: 69
+        ssid:
+          type: string
+          description: The SSID of the network
+          maxLength: 32
+          example: Corp-WiFi-5G
+        username:
+          type: string
+          description: The username of the client
+          maxLength: 128
+          example: john.doe@company.com
+        user_profile:
+          type: string
+          description: The user profile assigned to the client
+          maxLength: 128
+          example: Employee-WiFi
+        floor:
+          type: string
+          description: The floor where the client is located
+          maxLength: 256
+          example: Floor 2
+        building:
+          type: string
+          description: The building where the client is located
+          maxLength: 256
+          example: Building A
+        site:
+          type: string
+          description: The site where the client is located
+          maxLength: 256
+          example: Corporate HQ
+        encryption:
+          type: string
+          description: The encryption method used
+          enum:
+            - N/A
+            - AES
+            - TKIP
+            - WEP
+            - NON
+            - CCMP
+            - KEYGUARD
+            - WEP128
+            - WEP64
+            - WAPI
+            - GCMP256
+            - NONE
+            - PAP
+            - MsCHAP
+            - EAP-MD5
+            - EAP-TLS
+            - PEAP
+            - TTLS
+            - TTLS-INNER-TUNNEL
+            - PEAP-INNER-TUNNEL
+            - EAP-FAST
+            - EAP-LEAP
+            - EAP-RSA
+            - EAP-SIM
+            - EAP-AKA
+            - EAP-TEAP
+          maxLength: 64
+          example: AES
+        mlo_mode:
+          type: string
+          description: Multi-Link Operation (MLO) mode for WiFi 7 (e.g., STR, EMLSR, EMLMR)
+          maxLength: 32
+          example: STR
+        authentication:
+          type: string
+          description: The authentication method used
+          enum:
+            - N/A
+            - CWP
+            - OPEN
+            - WEP-OPEN
+            - WEP-SHARED
+            - WPA-PSK
+            - WPA2-PSK
+            - WPA-802.1X
+            - WPA2-802.1X
+            - WPA-AUTO-PSK
+            - WPA-AUTO-802.1X
+            - DYNAMIC-WEP
+            - 802.1X
+            - WPA3_SAE
+            - WPA3-802.1X
+            - OWE
+            - THREAD_PSKD
+            - MAC
+            - WPA3-SAE-EXT
+          maxLength: 64
+          example: WPA2-802.1X
+        category_assignment:
+          type: string
+          description: The category assignment of the client (e.g., Windows 10/11)
+          maxLength: 64
+          example: Windows 10/11
+        slowness:
+          type: integer
+          format: int32
+          description: The slowness value indicating network performance degradation (0 =
+            no issues)
+          minimum: 0
+          example: 0
+        ipv4_warning:
+          type: boolean
+          description: Indicates if there are any IPv4 configuration or connectivity
+            warnings
+          example: true
+        is_mlo:
+          type: boolean
+          description: Indicates if the client is using Multi-Link Operation (WiFi 7 MLO)
+          example: true
+        mlo_bands:
+          type: array
+          description: Array of frequency bands used in Multi-Link Operation (e.g., 2.4,
+            5, 6 for GHz bands)
+          items:
+            type: string
+            description: Frequency band identifier without unit
+          example:
+            - "2.4"
+            - "5"
+        client_mac:
+          type: string
+          description: The MAC address of the client device in hexadecimal format without
+            separators
+          pattern: ^[0-9A-Fa-f]{12}$
+          example: 1123CB00014E
+        frequency:
+          type: string
+          description: The frequency band used by the client (e.g., 2.4 GHz, 5 GHz, 6 GHz)
+          maxLength: 32
+          example: 5 GHz
+        client_type:
+          $ref: "#/components/schemas/WirelessClientType"
+        make:
+          type: string
+          description: Manufacturer/make of the client device
+          maxLength: 64
+          example: Apple
+        model:
+          type: string
+          description: Model of the client device
+          maxLength: 64
+          example: iPhone 14
+        serial_no:
+          type: string
+          description: Serial number of the client device
+          maxLength: 64
+          example: ABC123XYZ
+        status:
+          type: string
+          description: Status of the client device
+          maxLength: 32
+          example: Active
+        xvs_added_at:
+          type: integer
+          format: int64
+          description: Timestamp when the client was added to XVS (Extreme Vendor Services)
+          example: 1692624000000
+        xvs_last_seen:
+          type: integer
+          format: int64
+          description: Timestamp when the client was last seen by XVS (Extreme Vendor
+            Services)
+          example: 1692710400000
+        xiq_connected:
+          type: boolean
+          description: Indicates if the client is connected to XIQ (ExtremeCloud IQ)
+          example: true
+        is_xvs_client:
+          type: boolean
+          description: Indicates if the client is managed by XVS (Extreme Vendor Services)
+          example: false
+    PagedWireless:
+      description: Paginated response containing wireless client health grid data with
+        signal quality, connection metrics, and location information
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: Array of wireless client health grid records
+              items:
+                $ref: "#/components/schemas/WirelessDataInner"
+    ClientMacLookupRequest:
+      type: object
+      description: Request to lookup clients by their MAC addresses
+      required:
+        - mac_addresses
+      properties:
+        mac_addresses:
+          type: array
+          description: List of client MAC addresses to lookup (hexadecimal format without
+            separators, 12 characters)
+          items:
+            type: string
+            pattern: ^[0-9A-Fa-f]{12}$|^[0-9A-Fa-f]{16}$
+            description: Client MAC address in hexadecimal format without separators (12/16
+              characters)
+            example: E4FD8C988800
+          minItems: 1
+          maxItems: 100
+          example:
+            - E4FD8C988800
+            - 1123CB00014E
+            - AB0000000001
+    ClientMacLookupData:
+      type: object
+      description: Unified client data from MAC lookup containing common fields across
+        wired and wireless clients
+      required:
+        - mac
+        - client_type
+      properties:
+        client_id:
+          type: integer
+          format: int64
+          description: The client ID
+          example: 7778185873882
+        client_uuid:
+          type: string
+          description: The unique identifier for the client
+          format: uuid
+          example: 886fe194-2e54-4a45-b994-514081d802f4
+        mac:
+          type: string
+          description: The MAC address of the client device in hexadecimal format without
+            separators (12 hex characters)
+          pattern: ^[0-9A-Fa-f]{12}$
+          example: E4FD8C985C00
+        client_type:
+          type: string
+          description: Type of client connection
+          enum:
+            - WIRED
+            - WIRELESS
+          example: WIRED
+        connection_status:
+          type: string
+          description: The current connection status of the client
+          enum:
+            - CONNECTED
+            - DISCONNECTED
+          example: CONNECTED
+        client_hostname:
+          type: string
+          description: The hostname of the client
+          maxLength: 255
+          example: DESKTOP-ABC123
+        operating_system:
+          type: string
+          description: The operating system of the client device
+          maxLength: 64
+          example: Windows 10
+        username:
+          type: string
+          description: The username of the client
+          maxLength: 128
+          example: john.doe
+        client_ip:
+          type: string
+          description: The IP address of the client (IPv4 or IPv6, can be empty if no IP
+            assigned)
+          example: 192.168.1.100
+        ipv4:
+          type: string
+          description: The IPv4 address assigned to the client in dotted-decimal notation
+            (can be empty if no IP assigned)
+          example: 192.168.1.100
+        ipv6:
+          type: string
+          description: The IPv6 address assigned to the client in standard notation (can
+            be empty if no IPv6 assigned)
+          example: 2001:0db8:85a3::8a2e:0370:7334
+        vlan:
+          type: integer
+          format: int32
+          description: The VLAN ID (valid range 1-4094)
+          minimum: 1
+          maximum: 4094
+          example: 153
+        site:
+          type: string
+          description: The site where the client is located
+          maxLength: 256
+          example: Corporate HQ
+        building:
+          type: string
+          description: The building where the client is located
+          maxLength: 256
+          example: Building A
+        floor:
+          type: string
+          description: The floor where the client is located
+          maxLength: 256
+          example: Floor 2
+        device_id:
+          type: integer
+          format: int64
+          description: The device (AP or Switch) to which client is connected
+          example: 7778185883343
+        connected_device_mac:
+          type: string
+          description: The MAC address of the connected device (AP or Switch) in
+            hexadecimal format without separators
+          pattern: ^[0-9A-Fa-f]{12}$
+          example: AB0000000001
+    ClientMacLookupResponse:
+      type: object
+      description: Response containing client lookup results, including summary
+        counts, unified client records, and MAC addresses that were not found
+      properties:
+        total_count:
+          type: integer
+          description: Total number of MAC addresses queried
+          example: 3
+        found_count:
+          type: integer
+          description: Number of clients found
+          example: 2
+        clients:
+          type: array
+          description: List of found clients with unified fields from both wired and
+            wireless grid data
+          items:
+            $ref: "#/components/schemas/ClientMacLookupData"
+        not_found:
+          type: array
+          description: List of MAC addresses that were not found
+          items:
+            type: string
+            description: MAC address that was not found in hexadecimal format
+            pattern: ^[0-9A-Fa-f]{12}$
+            example: FFFFFFFFFFFF
+          example:
+            - FFFFFFFFFFFF
+    DeviceIpv4RoutingDetails:
+      type: object
+      properties:
+        destination:
+          type: string
+          description: IPv4 destination address with CIDR notation
+          example: 0.0.0.0/0
+        vlan_id:
+          type: integer
+          format: int32
+          description: VLAN identifier
+          example: 1
+        vlan_name:
+          type: string
+          description: Name of the VLAN
+          example: Default
+        route_origin:
+          type: string
+          description: Origin of the route
+          example: BOOTP
+        status:
+          type: string
+          description: Status of the route
+          example: UP
+        metric:
+          type: integer
+          format: int32
+          description: Route metric
+          example: 1
+        age:
+          type: integer
+          format: int32
+          description: Age of the route in seconds
+          example: 5929
+        route_type_priority:
+          type: string
+          description: Priority of the route type
+          example: "5000"
+        routing_instance:
+          type: string
+          description: Routing instance name
+          example: VR-Default
+        isid_id:
+          type: integer
+          format: int32
+          description: ISID identifier
+          example: 0
+        isid_name:
+          type: string
+          description: ISID name
+          example: ""
+        nexthop_ipv4_address:
+          type: string
+          description: Next hop IPv4 address
+          example: 10.234.63.254
+        nexthop_device_id:
+          type: integer
+          format: int64
+          description: Next hop device identifier
+          example: 0
+        nexthop_host_name:
+          type: string
+          description: Next hop hostname
+          example: ""
+        ping_protection_enabled:
+          type: boolean
+          description: Whether ping protection is enabled
+          example: false
+        ping_protection_state:
+          type: string
+          description: Ping protection state
+          example: UNKNOWN
+        ping_protection_last_uptime:
+          type: integer
+          format: int64
+          description: Last uptime of ping protection in milliseconds
+          example: 0
+        ping_protection_last_downtime:
+          type: integer
+          format: int64
+          description: Last downtime of ping protection in milliseconds
+          example: 0
+    DeviceIpv4RoutingData:
+      type: object
+      properties:
+        earliest_refresh_time:
+          type: string
+          description: Earliest refresh time in format "YYYY-MM-DD HH:mm:ss.SSS"
+          example: 2026-02-10 10:30:29.131
+        latest_refresh_time:
+          type: string
+          description: Latest refresh time in format "YYYY-MM-DD HH:mm:ss.SSS"
+          example: 2026-02-10 10:30:29.131
+        latest_refresh_timestamp:
+          type: integer
+          format: int64
+          description: Latest refresh timestamp in milliseconds
+          example: 1770719429131
+        ipv4_routing_details:
+          type: array
+          description: List of IPv4 routing details
+          items:
+            $ref: "#/components/schemas/DeviceIpv4RoutingDetails"
+    DeviceIpv4RoutingResponse:
+      description: Response schema for device IPv4 routing data, including pagination
+        information and a list of routing entries.
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: List of device IPv4 routing data
+              items:
+                $ref: "#/components/schemas/DeviceIpv4RoutingData"
+    WiredClientHealthFilterMetadataRequest:
+      type: object
+      properties:
+        site_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+    WiredClientHealthFilterMetadataResponse:
+      type: object
+      properties:
+        connection_status:
+          type: array
+          items:
+            type: string
+            enum:
+              - Connected
+              - Disconnected
+          description: List of connection status values (always static)
+          default:
+            - Connected
+            - Disconnected
+        os:
+          type: array
+          items:
+            type: string
+          description: List of distinct operating system values
+          example:
+            - Windows NT 6.1
+            - unknown
+            - Mac OS X 10.7+
+    RttsSupportRequest:
+      type: object
+      required:
+        - clients
+      properties:
+        clients:
+          type: array
+          description: List of clients to check for RTTS support (max 500 items)
+          minItems: 1
+          maxItems: 500
+          items:
+            type: object
+            required:
+              - client_uuid
+              - device_id
+              - connection_status
+            properties:
+              client_uuid:
+                type: string
+                description: The unique client identifier (UUID) obtained from the client health
+                  grid response (client_uuid field)
+                format: uuid
+                example: 886fe194-2e54-4a45-b994-514081d802f4
+              device_id:
+                type: integer
+                description: Unique identifier of the device
+                format: int64
+                example: 167941815665597
+              connection_status:
+                type: string
+                description: Current connection status of the client
+                enum:
+                  - CONNECTED
+                  - DISCONNECTED
+                example: CONNECTED
+    RttsSupportResponse:
+      type: object
+      required:
+        - clients
+      properties:
+        clients:
+          type: array
+          description: List of clients with their RTTS support status
+          items:
+            type: object
+            required:
+              - client_uuid
+              - rtts_supported
+            properties:
+              client_uuid:
+                type: string
+                description: The unique identifier for the client
+                format: uuid
+                example: 886fe194-2e54-4a45-b994-514081d802f4
+              rtts_supported:
+                type: boolean
+                description: Indicates whether Route Table Tracking Support (RTTS) is supported
+                  for this client
+                example: true
+  responses:
+    400ErrorResponse:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiClientError"
+    401ErrorResponse:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    403ErrorResponse:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    500ErrorResponse:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    404ErrorResponse:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+  parameters:
+    clientId:
+      name: client_uuid
+      in: path
+      description: The unique client identifier (UUID) obtained from the client health
+        grid response (client_uuid field)
+      required: true
+      schema:
+        type: string
+        example: 886fe194-2e54-4a45-b994-514081d802f4
+    page:
+      name: page
+      in: query
+      description: Page number for pagination, starting from 1
+      required: false
+      schema:
+        minimum: 1
+        maximum: 2147483647
+        type: integer
+        format: int32
+        default: 1
+    limit:
+      name: limit
+      in: query
+      description: Number of items to return per page (max 500)
+      required: false
+      schema:
+        maximum: 500
+        minimum: 1
+        type: integer
+        format: int32
+        default: 10
+    KeywordWired:
+      name: keyword
+      in: query
+      description: >
+        Keyword for case-insensitive exact match across multiple wired client
+        fields:
+
+        - client_mac: Client MAC address (e.g., "8899AA000101")
+
+
+        Returns results where any of these fields exactly matches the keyword
+        (case-insensitive).
+      required: false
+      schema:
+        type: string
+        maxLength: 256
+        example: 8899AA000101
+    order:
+      name: order
+      in: query
+      description: The sort order (ascending by default)
+      required: false
+      schema:
+        $ref: "#/components/schemas/SortOrder"
+    KeywordWireless:
+      name: keyword
+      in: query
+      description: >
+        Keyword for case-insensitive exact match across multiple fields:
+
+        - client_mac: Client MAC address (e.g., "8899AA000101")
+
+
+        Returns results where any of these fields exactly matches the keyword
+        (case-insensitive).
+      required: false
+      schema:
+        type: string
+        maxLength: 256
+        example: 8899AA000101
+    deviceId:
+      name: device_id
+      in: path
+      description: Unique identifier of the device
+      required: true
+      schema:
+        type: integer
+        format: int64
+        example: 167941815665597
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Enter your API Key as a Bearer Token
+security:
+  - BearerAuth: []

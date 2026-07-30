@@ -1028,6 +1028,111 @@
       "specFile": "specs/device-lifecycle-management/openapi.yaml"
     },
     {
+      "id": "client",
+      "title": "Extreme Platform ONE REST API - Client",
+      "description": "Platform Client Service (PCS) API provides client cache details and wireless/wired client health grid information.",
+      "version": "25.11.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/client/v1",
+      "tags": [
+        "Client Details",
+        "Dashboard",
+        "Routing Details"
+      ],
+      "endpoints": [
+        {
+          "path": "/wireless/details/{client_uuid}",
+          "method": "GET",
+          "operationId": "getWirelessClientDetailsInfo",
+          "summary": "Get Wireless Client Details Info",
+          "tags": [
+            "Client Details"
+          ]
+        },
+        {
+          "path": "/wired/details/{client_uuid}",
+          "method": "GET",
+          "operationId": "getWiredClientDetailsInfo",
+          "summary": "Get Wired Client Details Info",
+          "tags": [
+            "Client Details"
+          ]
+        },
+        {
+          "path": "/wired",
+          "method": "POST",
+          "operationId": "getWiredClientData",
+          "summary": "Wired client data",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/wired/grid",
+          "method": "POST",
+          "operationId": "getWiredClientHealthGrid",
+          "summary": "Wired client health grid",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/wireless",
+          "method": "POST",
+          "operationId": "getWirelessClientData",
+          "summary": "Wireless client data",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/wireless/grid",
+          "method": "POST",
+          "operationId": "getWirelessClientHealthGrid",
+          "summary": "Wireless client health grid",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/mac-lookup",
+          "method": "POST",
+          "operationId": "lookupClientsByMacAddress",
+          "summary": "Lookup clients by MAC addresses",
+          "tags": [
+            "Client Details"
+          ]
+        },
+        {
+          "path": "/devices/{device_id}/monitor/ipv4-routing",
+          "method": "GET",
+          "operationId": "getDeviceIpv4Routing",
+          "summary": "Get device IPv4 routing information",
+          "tags": [
+            "Routing Details"
+          ]
+        },
+        {
+          "path": "/wired/health-filter-metadata",
+          "method": "POST",
+          "operationId": "getWiredClientHealthFilterMetadata",
+          "summary": "Wired client health filter metadata",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/rtts-support",
+          "method": "POST",
+          "operationId": "checkRttsSupport",
+          "summary": "Check RTTS support for multiple clients",
+          "tags": [
+            "Client Details"
+          ]
+        }
+      ],
+      "specFile": "specs/client/openapi.yaml"
+    },
+    {
       "id": "audit-log",
       "title": "Extreme Platform ONE REST API - Audit Log",
       "description": "Extreme Platform ONE&trade; Audit Log API provides comprehensive tracking of user activities within Extreme Platform ONE, ensuring transparency, traceability, and accountability across all applications.",
