@@ -1,0 +1,2948 @@
+openapi: 3.0.3
+info:
+  title: Extreme Platform ONE REST API - Site
+  description: Extreme Platform ONE&trade; Site API allows users to access and
+    manage Site/Location information, such as Sites, Site Groups, Buildings,
+    Floors, etc.
+  termsOfService: https://www.extremenetworks.com/company/legal/terms-of-use/
+  contact:
+    name: Extreme Networks Support
+    url: https://www.extremenetworks.com/support
+    email: support@extremenetworks.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 25.11.0
+servers:
+  - url: https://cloudapi.extremecloudiq.com/site/v1
+    description: Extreme Platform ONE REST API - Site
+tags:
+  - name: Site
+    description: The Site Service API for managing the ExtremeCloud site related
+      configurations in a geographical area
+  - name: Site Group
+    description: The Site Group API for managing the grouping of sites and/or site groups
+  - name: Building
+    description: The Site Service API for managing building(s) under a site
+  - name: Floor
+    description: The Site Service API for managing floor(s) in a building
+  - name: Tree
+    description: The Site Service API for querying site related configurations on
+      the hierarchy tree
+  - name: Location Management
+    description: The Site Service API for different actions on SiteGroups, Sites,
+      Buildings and Floors
+  - name: Miscellaneous
+    description: The API executes miscellaneous functions.
+paths:
+  /sites:
+    get:
+      tags:
+        - Site
+      summary: List sites
+      description: List pages of sites by filter.
+      operationId: getSites
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit-500"
+        - name: order
+          in: query
+          description: The sort order by name (ascending by default)
+          required: false
+          schema:
+            $ref: "#/components/schemas/SortOrder"
+        - name: name
+          in: query
+          description: List sites by name (case insensitive)
+          required: false
+          schema:
+            type: string
+        - name: ids
+          in: query
+          description: List sites by IDs
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedClsSite"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Site
+      summary: Create site
+      description: Create a new site under a site group or the root location.
+      externalDocs:
+        description: API Reference
+        url: https://extremecloudiq.com/api-docs/api-reference.html#_create_site
+      operationId: createSite
+      requestBody:
+        description: Create site request body
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClsCreateSiteRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsSite"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /sites/{id}:
+    get:
+      tags:
+        - Site
+      summary: Get site by ID
+      description: Get the site for the specified ID.
+      operationId: getSite
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsSite"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    put:
+      tags:
+        - Site
+      summary: Update site by ID
+      description: Update the site information with the site ID.
+      externalDocs:
+        description: API Reference
+        url: https://extremecloudiq.com/api-docs/api-reference.html#_update_site
+      operationId: updateSite
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: Update site request body
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClsUpdateSiteRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsSite"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Site
+      summary: Delete site by ID
+      description: Delete the site for the specified ID.
+      externalDocs:
+        description: API Reference
+        url: https://extremecloudiq.com/api-docs/api-reference.html#_delete_site
+      operationId: deleteSite
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the site to be deleted.
+          schema:
+            type: integer
+            format: int64
+        - name: force_delete
+          in: query
+          description: When true, forcefully deletes the site and all its descendant sites
+            recursively. When false, deletion will fail if the site has
+            dependencies.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: OK
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /site-groups:
+    get:
+      tags:
+        - Site Group
+      summary: List site groups
+      description: List pages of site groups by filter.
+      operationId: getSiteGroups
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit-500"
+        - name: order
+          in: query
+          description: The sort order for site group name (ASC for ascending, DESC for
+            descending; ascending by default)
+          required: false
+          schema:
+            $ref: "#/components/schemas/SortOrder"
+        - name: name
+          in: query
+          description: List site groups by name (case insensitive)
+          required: false
+          schema:
+            type: string
+        - name: ids
+          in: query
+          description: List site groups by IDs
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedClsSiteGroup"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Site Group
+      summary: Create site group
+      description: Create a new site group.
+      operationId: createSiteGroup
+      requestBody:
+        description: Create site group request body
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClsCreateSiteGroupRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsSiteGroup"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /site-groups/{id}:
+    get:
+      tags:
+        - Site Group
+      summary: Get site group by ID
+      description: Get the site group for the specified ID.
+      operationId: getSiteGroup
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsSiteGroup"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    put:
+      tags:
+        - Site Group
+      summary: Update site group by ID
+      description: Update the site group information with the site group ID.
+      operationId: updateSiteGroup
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: Update site group request body
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClsUpdateSiteGroupRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsSiteGroup"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Site Group
+      summary: Delete site group by ID
+      description: Delete the site group for the specified ID.
+      externalDocs:
+        description: API Reference
+        url: https://extremecloudiq.com/api-docs/api-reference.html#_delete_site_group
+      operationId: deleteSiteGroup
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the site group to be deleted.
+          schema:
+            type: integer
+            format: int64
+        - name: force_delete
+          in: query
+          description: When true, forcefully deletes the site group along with all its
+            child site groups and associated resources (sites, buildings,
+            floors) recursively. When false, deletion will fail if the site
+            group has any dependencies.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: OK
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /buildings:
+    get:
+      tags:
+        - Building
+      summary: List buildings
+      description: List pages of buildings by filter.
+      operationId: getBuildings
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit-500"
+        - name: order
+          in: query
+          description: The sort order by name (ascending by default)
+          required: false
+          schema:
+            $ref: "#/components/schemas/SortOrder"
+        - name: name
+          in: query
+          description: List buildings by name (case insensitive)
+          required: false
+          schema:
+            type: string
+        - name: ids
+          in: query
+          description: List buildings by IDs
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedClsBuilding"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Building
+      summary: Create building
+      description: Create a new building under the parent location.
+      externalDocs:
+        description: API Reference
+        url: https://extremecloudiq.com/api-docs/api-reference.html#_create_building
+      operationId: createBuilding
+      requestBody:
+        description: Create building request body
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClsCreateBuildingRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsBuilding"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Building
+      summary: Delete multiple buildings
+      description: Delete buildings under the parent location.
+      externalDocs:
+        description: API Reference
+        url: https://extremecloudiq.com/api-docs/api-reference.html#_delete_buildings
+      operationId: deleteBuildings
+      parameters:
+        - name: ids
+          in: query
+          description: List of building IDs to delete.
+          required: true
+          explode: false
+          schema:
+            type: array
+            minItems: 1
+            items:
+              type: integer
+              format: int64
+              minimum: 1
+            example:
+              - 5784375
+              - 7548935
+              - 5475434
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsBatchResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /buildings/{id}:
+    get:
+      tags:
+        - Building
+      summary: Get a building by ID
+      description: Get the building for the specified ID.
+      operationId: getBuilding
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsBuilding"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    put:
+      tags:
+        - Building
+      summary: Update building
+      description: Update the building information with the building ID.
+      externalDocs:
+        description: API Reference
+        url: https://extremecloudiq.com/api-docs/api-reference.html#_update_building
+      operationId: updateBuilding
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: Update building request body
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClsUpdateBuildingRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsBuilding"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Building
+      summary: Delete building by ID
+      description: Delete the building for the specified ID.
+      externalDocs:
+        description: API Reference
+        url: https://extremecloudiq.com/api-docs/api-reference.html#_delete_building
+      operationId: deleteBuilding
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the building to be deleted.
+          schema:
+            type: integer
+            format: int64
+        - name: force_delete
+          in: query
+          description: Force deletion of this building and all associated floors, rooms,
+            and devices recursively
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: OK
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /floors:
+    get:
+      tags:
+        - Floor
+      summary: List floors
+      description: List pages of floors by filter.
+      operationId: getFloors
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit-500"
+        - name: order
+          in: query
+          description: The sort order by name (ascending by default)
+          required: false
+          schema:
+            $ref: "#/components/schemas/SortOrder"
+        - name: name
+          in: query
+          description: |
+            Filter floors by name (case insensitive).
+          required: false
+          schema:
+            type: string
+            example: Floor 1
+        - name: ids
+          in: query
+          description: List floors by IDs
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedClsFloor"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Floor
+      summary: Create floor
+      description: Create a new floor under the parent building.
+      externalDocs:
+        description: API Reference
+        url: https://extremecloudiq.com/api-docs/api-reference.html#_create_floor
+      operationId: createFloor
+      requestBody:
+        description: Create floor request body
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClsCreateFloorRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsFloor"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Floor
+      summary: Delete multiple floors
+      description: Delete multiple floors under the parent building.
+      externalDocs:
+        description: API Reference
+        url: https://extremecloudiq.com/api-docs/api-reference.html#_delete_floors
+      operationId: deleteFloors
+      parameters:
+        - name: ids
+          in: query
+          description: List of floor IDs to delete
+          required: true
+          explode: false
+          schema:
+            type: array
+            minItems: 1
+            items:
+              type: integer
+              format: int64
+              minimum: 1
+            example:
+              - 4324242
+              - 4343242
+              - 43423423
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsBatchResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /floors/{id}:
+    get:
+      tags:
+        - Floor
+      summary: Get a floor by ID
+      description: Get the floor for the specified ID.
+      operationId: getFloor
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsFloor"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    put:
+      tags:
+        - Floor
+      summary: Update floor
+      description: Update floor information with the floor ID.
+      externalDocs:
+        description: API Reference
+        url: https://extremecloudiq.com/api-docs/api-reference.html#_update_floor
+      operationId: updateFloor
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: Update floor request body
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClsUpdateFloorRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsFloor"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Floor
+      summary: Delete floor by ID
+      description: Delete the floor for the specified ID.
+      externalDocs:
+        description: API Reference
+        url: https://extremecloudiq.com/api-docs/api-reference.html#_delete_floor
+      operationId: deleteFloor
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      responses:
+        "200":
+          description: OK
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /floors/floorplan:
+    post:
+      tags:
+        - Floor
+      summary: Upload floorplan
+      description: Upload the floorplan map for the VIQ.
+      operationId: uploadFloorplan
+      parameters:
+        - name: overrideBg
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: |-
+            A flag indicating whether to override the existing floor plan image.
+            Set to `true` to override, `false` to retain the existing image.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+                - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  description: |-
+                    The floor plan image file to upload.
+                    Accepted formats: image/png, image/jpeg, image/jpg.
+                    Maximum file size: 10 MB.
+                  format: binary
+                  x-accepted-formats: image/png, image/jpeg, image/jpg
+            encoding:
+              file:
+                contentType: image/png, image/jpeg, image/jpg
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsUploadImageMetadataResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    get:
+      tags:
+        - Floor
+      summary: List floorplan images
+      description: List pages of available floorplan images.
+      operationId: getFloorplans
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit-100"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedClsFloorplan"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Floor
+      summary: Delete floorplan images by ID
+      description: Delete the floorplan images for the VIQ.
+      operationId: deleteFloorPlan
+      parameters:
+        - name: ids
+          in: query
+          description: The IDs of the floorplan images to be deleted
+          required: true
+          schema:
+            type: array
+            maxItems: 100
+            items:
+              type: integer
+              format: int64
+              minimum: 1
+      responses:
+        "200":
+          description: OK
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /floors/floorplan/{id}/:crop:
+    post:
+      tags:
+        - Floor
+      summary: Crop floorplan image
+      description: Crop floorplan image.
+      operationId: cropImage
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClsImageCropRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClsImageMetadataResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /tree:
+    get:
+      tags:
+        - Tree
+      summary: Get site tree
+      description: Get site hierarchical tree.
+      operationId: getLocationTree
+      parameters:
+        - name: parentId
+          in: query
+          description: The parent location ID, return root locations if parent is null
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: expandChildren
+          in: query
+          description: >-
+            Whether to return the child locations recursively, default is true.
+
+            Set it to false to improve performance when there are a lot of child
+            locations.
+          required: false
+          schema:
+            type: boolean
+            default: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClsLocation"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /tree/devices:
+    get:
+      tags:
+        - Tree
+      summary: Get devices on the site hierarchy
+      description: Get devices on the site hierarchy with pagination.
+      operationId: getLocationDevicesList
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
+        - name: locationId
+          in: query
+          description: The location ID, or null for all locations.
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: expandChildren
+          in: query
+          description: >-
+            Whether to return the child locations recursively, default is true.
+
+            Set it to false to improve performance when there are a lot of child
+            locations.
+          required: false
+          schema:
+            type: boolean
+            default: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedClsLocationTreeDevice"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /tree/maps:
+    get:
+      tags:
+        - Tree
+      summary: Get maps on the site hierarchy
+      description: Get maps on the site hierarchy with pagination.
+      operationId: getLocationMapsList
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
+        - name: locationId
+          in: query
+          description: The location ID, or null for all locations.
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: expandChildren
+          in: query
+          description: >-
+            Whether to return the child locations recursively, default is true.
+
+            Set it to false to improve performance when there are a lot of child
+            locations.
+          required: false
+          schema:
+            type: boolean
+            default: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedClsLocationTreeMap"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /tree/:import:
+    post:
+      tags:
+        - Tree
+      summary: Import site tree
+      description: Import sites groups and sites tree.
+      operationId: importTree
+      parameters:
+        - name: override
+          in: query
+          schema:
+            type: boolean
+          description: >-
+            A flag indicating whether to override the existing floor plan image
+            during import operation.
+
+            Set to true to override the existing image, false to retain the
+            existing image.
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          description: >-
+            id field corresponds to the folderId under which the XML file will
+            be imported. The folderId can be obtained from the GET /tree API.
+            Depending on the type of XML being imported, the folderId should be
+            as follows:
+
+            If folderId is not provided, the XML is imported under root folder.
+
+            - **Site Group / Site XML:** folderId should be the ID of the site
+            group under which the XML has to be imported or the root node .
+
+            - **Building XML:** folderId should be the ID of the site under
+            which the XML has to be imported.
+
+            - **Floor XML:** folderId should be the ID of the building under
+            which the XML has to be imported.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+                - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  description: >-
+                    The file to import. Two formats are accepted:
+
+                    - **.xml** (`text/xml` or `application/xml`): A plain XML
+                    export file containing site group, site, building, or floor
+                    hierarchy data (e.g., 'site-tree.xml',
+                    'building-export.xml').
+
+                    - **.tar.gz** (`application/gzip`): A compressed archive
+                    exported from ExtremeCloud that includes the XML hierarchy
+                    plus associated floor plan images (e.g.,
+                    'location-export.tar.gz', 'floor-plan-bundle.tar.gz').
+                  format: binary
+                  example: site-tree-import.xml
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - taskId
+                properties:
+                  taskId:
+                    type: string
+                    description: The unique identifier for the import task that can be used to track
+                      the import operation status.
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /tree/:export:
+    post:
+      tags:
+        - Tree
+      summary: Export site tree
+      description: export sites groups and sites tree.
+      operationId: exportTree
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClsExportTreeRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+                description: >
+                  Returns the exported sites tree as a binary file in the format
+                  specified by the file_type request parameter. When file_type
+                  is 'XML_OR_TAR_GZ', the response is either a plain .xml file
+                  (for trees without floor plan images) or a .tar.gz archive
+                  (for trees that include floor plan images exported from
+                  ExtremeCloud).
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /location/{id}:clone:
+    post:
+      tags:
+        - Location Management
+      summary: Clone a location
+      description: Clones a particular location, applicable to only buildings and floors.
+      operationId: cloneLocation
+      parameters:
+        - $ref: "#/components/parameters/id-int64"
+      requestBody:
+        description: Clone location request body
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClsCloneLocationRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /location/{id}:move:
+    post:
+      tags:
+        - Location Management
+      summary: Move a location
+      description: Move a site or site-group to a new parent location.
+      operationId: moveLocation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the site or site-group to be moved.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Move location request body
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClsMoveLocationRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /location/{id}:reorder:
+    put:
+      tags:
+        - Location Management
+      summary: Reorder floor
+      description: Reorders floor up or down.
+      operationId: reorderFloor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the floor to be reordered.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Reorder floor request body.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClsReorderLocationRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /status:
+    get:
+      tags:
+        - Miscellaneous
+      summary: Returns tasks status
+      description: Returns tasks status.
+      operationId: getStatus
+      parameters:
+        - name: taskId
+          in: query
+          description: >
+            The unique task identifier returned by an asynchronous operation
+            (e.g., importTree). The value is a string (e.g.,
+            'WipTask-importFolderToRoot-d0aad673-293f-412c-8768-d92612908196').
+          required: true
+          schema:
+            type: string
+            example: WipTask-importFolderToRoot-d0aad673-293f-412c-8768-d92612908196
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskStatus"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+  /count:
+    get:
+      tags:
+        - Miscellaneous
+      summary: Returns Count of each folderType
+      description: Returns counts of each folderType.
+      operationId: getCount
+      parameters:
+        - name: folderType
+          in: query
+          description: Filter to return count for a specific folder type. If omitted,
+            returns counts for all folder types.
+          schema:
+            $ref: "#/components/schemas/foldertype"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/countResponse"
+        "400":
+          $ref: "#/components/responses/400ErrorResponse"
+        "401":
+          $ref: "#/components/responses/401ErrorResponse"
+        "403":
+          $ref: "#/components/responses/403ErrorResponse"
+        "500":
+          $ref: "#/components/responses/500ErrorResponse"
+      security:
+        - BearerAuth: []
+components:
+  schemas:
+    SortOrder:
+      type: string
+      description: "Sort order for results. ASC: ascending order (oldest to newest, or
+        lowest to highest based on the sort field). DESC: descending order
+        (newest to oldest, or highest to lowest based on the sort field)."
+      enum:
+        - ASC
+        - DESC
+    Paged:
+      type: object
+      required:
+        - count
+        - page
+        - total_count
+        - total_pages
+      properties:
+        page:
+          type: integer
+          description: The current page number
+          format: int32
+          example: 1
+        count:
+          type: integer
+          description: The element count of the current page
+          format: int32
+          example: 10
+        total_pages:
+          type: integer
+          description: The total page number based on request page size
+          format: int32
+          example: 5
+        total_count:
+          type: integer
+          description: The total element count
+          format: int64
+          example: 43
+    BaseEntity:
+      required:
+        - id
+        - create_time
+        - update_time
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier
+          format: int64
+          example: 12345
+        create_time:
+          type: string
+          description: The create time
+          format: date-time
+          example: 2026-04-01T02:13:45.780Z
+        update_time:
+          type: string
+          description: The last update time
+          format: date-time
+          example: 2026-04-02T04:47:41.341Z
+    ViqEntity:
+      allOf:
+        - $ref: "#/components/schemas/BaseEntity"
+        - type: object
+          properties:
+            org_id:
+              type: integer
+              description: The organization identifier, valid when enabling HIQ feature
+              format: int64
+          required:
+            - org_id
+    ClsAddress:
+      type: object
+      description: The physical address information of the location.
+      properties:
+        address:
+          type: string
+          description: The street address line 1
+          example: 123 Main St
+        address2:
+          type: string
+          description: The street address line 2
+          example: Suite 100
+        city:
+          type: string
+          description: The city or town of the address
+          example: Springfield
+        postal_code:
+          type: string
+          description: >
+            The postal or ZIP code of the address. Format varies by country
+            (e.g., '62701' for US ZIP codes, 'M5H 2N2' for Canadian postal
+            codes, 'SW1A 1AA' for UK postcodes).
+          example: SW1A 1AA
+        state:
+          type: string
+          description: >
+            The province, state, or region of the address. For US addresses, use
+            the two-letter US state abbreviation (e.g., 'IL', 'CA', 'NY'). For
+            other countries, use the appropriate province/region name or code.
+          example: IL
+    ClsXrefApplicationType:
+      type: string
+      description: The types of application that cross-reference the location
+      enum:
+        - XIQ
+        - XSW
+        - XUZ
+    ClsMeasurementUnit:
+      type: string
+      description: The measurement unit in feet/meters
+      enum:
+        - FEET
+        - METERS
+      default: FEET
+    ClsSite:
+      allOf:
+        - $ref: "#/components/schemas/ViqEntity"
+        - type: object
+          description: The site information
+          required:
+            - name
+            - country_code
+          properties:
+            parent_id:
+              type: integer
+              description: The parent site group ID
+              format: int64
+              example: 2001
+            name:
+              type: string
+              description: The site name
+            unique_name:
+              type: string
+              description: The unique site name
+            type:
+              type: string
+              enum:
+                - SITE
+              description: The location type
+              example: SITE
+            description:
+              type: string
+              description: The site description
+            country_code:
+              type: integer
+              format: int32
+              externalDocs:
+                description: Get list of supported country codes
+                url: https://extremecloudiq.com/api-docs/api-reference.html#_get_list_of_countries_and_country_codes
+              description: The numeric country code for the site.
+              example: 840
+            address:
+              $ref: "#/components/schemas/ClsAddress"
+            created_by:
+              type: integer
+              description: The user ID used to create the site
+              format: int64
+            latitude:
+              type: number
+              description: >
+                The latitude coordinate for the site location, in decimal
+                degrees. Valid range: -90.0 (South Pole) to 90.0 (North Pole).
+              format: double
+              minimum: -90
+              maximum: 90
+              example: 37.7749
+            longitude:
+              type: number
+              description: >
+                The longitude coordinate for the site location, in decimal
+                degrees. Valid range: -180.0 (West) to 180.0 (East).
+              format: double
+              minimum: -180
+              maximum: 180
+              example: -122.4194
+            applications:
+              type: array
+              description: The applications that are cross-referencing the site
+              items:
+                $ref: "#/components/schemas/ClsXrefApplicationType"
+            site_type:
+              type: string
+              description: The site type indoor or outdoor.
+              enum:
+                - INDOOR
+                - OUTDOOR
+              default: INDOOR
+            device_elevation:
+              type: number
+              description: Device elevation in the unit specified by 'length_unit' field (FEET
+                or METERS) (applicable for outdoor site only).
+              format: double
+            floor_loss:
+              type: number
+              description: Floor loss in decibels(dB) (applicable for outdoor site only).
+              format: double
+            metric_width:
+              type: number
+              description: Metric width value in the unit specified by length_unit field (FEET
+                or METERS) (applicable for outdoor site only).
+              format: double
+            metric_height:
+              type: number
+              description: Metric height in the unit specified by 'length_unit' field (FEET or
+                METERS) (applicable for outdoor site only).
+              format: double
+            length_unit:
+              $ref: "#/components/schemas/ClsMeasurementUnit"
+            environment_type:
+              type: string
+              description: Environment type (applicable for outdoor site only).
+              enum:
+                - INDOOR_LINE_OF_SIGHT
+                - OUTDOOR_FREE_SPACE
+                - OUTDOOR_SUBURBAN
+                - OUTDOOR_DENSE_URBAN
+                - INDOOR
+                - OFFICE
+                - WAREHOUSE
+                - OBSTRUCTED_IN_BUILDING
+                - AUTO
+                - CALIBRATED
+              default: AUTO
+            background:
+              type: string
+              description: Background image filename with extension like map.png (applicable
+                for outdoor site only).
+              example: map.png
+            set_afc_schedule:
+              type: boolean
+              description: Set this property to enable afc schedule (applicable for outdoor
+                site only).
+              default: false
+            site_schedule:
+              type: integer
+              description: Site schedule (applicable for outdoor site only).
+              format: int64
+              default: 0
+            site_timezone:
+              type: string
+              format: timezone
+              description: Site timezone in IANA timezone format (e.g., 'America/New_York')
+                (applicable for outdoor site only).
+              default: UTC
+    PagedClsSite:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/ClsSite"
+    ConstraintViolationError:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field name
+        message:
+          type: string
+          description: The detailed description
+    ApiClientError:
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: The short description of error
+        status:
+          type: integer
+          description: The status code of error
+          format: int32
+        detail:
+          type: string
+          description: The detailed description of error
+        violations:
+          type: array
+          description: List of constraint violations
+          items:
+            $ref: "#/components/schemas/ConstraintViolationError"
+    ApiError:
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: The short description of error
+        status:
+          type: integer
+          description: The status code of error
+          format: int32
+        detail:
+          type: string
+          description: The detailed description of error
+    ClsCreateSiteRequest:
+      type: object
+      required:
+        - name
+        - country_code
+      properties:
+        parent_id:
+          type: integer
+          description: The parent site group ID that this site belongs to
+          format: int64
+          example: 2001
+        name:
+          type: string
+          description: The name of the site
+          example: San Francisco Office
+        country_code:
+          type: integer
+          format: int32
+          externalDocs:
+            description: Get list of supported country codes
+            url: https://extremecloudiq.com/api-docs/api-reference.html#_get_list_of_countries_and_country_codes
+          description: The numeric country code for the site.
+          example: 840
+        address:
+          $ref: "#/components/schemas/ClsAddress"
+        latitude:
+          type: number
+          description: >
+            The latitude coordinate for the site location, in decimal degrees
+            (e.g., 37.7749 for San Francisco). Range: -90.0 to 90.0.
+          format: double
+          minimum: -90
+          maximum: 90
+          example: 37.7749
+        longitude:
+          type: number
+          description: >
+            The longitude coordinate for the site location, in decimal degrees
+            (e.g., -122.4194 for San Francisco). Range: -180.0 to 180.0.
+          format: double
+          minimum: -180
+          maximum: 180
+          example: -122.4194
+        description:
+          type: string
+          description: Description of the site
+          example: Primary west coast data center
+        site_type:
+          type: string
+          description: The site type indoor or outdoor.
+          enum:
+            - INDOOR
+            - OUTDOOR
+          default: INDOOR
+        device_elevation:
+          type: number
+          description: Device elevation in the unit specified by 'length_unit' field
+            (applicable for outdoor site only).
+          format: double
+        floor_loss:
+          type: number
+          description: Floor loss in dB (applicable for outdoor site only).
+          format: double
+        metric_width:
+          type: number
+          description: Width measurement in the unit specified by 'length_unit' field
+            (applicable for outdoor site only).
+          format: double
+        metric_height:
+          type: number
+          description: Height measurement in the unit specified by 'length_unit' field
+            (applicable for outdoor site only).
+          format: double
+        length_unit:
+          $ref: "#/components/schemas/ClsMeasurementUnit"
+        environment_type:
+          type: string
+          description: Environment type (applicable for outdoor site only).
+          enum:
+            - INDOOR_LINE_OF_SIGHT
+            - OUTDOOR_FREE_SPACE
+            - OUTDOOR_SUBURBAN
+            - OUTDOOR_DENSE_URBAN
+            - INDOOR
+            - OFFICE
+            - WAREHOUSE
+            - OBSTRUCTED_IN_BUILDING
+            - AUTO
+            - CALIBRATED
+          default: AUTO
+        background:
+          type: string
+          description: Background image name (applicable for outdoor site only).
+        set_afc_schedule:
+          type: boolean
+          description: Set this property to enable afc schedule (applicable for outdoor
+            site only).
+          default: false
+        site_schedule:
+          type: integer
+          description: Site schedule (applicable for outdoor site only).
+          format: int64
+          default: 0
+        site_timezone:
+          type: string
+          format: timezone
+          description: Site timezone in IANA timezone format (e.g., 'America/New_York')
+            (applicable for outdoor site only).
+          default: UTC
+    ClsUpdateSiteRequest:
+      type: object
+      required:
+        - name
+      properties:
+        parent_id:
+          type: integer
+          description: The parent site group ID
+          format: int64
+        name:
+          type: string
+          description: The site name
+        address:
+          $ref: "#/components/schemas/ClsAddress"
+        latitude:
+          type: number
+          description: The latitude coordinate for the site
+          format: double
+          minimum: -90
+          maximum: 90
+        longitude:
+          type: number
+          description: The longitude coordinate for the site
+          format: double
+          minimum: -180
+          maximum: 180
+        description:
+          type: string
+          description: The site description
+        device_elevation:
+          type: number
+          description: Device elevation in the unit specified by 'length_unit' field (FEET
+            or METERS) (applicable for outdoor site only).
+          format: double
+        floor_loss:
+          type: number
+          description: Floor loss in decibels(dB) (applicable for outdoor site only).
+          format: double
+        metric_width:
+          type: number
+          description: Metric width in the unit specified by 'length_unit' field (FEET or
+            METERS) (applicable for outdoor site only).
+          format: double
+        metric_height:
+          type: number
+          description: Metric height in the unit specified by 'length_unit' field (FEET or
+            METERS) (applicable for outdoor site only).
+          format: double
+        length_unit:
+          $ref: "#/components/schemas/ClsMeasurementUnit"
+        environment_type:
+          type: string
+          description: Environment type (applicable for outdoor site only).
+          enum:
+            - INDOOR_LINE_OF_SIGHT
+            - OUTDOOR_FREE_SPACE
+            - OUTDOOR_SUBURBAN
+            - OUTDOOR_DENSE_URBAN
+            - INDOOR
+            - OFFICE
+            - WAREHOUSE
+            - OBSTRUCTED_IN_BUILDING
+            - AUTO
+            - CALIBRATED
+          default: AUTO
+        background:
+          type: string
+          description: Background image name (applicable for outdoor site only).
+        set_afc_schedule:
+          type: boolean
+          description: Set this property to enable afc schedule (applicable for outdoor
+            site only).
+          default: false
+        site_schedule:
+          type: integer
+          description: Site schedule (applicable for outdoor site only).
+          format: int64
+          default: 0
+        site_timezone:
+          type: string
+          description: Site timezone (applicable for outdoor site only).
+          default: UTC
+        country_code:
+          type: integer
+          description: Country code for the site.
+          format: int32
+    ClsSiteGroup:
+      allOf:
+        - $ref: "#/components/schemas/ViqEntity"
+        - type: object
+          description: The site group information
+          required:
+            - name
+          properties:
+            parent_id:
+              type: integer
+              description: The parent site group ID
+              format: int64
+            name:
+              type: string
+              description: The site group name
+            type:
+              type: string
+              enum:
+                - SITE_GROUP
+              description: The location type
+              example: SITE_GROUP
+            description:
+              type: string
+              description: The site group description
+    PagedClsSiteGroup:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/ClsSiteGroup"
+    ClsCreateSiteGroupRequest:
+      type: object
+      required:
+        - name
+      properties:
+        parent_id:
+          type: integer
+          description: The parent site group ID
+          format: int64
+        name:
+          type: string
+          description: The site group name
+        description:
+          type: string
+          description: The site group description
+    ClsUpdateSiteGroupRequest:
+      type: object
+      required:
+        - name
+      properties:
+        parent_id:
+          type: integer
+          description: The parent site group ID
+          format: int64
+        name:
+          type: string
+          description: The site group name
+        description:
+          type: string
+          description: The site group description
+    ClsBuilding:
+      allOf:
+        - $ref: "#/components/schemas/ViqEntity"
+        - type: object
+          description: The building information
+          required:
+            - name
+            - parent_id
+          properties:
+            parent_id:
+              type: integer
+              description: The parent site ID that this building belongs to
+              format: int64
+              example: 1001
+            name:
+              type: string
+              description: The building name (e.g., 'Headquarters', 'Building A')
+              example: Headquarters
+            unique_name:
+              type: string
+              description: The system-generated unique identifier name for the building
+              example: Site A|Building A
+            type:
+              type: string
+              enum:
+                - BUILDING
+              description: The location type, always 'BUILDING' for building entities
+              example: BUILDING
+            description:
+              type: string
+              description: Description of the building (e.g., 'Main corporate office
+                building')
+              example: Main corporate office building, 5 floors
+            address:
+              $ref: "#/components/schemas/ClsAddress"
+            latitude:
+              type: number
+              description: >
+                The latitude coordinate for the building location, in decimal
+                degrees (e.g., 37.7749 for San Francisco). Range: -90.0 to 90.0.
+              format: double
+              minimum: -90
+              maximum: 90
+              example: 37.7749
+            longitude:
+              type: number
+              description: >
+                The longitude coordinate for the building location, in decimal
+                degrees (e.g., -122.4194 for San Francisco). Range: -180.0 to
+                180.0.
+              format: double
+              minimum: -180
+              maximum: 180
+              example: -122.4194
+            applications:
+              type: array
+              description: The list of applications that are cross-referencing this building
+              items:
+                $ref: "#/components/schemas/ClsXrefApplicationType"
+    PagedClsBuilding:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/ClsBuilding"
+    ClsCreateBuildingRequest:
+      type: object
+      required:
+        - parent_id
+        - name
+      properties:
+        parent_id:
+          type: integer
+          description: The parent location ID
+          format: int64
+        name:
+          type: string
+          description: The building name
+        address:
+          $ref: "#/components/schemas/ClsAddress"
+        latitude:
+          type: number
+          description: The latitude coordinate for the building
+          format: double
+          minimum: -90
+          maximum: 90
+        longitude:
+          type: number
+          description: The longitude coordinate for the building
+          format: double
+          minimum: -180
+          maximum: 180
+        description:
+          type: string
+          description: The building description
+    ClsBatchResponse:
+      type: array
+      items:
+        type: object
+        description: The deletion result for each location operation.
+        properties:
+          id:
+            type: integer
+            format: int64
+            description: Location id.
+          status:
+            type: string
+            description: Execution status.
+            enum:
+              - SUCCESS
+              - FAILURE
+          location_type:
+            type: string
+            enum:
+              - BUILDING
+              - FLOOR
+            description: Type of location being deleted.
+            example: FLOOR
+          message:
+            type: string
+            description: Execution message if any (optional).
+    ClsUpdateBuildingRequest:
+      type: object
+      required:
+        - parent_id
+        - name
+      properties:
+        parent_id:
+          type: integer
+          description: The parent site ID that this building belongs to
+          format: int64
+          example: 1001
+        name:
+          type: string
+          description: The building name
+        address:
+          $ref: "#/components/schemas/ClsAddress"
+        latitude:
+          type: number
+          description: >
+            The latitude coordinate for the building location, in decimal
+            degrees. Valid range: -90.0 (south) to 90.0 (north). Provide both
+            latitude and longitude when specifying a precise location.
+          format: double
+          minimum: -90
+          maximum: 90
+          example: 37.7749
+        longitude:
+          type: number
+          description: >
+            The longitude coordinate for the building location, in decimal
+            degrees. Valid range: -180.0 (west) to 180.0 (east). Provide both
+            latitude and longitude when specifying a precise location.
+          format: double
+          minimum: -180
+          maximum: 180
+          example: -122.4194
+        description:
+          type: string
+          description: The building description
+    ClsRfEnvironmentType:
+      type: string
+      description: The floor RF environment
+      enum:
+        - AUTO_ESTIMATE
+        - OFFICE
+        - OUTDOOR_FREE_SPACE
+        - OBSTRUCTED_IN_BUILDING
+        - OUTDOOR_SUBURBAN
+        - WAREHOUSE
+        - OUTDOOR_DENSE_URBAN
+    ClsFloor:
+      allOf:
+        - $ref: "#/components/schemas/ViqEntity"
+        - type: object
+          description: The Floor information on the floor plan
+          required:
+            - parent_id
+            - name
+            - unique_name
+            - environment
+            - db_attenuation
+            - measurement_unit
+            - installation_height
+          properties:
+            parent_id:
+              type: integer
+              description: The parent building ID
+              format: int64
+            name:
+              type: string
+              description: The floor name (e.g., 'Ground Floor', 'Floor 1', '2nd Floor',
+                'Basement')
+              example: Floor 1
+            unique_name:
+              type: string
+              description: >
+                The system-generated unique identifier name for the floor.
+                Assigned by the system upon creation.
+              example: Site A|Building A|Floor 1
+            type:
+              type: string
+              enum:
+                - FLOOR
+              description: The location type (e.g. FLOOR)
+              example: FLOOR
+            description:
+              type: string
+              description: The floor description
+            environment:
+              $ref: "#/components/schemas/ClsRfEnvironmentType"
+            db_attenuation:
+              type: number
+              description: The floor attenuation value in decibels (dB) representing signal
+                loss through the floor material
+              x-unit: dB
+              format: double
+            measurement_unit:
+              $ref: "#/components/schemas/ClsMeasurementUnit"
+            installation_height:
+              type: number
+              description: The installation height in feet or meters (based on
+                measurement_unit setting)
+              minimum: 0
+              maximum: 1000
+              format: double
+            map_size_width:
+              type: number
+              description: The floormap width in feet or meters (based on measurement_unit
+                setting)
+              minimum: 0.1
+              maximum: 100000
+              format: double
+            map_size_height:
+              type: number
+              description: The floormap height in feet or meters (based on measurement_unit
+                setting)
+              minimum: 0.1
+              maximum: 100000
+              format: double
+            map_name:
+              type: string
+              description: >
+                The filename of the uploaded floor map image associated with
+                this floor. Typically an image file name with extension (e.g.,
+                'floor1-plan.png', 'ground-floor-map.jpg'). Set when a floor map
+                image is uploaded via the floorplan upload endpoint.
+              example: floor1-plan.png
+            applications:
+              type: array
+              description: The applications that are cross-referencing the floor
+              items:
+                $ref: "#/components/schemas/ClsXrefApplicationType"
+    PagedClsFloor:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/ClsFloor"
+    ClsCreateFloorRequest:
+      type: object
+      required:
+        - parent_id
+        - name
+        - db_attenuation
+        - measurement_unit
+        - installation_height
+        - map_size_width
+        - map_size_height
+      properties:
+        parent_id:
+          type: integer
+          description: The parent building ID
+          format: int64
+        name:
+          type: string
+          description: The floor name
+        environment:
+          $ref: "#/components/schemas/ClsRfEnvironmentType"
+        db_attenuation:
+          type: number
+          description: The floor attenuation value in decibels (dB)
+          minimum: 0
+          maximum: 100
+          format: double
+        measurement_unit:
+          $ref: "#/components/schemas/ClsMeasurementUnit"
+        installation_height:
+          type: number
+          description: The installation height in feet or meters (based on
+            measurement_unit setting)
+          minimum: 0
+          maximum: 1000
+          format: double
+        map_size_width:
+          type: number
+          description: The floor map width in feet or meters (based on measurement_unit
+            setting)
+          minimum: 0.1
+          maximum: 100000
+          format: double
+        map_size_height:
+          type: number
+          description: The floor map height in feet or meters (based on measurement_unit
+            setting)
+          minimum: 0.1
+          maximum: 100000
+          format: double
+        map_name:
+          type: string
+          description: The floor map name
+        description:
+          type: string
+          description: The floor description
+    ClsUpdateFloorRequest:
+      type: object
+      required:
+        - parent_id
+        - name
+        - db_attenuation
+        - measurement_unit
+        - installation_height
+        - map_size_width
+        - map_size_height
+      properties:
+        parent_id:
+          type: integer
+          description: The parent building ID
+          format: int64
+        name:
+          type: string
+          description: The floor name
+        environment:
+          $ref: "#/components/schemas/ClsRfEnvironmentType"
+        db_attenuation:
+          type: number
+          description: The floor attenuation value in decibels (dB) representing signal
+            loss through the floor material
+          minimum: 0
+          format: double
+        measurement_unit:
+          $ref: "#/components/schemas/ClsMeasurementUnit"
+        installation_height:
+          type: number
+          description: The installation height in feet or meters (based on
+            measurement_unit setting)
+          minimum: 0
+          format: double
+        map_size_width:
+          type: number
+          description: The floormap width in feet or meters (based on measurement_unit
+            setting)
+          minimum: 0
+          format: double
+        map_size_height:
+          type: number
+          description: The floormap height in feet or meters (based on measurement_unit
+            setting)
+          minimum: 0
+          format: double
+        map_name:
+          type: string
+          description: The floor map name
+        description:
+          type: string
+          description: The floor description
+    ClsImageMetadataResponse:
+      allOf:
+        - $ref: "#/components/schemas/ViqEntity"
+        - type: object
+          required:
+            - name
+            - size
+            - height
+            - width
+          properties:
+            name:
+              type: string
+              description: image name
+            size:
+              type: integer
+              description: The size of the image file in bytes
+              format: int64
+            height:
+              type: integer
+              description: Height of the new image in pixels(px)
+              format: int32
+            width:
+              type: integer
+              description: Width of the new image in pixels(px)
+              format: int32
+            description:
+              type: string
+              description: description of the image
+    PagedClsFloorplan:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/ClsImageMetadataResponse"
+            imageBaseUrl:
+              type: string
+              description: >
+                The base URL used to construct full image URLs for floor plan
+                images. Append the image filename or {id} to form the complete
+                URL (e.g., 'https://example.com/images/topology/{id}/').
+              example: https://example.com/images/topology/{id}/
+    ClsUploadImageMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          description: Contains the response data including metadata, image URL, and
+            upload status.
+          properties:
+            metadata:
+              description: Contains metadata information about the uploaded floor plan image.
+              allOf:
+                - $ref: "#/components/schemas/ClsImageMetadataResponse"
+            imageBaseUrl:
+              type: string
+              description: The base URI used to construct full floorplan image URLs; append
+                image filename or id.
+              example: https://example.com/afs-webapp/images/topology/1095/
+            status:
+              type: boolean
+              description: Status of the image upload operation
+              example: true
+    ClsImageCropRequest:
+      required:
+        - top
+        - left
+        - width
+        - height
+      type: object
+      properties:
+        top:
+          type: integer
+          description: top co-ordinate of the image
+          format: int32
+        left:
+          type: integer
+          description: left co-ordinate of the image
+          format: int32
+        width:
+          type: integer
+          description: Width of the new image in pixels(px)
+          format: int32
+        height:
+          type: integer
+          description: Height of the new image in pixels(px)
+          format: int32
+        description:
+          type: string
+          description: description of the image
+    ClsFolderType:
+      type: string
+      description: The folder type of the location
+      enum:
+        - Site_Group
+        - SITE
+        - BUILDING
+        - FLOOR
+      example: SITE
+    ClsLocation:
+      allOf:
+        - $ref: "#/components/schemas/ViqEntity"
+        - type: object
+          description: The hierarchical location tree for Site Groups, Sites, Buildings,
+            and Floors
+          required:
+            - name
+            - unique_name
+            - type
+          properties:
+            id:
+              type: integer
+              description: The unique identifier
+              format: int64
+            create_time:
+              type: string
+              description: The create time
+              format: date-time
+            update_time:
+              type: string
+              description: The last update time
+              format: date-time
+            org_id:
+              type: integer
+              description: The organization identifier, valid when enabling HIQ feature
+              format: int64
+            parent_id:
+              type: integer
+              description: The parent location ID
+              format: int64
+            name:
+              type: string
+              description: The location name
+            unique_name:
+              type: string
+              description: The unique location name
+            type:
+              $ref: "#/components/schemas/ClsFolderType"
+            address:
+              type: string
+              description: The address for the location
+            predefined:
+              type: boolean
+              description: Indicates whether the SITE is a default site. If true, the SITE is
+                a default site.
+              default: false
+            site_type:
+              type: string
+              enum:
+                - INDOOR
+                - OUTDOOR
+              description: The site type of the location. Only applicable when type is SITE;
+                omitted for Site_Group, BUILDING, and FLOOR.
+              example: INDOOR
+            applications:
+              type: array
+              description: The applications aggregated from all cross-references traversing
+                from the parent location.
+              items:
+                $ref: "#/components/schemas/ClsXrefApplicationType"
+            children:
+              type: array
+              description: The child locations
+              items:
+                $ref: "#/components/schemas/ClsLocation"
+            map:
+              type: string
+              description: >
+                The background map image filename for this location. Provide the
+                filename including extension; accepted extensions: .png, .jpg,
+                .jpeg.
+              example: floor1-plan.png
+    ClsLocationTreeDevice:
+      type: object
+      description: The device on the location hierarchy.
+      required:
+        - device_name
+        - serial_number
+        - mac_address
+        - device_function
+        - product_type
+        - ip_address
+        - location_id
+        - x
+        - y
+        - scale_x
+        - scale_y
+      properties:
+        device_name:
+          type: string
+          description: The name of the device.
+        serial_number:
+          type: string
+          description: The device serial number.
+        mac_address:
+          type: string
+          format: mac-address
+          description: The device MAC address in non-colon separated format.
+          example: B0ADAA509040
+        device_function:
+          type: string
+          description: >
+            Device function category (for example: AP, Router, Switch, Gateway,
+            Controller). Values may expand over time as new device categories
+            are introduced.
+          example: AP
+        product_type:
+          type: string
+          description: >
+            Product type identifier reported by the device (for example: AP_230,
+            BR_100, NX9600). Supported values depend on device inventory and may
+            expand over time.
+          example: AP_230
+        ip_address:
+          type: string
+          format: ipv4
+          description: The IPv4 address of the device.
+          example: 192.168.1.100
+        location_id:
+          type: integer
+          description: The location ID of the device on the location hierarchy.
+          format: int64
+        map_name:
+          type: string
+          description: The background map for the device overlay.
+        x:
+          type: number
+          description: The x-position of the device relative to the horizontal scale in
+            meter.
+          format: double
+        y:
+          type: number
+          description: The y-position of the device relative to the vertical scale in meter.
+          format: double
+        scale_x:
+          type: number
+          description: The horizontal scale for the background map in meter.
+          format: double
+        scale_y:
+          type: number
+          description: The vertical scale for the background map in meter.
+          format: double
+    PagedClsLocationTreeDevice:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/ClsLocationTreeDevice"
+    ClsLocationTreeMap:
+      type: object
+      description: The map on the location hierarchy.
+      required:
+        - map_name
+        - width
+        - height
+        - data
+      properties:
+        map_name:
+          type: string
+          description: The background map name.
+        width:
+          type: number
+          description: The x-dimension of the map in pixels.
+          format: double
+        height:
+          type: number
+          description: The y-dimension of the map in pixels.
+          format: double
+        data:
+          type: string
+          description: The base-64 encoded string of the map.
+          example: iVBORw0KGgoAAAANSUhEUgAAAAUA...
+    PagedClsLocationTreeMap:
+      allOf:
+        - $ref: "#/components/schemas/Paged"
+        - type: object
+          properties:
+            data:
+              type: array
+              description: The data in the current page
+              items:
+                $ref: "#/components/schemas/ClsLocationTreeMap"
+    ClsExportTreeRequest:
+      type: object
+      description: The device on the location hierarchy.
+      required:
+        - location_id
+        - file_type
+      properties:
+        location_id:
+          type: integer
+          description: The root location ID from which to start exporting the site groups
+            and sites tree hierarchy.
+          format: int64
+        file_type:
+          type: string
+          description: Export file type.
+          enum:
+            - XML_OR_TAR_GZ
+    ClsLocationMigration:
+      allOf:
+        - $ref: "#/components/schemas/ViqEntity"
+        - type: object
+          description: The hierarchical location tree for Site Groups, Sites, Buildings,
+            and Floors
+          required:
+            - name
+            - unique_name
+            - type
+          properties:
+            id:
+              type: integer
+              description: The unique identifier
+              format: int64
+            create_time:
+              type: string
+              description: The create time
+              format: date-time
+            update_time:
+              type: string
+              description: The last update time
+              format: date-time
+            org_id:
+              type: integer
+              description: The organization identifier, valid when enabling HIQ feature
+              format: int64
+            parent_id:
+              type: integer
+              description: The parent location ID
+              format: int64
+            name:
+              type: string
+              description: The location name
+            unique_name:
+              type: string
+              description: The unique location name
+            type:
+              $ref: "#/components/schemas/ClsFolderType"
+            address:
+              type: string
+              description: The address for the location
+            predefined:
+              type: boolean
+              description: Indicates whether the SITE is a default site. If true, the SITE is
+                a default site.
+              default: false
+            site_type:
+              type: string
+              enum:
+                - INDOOR
+                - OUTDOOR
+              description: The site type of the location
+              example: INDOOR
+            applications:
+              type: array
+              description: The applications aggregated from all cross-references traversing
+                from the parent location.
+              items:
+                $ref: "#/components/schemas/ClsXrefApplicationType"
+            children:
+              type: array
+              description: The child locations
+              items:
+                $ref: "#/components/schemas/ClsLocationMigration"
+            map:
+              type: string
+              description: Map image name.
+            isPlatformOneCompliant:
+              type: boolean
+              description: Indicates whether the location is compliant with Platform One. This
+                field is only applicable to buildings. If Building is not
+                compliant (false) than the action is 'PlatformONE compliant'.
+              default: false
+            fabric_name:
+              type: string
+              description: Name of the fabric tag on the location; applicable for Buildings.
+            license_count:
+              type: object
+              description: The license count for the location. The key is the license type and
+                the value is the license count.
+              properties:
+                pilot:
+                  type: integer
+                  description: The count of pilot licenses.
+                  example: 0
+                legacy:
+                  type: integer
+                  description: The count of pilot licenses.
+                  example: 1
+            is_license_available:
+              type: object
+              description: Indicates whether the location has available licenses for
+                migration.
+              properties:
+                is_pilot_license_available:
+                  type: boolean
+                  description: if pilot license available returns true.
+                is_legacy_license_available:
+                  type: boolean
+                  description: if legacy license available returns true.
+    LicenseMigrationTreeRequest:
+      type: object
+      description: Request body for license migration tree
+      properties:
+        location_ids:
+          type: array
+          description: The location IDs to filter
+          items:
+            type: integer
+            format: int64
+    ClsCloneLocationRequest:
+      type: object
+      required:
+        - toId
+        - toName
+      properties:
+        toId:
+          type: integer
+          description: Target folder ID under which the cloned folder needs to be added
+          format: int64
+        toName:
+          type: string
+          description: >
+            The name to assign to the cloned location (applicable to buildings
+            and floors). Use a descriptive name that reflects the cloned entity
+            type (e.g., 'Building A - Copy', 'Floor 1 - Clone', 'Cloned HQ
+            Building').
+          example: Cloned Location Name
+    ClsMoveLocationRequest:
+      type: object
+      required:
+        - targetParentId
+      properties:
+        targetParentId:
+          type: integer
+          description: The unique identifier of the target parent location.
+          format: int64
+          example: 4702989289168
+    ClsReorderLocationRequest:
+      type: object
+      required:
+        - level
+        - up
+      properties:
+        level:
+          type: integer
+          description: >
+            The target floor position (1-based index) to which the specified
+            floor will be moved. For example, to move a floor to the top
+            position of the building specify 1; to move it to the third position
+            specify 3.
+          format: int32
+          example: 2
+        up:
+          type: string
+          enum:
+            - "false"
+            - "true"
+          description: Direction of dragging the floor. Set to 'true' means drag the floor
+            upwards and set to 'false' means drag the floor downwards.
+    TaskStatus:
+      type: object
+      description: Task status information.
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Task status data.
+          required:
+            - percentage
+            - completed
+          properties:
+            percentage:
+              type: integer
+              description: task complete percentage
+              format: int64
+              minimum: 0
+              maximum: 100
+            completed:
+              type: boolean
+              description: task complete status
+    foldertype:
+      type: string
+      enum:
+        - SITE_GROUP
+        - SITE
+        - BUILDING
+        - FLOOR
+    countResponse:
+      type: object
+      description: Count of folder type.
+      properties:
+        SITE_GROUP:
+          type: integer
+          format: int32
+          description: Count of site group folders (top-level organizational folders).
+          example: 5
+        SITE:
+          type: integer
+          format: int32
+          description: Count of site folders (locations representing sites).
+          example: 42
+        BUILDING:
+          type: integer
+          format: int32
+          description: Count of building folders (locations representing buildings under
+            sites).
+          example: 120
+        FLOOR:
+          type: integer
+          format: int32
+          description: Count of floor entities (floors within buildings).
+          example: 400
+        INDOOR_SITE:
+          type: integer
+          format: int32
+          description: Count of sites classified as indoor sites.
+          example: 30
+        OUTDOOR_SITE:
+          type: integer
+          format: int32
+          description: Count of sites classified as outdoor sites.
+          example: 12
+  responses:
+    400ErrorResponse:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiClientError"
+    401ErrorResponse:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    403ErrorResponse:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    500ErrorResponse:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+  parameters:
+    page:
+      name: page
+      in: query
+      description: Page number for pagination, starting from 1
+      required: false
+      schema:
+        minimum: 1
+        maximum: 2147483647
+        type: integer
+        format: int32
+        default: 1
+    limit-500:
+      name: limit
+      in: query
+      description: Page Size, min = 1, max = 500
+      required: false
+      schema:
+        maximum: 500
+        minimum: 1
+        type: integer
+        format: int32
+        default: 500
+    id-int64:
+      name: id
+      description: The unique identifier
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+    limit-100:
+      name: limit
+      in: query
+      description: Page Size, min = 1, max = 100
+      required: false
+      schema:
+        maximum: 100
+        minimum: 1
+        type: integer
+        format: int32
+        default: 100
+    limit:
+      name: limit
+      in: query
+      description: Page Size, min = 1, max = 100
+      required: false
+      schema:
+        maximum: 100
+        minimum: 1
+        type: integer
+        format: int32
+        default: 10
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Enter your API Key as a Bearer Token
+security:
+  - BearerAuth: []

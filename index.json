@@ -146,6 +146,349 @@
       "specFile": "specs/subscriptions/openapi.yaml"
     },
     {
+      "id": "site",
+      "title": "Extreme Platform ONE REST API - Site",
+      "description": "Extreme Platform ONE&trade; Site API allows users to access and manage Site/Location information, such as Sites, Site Groups, Buildings, Floors, etc.",
+      "version": "25.11.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/site/v1",
+      "tags": [
+        "Site",
+        "Site Group",
+        "Building",
+        "Floor",
+        "Tree",
+        "Location Management",
+        "Miscellaneous"
+      ],
+      "endpoints": [
+        {
+          "path": "/sites",
+          "method": "GET",
+          "operationId": "getSites",
+          "summary": "List sites",
+          "tags": [
+            "Site"
+          ]
+        },
+        {
+          "path": "/sites",
+          "method": "POST",
+          "operationId": "createSite",
+          "summary": "Create site",
+          "tags": [
+            "Site"
+          ]
+        },
+        {
+          "path": "/sites/{id}",
+          "method": "GET",
+          "operationId": "getSite",
+          "summary": "Get site by ID",
+          "tags": [
+            "Site"
+          ]
+        },
+        {
+          "path": "/sites/{id}",
+          "method": "PUT",
+          "operationId": "updateSite",
+          "summary": "Update site by ID",
+          "tags": [
+            "Site"
+          ]
+        },
+        {
+          "path": "/sites/{id}",
+          "method": "DELETE",
+          "operationId": "deleteSite",
+          "summary": "Delete site by ID",
+          "tags": [
+            "Site"
+          ]
+        },
+        {
+          "path": "/site-groups",
+          "method": "GET",
+          "operationId": "getSiteGroups",
+          "summary": "List site groups",
+          "tags": [
+            "Site Group"
+          ]
+        },
+        {
+          "path": "/site-groups",
+          "method": "POST",
+          "operationId": "createSiteGroup",
+          "summary": "Create site group",
+          "tags": [
+            "Site Group"
+          ]
+        },
+        {
+          "path": "/site-groups/{id}",
+          "method": "GET",
+          "operationId": "getSiteGroup",
+          "summary": "Get site group by ID",
+          "tags": [
+            "Site Group"
+          ]
+        },
+        {
+          "path": "/site-groups/{id}",
+          "method": "PUT",
+          "operationId": "updateSiteGroup",
+          "summary": "Update site group by ID",
+          "tags": [
+            "Site Group"
+          ]
+        },
+        {
+          "path": "/site-groups/{id}",
+          "method": "DELETE",
+          "operationId": "deleteSiteGroup",
+          "summary": "Delete site group by ID",
+          "tags": [
+            "Site Group"
+          ]
+        },
+        {
+          "path": "/buildings",
+          "method": "GET",
+          "operationId": "getBuildings",
+          "summary": "List buildings",
+          "tags": [
+            "Building"
+          ]
+        },
+        {
+          "path": "/buildings",
+          "method": "POST",
+          "operationId": "createBuilding",
+          "summary": "Create building",
+          "tags": [
+            "Building"
+          ]
+        },
+        {
+          "path": "/buildings",
+          "method": "DELETE",
+          "operationId": "deleteBuildings",
+          "summary": "Delete multiple buildings",
+          "tags": [
+            "Building"
+          ]
+        },
+        {
+          "path": "/buildings/{id}",
+          "method": "GET",
+          "operationId": "getBuilding",
+          "summary": "Get a building by ID",
+          "tags": [
+            "Building"
+          ]
+        },
+        {
+          "path": "/buildings/{id}",
+          "method": "PUT",
+          "operationId": "updateBuilding",
+          "summary": "Update building",
+          "tags": [
+            "Building"
+          ]
+        },
+        {
+          "path": "/buildings/{id}",
+          "method": "DELETE",
+          "operationId": "deleteBuilding",
+          "summary": "Delete building by ID",
+          "tags": [
+            "Building"
+          ]
+        },
+        {
+          "path": "/floors",
+          "method": "GET",
+          "operationId": "getFloors",
+          "summary": "List floors",
+          "tags": [
+            "Floor"
+          ]
+        },
+        {
+          "path": "/floors",
+          "method": "POST",
+          "operationId": "createFloor",
+          "summary": "Create floor",
+          "tags": [
+            "Floor"
+          ]
+        },
+        {
+          "path": "/floors",
+          "method": "DELETE",
+          "operationId": "deleteFloors",
+          "summary": "Delete multiple floors",
+          "tags": [
+            "Floor"
+          ]
+        },
+        {
+          "path": "/floors/{id}",
+          "method": "GET",
+          "operationId": "getFloor",
+          "summary": "Get a floor by ID",
+          "tags": [
+            "Floor"
+          ]
+        },
+        {
+          "path": "/floors/{id}",
+          "method": "PUT",
+          "operationId": "updateFloor",
+          "summary": "Update floor",
+          "tags": [
+            "Floor"
+          ]
+        },
+        {
+          "path": "/floors/{id}",
+          "method": "DELETE",
+          "operationId": "deleteFloor",
+          "summary": "Delete floor by ID",
+          "tags": [
+            "Floor"
+          ]
+        },
+        {
+          "path": "/floors/floorplan",
+          "method": "POST",
+          "operationId": "uploadFloorplan",
+          "summary": "Upload floorplan",
+          "tags": [
+            "Floor"
+          ]
+        },
+        {
+          "path": "/floors/floorplan",
+          "method": "GET",
+          "operationId": "getFloorplans",
+          "summary": "List floorplan images",
+          "tags": [
+            "Floor"
+          ]
+        },
+        {
+          "path": "/floors/floorplan",
+          "method": "DELETE",
+          "operationId": "deleteFloorPlan",
+          "summary": "Delete floorplan images by ID",
+          "tags": [
+            "Floor"
+          ]
+        },
+        {
+          "path": "/floors/floorplan/{id}/:crop",
+          "method": "POST",
+          "operationId": "cropImage",
+          "summary": "Crop floorplan image",
+          "tags": [
+            "Floor"
+          ]
+        },
+        {
+          "path": "/tree",
+          "method": "GET",
+          "operationId": "getLocationTree",
+          "summary": "Get site tree",
+          "tags": [
+            "Tree"
+          ]
+        },
+        {
+          "path": "/tree/devices",
+          "method": "GET",
+          "operationId": "getLocationDevicesList",
+          "summary": "Get devices on the site hierarchy",
+          "tags": [
+            "Tree"
+          ]
+        },
+        {
+          "path": "/tree/maps",
+          "method": "GET",
+          "operationId": "getLocationMapsList",
+          "summary": "Get maps on the site hierarchy",
+          "tags": [
+            "Tree"
+          ]
+        },
+        {
+          "path": "/tree/:import",
+          "method": "POST",
+          "operationId": "importTree",
+          "summary": "Import site tree",
+          "tags": [
+            "Tree"
+          ]
+        },
+        {
+          "path": "/tree/:export",
+          "method": "POST",
+          "operationId": "exportTree",
+          "summary": "Export site tree",
+          "tags": [
+            "Tree"
+          ]
+        },
+        {
+          "path": "/location/{id}:clone",
+          "method": "POST",
+          "operationId": "cloneLocation",
+          "summary": "Clone a location",
+          "tags": [
+            "Location Management"
+          ]
+        },
+        {
+          "path": "/location/{id}:move",
+          "method": "POST",
+          "operationId": "moveLocation",
+          "summary": "Move a location",
+          "tags": [
+            "Location Management"
+          ]
+        },
+        {
+          "path": "/location/{id}:reorder",
+          "method": "PUT",
+          "operationId": "reorderFloor",
+          "summary": "Reorder floor",
+          "tags": [
+            "Location Management"
+          ]
+        },
+        {
+          "path": "/status",
+          "method": "GET",
+          "operationId": "getStatus",
+          "summary": "Returns tasks status",
+          "tags": [
+            "Miscellaneous"
+          ]
+        },
+        {
+          "path": "/count",
+          "method": "GET",
+          "operationId": "getCount",
+          "summary": "Returns Count of each folderType",
+          "tags": [
+            "Miscellaneous"
+          ]
+        }
+      ],
+      "specFile": "specs/site/openapi.yaml"
+    },
+    {
       "id": "iam",
       "title": "Extreme Platform ONE REST API - IAM",
       "description": "Extreme Platform ONE™ IAM (Identity and Access Management) API allows users to manage organization setting, user profile, identities, roles, external Identity Providers (IDPs), Multi-Factor Authentication (MFA), API Keys, etc.",
