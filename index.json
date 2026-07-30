@@ -819,6 +819,159 @@
       "specFile": "specs/reporting/openapi.yaml"
     },
     {
+      "id": "platform-one-security",
+      "title": "Platform ONE Security OpenAPI Specs",
+      "description": "The OpenAPI specification provides a detailed description of the Platform ONE Security\nservices API. This API enables seamless integration and interaction with\nthe platform for managing user groups, device groups, devices,\nand access control capabilities.\n\n🔑 Key Features:\n\n**User Group Operations**\n\n  Create, update, retrieve, and manage user groups with detailed access\n  control and user association capabilities.\n\n**Device Group Operations**\n\n  Manage device groups with features like creating, updating, deleting,\n  and retrieving device group details, including device associations\n  and metadata.\n\n**Device Operations**\n\n  Search, filter, and manage devices with advanced query\n  capabilities, including action logs and pagination.\n\n**Access Control**\n\n  Manage device access permissions with operations to allow or revoke\n  access for specific devices.\n\n**End System Data Management**\n\n  Manage and retrieve End system data.\n\n**Disconnect Client Sessions**\n\n  Disconnect one or more client sessions.\n\n🏢 Enterprise-Ready:\n\nDesigned for enterprise-grade environments, this API ensures secure and\nscalable operations with support for pagination, filtering, and detailed\nresponse schemas. It also includes vendor extensions for enhanced\ndocumentation and integration capabilities.",
+      "version": "25.11.0-20260522",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/uztna",
+      "tags": [
+        "Users",
+        "User Groups",
+        "Devices",
+        "Device Groups",
+        "Clients",
+        "Trigger Client Session Deauthorization"
+      ],
+      "endpoints": [
+        {
+          "path": "/admin/resource/api/v2/access-groups",
+          "method": "GET",
+          "operationId": "getUserGroups",
+          "summary": "Get the list of user groups",
+          "tags": [
+            "User Groups"
+          ]
+        },
+        {
+          "path": "/admin/resource/api/v2/access-groups",
+          "method": "POST",
+          "operationId": "createUserGroup",
+          "summary": "Create a user group",
+          "tags": [
+            "User Groups"
+          ]
+        },
+        {
+          "path": "/admin/resource/api/v2/access-groups/{id}",
+          "method": "GET",
+          "operationId": "getUserGroupbyId",
+          "summary": "Get the user group by ID",
+          "tags": [
+            "User Groups"
+          ]
+        },
+        {
+          "path": "/admin/resource/api/v2/access-groups/{id}",
+          "method": "PATCH",
+          "operationId": "updateUserGroup",
+          "summary": "Add or remove users from user group",
+          "tags": [
+            "User Groups"
+          ]
+        },
+        {
+          "path": "/admin/resource/api/v2/access-groups/associations/{access_group_id}/details",
+          "method": "GET",
+          "operationId": "getUserGroupDetailsWithPagination",
+          "summary": "Get users associated with user group",
+          "tags": [
+            "User Groups"
+          ]
+        },
+        {
+          "path": "/admin/resource/api/v2/resources/device-groups",
+          "method": "GET",
+          "operationId": "getDeviceGroups",
+          "summary": "Get a list of device groups",
+          "tags": [
+            "Device Groups"
+          ]
+        },
+        {
+          "path": "/admin/resource/api/v2/resources/device-groups",
+          "method": "POST",
+          "operationId": "createDeviceGroups",
+          "summary": "Create a device group",
+          "tags": [
+            "Device Groups"
+          ]
+        },
+        {
+          "path": "/admin/resource/api/v2/resources/device-groups/{device_group_id}",
+          "method": "PATCH",
+          "operationId": "patchDeviceGroups",
+          "summary": "Update a device group",
+          "tags": [
+            "Device Groups"
+          ]
+        },
+        {
+          "path": "/admin/resource/api/v2/resources/device-groups/{device_group_id}",
+          "method": "DELETE",
+          "operationId": "deleteDeviceGroups",
+          "summary": "Delete a device group",
+          "tags": [
+            "Device Groups"
+          ]
+        },
+        {
+          "path": "/admin/resource/api/v2/resources/device-groups/associations/details",
+          "method": "GET",
+          "operationId": "getDeviceGroupDetailsWithPagination",
+          "summary": "Get device group associations list",
+          "tags": [
+            "Device Groups"
+          ]
+        },
+        {
+          "path": "/admin/resource/api/v2/resources/devices/access",
+          "method": "PATCH",
+          "operationId": "manageDeviceAccess",
+          "summary": "Revoke or allow device access",
+          "tags": [
+            "Devices"
+          ]
+        },
+        {
+          "path": "/admin/resource/api/v2/resources/devices/search-devices",
+          "method": "GET",
+          "operationId": "searchDevicesList",
+          "summary": "Retrieve devices list",
+          "tags": [
+            "Devices"
+          ]
+        },
+        {
+          "path": "/admin/auth/api/v2/accounts/workspace-users",
+          "method": "GET",
+          "operationId": "workspaceUsersList",
+          "summary": "List of all End Users",
+          "tags": [
+            "Users"
+          ]
+        },
+        {
+          "path": "/cnac/endsystem-service/api/endsystems/v2/clients",
+          "method": "GET",
+          "operationId": "clientslist",
+          "summary": "Get Client list",
+          "tags": [
+            "Clients"
+          ]
+        },
+        {
+          "path": "/cnac/network-policy-engine/api/v1/npe/external/deauth",
+          "method": "POST",
+          "operationId": "deauthClient",
+          "summary": "Disconnect one or more client sessions",
+          "tags": [
+            "Trigger Client Session Deauthorization"
+          ]
+        }
+      ],
+      "specFile": "specs/platform-one-security/openapi.yaml"
+    },
+    {
       "id": "perfmonitor-infrastructure",
       "title": "PerfMonitor Infrastructure API",
       "description": "# Performance Monitor Infrastructure API for MCP Servers\n\nThis comprehensive API provides advanced network performance monitoring capabilities specifically optimized for MCP (Model Context Protocol) servers and automated monitoring systems.\nThe API enables sophisticated monitoring of device health, performance metrics, and network analytics across various network components with intelligent automation support.\n\n## MCP Server Integration Features\n- **Automated Performance Monitoring**: Continuous collection and analysis of network performance metrics\n- **Intelligent Alerting**: AI-driven anomaly detection and automated alert generation\n- **Time-Series Analytics**: Advanced time-series data processing for trend analysis and forecasting\n- **Real-time Health Monitoring**: Live device health status tracking with automated response capabilities\n- **Scalable Data Collection**: High-performance metric collection supporting thousands of devices\n- **Integration-Ready**: Designed for seamless integration with monitoring platforms and automation tools\n\n## Key Features\n- **Application Discovery**: List supported monitoring applications and their capabilities\n- **Metric Collection**: Retrieve time-series performance data from network devices with advanced filtering\n- **Device Health Analytics**: Monitor device health status and performance indicators with trend analysis\n- **Flexible Filtering**: Advanced filtering and pagination optimized for large-scale monitoring deployments\n- **Real-time Data**: Access to current and historical performance metrics with microsecond precision\n- **Bulk Operations**: Efficient batch processing for monitoring large network infrastructures\n\n## MCP Use Cases\n- **Infrastructure Monitoring**: Automated monitoring of switches, routers, and network devices\n- **Performance Optimization**: AI-driven performance analysis and optimization recommendations\n- **Capacity Planning**: Predictive analytics for network capacity planning and resource allocation\n- **Anomaly Detection**: Machine learning-based anomaly detection for proactive issue identification\n- **Compliance Monitoring**: Automated compliance tracking for SLA and performance requirements\n- **Integration Workflows**: Seamless integration with ITSM, SIEM, and automation platforms\n\n## Supported Applications\nCurrently supports monitoring for:\n- **Network Infrastructure**: Switches, routers, and network devices with full SNMP and telemetry support\n- **Device Stats**: CPU, memory, temperature, and power metrics with threshold monitoring\n- **Interface Stats**: Port utilization, errors, and performance data with trend analysis\n- **Wireless Stats**: Wireless device and interface monitoring with RF analytics\n- **Health Analytics**: Comprehensive device health scoring and predictive maintenance\n- **Usage Capacity Analytics**: Comprehensive usage and capacity monitoring across network infrastructure\n\n## Data Formats\nAll timestamps use ISO 8601 UTC format (e.g., \"2024-08-26T19:00:00Z\").\nPagination is supported across all list operations for efficient data retrieval.\nTime-series data includes microsecond precision for high-frequency monitoring.\n\n## Authentication\nThis API requires proper authentication and authorization. Contact your system administrator for access credentials.\n",

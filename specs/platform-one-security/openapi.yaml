@@ -1,0 +1,3075 @@
+openapi: 3.0.3
+info:
+  title: Platform ONE Security OpenAPI Specs
+  version: 25.11.0-20260522
+  x-logo:
+    url: assets/extreme.png
+    backgroundColor: "#FFFFFF"
+    altText: Extreme Networks
+  description: >-
+    The OpenAPI specification provides a detailed description of the Platform
+    ONE Security
+
+    services API. This API enables seamless integration and interaction with
+
+    the platform for managing user groups, device groups, devices,
+
+    and access control capabilities.
+
+
+    🔑 Key Features:
+
+
+    **User Group Operations**
+
+      Create, update, retrieve, and manage user groups with detailed access
+      control and user association capabilities.
+
+    **Device Group Operations**
+
+      Manage device groups with features like creating, updating, deleting,
+      and retrieving device group details, including device associations
+      and metadata.
+
+    **Device Operations**
+
+      Search, filter, and manage devices with advanced query
+      capabilities, including action logs and pagination.
+
+    **Access Control**
+
+      Manage device access permissions with operations to allow or revoke
+      access for specific devices.
+
+    **End System Data Management**
+
+      Manage and retrieve End system data.
+
+    **Disconnect Client Sessions**
+
+      Disconnect one or more client sessions.
+
+    🏢 Enterprise-Ready:
+
+
+    Designed for enterprise-grade environments, this API ensures secure and
+
+    scalable operations with support for pagination, filtering, and detailed
+
+    response schemas. It also includes vendor extensions for enhanced
+
+    documentation and integration capabilities.
+  contact:
+    name: Extreme Networks Support
+    url: https://www.extremenetworks.com/support
+    email: support@extremenetworks.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: https://cloudapi.extremecloudiq.com/uztna
+    description: Extreme Platform ONE REST API - Security
+tags:
+  - name: Users
+    description: >
+      Users provides a unified layer for managing who can access the platform.
+
+
+      It focuses on user identities and exposes search, filtering, and
+      pagination capabilities that support administrative workflows and bulk
+      operations.
+
+
+      **Core Functions:**
+
+
+      - List and paginate users with key attributes such as ID, email, and sync
+      state.
+
+      - Build filtered and stateful user selections for assignment flows.
+
+      - Integrate with external identity providers to keep user records aligned
+      with upstream sources of truth.
+  - name: User Groups
+    description: >
+      User groups provide a unified way to manage access by organizing users
+      into logical collections.
+
+
+      It focuses on group lifecycle, policy assignment, and synchronization with
+      identity providers. Administrative workflows and bulk operations are
+      supported.
+
+
+      **Core Functions:**
+
+
+      - Create and maintain user groups synchronized from an identity provider.
+
+      - Assign policies to groups at scale.
+
+      - Add or remove users and manage group lifecycle.
+  - name: Devices
+    description: >
+      Devices represent the endpoints that users access the platform with.
+
+
+      This module allows administrators to register, manage, and track devices.
+      Bulk operations and filtering support large-scale deployments.
+
+
+      **Core Functions:**
+
+
+      - Register and manage devices (MAC, hostname, alias).
+
+      - Bulk import and update device inventories.
+
+      - Control device access states (allow/revoke).
+  - name: Device Groups
+    description: >
+      Device groups organize related devices into logical collections for policy
+      enforcement.
+
+
+      Administrators can create groups based on explicit membership, MAC OUIs,
+      or custom prefixes. Group associations can be viewed, filtered, and used
+      as targets for policies.
+
+
+      **Core Functions:**
+
+
+      - Create groups using explicit membership, MAC OUIs, or custom prefixes.
+
+      - View and paginate group associations.
+
+      - Use groups as policy targets for policies.
+  - name: Clients
+    description: >
+      API for fetching client data with key attributes such as authentication
+      status, compliance state,
+
+      and agent status.Also supports advanced filtering and search capabilities
+      to locate specific client devices.
+  - name: Trigger Client Session Deauthorization
+    description: >
+      Triggers de-authorization for the specified client MAC addresses and
+      optionally, 
+
+      their associated RADIUS session identifiers. Use this endpoint when
+      clients must be forcibly disconnected, for example 
+
+      during logout events, policy updates, or security remediation actions. For
+      cloud‑onboarded devices, 
+
+      this API forcibly disconnects clients directly. For third‑party devices
+      connected through a proxy, 
+
+      it initiates a standard RADIUS Change of Authorization (CoA) request
+      instead.
+paths:
+  /admin/resource/api/v2/access-groups:
+    get:
+      operationId: getUserGroups
+      description: >-
+        Retrieve a paginated list of user groups.
+
+
+        Supports pagination using `limit` and `offset`.
+
+        Use `ordering` to sort results and `search` to filter by name or
+        description.
+      summary: Get the list of user groups
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 50
+          description: Number of results to return per page.
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+          description: The initial index from which to return the results.
+        - in: query
+          name: ordering
+          schema:
+            type: string
+            enum:
+              - name
+            default: name
+          description: Field used to order the results. Defaults to user group name.
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum:
+              - description
+              - name
+          description: User group search by description or name.
+      tags:
+        - User Groups
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedAccessGroupList"
+          description: List of user groups.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Bad Request. Validation failed or request data is invalid.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+              examples:
+                UnauthorizedErrorExample:
+                  value:
+                    error:
+                      support_id: 9dae9dbdae3fdc7a2b3e331fc4e08004
+                      details: Invalid access token or API key
+                      timestamp: 1776354126.142
+                      message: Authentication failed
+                      code: UNAUTHORIZED
+                  summary: Unauthorized error example
+                  description: Example response for unauthorized error.
+          description: Unauthorized. Authentication credentials were not provided or are
+            invalid.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Forbidden. You do not have permission to perform this action.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Not Found. The requested resource does not exist.
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MethodNotAllowedErrorResponse"
+              examples:
+                MethodNotAllowedErrorExample:
+                  value:
+                    success: false
+                    code: ""
+                    payload: {}
+                    errors: {}
+                    description: Method "DELETE" not allowed.
+                  summary: Method Not Allowed error example
+                  description: Example response for method not allowed.
+          description: Method Not Allowed.
+    post:
+      operationId: createUserGroup
+      description: Create a new user group with a unique name.
+      summary: Create a user group
+      tags:
+        - User Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccessGroupRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/AccessGroupRequest"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/AccessGroupRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddAccessGroupResponse"
+          description: User group created successfully.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Bad Request. Validation failed or request data is invalid.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+              examples:
+                UnauthorizedErrorExample:
+                  value:
+                    error:
+                      support_id: 9dae9dbdae3fdc7a2b3e331fc4e08004
+                      details: Invalid access token or API key
+                      timestamp: 1776354126.142
+                      message: Authentication failed
+                      code: UNAUTHORIZED
+                  summary: Unauthorized error example
+                  description: Example response for unauthorized error.
+          description: Unauthorized. Authentication credentials were not provided or are
+            invalid.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Forbidden. You do not have permission to perform this action.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Not Found. The requested resource does not exist.
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MethodNotAllowedErrorResponse"
+              examples:
+                MethodNotAllowedErrorExample:
+                  value:
+                    success: false
+                    code: ""
+                    payload: {}
+                    errors: {}
+                    description: Method "DELETE" not allowed.
+                  summary: Method Not Allowed error example
+                  description: Example response for method not allowed.
+          description: Method Not Allowed.
+  /admin/resource/api/v2/access-groups/{id}:
+    get:
+      operationId: getUserGroupbyId
+      description: Retrieve a specific user group by its unique ID.
+      summary: Get the user group by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          description: The unique identifier of the user group.
+          required: true
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum:
+              - description
+              - name
+          description: User group search by description or name.
+      tags:
+        - User Groups
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccessGroup"
+          description: User group details retrieved successfully.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Bad Request. Validation failed or request data is invalid.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+              examples:
+                UnauthorizedErrorExample:
+                  value:
+                    error:
+                      support_id: 9dae9dbdae3fdc7a2b3e331fc4e08004
+                      details: Invalid access token or API key
+                      timestamp: 1776354126.142
+                      message: Authentication failed
+                      code: UNAUTHORIZED
+                  summary: Unauthorized error example
+                  description: Example response for unauthorized error.
+          description: Unauthorized. Authentication credentials were not provided or are
+            invalid.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Forbidden. You do not have permission to perform this action.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Not Found. The requested resource does not exist.
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MethodNotAllowedErrorResponse"
+              examples:
+                MethodNotAllowedErrorExample:
+                  value:
+                    success: false
+                    code: ""
+                    payload: {}
+                    errors: {}
+                    description: Method "DELETE" not allowed.
+                  summary: Method Not Allowed error example
+                  description: Example response for method not allowed.
+          description: Method Not Allowed.
+    patch:
+      operationId: updateUserGroup
+      description: Update a user group by adding or removing users or updating name or
+        description field.
+      summary: Add or remove users from user group
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          description: The unique identifier of the user group to update.
+          required: true
+      tags:
+        - User Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedAccessGroupRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedAccessGroupRequest"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedAccessGroupRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateAccessGroupResponse"
+          description: User group updated successfully.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Bad Request. Validation failed or request data is invalid.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+              examples:
+                UnauthorizedErrorExample:
+                  value:
+                    error:
+                      support_id: 9dae9dbdae3fdc7a2b3e331fc4e08004
+                      details: Invalid access token or API key
+                      timestamp: 1776354126.142
+                      message: Authentication failed
+                      code: UNAUTHORIZED
+                  summary: Unauthorized error example
+                  description: Example response for unauthorized error.
+          description: Unauthorized. Authentication credentials were not provided or are
+            invalid.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Forbidden. You do not have permission to perform this action.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Not Found. The requested resource does not exist.
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MethodNotAllowedErrorResponse"
+              examples:
+                MethodNotAllowedErrorExample:
+                  value:
+                    success: false
+                    code: ""
+                    payload: {}
+                    errors: {}
+                    description: Method "DELETE" not allowed.
+                  summary: Method Not Allowed error example
+                  description: Example response for method not allowed.
+          description: Method Not Allowed.
+  /admin/resource/api/v2/access-groups/associations/{access_group_id}/details:
+    get:
+      operationId: getUserGroupDetailsWithPagination
+      description: Get users associated with user group.
+      summary: Get users associated with user group
+      parameters:
+        - in: path
+          name: access_group_id
+          schema:
+            type: string
+            format: uuid
+          description: User Group ID
+          required: true
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 50
+          description: Number of users to fetch
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+          description: Offset for pagination
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum:
+              - email
+          description: Search users by email
+      tags:
+        - User Groups
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedAccessGroupAssociatedUsersList"
+          description: Associated Users.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Bad Request. Validation failed or request data is invalid.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+              examples:
+                UnauthorizedErrorExample:
+                  value:
+                    error:
+                      support_id: 9dae9dbdae3fdc7a2b3e331fc4e08004
+                      details: Invalid access token or API key
+                      timestamp: 1776354126.142
+                      message: Authentication failed
+                      code: UNAUTHORIZED
+                  summary: Unauthorized error example
+                  description: Example response for unauthorized error.
+          description: Unauthorized. Authentication credentials were not provided or are
+            invalid.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Forbidden. You do not have permission to perform this action.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Not Found. The requested resource does not exist.
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MethodNotAllowedErrorResponse"
+              examples:
+                MethodNotAllowedErrorExample:
+                  value:
+                    success: false
+                    code: ""
+                    payload: {}
+                    errors: {}
+                    description: Method "DELETE" not allowed.
+                  summary: Method Not Allowed error example
+                  description: Example response for method not allowed.
+          description: Method Not Allowed.
+  /admin/resource/api/v2/resources/device-groups:
+    get:
+      operationId: getDeviceGroups
+      description: |-
+        Retrieve a list of device groups.
+
+        Supports pagination using `limit` and `offset`.
+        Use `search` to filter by group name or description.
+      summary: Get a list of device groups
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 50
+          description: Number of results to return per page.
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+          description: The initial index from which to return the results.
+        - in: query
+          name: ordering
+          schema:
+            type: string
+            enum:
+              - description
+              - name
+            default: name
+          description: Field used to order the results. Defaults to device group name.
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum:
+              - description
+              - name
+          description: Search device groups by name or description.
+      tags:
+        - Device Groups
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedDeviceGroupListList"
+          description: List of device groups.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Bad Request. Validation failed or request data is invalid.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+              examples:
+                UnauthorizedErrorExample:
+                  value:
+                    error:
+                      support_id: 9dae9dbdae3fdc7a2b3e331fc4e08004
+                      details: Invalid access token or API key
+                      timestamp: 1776354126.142
+                      message: Authentication failed
+                      code: UNAUTHORIZED
+                  summary: Unauthorized error example
+                  description: Example response for unauthorized error.
+          description: Unauthorized. Authentication credentials were not provided or are
+            invalid.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Forbidden. You do not have permission to perform this action.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Not Found. The requested resource does not exist.
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MethodNotAllowedErrorResponse"
+              examples:
+                MethodNotAllowedErrorExample:
+                  value:
+                    success: false
+                    code: ""
+                    payload: {}
+                    errors: {}
+                    description: Method "DELETE" not allowed.
+                  summary: Method Not Allowed error example
+                  description: Example response for method not allowed.
+          description: Method Not Allowed.
+    post:
+      operationId: createDeviceGroups
+      description: >-
+        Create a new device group.
+
+
+        Rules:
+
+        - `name` must be unique.
+
+        - If `workspace_all_devices` is true, `device_ids` must not be provided.
+
+        - If `workspace_all_devices` is false, `device_ids` may be provided.
+
+        - `meta_data` is required when `type` is `MAC_OUI` or `CUSTOM_MAC`.
+
+        - `meta_data` must be empty when `type` is `DEVICE`.
+
+
+        This endpoint creates and configures a device group based on the
+        provided configuration.
+      summary: Create a device group
+      tags:
+        - Device Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeviceGroupPostRequest"
+            examples:
+              CreateDeviceGroupExample:
+                value:
+                  name: Corporate Laptops
+                  description: All corporate managed laptops
+                  device_ids:
+                    - 550e8400-e29b-41d4-a716-446655440000
+                    - 123e4567-e89b-12d3-a456-426614174000
+                  workspace_all_devices: false
+                  type: DEVICE
+                  meta_data: []
+                summary: Create device group
+                description: Example request for creating a device group with manually selected
+                  devices.
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/DeviceGroupPostRequest"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/DeviceGroupPostRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceGroupResponse"
+              examples:
+                CreateDeviceGroupResponseExample:
+                  value:
+                    id: 550e8400-e29b-41d4-a716-446655440000
+                    name: Corporate Laptops
+                    workspace_id: 1
+                    description: All corporate managed laptops
+                    type: DEVICE
+                    meta_data: []
+                    device_count: 2
+                    is_blocked: false
+                    mac_oui: []
+                    attached_devices:
+                      - id: 4f389dea-7fdb-4823-a9e2-64b85f043a11
+                        mac_address: EE:F0:8B:52:7D:01
+                        mac_oui: EE:F0:8B
+                        alias: Device
+                        name: ""
+                        device_type: ""
+                        description: Description
+                  summary: Successful creation response
+                  description: Example successful response for device group creation.
+          description: Device group created successfully.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Bad Request. Validation failed or request data is invalid.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+              examples:
+                UnauthorizedErrorExample:
+                  value:
+                    error:
+                      support_id: 9dae9dbdae3fdc7a2b3e331fc4e08004
+                      details: Invalid access token or API key
+                      timestamp: 1776354126.142
+                      message: Authentication failed
+                      code: UNAUTHORIZED
+                  summary: Unauthorized error example
+                  description: Example response for unauthorized error.
+          description: Unauthorized. Authentication credentials were not provided or are
+            invalid.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Forbidden. You do not have permission to perform this action.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Not Found. The requested resource does not exist.
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MethodNotAllowedErrorResponse"
+              examples:
+                MethodNotAllowedErrorExample:
+                  value:
+                    success: false
+                    code: ""
+                    payload: {}
+                    errors: {}
+                    description: Method "DELETE" not allowed.
+                  summary: Method Not Allowed error example
+                  description: Example response for method not allowed.
+          description: Method Not Allowed.
+  /admin/resource/api/v2/resources/device-groups/{device_group_id}:
+    patch:
+      operationId: patchDeviceGroups
+      description: >-
+        Partially update a device group.
+
+
+        All fields are optional.
+
+
+        - `device_ids.added_devices` adds devices.
+
+        - `device_ids.removed_devices` removes devices.
+
+        - Setting `workspace_all_devices` to true includes all devices.
+
+        - If changing `type` to `MAC_OUI` or `CUSTOM_MAC`, `meta_data` must be
+        provided.
+
+
+        This endpoint updates the device group configuration according to the
+        provided fields.
+      summary: Update a device group
+      parameters:
+        - in: path
+          name: device_group_id
+          schema:
+            type: string
+            format: uuid
+          description: Device Group unique identifier (UUID).
+          required: true
+      tags:
+        - Device Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedPatchedDeviceGroupPostRequest"
+            examples:
+              PatchDeviceGroupExampleBasic:
+                value:
+                  name: Updated Corporate Devices
+                  device_ids:
+                    added_devices:
+                      - 550e8400-e29b-41d4-a716-446655440000
+                    removed_devices:
+                      - 123e4567-e89b-12d3-a456-426614174000
+                  workspace_all_devices: false
+                  type: DEVICE
+                  meta_data: []
+                summary: Modify device assignments
+                description: Adds and removes devices from the group.
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedPatchedDeviceGroupPostRequest"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedPatchedDeviceGroupPostRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceGroupResponse"
+          description: Device group updated successfully.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Bad Request. Validation failed or request data is invalid.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+              examples:
+                UnauthorizedErrorExample:
+                  value:
+                    error:
+                      support_id: 9dae9dbdae3fdc7a2b3e331fc4e08004
+                      details: Invalid access token or API key
+                      timestamp: 1776354126.142
+                      message: Authentication failed
+                      code: UNAUTHORIZED
+                  summary: Unauthorized error example
+                  description: Example response for unauthorized error.
+          description: Unauthorized. Authentication credentials were not provided or are
+            invalid.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Forbidden. You do not have permission to perform this action.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Not Found. The requested resource does not exist.
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MethodNotAllowedErrorResponse"
+              examples:
+                MethodNotAllowedErrorExample:
+                  value:
+                    success: false
+                    code: ""
+                    payload: {}
+                    errors: {}
+                    description: Method "DELETE" not allowed.
+                  summary: Method Not Allowed error example
+                  description: Example response for method not allowed.
+          description: Method Not Allowed.
+    delete:
+      operationId: deleteDeviceGroups
+      description: Delete an existing device group by its unique identifier.
+      summary: Delete a device group
+      parameters:
+        - in: path
+          name: device_group_id
+          schema:
+            type: string
+            format: uuid
+          description: Device Group unique identifier (UUID).
+          required: true
+      tags:
+        - Device Groups
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceGroupDeleteResponse"
+              examples:
+                DeviceGroupDeleteResponseExample:
+                  value:
+                    success: true
+                    payload: {}
+                    errors: {}
+                    description: Device Group has been successfully deleted.
+                  summary: Successful deletion response
+                  description: Example response for successful device group deletion.
+          description: Device Group has been successfully deleted.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Bad Request. Validation failed or request data is invalid.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+              examples:
+                UnauthorizedErrorExample:
+                  value:
+                    error:
+                      support_id: 9dae9dbdae3fdc7a2b3e331fc4e08004
+                      details: Invalid access token or API key
+                      timestamp: 1776354126.142
+                      message: Authentication failed
+                      code: UNAUTHORIZED
+                  summary: Unauthorized error example
+                  description: Example response for unauthorized error.
+          description: Unauthorized. Authentication credentials were not provided or are
+            invalid.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Forbidden. You do not have permission to perform this action.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Not Found. The requested resource does not exist.
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MethodNotAllowedErrorResponse"
+              examples:
+                MethodNotAllowedErrorExample:
+                  value:
+                    success: false
+                    code: ""
+                    payload: {}
+                    errors: {}
+                    description: Method "DELETE" not allowed.
+                  summary: Method Not Allowed error example
+                  description: Example response for method not allowed.
+          description: Method Not Allowed.
+  /admin/resource/api/v2/resources/device-groups/associations/details:
+    get:
+      operationId: getDeviceGroupDetailsWithPagination
+      description: Get device group details.
+      summary: Get device group associations list
+      parameters:
+        - in: query
+          name: device_group_id
+          schema:
+            type: string
+            format: uuid
+          description: Device group ID
+          required: true
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 50
+          description: Number of results to return per page.
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+          description: The initial index from which to return the results.
+        - in: query
+          name: search
+          schema:
+            type: string
+            enum:
+              - alias
+              - mac_address
+              - mac_oui
+              - mdm_type
+          description: Search query based on Device alias, or MAC address, MDM Type, or
+            MAC OUI. Applicable only when type is DEVICE.
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum:
+              - CUSTOM_MAC
+              - DEVICE
+              - MAC_OUI
+          description: "Type of device group. Must be one of: DEVICE, MAC_OUI, CUSTOM_MAC."
+          required: true
+      tags:
+        - Device Groups
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedDeviceGroupPaginationList"
+          description: Device group details fetched successfully.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Bad Request. Validation failed or request data is invalid.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+              examples:
+                UnauthorizedErrorExample:
+                  value:
+                    error:
+                      support_id: 9dae9dbdae3fdc7a2b3e331fc4e08004
+                      details: Invalid access token or API key
+                      timestamp: 1776354126.142
+                      message: Authentication failed
+                      code: UNAUTHORIZED
+                  summary: Unauthorized error example
+                  description: Example response for unauthorized error.
+          description: Unauthorized. Authentication credentials were not provided or are
+            invalid.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Forbidden. You do not have permission to perform this action.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Not Found. The requested resource does not exist.
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MethodNotAllowedErrorResponse"
+              examples:
+                MethodNotAllowedErrorExample:
+                  value:
+                    success: false
+                    code: ""
+                    payload: {}
+                    errors: {}
+                    description: Method "DELETE" not allowed.
+                  summary: Method Not Allowed error example
+                  description: Example response for method not allowed.
+          description: Method Not Allowed.
+  /admin/resource/api/v2/resources/devices/access:
+    patch:
+      operationId: manageDeviceAccess
+      description: >-
+        Revoke or allow device access for users or specific devices (by MAC
+        address).
+
+
+        You can provide a list of user emails in `users` and/or MAC addresses in
+        `mac_addresses`. The `operation` field determines whether access will be
+        'ALLOWED' or 'REVOKED'.
+      summary: Revoke or allow device access
+      tags:
+        - Devices
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedPatchedDeviceAccessManagementRequest"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedPatchedDeviceAccessManagementRequest"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedPatchedDeviceAccessManagementRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceAccessManagement"
+          description: Device access successfully updated.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Bad Request. Validation failed or request data is invalid.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+              examples:
+                UnauthorizedErrorExample:
+                  value:
+                    error:
+                      support_id: 9dae9dbdae3fdc7a2b3e331fc4e08004
+                      details: Invalid access token or API key
+                      timestamp: 1776354126.142
+                      message: Authentication failed
+                      code: UNAUTHORIZED
+                  summary: Unauthorized error example
+                  description: Example response for unauthorized error.
+          description: Unauthorized. Authentication credentials were not provided or are
+            invalid.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Forbidden. You do not have permission to perform this action.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Not Found. The requested resource does not exist.
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MethodNotAllowedErrorResponse"
+              examples:
+                MethodNotAllowedErrorExample:
+                  value:
+                    success: false
+                    code: ""
+                    payload: {}
+                    errors: {}
+                    description: Method "DELETE" not allowed.
+                  summary: Method Not Allowed error example
+                  description: Example response for method not allowed.
+          description: Method Not Allowed.
+  /admin/resource/api/v2/resources/devices/search-devices:
+    get:
+      operationId: searchDevicesList
+      description: >-
+        Retrieve a paginated list of all devices belonging to a Tenant.
+
+
+        Supports pagination using `limit` and `offset`. Each device object
+        includes all fields defined in the WorkspaceDeviceSerializer.
+      summary: Retrieve devices list
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 50
+          description: Number of results to return per page.
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+          description: The initial index from which to return the results.
+      tags:
+        - Devices
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedWorkspaceDeviceList"
+          description: List of devices.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Bad Request. Validation failed or request data is invalid.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+              examples:
+                UnauthorizedErrorExample:
+                  value:
+                    error:
+                      support_id: 9dae9dbdae3fdc7a2b3e331fc4e08004
+                      details: Invalid access token or API key
+                      timestamp: 1776354126.142
+                      message: Authentication failed
+                      code: UNAUTHORIZED
+                  summary: Unauthorized error example
+                  description: Example response for unauthorized error.
+          description: Unauthorized. Authentication credentials were not provided or are
+            invalid.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Forbidden. You do not have permission to perform this action.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Not Found. The requested resource does not exist.
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MethodNotAllowedErrorResponse"
+              examples:
+                MethodNotAllowedErrorExample:
+                  value:
+                    success: false
+                    code: ""
+                    payload: {}
+                    errors: {}
+                    description: Method "DELETE" not allowed.
+                  summary: Method Not Allowed error example
+                  description: Example response for method not allowed.
+          description: Method Not Allowed.
+  /admin/auth/api/v2/accounts/workspace-users:
+    get:
+      operationId: workspaceUsersList
+      description: Retrieve a paginated list of all end users. This included both IDP
+        synced users as well as local users.
+      summary: List of all End Users
+      parameters:
+        - in: query
+          name: blocked_users
+          schema:
+            type: boolean
+          description: Filter users based on access status. Set to 'true' to get blocked
+            users (blocked_users=True), 'false' to get active users
+            (blocked_users=False). If not provided, returns all users.
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 50
+          description: Number of results to return per page.
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+          description: The initial index from which to return the results.
+        - in: query
+          name: ordering
+          schema:
+            type: string
+            enum:
+              - email
+            default: email
+          description: Field used to order the results. Defaults to user email.
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: User search by email.
+      tags:
+        - Users
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedUserIdNameEmailList"
+          description: List of associated users.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Bad Request. Validation failed or request data is invalid.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
+              examples:
+                UnauthorizedErrorExample:
+                  value:
+                    error:
+                      support_id: 9dae9dbdae3fdc7a2b3e331fc4e08004
+                      details: Invalid access token or API key
+                      timestamp: 1776354126.142
+                      message: Authentication failed
+                      code: UNAUTHORIZED
+                  summary: Unauthorized error example
+                  description: Example response for unauthorized error.
+          description: Unauthorized. Authentication credentials were not provided or are
+            invalid.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Forbidden. You do not have permission to perform this action.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Not Found. The requested resource does not exist.
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MethodNotAllowedErrorResponse"
+              examples:
+                MethodNotAllowedErrorExample:
+                  value:
+                    success: false
+                    code: ""
+                    payload: {}
+                    errors: {}
+                    description: Method "DELETE" not allowed.
+                  summary: Method Not Allowed error example
+                  description: Example response for method not allowed.
+          description: Method Not Allowed.
+  /cnac/endsystem-service/api/endsystems/v2/clients:
+    get:
+      tags:
+        - Clients
+      summary: Get Client list
+      description: List of client device data with optional filtering based on query
+        parameters. Filters include time range (start-time and end-time),
+        authentication type, client state, ZTNA agent status, compliance status,
+        user identity, and keyword-based searches across multiple fields.
+        Pagination and sorting options are supported for efficient data
+        retrieval. The response provides detailed information about the clients,
+        such as their authentication status, compliance, VLAN configuration, and
+        more. This endpoint enables administrators to manage and analyze
+        client's authentication data effectively.
+      operationId: clientslist
+      parameters:
+        - in: query
+          name: start-time
+          schema:
+            type: integer
+            format: int64
+            example: 1652607240
+          description: start-time is epoch time in seconds.<br>It represents the start of
+            the time range (start-time - end-time) in which the auth request was
+            last seen (inclusive). Both start-time and end-time parameters
+            should be provided together.Unix Epoch (Jan 1,1970 UTC)
+          required: false
+        - in: query
+          name: end-time
+          schema:
+            type: integer
+            format: int64
+            example: 1652607260
+          description: end-time is epoch time in seconds.<br>It represents the end of the
+            time range (start-time - end-time) in which the auth request was
+            last seen (exclusive). Both start-time and end-time parameters
+            should be provided together.Unix Epoch (Jan 1,1970 UTC)
+          required: false
+        - in: query
+          name: mac-address
+          schema:
+            type: string
+            example: 12:26:7F:00:02:0B
+          description: client's mac address<br>its a search for given mac-address with
+            delimeter.
+          required: false
+        - in: query
+          name: auth-type
+          schema:
+            type: string
+            enum:
+              - EAP-TTLS
+              - EAP-TLS
+              - MAC-AUTH
+            example: EAP-TTLS
+          description: Authentication Type.
+          required: false
+        - in: query
+          name: state
+          schema:
+            type: string
+            example: Accepted
+            enum:
+              - Accepted
+              - Rejected
+              - Revoked
+              - Disconnected
+          description: Authentication state of client device
+          required: false
+        - in: query
+          name: ztna-agent-status
+          schema:
+            type: string
+            example: Connected
+            enum:
+              - Connected
+              - Disconnected
+              - Revoked
+          description: Status of client agent
+          required: false
+        - in: query
+          name: compliance-status
+          schema:
+            type: string
+            example: COMPLIANT
+            enum:
+              - COMPLIANT
+              - NON_COMPLIANT
+              - Unknown
+          description: Compliance status of client device
+          required: false
+        - in: query
+          name: user-name
+          schema:
+            type: string
+            example: uztna_cust1@0c5vx.onmicrosoft.com
+          description: User identity with a maximum limit of 194 characters.
+          required: false
+        - in: query
+          name: keyword
+          schema:
+            type: string
+            example: windows
+          description: keyword for case-insensitive search on all the string fields
+            including mac-address, user-name, nas-ip, nas-port-id, auth-type,
+            ssid, ip-address, ipv6-address, es-type, os-name, host-name, state,
+            last-nac-profile, last-nac-rule, response-attributes,
+            ztna-agent-status, compliance-status, model-name, device-family,
+            device-location, reason, switch-name.
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+            format: int32
+            example: 5
+          description: next page number for pagination.<br>Default value is 1 (used if set
+            value is not an integer > 0).
+          required: false
+        - in: query
+          name: size
+          schema:
+            type: integer
+            format: int32
+            example: 10
+          description: current page size for pagination.<br>Default value is 20 (used if
+            set value is not an integer > 0).
+          required: false
+        - in: query
+          name: sort
+          schema:
+            type: string
+            example: last-seen-time,DESC
+          description: column on which the sort is required and the sort order (ASC,
+            DESC).<br>Sorting can be applied only one column at a time.
+          required: false
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    description: list of endsystems
+                    type: array
+                    items:
+                      properties:
+                        timestamp:
+                          description: timestamp at which the record entry was made (internal)
+                          type: integer
+                          format: int64
+                          example: 1689343258
+                        mac_address:
+                          description: mac address of the client
+                          type: string
+                          example: F8:DB:7F:01:08:76
+                        user_name:
+                          description: user name
+                          type: string
+                          example: mallfrieden@gmail.com
+                        nas_ip:
+                          description: nas ip address
+                          type: string
+                          example: 172.16.1.215
+                        nas_port_id:
+                          description: nas port id
+                          type: string
+                          example: "2454"
+                        nas_port:
+                          description: nas port number
+                          type: integer
+                          format: int32
+                          example: 23
+                        auth_type:
+                          description: Authentication Type
+                          type: string
+                          example: EAP-TTLS
+                        ssid:
+                          description: SSID (service set identifier)
+                          type: string
+                          example: Extreme-Guest
+                        ip_address:
+                          description: client's ip address
+                          type: string
+                          example: 192.168.15.127
+                        ipv6_address:
+                          description: client's ipv6 address
+                          type: string
+                          example: 0:0:0:0:0:FFFF:C0A8:C8B
+                        es_type:
+                          description: end system os type
+                          type: string
+                          example: Windows
+                        os_name:
+                          description: end system operating system
+                          type: string
+                          example: Windows Server 2003
+                        host_name:
+                          description: host name
+                          type: string
+                          example: mfrieden-phone
+                        state:
+                          description: client's state
+                          type: string
+                          example: Accepted
+                        last_nac_profile:
+                          description: last nac profile
+                          type: string
+                          example: Guest Access
+                        last_nac_rule:
+                          description: last nac rule
+                          type: string
+                          example: Guest Access
+                        response_attributes:
+                          description: response attributes
+                          type: string
+                          example: "[{'name':'Filter Id','value':'GuestRegistered'},{'name':'Filter
+                            Id','value':'SomeName'}]"
+                        first_seen_time:
+                          description: epoch time in seconds when the client auth request was received
+                            first time
+                          type: integer
+                          format: int64
+                          example: 1692021658
+                        last_seen_time:
+                          description: epoch time in seconds when the client auth request was received
+                            last time
+                          type: integer
+                          format: int64
+                          example: 1689343258
+                        ztna_agent_status:
+                          description: ztna agent status on the device
+                          type: string
+                          example: Allowed
+                        compliance_status:
+                          description: device compliance status
+                          type: string
+                          example: Compliant
+                        model_name:
+                          description: model name of the device
+                          type: string
+                          example: Apple MacBook
+                        device_family:
+                          description: device family
+                          type: string
+                          example: Mobiles/Phones
+                        device_location:
+                          description: geographic location of the device
+                          type: string
+                          example: US
+                        reason:
+                          description: reason for auth failure, if applicable
+                          type: string
+                          example: failed to match rule
+                        is_craas:
+                          description: if the client is authenticated via RaaS
+                          type: boolean
+                          example: false
+                        is_zta:
+                          description: if the client is authenticated via ZTNA
+                          type: boolean
+                          example: true
+                        policy_vlan:
+                          description: VLAN id configured in policy
+                          type: integer
+                          format: int32
+                          example: 32
+                        policy_nsi:
+                          description: ISID configured in policy
+                          type: integer
+                          format: int32
+                          example: 57
+                        switch_name:
+                          description: hostname of the switch
+                          type: string
+                          example: extreme-switch
+                        user_blocked:
+                          description: if the user is blocked or not
+                          type: boolean
+                          example: false
+                        device_blocked:
+                          description: if the device is blocked or not
+                          type: boolean
+                          example: false
+                  pagination:
+                    description: pagination details
+                    type: object
+                    properties:
+                      total_count:
+                        description: total count of the endsystems
+                        type: integer
+                        format: int32
+                        example: 10
+                      count_in_page:
+                        description: count of endsystems in the current page
+                        type: integer
+                        format: int32
+                        example: 10
+                      offset:
+                        description: offset
+                        format: int32
+                        type: integer
+                        example: 1
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - required:
+                      - status
+                      - error
+                      - message
+                    type: object
+                    properties:
+                      status:
+                        type: integer
+                      error:
+                        type: string
+                      message:
+                        type: string
+                  - type: object
+                    properties:
+                      violations:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            field:
+                              type: string
+                            message:
+                              type: string
+                example:
+                  status: 400
+                  error: Bad Request
+                  message: Constraint Violation
+                  violations:
+                    - field: id
+                      message: may not be null
+                    - field: name
+                      message: may not be empty
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                required:
+                  - code
+                  - message
+                  - details
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: string
+              example:
+                code: UNAUTHORIZED
+                message: Authentication failed
+                details: Invalid access token or API key
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                required:
+                  - status
+                  - error
+                  - message
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  error:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 403
+                error: Forbidden
+                message: Resource not authorized
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                required:
+                  - status
+                  - error
+                  - message
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  error:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 404
+                error: Not Found
+                message: Resource not found
+        "405":
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                required:
+                  - status
+                  - error
+                  - message
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  error:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 405
+                error: Method Not Allowed
+                message: Method POST is not Allowed
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                required:
+                  - status
+                  - error
+                  - message
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  error:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 500
+                error: Internal Server Error
+                message: Things are a little unstable
+  /cnac/network-policy-engine/api/v1/npe/external/deauth:
+    post:
+      operationId: deauthClient
+      description: Forcibly disconnects one or more client devices from the network by
+        deauthorizing their active sessions. This endpoint accepts client MAC
+        addresses and optional RADIUS session identifiers to immediately
+        terminate connectivity. It is typically used for logout events, policy
+        changes, or security remediation. Cloud‑onboarded devices are
+        disconnected directly, while clients on third‑party devices are
+        deauthorized via a RADIUS Change of Authorization (CoA) request.
+      summary: Disconnect one or more client sessions
+      tags:
+        - Trigger Client Session Deauthorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExternalDeauth"
+        required: true
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                required:
+                  - status
+                  - title
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  title:
+                    type: string
+                  detail:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 400
+                title: Bad Request
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                required:
+                  - code
+                  - message
+                  - details
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: string
+              example:
+                code: UNAUTHORIZED
+                message: Authentication failed
+                details: Invalid access token or API key
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                required:
+                  - status
+                  - error
+                  - message
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  error:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 403
+                error: Forbidden
+                message: Resource not authorized
+components:
+  schemas:
+    AccessGroup:
+      type: object
+      description: Serializers for PinEmail object.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: The unique identifier for the access group.
+        name:
+          type: string
+          description: The name of the access group.
+          maxLength: 512
+        description:
+          type: string
+        code:
+          type: string
+          readOnly: true
+          description: The code of the access group.
+          pattern: ^[-a-zA-Z0-9_]+$
+        status:
+          allOf:
+            - $ref: "#/components/schemas/StatusEnum"
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The timestamp when the access group was created.
+        last_modified_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The timestamp when the access group was last modified.
+        associated_users_count:
+          type: integer
+          description: The count of associated users with this user group.
+          readOnly: true
+          nullable: true
+        is_synced:
+          type: boolean
+          description: Indicates whether the access group is synced.
+        is_local_synced:
+          type: boolean
+          description: Indicates whether the access group is locally synced.
+        is_deleted:
+          type: boolean
+          description: Indicates whether the access group is deleted.
+        idp_company_type:
+          type: string
+          readOnly: true
+          nullable: true
+          description: The type of IDP (Identity Provider) company associated with this
+            user group.
+        is_blocked:
+          type: boolean
+          readOnly: true
+          description: Indicates whether the user group is blocked.
+      required:
+        - associated_users_count
+        - code
+        - created_at
+        - description
+        - id
+        - idp_company_type
+        - is_blocked
+        - last_modified_at
+        - name
+        - status
+    AccessGroupAssociatedUsers:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: The email address of the user.
+        id:
+          type: integer
+          description: The ID of the user.
+        scim_username:
+          type: string
+          description: The SCIM username of the user.
+        status:
+          allOf:
+            - $ref: "#/components/schemas/StatusEnum"
+          description: |-
+            The status of the access group.
+
+            * `ACTIVE` - active
+            * `IN_PROGRESS` - in_progress
+            * `FAILED` - failed
+            * `DELETED` - deleted
+            * `SYSTEM_GENERATED_ENABLED` - system_generated_enabled
+            * `SYSTEM_GENERATED_DISABLED` - system_generated_disabled
+            * `MDM_ENROLLED_ENABLED` - mdm_enrolled_enabled
+            * `MDM_ENROLLED_DISABLED` - mdm_enrolled_disabled
+        user_access_revoked:
+          type: boolean
+          description: Indicates whether the user is blocked or not.
+      required:
+        - email
+        - id
+        - scim_username
+        - status
+        - user_access_revoked
+    AccessGroupRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the user group.
+          maxLength: 512
+          minLength: 3
+        description:
+          type: string
+          nullable: true
+          description: The description of the user group.
+          maxLength: 5000
+        user_ids:
+          type: array
+          items:
+            type: integer
+          description: List of user IDs to be added in the user group.
+          maxItems: 10000
+          minItems: 0
+      required:
+        - name
+    AddAccessGroupResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier for the user group.
+        name:
+          type: string
+          description: The name of the user group.
+        description:
+          type: string
+          description: The description of the user group.
+        code:
+          type: string
+          description: The code associated with the user group.
+        status:
+          allOf:
+            - $ref: "#/components/schemas/StatusEnum"
+          description: |-
+            The status of the user group.
+
+            * `ACTIVE` - active
+            * `IN_PROGRESS` - in_progress
+            * `FAILED` - failed
+            * `DELETED` - deleted
+            * `SYSTEM_GENERATED_ENABLED` - system_generated_enabled
+            * `SYSTEM_GENERATED_DISABLED` - system_generated_disabled
+
+            * `ACTIVE` - active
+            * `IN_PROGRESS` - in_progress
+            * `FAILED` - failed
+            * `DELETED` - deleted
+            * `SYSTEM_GENERATED_ENABLED` - system_generated_enabled
+            * `SYSTEM_GENERATED_DISABLED` - system_generated_disabled
+            * `MDM_ENROLLED_ENABLED` - mdm_enrolled_enabled
+            * `MDM_ENROLLED_DISABLED` - mdm_enrolled_disabled
+        created_at:
+          type: string
+          format: date-time
+          description: The timestamp when the user group was created.
+        last_modified_at:
+          type: string
+          format: date-time
+          description: The timestamp when the user group was last modified.
+        associated_users_count:
+          type: integer
+          nullable: true
+          description: The number of users associated with the user group.
+        is_synced:
+          type: boolean
+          description: The sync status of the user group.
+        is_local_synced:
+          type: boolean
+          description: The local sync status of the user group.
+        is_deleted:
+          type: boolean
+          description: The delete status of the user group.
+        idp_company_type:
+          type: string
+          nullable: true
+          description: The IDP company type.
+        user_ids:
+          type: array
+          items:
+            type: integer
+            nullable: true
+          description: The list of user IDs associated with the user group.
+      required:
+        - associated_users_count
+        - code
+        - created_at
+        - description
+        - id
+        - idp_company_type
+        - is_deleted
+        - is_local_synced
+        - is_synced
+        - last_modified_at
+        - name
+        - status
+        - user_ids
+    DeviceAccessManagement:
+      type: object
+      description: Serializer to serialize manage devices access
+      properties:
+        operation:
+          type: string
+        users:
+          type: array
+          items:
+            type: string
+            format: email
+          description: List of user emails to block or unblock
+        mac_addresses:
+          type: array
+          items:
+            type: string
+            maxLength: 17
+      required:
+        - mac_addresses
+        - operation
+    DeviceGroupList:
+      type: object
+      description: Serialize id, instance type and project for tree chart visualization
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Device group ID
+        name:
+          type: string
+          description: Name of the device group
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          description: Description of the device group
+        type:
+          type: string
+          nullable: true
+          default: DEVICE
+        workspace_id:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Workspace ID
+        count:
+          type: string
+          readOnly: true
+          description: Count of devices in the device group
+        mdm_id:
+          type: string
+          nullable: true
+          maxLength: 40
+        mdm_type:
+          type: string
+          maxLength: 255
+        is_blocked:
+          type: boolean
+          readOnly: true
+          description: Indicates whether the device group is blocked.
+      required:
+        - count
+        - id
+        - is_blocked
+        - name
+        - workspace_id
+    DeviceGroupMetaDataItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        partial_mac_address:
+          type: string
+        mac_oui:
+          type: string
+        vendor:
+          type: string
+        alias:
+          type: string
+    DeviceGroupPagination:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Device ID
+        mac_address:
+          type: string
+          nullable: true
+          description: MAC address of the device
+          maxLength: 17
+        mac_oui:
+          type: string
+          nullable: true
+          description: MAC OUI of the device
+          maxLength: 255
+        alias:
+          type: string
+          description: Alias of the device
+        name:
+          type: string
+          description: Hostname of the device
+        device_type:
+          type: string
+          nullable: true
+          description: Device type
+          maxLength: 20
+        description:
+          type: string
+          description: Description of the device
+        mdm_id:
+          type: string
+          nullable: true
+          maxLength: 40
+        mdm_type:
+          type: string
+          maxLength: 255
+        ethernet_mac_address:
+          type: string
+          nullable: true
+          maxLength: 17
+        user_principal_name:
+          type: string
+          nullable: true
+          maxLength: 255
+        device_owner_type:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+        - id
+    DeviceGroupPostRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the device group
+          maxLength: 512
+          minLength: 3
+        description:
+          type: string
+          nullable: true
+          description: Description of the device group
+          maxLength: 5000
+        device_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: "List of device UUIDs to associate with the device group. "
+          maxItems: 10000
+        workspace_all_devices:
+          type: boolean
+          description: If true, all devices are automatically included. If false, all the
+            provided device_ids will be added to the group.
+        type:
+          allOf:
+            - $ref: "#/components/schemas/TypeEnum"
+          default: DEVICE
+          description: |-
+            Type of the device group.
+
+            DEVICE - manually selected devices
+            MAC_OUI - devices matching MAC OUI patterns
+            CUSTOM_MAC - devices matching custom MAC patterns
+
+            * `DEVICE` - device
+            * `MAC_OUI` - mac_oui
+            * `CUSTOM_MAC` - custom_mac
+        meta_data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DeviceGroupMetaDataItem"
+          default: []
+          description: >-
+            Required when type is MAC_OUI or CUSTOM_MAC. Ignored when type is
+            DEVICE.
+
+
+            Each object may contain:
+
+            - id (UUID)
+
+            - partial_mac_address
+
+            - mac_oui
+
+            - vendor
+
+            - alias
+      required:
+        - description
+        - name
+        - workspace_all_devices
+    DeviceGroupResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Device group ID
+        name:
+          type: string
+          description: Name of the device group
+        description:
+          type: string
+          description: Description of the device group
+        type:
+          allOf:
+            - $ref: "#/components/schemas/TypeEnum"
+          description: |-
+            Type of the device group.
+
+            DEVICE - manually selected devices
+            MAC_OUI - devices matching MAC OUI patterns
+            CUSTOM_MAC - devices matching custom MAC patterns
+
+            * `DEVICE` - device
+            * `MAC_OUI` - mac_oui
+            * `CUSTOM_MAC` - custom_mac
+        workspace_id:
+          type: integer
+          description: Workspace ID
+        device_count:
+          type: integer
+          description: Number of devices in the group
+        attached_devices:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkspaceDevice"
+          description: List of devices associated with the group
+        meta_data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DeviceGroupMetaDataItem"
+          description: Data of the custom MAC or MAC OUI objects
+        mac_oui:
+          type: array
+          items: {}
+          description: List of MAC OUIs
+        is_blocked:
+          type: boolean
+          description: The blocked status of the device group.
+      required:
+        - attached_devices
+        - description
+        - device_count
+        - id
+        - is_blocked
+        - mac_oui
+        - meta_data
+        - name
+        - type
+        - workspace_id
+    DeviceGroupDeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: true
+        payload:
+          type: object
+          additionalProperties: {}
+        errors:
+          type: object
+          additionalProperties: {}
+        description:
+          type: string
+      required:
+        - description
+        - errors
+        - payload
+    DeviceIdsPatchField:
+      type: object
+      properties:
+        added_devices:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of device UUIDs to associate with the device group.
+          maxItems: 10000
+        removed_devices:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of device UUIDs to be removed from the device group.
+          maxItems: 10000
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+          description: Success status of the response.
+        payload:
+          default: {}
+          description: Payload, typically empty in case of an error.
+        errors:
+          type: object
+          additionalProperties: {}
+          nullable: true
+          default: {}
+          description: Additional error details.
+        description:
+          type: string
+          description: Description of the response.
+      required:
+        - description
+    MethodNotAllowedErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+        code:
+          type: string
+          default: ""
+        payload:
+          default: {}
+        errors:
+          type: object
+          additionalProperties: {}
+          nullable: true
+          default: {}
+        description:
+          type: string
+      required:
+        - description
+    OperationEnum:
+      enum:
+        - ALLOWED
+        - REVOKED
+      type: string
+      description: |-
+        * `ALLOWED` - Allowed
+        * `REVOKED` - Revoked
+    PaginatedAccessGroupAssociatedUsersList:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+          description: Indicates if the API call was successful.
+        payload:
+          type: object
+          properties:
+            users:
+              type: array
+              items:
+                $ref: "#/components/schemas/AccessGroupAssociatedUsers"
+              description: List of users.
+            total:
+              type: integer
+              example: 1
+              description: Total number of items available.
+            from:
+              type: integer
+              example: 0
+              description: The starting offset of the items.
+            to:
+              type: integer
+              example: 1
+              description: The ending offset of the items.
+        errors:
+          type: object
+          nullable: true
+          example: {}
+          description: Errors encountered during the request.
+        description:
+          type: string
+          example: Associated Users.
+          description: Description of the API response.
+    PaginatedAccessGroupList:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+          description: Indicates if the API call was successful.
+        payload:
+          type: object
+          properties:
+            access_groups:
+              type: array
+              items:
+                $ref: "#/components/schemas/AccessGroup"
+              description: List of access_groups.
+            total:
+              type: integer
+              example: 1
+              description: Total number of items available.
+            from:
+              type: integer
+              example: 0
+              description: The starting offset of the items.
+            to:
+              type: integer
+              example: 1
+              description: The ending offset of the items.
+        errors:
+          type: object
+          nullable: true
+          example: {}
+          description: Errors encountered during the request.
+        description:
+          type: string
+          example: List of Access Group.
+          description: Description of the API response.
+    PaginatedDeviceGroupListList:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+          description: Indicates if the API call was successful.
+        payload:
+          type: object
+          properties:
+            device_groups:
+              type: array
+              items:
+                $ref: "#/components/schemas/DeviceGroupList"
+              description: List of device_groups.
+            total:
+              type: integer
+              example: 1
+              description: Total number of items available.
+            from:
+              type: integer
+              example: 0
+              description: The starting offset of the items.
+            to:
+              type: integer
+              example: 1
+              description: The ending offset of the items.
+        errors:
+          type: object
+          nullable: true
+          example: {}
+          description: Errors encountered during the request.
+        description:
+          type: string
+          example: List of device groups.
+          description: Description of the API response.
+    PaginatedDeviceGroupPaginationList:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+          description: Indicates if the API call was successful.
+        payload:
+          type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/DeviceGroupPagination"
+              description: List of data.
+            total:
+              type: integer
+              example: 1
+              description: Total number of items available.
+            from:
+              type: integer
+              example: 0
+              description: The starting offset of the items.
+            to:
+              type: integer
+              example: 1
+              description: The ending offset of the items.
+        errors:
+          type: object
+          nullable: true
+          example: {}
+          description: Errors encountered during the request.
+        description:
+          type: string
+          example: Device group details fetched successfully
+          description: Description of the API response.
+    PaginatedWorkspaceDeviceList:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+          description: Indicates if the API call was successful.
+        payload:
+          type: object
+          properties:
+            devices:
+              type: array
+              items:
+                $ref: "#/components/schemas/WorkspaceDevice"
+              description: List of devices.
+            total:
+              type: integer
+              example: 1
+              description: Total number of items available.
+            from:
+              type: integer
+              example: 0
+              description: The starting offset of the items.
+            to:
+              type: integer
+              example: 1
+              description: The ending offset of the items.
+        errors:
+          type: object
+          nullable: true
+          example: {}
+          description: Errors encountered during the request.
+        description:
+          type: string
+          example: List of workspace devices.
+          description: Description of the API response.
+    PatchedAccessGroupRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the user group.
+        description:
+          type: string
+          nullable: true
+          description: The description of the user group.
+        user_ids:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+              format: uuid
+          description: Object containing 'added_users' and 'removed_users' lists of ids.
+            Optional field
+    PatchedPatchedDeviceAccessManagementRequest:
+      type: object
+      properties:
+        operation:
+          allOf:
+            - $ref: "#/components/schemas/OperationEnum"
+          default: ALLOWED
+          description: |-
+            The action to perform on the device access
+
+            * `ALLOWED` - Allowed
+            * `REVOKED` - Revoked
+        users:
+          type: array
+          items:
+            type: string
+            format: email
+          description: List of user emails to block or unblock
+        mac_addresses:
+          type: array
+          items:
+            type: string
+            maxLength: 17
+          description: List of MAC addresses affected by the operation
+    PatchedPatchedDeviceGroupPostRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the device group
+          maxLength: 512
+          minLength: 3
+        description:
+          type: string
+          description: Description of the device group
+          maxLength: 1000
+        device_ids:
+          allOf:
+            - $ref: "#/components/schemas/DeviceIdsPatchField"
+          description: Object containing added_devices and removed_devices lists. Optional
+            field.
+        workspace_all_devices:
+          type: boolean
+          description: If true, all devices are automatically included. If false, all the
+            provided device_ids will be added to the group.
+        type:
+          allOf:
+            - $ref: "#/components/schemas/TypeEnum"
+          default: DEVICE
+          description: |-
+            Type of the device group.
+
+            DEVICE - manually selected devices
+            MAC_OUI - devices matching MAC OUI patterns
+            CUSTOM_MAC - devices matching custom MAC patterns
+
+            * `DEVICE` - device
+            * `MAC_OUI` - mac_oui
+            * `CUSTOM_MAC` - custom_mac
+        meta_data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DeviceGroupMetaDataItem"
+          default: []
+          description: >-
+            Required when type is MAC_OUI or CUSTOM_MAC. Ignored when type is
+            DEVICE.
+
+
+            Each object may contain:
+
+            - id (UUID)
+
+            - partial_mac_address
+
+            - mac_oui
+
+            - vendor
+
+            - alias
+    StatusEnum:
+      enum:
+        - ACTIVE
+        - IN_PROGRESS
+        - FAILED
+        - DELETED
+        - SYSTEM_GENERATED_ENABLED
+        - SYSTEM_GENERATED_DISABLED
+        - MDM_ENROLLED_ENABLED
+        - MDM_ENROLLED_DISABLED
+      type: string
+      description: |-
+        * `ACTIVE` - active
+        * `IN_PROGRESS` - in_progress
+        * `FAILED` - failed
+        * `DELETED` - deleted
+        * `SYSTEM_GENERATED_ENABLED` - system_generated_enabled
+        * `SYSTEM_GENERATED_DISABLED` - system_generated_disabled
+        * `MDM_ENROLLED_ENABLED` - mdm_enrolled_enabled
+        * `MDM_ENROLLED_DISABLED` - mdm_enrolled_disabled
+    TypeEnum:
+      enum:
+        - DEVICE
+        - MAC_OUI
+        - CUSTOM_MAC
+      type: string
+      description: |-
+        * `DEVICE` - device
+        * `MAC_OUI` - mac_oui
+        * `CUSTOM_MAC` - custom_mac
+    UnauthorizedError:
+      type: object
+      properties:
+        support_id:
+          type: string
+        details:
+          type: string
+        timestamp:
+          type: number
+          format: double
+        message:
+          type: string
+        code:
+          type: string
+      required:
+        - code
+        - details
+        - message
+        - support_id
+        - timestamp
+    UnauthorizedErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: "#/components/schemas/UnauthorizedError"
+      required:
+        - error
+    PaginatedUserIdNameEmailList:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+          description: Indicates if the API call was successful.
+        payload:
+          type: object
+          properties:
+            users:
+              type: array
+              items:
+                $ref: "#/components/schemas/UserIdNameEmail"
+              description: List of users.
+            total:
+              type: integer
+              example: 1
+              description: Total number of items available.
+            from:
+              type: integer
+              example: 0
+              description: The starting offset of the items.
+            to:
+              type: integer
+              example: 1
+              description: The ending offset of the items.
+        errors:
+          type: object
+          nullable: true
+          example: {}
+          description: Errors encountered during the request.
+        description:
+          type: string
+          example: List of associated users.
+          description: Description of the API response.
+    UpdateAccessGroupResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier for the user group.
+        name:
+          type: string
+          description: The name of the user group.
+        description:
+          type: string
+          description: The description of the user group.
+        code:
+          type: string
+          description: The code associated with the user group.
+        status:
+          allOf:
+            - $ref: "#/components/schemas/StatusEnum"
+          description: |-
+            The status of the user group.
+
+            * `ACTIVE` - active
+            * `IN_PROGRESS` - in_progress
+            * `FAILED` - failed
+            * `DELETED` - deleted
+            * `SYSTEM_GENERATED_ENABLED` - system_generated_enabled
+            * `SYSTEM_GENERATED_DISABLED` - system_generated_disabled
+            * `MDM_ENROLLED_ENABLED` - mdm_enrolled_enabled
+            * `MDM_ENROLLED_DISABLED` - mdm_enrolled_disabled
+        created_at:
+          type: string
+          format: date-time
+          description: The timestamp when the user group was created.
+        last_modified_at:
+          type: string
+          format: date-time
+          description: The timestamp when the user group was last modified.
+        associated_users_count:
+          type: integer
+          nullable: true
+          description: The number of users associated with the user group.
+        is_synced:
+          type: boolean
+          description: The sync status of the user group.
+        is_local_synced:
+          type: boolean
+          description: The local sync status of the user group.
+        is_deleted:
+          type: boolean
+          description: The delete status of the user group.
+        idp_company_type:
+          type: string
+          nullable: true
+          description: The IDP company type.
+      required:
+        - associated_users_count
+        - code
+        - created_at
+        - description
+        - id
+        - idp_company_type
+        - is_deleted
+        - is_local_synced
+        - is_synced
+        - last_modified_at
+        - name
+        - status
+    WorkspaceDevice:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Device ID
+        mac_address:
+          type: string
+          description: MAC address of the device
+        mac_oui:
+          type: string
+          description: MAC OUI of the device
+        name:
+          type: string
+          description: Hostname of the device
+        alias:
+          type: string
+          description: Alias of the device
+        description:
+          type: string
+          description: Description of the device
+        device_type:
+          type: string
+          description: Type of the device
+      required:
+        - alias
+        - description
+        - device_type
+        - id
+        - mac_address
+        - mac_oui
+        - name
+    UserIdNameEmail:
+      type: object
+      description: get user id, email, is_synced, is_deleted and is_selected serializers
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: User ID
+        email:
+          type: string
+          format: email
+          title: Email Address
+          description: User Email
+          maxLength: 254
+        is_synced:
+          type: boolean
+          description: Is Synced
+        is_deleted:
+          type: boolean
+          description: Is Deleted
+        is_selected:
+          type: boolean
+          default: false
+        idp_company_type:
+          type: string
+          readOnly: true
+        scim_username:
+          type: string
+          description: User SCIM Username
+      required:
+        - email
+        - id
+        - idp_company_type
+    ExternalDeauth:
+      type: object
+      required:
+        - devices
+      properties:
+        org_id:
+          type: string
+          description: Organization identifier used to scope the deauthorization request.
+          example: "0"
+        owner_id:
+          type: string
+          description: Tenant or account owner identifier associated with the request.
+          example: "189357"
+        workspace_id:
+          type: number
+          description: Workspace identifier in which the client sessions are managed.
+          example: 1235
+        reason:
+          type: string
+          description: Optional default reason applied to all targeted devices when a
+            per-device reason is not provided.
+          example: ""
+        devices:
+          type: array
+          description: List of client sessions to deauthorize.
+          items:
+            type: object
+            properties:
+              mac_address:
+                type: string
+                description: Client device MAC address to disconnect.
+                example: 9C:A2:F4:E2:1A:03
+              nas_ip:
+                type: string
+                description: NAS (network access server) IP address where the client session is
+                  active.
+                example: 10.234.153.103
+              nas_port_id:
+                type: string
+                description: Logical NAS port identifier for the client session.
+                example: "1004"
+              nas_port:
+                type: string
+                description: Physical or mapped NAS port value for the client session.
+                example: "1111"
+              accounting_session_id:
+                type: string
+                description: RADIUS accounting session identifier used to target a specific
+                  active session.
+                example: "123456789"
+              proxy_id:
+                type: number
+                description: Optional proxy identifier when request routing is proxied.
+                example: 1234567
+              reason:
+                type: string
+                description: Optional reason for deauthorizing this specific client session.
+                example: Logout
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Enter your API Key as a Bearer Token
+security:
+  - BearerAuth: []
