@@ -1770,6 +1770,6201 @@
       "specFile": "specs/iam/openapi.yaml"
     },
     {
+      "id": "extremecloud-iq",
+      "title": "ExtremeCloud IQ API",
+      "description": "ExtremeCloud IQ RESTful API for external and internal applications.",
+      "version": "25.11.1-3",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/xiq/v1",
+      "tags": [
+        "Authentication",
+        "Authorization",
+        "Operation",
+        "Account",
+        "User",
+        "Use Folder Preferences",
+        "HIQ",
+        "Location",
+        "Device",
+        "Network Policy",
+        "Client",
+        "Client - Details",
+        "Switch Inspector Panel",
+        "D360",
+        "Dashboard",
+        "Dashboard Wired Usage and Capacity",
+        "Dashboard Wired Client Health",
+        "Dashboard Wired Device Health",
+        "Dashboard Wireless Usage and Capacity",
+        "Dashboard Wireless Client Health",
+        "Dashboard Wireless Device Health",
+        "Geo View",
+        "Application",
+        "Alert",
+        "Log",
+        "Notification",
+        "Administration",
+        "NOS",
+        "Configuration - Deployment",
+        "Configuration - Basic",
+        "Configuration - User Management",
+        "Configuration - Policy",
+        "Configuration - Network",
+        "Configuration - Authentication",
+        "Configuration - Certificate",
+        "Copilot - Connectivity Experience",
+        "Copilot - Anomalies",
+        "Packet Capture",
+        "Network Scorecard",
+        "Essentials - ExtremeLocation",
+        "Misc",
+        "Thread",
+        "NG Reports (Ondemand)",
+        "NG Reports (Scheduled)",
+        "Universal Compute Platform"
+      ],
+      "endpoints": [
+        {
+          "path": "/v1/account/viq/default-device-password",
+          "method": "PUT",
+          "operationId": "updateDefaultDevicePasswordWithValidation",
+          "summary": "Update the default device password in the account (with validation)",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/usergroups/{id}",
+          "method": "PUT",
+          "operationId": "updateUserGroup",
+          "summary": "Update user group",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/usergroups/{id}",
+          "method": "DELETE",
+          "operationId": "deleteUserGroup",
+          "summary": "Delete user group by ID",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/user-profiles/{id}",
+          "method": "GET",
+          "operationId": "getUserProfile",
+          "summary": "Get user profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/user-profiles/{id}",
+          "method": "PUT",
+          "operationId": "updateCoUserProfile",
+          "summary": "Update user profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/user-profiles/{id}",
+          "method": "DELETE",
+          "operationId": "deleteCoUserProfile",
+          "summary": "Delete an user profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/tunnel-concentrators/{id}",
+          "method": "GET",
+          "operationId": "getTunnelConcentrator",
+          "summary": "Get Tunnel Concentrator by ID",
+          "tags": [
+            "Configuration - Network"
+          ]
+        },
+        {
+          "path": "/tunnel-concentrators/{id}",
+          "method": "PUT",
+          "operationId": "updateTunnelConcentrator",
+          "summary": "Update TunnelConcentrator by ID",
+          "tags": [
+            "Configuration - Network"
+          ]
+        },
+        {
+          "path": "/tunnel-concentrators/{id}",
+          "method": "DELETE",
+          "operationId": "deleteTunnelConcentrator",
+          "summary": "Delete TunnelConcentrator by ID",
+          "tags": [
+            "Configuration - Network"
+          ]
+        },
+        {
+          "path": "/third-party-api-connection",
+          "method": "GET",
+          "operationId": "listThirdPartyApiConnections",
+          "summary": "List third party api connections",
+          "tags": [
+            "Administration"
+          ]
+        },
+        {
+          "path": "/third-party-api-connection",
+          "method": "PUT",
+          "operationId": "updateThirdPartyApiConnection",
+          "summary": "Update a third party api connection",
+          "tags": [
+            "Administration"
+          ]
+        },
+        {
+          "path": "/third-party-api-connection",
+          "method": "DELETE",
+          "operationId": "deleteThirdPartyApiConnection",
+          "summary": "Delete a third party api connection",
+          "tags": [
+            "Administration"
+          ]
+        },
+        {
+          "path": "/subscriptions/webhook/{id}",
+          "method": "PUT",
+          "operationId": "updateWebhookSubscription",
+          "summary": "Update webhook subscription",
+          "tags": [
+            "Notification"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/psk/password",
+          "method": "PUT",
+          "operationId": "changePskPassword",
+          "summary": "Change the SSID PSK password",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/mode/wep",
+          "method": "PUT",
+          "operationId": "setSsidModeWep",
+          "summary": "Change the SSID mode to WEP",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/mode/psk",
+          "method": "PUT",
+          "operationId": "setSsidModePsk",
+          "summary": "Change the SSID mode to PSK",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/mode/ppsk",
+          "method": "PUT",
+          "operationId": "setSsidModePpsk",
+          "summary": "Change the SSID mode to PPSK",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/mode/open",
+          "method": "PUT",
+          "operationId": "setSsidModeOpen",
+          "summary": "Change the SSID mode to open access",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/mode/dot1x",
+          "method": "PUT",
+          "operationId": "setSsidModeDot1x",
+          "summary": "Change the SSID mode to 802.1x",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/advanced-settings/{id}",
+          "method": "GET",
+          "operationId": "getSsidAdvancedSettings",
+          "summary": "Get SSID advanced settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/advanced-settings/{id}",
+          "method": "PUT",
+          "operationId": "updateSsidAdvancedSettings",
+          "summary": "Update SSID advanced settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/site/afc/schedule",
+          "method": "GET",
+          "operationId": "getSiteAfcSchedule",
+          "summary": "No summary",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/site/afc/schedule",
+          "method": "PUT",
+          "operationId": "updateSiteAfcSchedule",
+          "summary": "No summary",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/site/afc/schedule",
+          "method": "POST",
+          "operationId": "createSiteAfcSchedule",
+          "summary": "No summary",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/radsec-proxies/{id}",
+          "method": "GET",
+          "operationId": "getRadsecProxy",
+          "summary": "Get the RADSEC proxy configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radsec-proxies/{id}",
+          "method": "PUT",
+          "operationId": "updateRadsecProxy",
+          "summary": "Update RADSEC proxy configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radsec-proxies/{id}",
+          "method": "DELETE",
+          "operationId": "deleteRadsecProxy",
+          "summary": "Delete the RADSEC proxy configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-servers/internal/{id}",
+          "method": "GET",
+          "operationId": "getInternalRadiusServer",
+          "summary": "Get internal RADIUS server by ID",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-servers/internal/{id}",
+          "method": "PUT",
+          "operationId": "updateInternalRadiusServer",
+          "summary": "Update internal RADIUS server configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-servers/internal/{id}",
+          "method": "DELETE",
+          "operationId": "deleteInternalRadiusServer",
+          "summary": "Delete internal RADIUS server configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-servers/external/{id}",
+          "method": "GET",
+          "operationId": "getExternalRadiusServer",
+          "summary": "Get external RADIUS server by ID",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-servers/external/{id}",
+          "method": "PUT",
+          "operationId": "updateExternalRadiusServer",
+          "summary": "Update external RADIUS server configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-servers/external/{id}",
+          "method": "DELETE",
+          "operationId": "deleteExternalRadiusServer",
+          "summary": "Delete external RADIUS server configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-proxies/{id}",
+          "method": "GET",
+          "operationId": "getRadiusProxy",
+          "summary": "Get the RADIUS proxy configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-proxies/{id}",
+          "method": "PUT",
+          "operationId": "updateRadiusProxy",
+          "summary": "Update RADIUS proxy configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-proxies/{id}",
+          "method": "DELETE",
+          "operationId": "deleteRadiusProxy",
+          "summary": "Delete the RADIUS proxy configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-client-objects/{id}",
+          "method": "GET",
+          "operationId": "getRadiusClientObject",
+          "summary": "Get RADIUS client object by ID",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-client-objects/{id}",
+          "method": "PUT",
+          "operationId": "updateRadiusClientObject",
+          "summary": "Update RADIUS client object configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-client-objects/{id}",
+          "method": "DELETE",
+          "operationId": "deleteRadiusClientObject",
+          "summary": "Delete a RADIUS client object configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radio-profiles/{id}",
+          "method": "GET",
+          "operationId": "getRadioProfile",
+          "summary": "Get radio profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/{id}",
+          "method": "PUT",
+          "operationId": "updateRadioProfile",
+          "summary": "Update radio profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/{id}",
+          "method": "DELETE",
+          "operationId": "deleteRadioProfile",
+          "summary": "Delete radio profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/wmm-qos/{id}",
+          "method": "GET",
+          "operationId": "getRpWmmQosSettings",
+          "summary": "Get Wmm QoS settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/wmm-qos/{id}",
+          "method": "PUT",
+          "operationId": "updateRpWmmQosSettings",
+          "summary": "Update Wmm QoS settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/sensor-scan/{id}",
+          "method": "GET",
+          "operationId": "getRpSensorScanSettings",
+          "summary": "Get sensor scan settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/sensor-scan/{id}",
+          "method": "PUT",
+          "operationId": "updateRpSensorScanSettings",
+          "summary": "Update sensor scan settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/radio-usage-opt/{id}",
+          "method": "GET",
+          "operationId": "getRpRadioUsageOptimization",
+          "summary": "Get radio usage optimization settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/radio-usage-opt/{id}",
+          "method": "PUT",
+          "operationId": "updateRpRadioUsageOptimization",
+          "summary": "Update radio usage optimization settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/neighborhood-analysis/{id}",
+          "method": "GET",
+          "operationId": "getNeighborhoodAnalysis",
+          "summary": "Get neighborhood analysis settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/neighborhood-analysis/{id}",
+          "method": "PUT",
+          "operationId": "updateNeighborhoodAnalysis",
+          "summary": "Update neighborhood analysis settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/miscellaneous/{id}",
+          "method": "GET",
+          "operationId": "getRpMiscellaneousSettings",
+          "summary": "Get radio miscellaneous settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/miscellaneous/{id}",
+          "method": "PUT",
+          "operationId": "updateRpMiscellaneousSettings",
+          "summary": "Update radio miscellaneous settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/mac-ouis/{id}",
+          "method": "GET",
+          "operationId": "getRpMacOuiProfile",
+          "summary": "Get MAC OUI profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/mac-ouis/{id}",
+          "method": "PUT",
+          "operationId": "updateRpMacOuiProfile",
+          "summary": "Update MAC OUI profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/mac-ouis/{id}",
+          "method": "DELETE",
+          "operationId": "deleteRpMacOuiProfile",
+          "summary": "Delete MAC OUI profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/channel-selection/{id}",
+          "method": "GET",
+          "operationId": "getRpChannelSelection",
+          "summary": "Get channel selection settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/channel-selection/{id}",
+          "method": "PUT",
+          "operationId": "updateRpChannelSelection",
+          "summary": "Update channel selection settings",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/pcgs/key-based/network-policy-{policyId}/users",
+          "method": "GET",
+          "operationId": "getKeyBasedPcgUsers",
+          "summary": "Get users for a PCG-enabled network policy",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/pcgs/key-based/network-policy-{policyId}/users",
+          "method": "PUT",
+          "operationId": "updateKeyBasedPcgUsers",
+          "summary": "Replace all users in a PCG-enabled network policy",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/pcgs/key-based/network-policy-{policyId}/users",
+          "method": "POST",
+          "operationId": "addKeyBasedPcgUsers",
+          "summary": "[LRO] Add users to a PCG-enabled network policy",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/pcgs/key-based/network-policy-{policyId}/users",
+          "method": "DELETE",
+          "operationId": "deleteKeyBasedPcgUsers",
+          "summary": "Delete users from a PCG-enabled network policy",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/{reportId}/recipients",
+          "method": "GET",
+          "operationId": "getRecipientsForReport",
+          "summary": "Get Recipients for Report",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/{reportId}/recipients",
+          "method": "PUT",
+          "operationId": "addRecipientsToReport",
+          "summary": "Add Recipients to Report",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/{reportId}/recipients",
+          "method": "POST",
+          "operationId": "deleteRecipientsFromReport",
+          "summary": "Delete Recipients from Report",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/custom/{reportId}",
+          "method": "GET",
+          "operationId": "getCustomReportSchedule",
+          "summary": "Get a custom report schedule",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/custom/{reportId}",
+          "method": "PUT",
+          "operationId": "updateScheduledCustomReport",
+          "summary": "Update a scheduled custom report",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/network-policies/{id}",
+          "method": "GET",
+          "operationId": "getNetworkPolicy",
+          "summary": "Get the network policy",
+          "tags": [
+            "Network Policy"
+          ]
+        },
+        {
+          "path": "/network-policies/{id}",
+          "method": "PUT",
+          "operationId": "updateNetworkPolicy",
+          "summary": "Update the network policy",
+          "tags": [
+            "Network Policy"
+          ]
+        },
+        {
+          "path": "/network-policies/{id}",
+          "method": "DELETE",
+          "operationId": "deleteNetworkPolicy",
+          "summary": "Delete the network policy",
+          "tags": [
+            "Network Policy"
+          ]
+        },
+        {
+          "path": "/mac-object-profiles/{id}",
+          "method": "GET",
+          "operationId": "getMacObject",
+          "summary": "Get MAC Object by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/mac-object-profiles/{id}",
+          "method": "PUT",
+          "operationId": "updateMacObject",
+          "summary": "Update MAC Object by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/mac-object-profiles/{id}",
+          "method": "DELETE",
+          "operationId": "deleteMacObjectProfiles",
+          "summary": "Delete a MAC object by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/mac-firewall-policies/{id}",
+          "method": "GET",
+          "operationId": "getMacFirewallPolicy",
+          "summary": "Get MAC Firewall Policy by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/mac-firewall-policies/{id}",
+          "method": "PUT",
+          "operationId": "updateMacFirewallPolicy",
+          "summary": "Update MAC Firewall policy by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/mac-firewall-policies/{id}",
+          "method": "DELETE",
+          "operationId": "deleteMacFirewallPolicy",
+          "summary": "Delete MAC Firewall policy by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/locations/{id}",
+          "method": "PUT",
+          "operationId": "updateLocation",
+          "summary": "Update a location",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/{id}",
+          "method": "DELETE",
+          "operationId": "deleteLocation",
+          "summary": "Delete a location by ID",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/wall/type/{id}",
+          "method": "PUT",
+          "operationId": "updateWallType",
+          "summary": "Update a wall type",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/wall/type/{id}",
+          "method": "DELETE",
+          "operationId": "deleteWallType",
+          "summary": "Delete a wall type",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/site/{id}",
+          "method": "GET",
+          "operationId": "getSite",
+          "summary": "Get a site by ID",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/site/{id}",
+          "method": "PUT",
+          "operationId": "updateSite",
+          "summary": "Update a site by ID",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/site/{id}",
+          "method": "DELETE",
+          "operationId": "deleteSite",
+          "summary": "Delete a site by ID",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/folder/zones",
+          "method": "PUT",
+          "operationId": "updateZones",
+          "summary": "Update zones in folder",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/folder/zones",
+          "method": "POST",
+          "operationId": "createZone",
+          "summary": "Create a zone",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/floor/{id}",
+          "method": "GET",
+          "operationId": "getFloor",
+          "summary": "Get a floor by ID",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/floor/{id}",
+          "method": "PUT",
+          "operationId": "updateFloor",
+          "summary": "Update a floor",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/floor/{id}",
+          "method": "DELETE",
+          "operationId": "deleteFloor",
+          "summary": "Delete a floor by ID",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/floor/{floorId}/label",
+          "method": "GET",
+          "operationId": "getFloorMapLabels",
+          "summary": "Find all floor map labels referencing the floor",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/floor/{floorId}/label",
+          "method": "PUT",
+          "operationId": "updateFloorMapLabel",
+          "summary": "Updates one floor map label.",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/floor/{floorId}/label",
+          "method": "POST",
+          "operationId": "createFloorMapLabel",
+          "summary": "Creates one floor map label.",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/floor/bulk/label",
+          "method": "PUT",
+          "operationId": "bulkUpdateFloorMapLabels",
+          "summary": "Updates one ore more floor map labels.",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/building/{id}",
+          "method": "GET",
+          "operationId": "getBuilding",
+          "summary": "Get a building by ID",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/building/{id}",
+          "method": "PUT",
+          "operationId": "updateBuilding",
+          "summary": "Update a building",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/building/{id}",
+          "method": "DELETE",
+          "operationId": "deleteBuilding",
+          "summary": "Delete a building by ID",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/ldap-servers/{id}",
+          "method": "GET",
+          "operationId": "getLdapServer",
+          "summary": "Get LDAP server by ID",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/ldap-servers/{id}",
+          "method": "PUT",
+          "operationId": "updateLdapServer",
+          "summary": "Update LDAP server configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/ldap-servers/{id}",
+          "method": "DELETE",
+          "operationId": "deleteLdapServer",
+          "summary": "Delete a LDAP server",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/l3-address-profiles/{id}",
+          "method": "GET",
+          "operationId": "getL3AddressProfile",
+          "summary": "Get a L3 address profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/l3-address-profiles/{id}",
+          "method": "PUT",
+          "operationId": "updateL3AddressProfile",
+          "summary": "Update a L3 address profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/l3-address-profiles/{id}",
+          "method": "DELETE",
+          "operationId": "deleteL3AddressProfile",
+          "summary": "Delete a L3 address profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ip-firewall-policies/{id}",
+          "method": "GET",
+          "operationId": "getIpFirewallPolicy",
+          "summary": "Get IP Firewall Policy by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ip-firewall-policies/{id}",
+          "method": "PUT",
+          "operationId": "updateIpPolicyRequest",
+          "summary": "Update IP Firewall policy by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ip-firewall-policies/{id}",
+          "method": "DELETE",
+          "operationId": "deleteIpFirewallPolicy",
+          "summary": "Delete IP Firewall policy by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/iot-profiles/{id}",
+          "method": "GET",
+          "operationId": "getIotProfile",
+          "summary": "Get IoT profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/iot-profiles/{id}",
+          "method": "PUT",
+          "operationId": "updateIotProfile",
+          "summary": "Update IoT profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/iot-profiles/{id}",
+          "method": "DELETE",
+          "operationId": "deleteIotProfile",
+          "summary": "Delete IoT profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/hotspot-service-provider-profiles/{id}",
+          "method": "GET",
+          "operationId": "getHotspotServiceProviderProfile",
+          "summary": "Get Hotspot Service Provider profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/hotspot-service-provider-profiles/{id}",
+          "method": "PUT",
+          "operationId": "updateHotspotServiceProviderProfile",
+          "summary": "Update Hotspot Service Provider profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/hotspot-service-provider-profiles/{id}",
+          "method": "DELETE",
+          "operationId": "deleteHotspotServiceProviderProfile",
+          "summary": "Delete Hotspot Service Provider profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/hotspot-profiles/{id}",
+          "method": "GET",
+          "operationId": "getHotspotProfile",
+          "summary": "Get Hotspot profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/hotspot-profiles/{id}",
+          "method": "PUT",
+          "operationId": "updateHotspotProfile",
+          "summary": "Update Hotspot profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/hotspot-profiles/{id}",
+          "method": "DELETE",
+          "operationId": "deleteHotspotProfile",
+          "summary": "Delete Hotspot profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/hiq/context",
+          "method": "GET",
+          "operationId": "getHiqContext",
+          "summary": "Get HIQ context",
+          "tags": [
+            "HIQ"
+          ]
+        },
+        {
+          "path": "/hiq/context",
+          "method": "PUT",
+          "operationId": "setHiqContext",
+          "summary": "Set HIQ context",
+          "tags": [
+            "HIQ"
+          ]
+        },
+        {
+          "path": "/hiq/context/reading",
+          "method": "GET",
+          "operationId": "getReadingOrgIds",
+          "summary": "Get organizations for reading data",
+          "tags": [
+            "HIQ"
+          ]
+        },
+        {
+          "path": "/hiq/context/reading",
+          "method": "PUT",
+          "operationId": "setReadingOrgIds",
+          "summary": "Set organizations for reading data",
+          "tags": [
+            "HIQ"
+          ]
+        },
+        {
+          "path": "/hiq/context/creating",
+          "method": "GET",
+          "operationId": "getCreatingOrgId",
+          "summary": "Get organization for creating new data",
+          "tags": [
+            "HIQ"
+          ]
+        },
+        {
+          "path": "/hiq/context/creating",
+          "method": "PUT",
+          "operationId": "setCreatingOrgId",
+          "summary": "Set organization for creating new data",
+          "tags": [
+            "HIQ"
+          ]
+        },
+        {
+          "path": "/floor/afc/details",
+          "method": "GET",
+          "operationId": "getFloorAfcProperties",
+          "summary": "AFC Related Floor Height and Accuracy data",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/floor/afc/details",
+          "method": "PUT",
+          "operationId": "updateFloorAfcProperties",
+          "summary": "AFC Related Floor and AP Height and Accuracy data",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/floor/afc/details",
+          "method": "POST",
+          "operationId": "addFloorAfcProperties",
+          "summary": "AFC Related Floor and AP Height and Accuracy data",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/endusers/{id}",
+          "method": "PUT",
+          "operationId": "updateEndUser",
+          "summary": "Update an end user",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/endusers/{id}",
+          "method": "DELETE",
+          "operationId": "deleteSsidUser",
+          "summary": "Delete end user by ID",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/devices/{id}/visible",
+          "method": "PUT",
+          "operationId": "updateDeviceVisible",
+          "summary": "Update the visible status of a device in a floor",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/radio-operating-mode",
+          "method": "GET",
+          "operationId": "getDeviceRadioOperatingMode",
+          "summary": "Get the device radio operating mode",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/radio-operating-mode",
+          "method": "PUT",
+          "operationId": "configureDeviceRadioOperatingMode",
+          "summary": "Configure radio operating mode of a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/network-policy",
+          "method": "GET",
+          "operationId": "getDeviceNetworkPolicy",
+          "summary": "Get network policy for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/network-policy",
+          "method": "PUT",
+          "operationId": "assignDeviceNetworkPolicy",
+          "summary": "Assign network policy to a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/network-policy",
+          "method": "DELETE",
+          "operationId": "revokeDeviceNetworkPolicy",
+          "summary": "Revoke network policy for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/mobileapp/gps",
+          "method": "PUT",
+          "operationId": "mobileappGpsSettings",
+          "summary": "Update AP GPS settings",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/location",
+          "method": "GET",
+          "operationId": "getDeviceLocation",
+          "summary": "Get location for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/location",
+          "method": "PUT",
+          "operationId": "assignDeviceLocation",
+          "summary": "Assign location to a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/location",
+          "method": "DELETE",
+          "operationId": "revokeDeviceLocation",
+          "summary": "Revoke location for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/hostname",
+          "method": "PUT",
+          "operationId": "changeHostname",
+          "summary": "Change hostname for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/ftm-settings",
+          "method": "GET",
+          "operationId": "getFtmSettings",
+          "summary": "Get FTM Settings by device ID",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/ftm-settings",
+          "method": "PUT",
+          "operationId": "configureFtmSettings",
+          "summary": "Configure (create / update) device FTM Settings",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/ftm-settings",
+          "method": "DELETE",
+          "operationId": "deleteFtmSettings",
+          "summary": "Delete FTM Settings by device ID",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/description",
+          "method": "PUT",
+          "operationId": "changeDeviceDescription",
+          "summary": "Change description for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/client-monitor",
+          "method": "GET",
+          "operationId": "getDeviceClientMonitor",
+          "summary": "Get client monitor setting for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/client-monitor",
+          "method": "PUT",
+          "operationId": "assignDeviceClientMonitor",
+          "summary": "Assign client monitor setting to a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/client-monitor",
+          "method": "DELETE",
+          "operationId": "revokeDeviceClientMonitor",
+          "summary": "Revoke client monitor setting for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/radius-proxy/:assign",
+          "method": "PUT",
+          "operationId": "assignDevicesRadiusProxy",
+          "summary": "Assign RADIUS proxy to devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/ibeacon",
+          "method": "PUT",
+          "operationId": "changeDevicesIbeacon",
+          "summary": "Change iBeacon settings for devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/deployments/{deploymentId}",
+          "method": "GET",
+          "operationId": "getDeploymentDetailsById",
+          "summary": "Get deployment details by Id",
+          "tags": [
+            "Configuration - Deployment"
+          ]
+        },
+        {
+          "path": "/deployments/{deploymentId}",
+          "method": "PUT",
+          "operationId": "updateFirmwareUpgradeSchedule",
+          "summary": "Update schedule with deployment ID",
+          "tags": [
+            "Configuration - Deployment"
+          ]
+        },
+        {
+          "path": "/deployments/{deploymentId}",
+          "method": "DELETE",
+          "operationId": "deleteFirmwareUpgradeSchedule",
+          "summary": "Delete the deployment schedule by ID",
+          "tags": [
+            "Configuration - Deployment"
+          ]
+        },
+        {
+          "path": "/credential-distribution-groups/{id}",
+          "method": "PUT",
+          "operationId": "updateCredentialDistributionGroup",
+          "summary": "Update Credential Distribution Group by ID",
+          "tags": [
+            "Administration"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/update-device-action",
+          "method": "PUT",
+          "operationId": "updateCopilotAnomaliesDevicesAction",
+          "summary": "[LRO] Update Anomalies and Devices",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/update-action",
+          "method": "PUT",
+          "operationId": "updateAnomalyAction",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/devices/update-action",
+          "method": "PUT",
+          "operationId": "updateAnomalyDeviceAction",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/devices/feedback",
+          "method": "PUT",
+          "operationId": "updateAnomaliesFeedback",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/clients/alias",
+          "method": "PUT",
+          "operationId": "setClientsAliases",
+          "summary": "Set the aliases for multiple clients",
+          "tags": [
+            "Client"
+          ]
+        },
+        {
+          "path": "/client-monitor-profiles/{id}",
+          "method": "GET",
+          "operationId": "getClientMonitorProfile",
+          "summary": "Get client monitor profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/client-monitor-profiles/{id}",
+          "method": "PUT",
+          "operationId": "updateClientMonitorProfile",
+          "summary": "Update client monitor profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/client-monitor-profiles/{id}",
+          "method": "DELETE",
+          "operationId": "deleteClientMonitorProfile",
+          "summary": "Delete an client monitor profile by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/classification-rules/{id}",
+          "method": "GET",
+          "operationId": "getClassificationRule",
+          "summary": "Get a classification rule by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/classification-rules/{id}",
+          "method": "PUT",
+          "operationId": "updateClassificationRule",
+          "summary": "Update classification rule",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/classification-rules/{id}",
+          "method": "DELETE",
+          "operationId": "deleteClassificationRule",
+          "summary": "Delete classification rule by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/certificate-bundles/{id}",
+          "method": "GET",
+          "operationId": "getCertificateBundle",
+          "summary": "Get Certificate Bundle by ID",
+          "tags": [
+            "Configuration - Certificate"
+          ]
+        },
+        {
+          "path": "/certificate-bundles/{id}",
+          "method": "PUT",
+          "operationId": "updateCertificateBundle",
+          "summary": "Update Certificate Bundle by ID",
+          "tags": [
+            "Configuration - Certificate"
+          ]
+        },
+        {
+          "path": "/certificate-bundles/{id}",
+          "method": "DELETE",
+          "operationId": "deleteCertificateBundle",
+          "summary": "Delete Certificate Bundle by ID",
+          "tags": [
+            "Configuration - Certificate"
+          ]
+        },
+        {
+          "path": "/ccgs/{id}",
+          "method": "GET",
+          "operationId": "getCloudConfigGroup",
+          "summary": "Get a cloud config group",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ccgs/{id}",
+          "method": "PUT",
+          "operationId": "updateCloudConfigGroup",
+          "summary": "Update cloud config group information",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ccgs/{id}",
+          "method": "DELETE",
+          "operationId": "deleteCloudConfigGroup",
+          "summary": "Delete a cloud config group",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/webhooks/{id}",
+          "method": "GET",
+          "operationId": "getAlertWebhookSubscription",
+          "summary": "Get alert webhook subscription",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/webhooks/{id}",
+          "method": "PUT",
+          "operationId": "updateAlertWebhookSubscription",
+          "summary": "Update alert webhook subscription",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/webhooks/{id}",
+          "method": "DELETE",
+          "operationId": "deleteAlertWebhookSubscription",
+          "summary": "Delete alert webhook subscription",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/servicenow/{id}",
+          "method": "GET",
+          "operationId": "getServiceNowSubscription",
+          "summary": "Get a specific ServiceNow subscription",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/servicenow/{id}",
+          "method": "PUT",
+          "operationId": "updateServiceNowSubscription",
+          "summary": "Update ServiceNow subscription",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/servicenow/{id}",
+          "method": "PATCH",
+          "operationId": "patchServiceNowSubscription",
+          "summary": "Partial or full update ServiceNow subscription",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/emails/{id}",
+          "method": "GET",
+          "operationId": "getAlertEmailSubscription",
+          "summary": "Get alert email subscription",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/emails/{id}",
+          "method": "PUT",
+          "operationId": "updateAlertEmailSubscription",
+          "summary": "Update alert email subscription",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/emails/{id}",
+          "method": "DELETE",
+          "operationId": "deleteAlertEmailSubscription",
+          "summary": "Delete alert email subscription",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-policies/{policyId}/rules/{ruleId}",
+          "method": "GET",
+          "operationId": "getAlertRule",
+          "summary": "Get details of an alert rule",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-policies/{policyId}/rules/{ruleId}",
+          "method": "PUT",
+          "operationId": "updateAlertRule",
+          "summary": "Update an alert rule",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-policies/{id}",
+          "method": "GET",
+          "operationId": "getAlertPolicy",
+          "summary": "Get details of an alert policy",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-policies/{id}",
+          "method": "PUT",
+          "operationId": "updateAlertPolicy",
+          "summary": "Update a site-based alert policy",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-policies/{id}",
+          "method": "DELETE",
+          "operationId": "deleteAlertPolicy",
+          "summary": "Delete a site-based alert policy",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/account/viq/default-device-password",
+          "method": "GET",
+          "operationId": "getDefaultDevicePassword",
+          "summary": "Get the default device password in the account",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/viq/default-device-password",
+          "method": "PUT",
+          "operationId": "updateDefaultDevicePassword",
+          "summary": "Update the default device password in the account",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/vhm/setting/{id}",
+          "method": "PUT",
+          "operationId": "updateVhmSetting",
+          "summary": "Update Vhm Setting",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/vlan-profiles",
+          "method": "GET",
+          "operationId": "listVlanProfiles",
+          "summary": "List VLAN profiles",
+          "tags": [
+            "Configuration - Basic"
+          ]
+        },
+        {
+          "path": "/vlan-profiles",
+          "method": "POST",
+          "operationId": "createVlanProfile",
+          "summary": "Create VLAN profile",
+          "tags": [
+            "Configuration - Basic"
+          ]
+        },
+        {
+          "path": "/vlan-profiles/:delete",
+          "method": "POST",
+          "operationId": "deleteVlanProfiles",
+          "summary": "[LRO] Delete VLAN profiles",
+          "tags": [
+            "Configuration - Basic"
+          ]
+        },
+        {
+          "path": "/users",
+          "method": "GET",
+          "operationId": "listUsers",
+          "summary": "List all users",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users",
+          "method": "POST",
+          "operationId": "createUser",
+          "summary": "Create new user",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users/type-distribution",
+          "method": "POST",
+          "operationId": "getUserTypeDistribution",
+          "summary": "Get user type distribution",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users/grid",
+          "method": "POST",
+          "operationId": "listUsersGrid",
+          "summary": "List Users",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users/grid-export",
+          "method": "POST",
+          "operationId": "exportToCsv",
+          "summary": "Export the Users grid data",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users/filter-metadata",
+          "method": "POST",
+          "operationId": "listUserGridFilterMetadata",
+          "summary": "List user grid filter metadata",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users/external",
+          "method": "GET",
+          "operationId": "listExternalUsers",
+          "summary": "List external access users",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users/external",
+          "method": "POST",
+          "operationId": "grantExternalUser",
+          "summary": "Grant external access",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users/data-usage",
+          "method": "POST",
+          "operationId": "getUserDataUsage",
+          "summary": "Get user data usage",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/usergroups",
+          "method": "GET",
+          "operationId": "listUserGroups",
+          "summary": "List user groups",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/usergroups",
+          "method": "POST",
+          "operationId": "createUserGroup",
+          "summary": "Create user group",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/user-profiles",
+          "method": "GET",
+          "operationId": "listUserProfiles",
+          "summary": "List user profiles",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/user-profiles",
+          "method": "POST",
+          "operationId": "createUserProfile",
+          "summary": "Create a user profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/user-profiles/{id}/mac-firewall-policies/:detach",
+          "method": "POST",
+          "operationId": "detachMacFirewallPolicyFromUserProfile",
+          "summary": "Detach MAC Firewall Policy from an User Profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/user-profiles/{id}/mac-firewall-policies/:attach",
+          "method": "POST",
+          "operationId": "attachMacFirewallPolicyToUserProfile",
+          "summary": "Attach MAC Firewall Policy to an User Profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/user-profiles/{id}/ip-firewall-policies/:detach",
+          "method": "POST",
+          "operationId": "detachIpFirewallPolicyFromUserProfile",
+          "summary": "Detach IP Firewall Policy from an User Profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/user-profiles/{id}/ip-firewall-policies/:attach",
+          "method": "POST",
+          "operationId": "attachIpFirewallPolicyToUserProfile",
+          "summary": "Attach IP Firewall Policy to an User Profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/user-profile-assignments",
+          "method": "GET",
+          "operationId": "listUserProfileAssignments",
+          "summary": "List user profile assignments",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/user-profile-assignments",
+          "method": "POST",
+          "operationId": "createUserProfileAssignment",
+          "summary": "Create a user profile assignment",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/user-folder-preferences/{folderId}",
+          "method": "POST",
+          "operationId": "saveUserFolderPreferences",
+          "summary": "Save user folder preferences values.",
+          "tags": [
+            "Use Folder Preferences"
+          ]
+        },
+        {
+          "path": "/tunnel-concentrators",
+          "method": "GET",
+          "operationId": "listTunnelConcentrators",
+          "summary": "List Tunnel Concentrators",
+          "tags": [
+            "Configuration - Network"
+          ]
+        },
+        {
+          "path": "/tunnel-concentrators",
+          "method": "POST",
+          "operationId": "createTunnelConcentrator",
+          "summary": "Create a Tunnel Concentrator",
+          "tags": [
+            "Configuration - Network"
+          ]
+        },
+        {
+          "path": "/switch-inspector/diagnostics",
+          "method": "POST",
+          "operationId": "getDiagnostics",
+          "summary": "Switch Inspector Panel Diagnostics",
+          "tags": [
+            "Switch Inspector Panel"
+          ]
+        },
+        {
+          "path": "/subscriptions/webhook",
+          "method": "GET",
+          "operationId": "list",
+          "summary": "List webhook subscriptions",
+          "tags": [
+            "Notification"
+          ]
+        },
+        {
+          "path": "/subscriptions/webhook",
+          "method": "POST",
+          "operationId": "createSubscriptions",
+          "summary": "Create webhook subscriptions",
+          "tags": [
+            "Notification"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/user-profile/:attach",
+          "method": "POST",
+          "operationId": "attachUserProfileToSsid",
+          "summary": "Attach user profile to an SSID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/user-profile-assignment/:attach",
+          "method": "POST",
+          "operationId": "attachUserProfileAssignmentToSsid",
+          "summary": "Attach user profile assignment to an SSID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/radius-server-group/:attach",
+          "method": "POST",
+          "operationId": "attachRadiusServerGroupToSsid",
+          "summary": "Attach radius server group to an SSID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/radius-client-profile/:attach",
+          "method": "POST",
+          "operationId": "attachRadiusClientProfileToSsid",
+          "summary": "Attach RADIUS client profile to an SSID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/cwp/:enable",
+          "method": "POST",
+          "operationId": "enableSsidCwp",
+          "summary": "Enable and attach the CWP on the SSID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/cwp/:disable",
+          "method": "POST",
+          "operationId": "disableSsidCwp",
+          "summary": "Disable the CWP on the SSID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/cwp/:attach",
+          "method": "POST",
+          "operationId": "attachCwpToSsid",
+          "summary": "Attach CWP to an SSID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/client-monitor-profile/:attach",
+          "method": "POST",
+          "operationId": "attachClientMonitorProfileToSsid",
+          "summary": "Attach client monitor profile to an SSID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ssids/{id}/:rename",
+          "method": "POST",
+          "operationId": "renameSsid",
+          "summary": "Rename SSID (Wireless name)",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/site/spectrum/",
+          "method": "POST",
+          "operationId": "getAfcSpectrumPerSite",
+          "summary": "No summary",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/rtts",
+          "method": "POST",
+          "operationId": "createRttsSession",
+          "summary": "Create",
+          "tags": [
+            "rtts-endpoint"
+          ]
+        },
+        {
+          "path": "/rtts/supported-devices",
+          "method": "POST",
+          "operationId": "listRttsSupportedDevices",
+          "summary": "List RTTS supported devices",
+          "tags": [
+            "rtts-endpoint"
+          ]
+        },
+        {
+          "path": "/radsec-proxies",
+          "method": "GET",
+          "operationId": "listRadsecProxies",
+          "summary": "List RADSEC proxies",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radsec-proxies",
+          "method": "POST",
+          "operationId": "createRadsecProxy",
+          "summary": "Create RADSEC proxy configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-servers/internal",
+          "method": "GET",
+          "operationId": "listInternalRadiusServers",
+          "summary": "List all internal RADIUS servers",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-servers/internal",
+          "method": "POST",
+          "operationId": "createInternalRadiusServer",
+          "summary": "Create internal RADIUS server configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-servers/internal",
+          "method": "DELETE",
+          "operationId": "deleteBulkInternalRadiusServer",
+          "summary": "[LRO] Delete internal RADIUS server configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-servers/external",
+          "method": "GET",
+          "operationId": "listExternalRadiusServers",
+          "summary": "List external RADIUS servers",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-servers/external",
+          "method": "POST",
+          "operationId": "createExternalRadiusServer",
+          "summary": "Create external RADIUS server configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-proxies",
+          "method": "GET",
+          "operationId": "listRadiusProxies",
+          "summary": "List RADIUS proxies",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-proxies",
+          "method": "POST",
+          "operationId": "createRadiusProxy",
+          "summary": "Create RADIUS proxy configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-client-objects",
+          "method": "GET",
+          "operationId": "listRadiusClientObjects",
+          "summary": "List RADIUS client objects",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-client-objects",
+          "method": "POST",
+          "operationId": "createRadiusClientObject",
+          "summary": "Create RADIUS client object configuration",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radio-profiles",
+          "method": "GET",
+          "operationId": "listRadioProfiles",
+          "summary": "List radio profiles",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles",
+          "method": "POST",
+          "operationId": "createRadioProfile",
+          "summary": "Create a radio profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/mac-ouis",
+          "method": "GET",
+          "operationId": "listRpMacOuiProfiles",
+          "summary": "List MAC OUI profiles",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/radio-profiles/mac-ouis",
+          "method": "POST",
+          "operationId": "createMacOuiProfile",
+          "summary": "Create a MAC OUI profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/pcgs/key-based",
+          "method": "GET",
+          "operationId": "listKeyBasedPrivateClientGroups",
+          "summary": "List Key-based Private Client Groups",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/pcgs/key-based",
+          "method": "POST",
+          "operationId": "createKeyBasedPcgNetworkPolicy",
+          "summary": "[LRO] Create a Key-based Private Client Group",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/pcgs/key-based/network-policy-{policyId}/port-assignments",
+          "method": "GET",
+          "operationId": "getPortAssignments",
+          "summary": "Get device port assignments in network policy",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/pcgs/key-based/network-policy-{policyId}/port-assignments",
+          "method": "POST",
+          "operationId": "assignPorts",
+          "summary": "Assign ports to devices in network policy",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/pcgs/key-based/network-policy-{policyId}/keys/:generate",
+          "method": "POST",
+          "operationId": "generateKeys",
+          "summary": "Generate shared keys for users in network policy",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/pcgs/key-based/network-policy-{policyId}/keys/:email",
+          "method": "POST",
+          "operationId": "emailKeys",
+          "summary": "Send keys to users in network policy via Email",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/pcgs/key-based/network-policy-{policyId}/:onboard",
+          "method": "POST",
+          "operationId": "onboardKeyBasedPrivateClientGroup",
+          "summary": "[LRO] Onboard Key-based PCG in network policy",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/packetcaptures",
+          "method": "GET",
+          "operationId": "listPacketCaptures",
+          "summary": "List packet capture sessions",
+          "tags": [
+            "Packet Capture"
+          ]
+        },
+        {
+          "path": "/packetcaptures",
+          "method": "POST",
+          "operationId": "createPacketCapture",
+          "summary": "Create a new packet capture session",
+          "tags": [
+            "Packet Capture"
+          ]
+        },
+        {
+          "path": "/packetcaptures",
+          "method": "DELETE",
+          "operationId": "deletePacketCaptures",
+          "summary": "Delete packet capture sessions",
+          "tags": [
+            "Packet Capture"
+          ]
+        },
+        {
+          "path": "/packetcaptures/{id}/:upload",
+          "method": "POST",
+          "operationId": "uploadPacketCaptureFiles",
+          "summary": "Upload a packet capture session's capture files",
+          "tags": [
+            "Packet Capture"
+          ]
+        },
+        {
+          "path": "/packetcaptures/{id}/:stop",
+          "method": "POST",
+          "operationId": "stopPacketCapture",
+          "summary": "Stop a packet capture session",
+          "tags": [
+            "Packet Capture"
+          ]
+        },
+        {
+          "path": "/operations/{operationId}/:cancel",
+          "method": "POST",
+          "operationId": "cancelOperation",
+          "summary": "Cancel Long-Running Operation (LRO)",
+          "tags": [
+            "Operation"
+          ]
+        },
+        {
+          "path": "/ng-reports/timeseries",
+          "method": "POST",
+          "operationId": "qoeDiagnosticsTimeSeriesData",
+          "summary": "Get QoE Diagnostics Time Series Data",
+          "tags": [
+            "NG Reports (Ondemand)"
+          ]
+        },
+        {
+          "path": "/ng-reports/tabledata",
+          "method": "POST",
+          "operationId": "qoeDiagnosticsTableData",
+          "summary": "Get QoE Diagnostics Table Data",
+          "tags": [
+            "NG Reports (Ondemand)"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/custom",
+          "method": "GET",
+          "operationId": "listScheduledCustomReports",
+          "summary": "List Custom Report Schedules",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/custom",
+          "method": "POST",
+          "operationId": "createScheduledCustomReport",
+          "summary": "Create a scheduled custom report",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/custom",
+          "method": "DELETE",
+          "operationId": "deleteScheduledCustomReports",
+          "summary": "Delete scheduled custom reports",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/ng-reports/metadata/user",
+          "method": "POST",
+          "operationId": "getUsersListForFilter",
+          "summary": "List of Users for filtering",
+          "tags": [
+            "NG Reports (Ondemand)"
+          ]
+        },
+        {
+          "path": "/ng-reports/metadata/ssids",
+          "method": "POST",
+          "operationId": "getSsisMetadata",
+          "summary": "List of SSIDs for filtering",
+          "tags": [
+            "NG Reports (Ondemand)"
+          ]
+        },
+        {
+          "path": "/ng-reports/metadata/os",
+          "method": "POST",
+          "operationId": "getOsFilterMetadata",
+          "summary": "List of OS for filtering",
+          "tags": [
+            "NG Reports (Ondemand)"
+          ]
+        },
+        {
+          "path": "/ng-reports/metadata/device",
+          "method": "POST",
+          "operationId": "getDeviceListForFilter",
+          "summary": "List of Devices for filtering",
+          "tags": [
+            "NG Reports (Ondemand)"
+          ]
+        },
+        {
+          "path": "/ng-reports/metadata/client",
+          "method": "POST",
+          "operationId": "getClientListForFilter",
+          "summary": "List of Clients for filtering",
+          "tags": [
+            "NG Reports (Ondemand)"
+          ]
+        },
+        {
+          "path": "/ng-reports/metadata/bands",
+          "method": "POST",
+          "operationId": "getBandMetadata",
+          "summary": "List of Band for filtering",
+          "tags": [
+            "NG Reports (Ondemand)"
+          ]
+        },
+        {
+          "path": "/ng-reports/metadata/application",
+          "method": "POST",
+          "operationId": "getApplicationListForFilter",
+          "summary": "List of Applications for filtering",
+          "tags": [
+            "NG Reports (Ondemand)"
+          ]
+        },
+        {
+          "path": "/ng-reports/downloads/reports",
+          "method": "POST",
+          "operationId": "qoeDiagnosticsXlsxData",
+          "summary": "Download the Reports",
+          "tags": [
+            "NG Reports (Ondemand)"
+          ]
+        },
+        {
+          "path": "/network-services",
+          "method": "GET",
+          "operationId": "listNetworkServices",
+          "summary": "List Network Services",
+          "tags": [
+            "Configuration - Network"
+          ]
+        },
+        {
+          "path": "/network-services",
+          "method": "POST",
+          "operationId": "createNetworkServices",
+          "summary": "Create Network Services",
+          "tags": [
+            "Configuration - Network"
+          ]
+        },
+        {
+          "path": "/network-policies",
+          "method": "GET",
+          "operationId": "listNetworkPolices",
+          "summary": "List network policies",
+          "tags": [
+            "Network Policy"
+          ]
+        },
+        {
+          "path": "/network-policies",
+          "method": "POST",
+          "operationId": "createNetworkPolicy",
+          "summary": "Create network policy",
+          "tags": [
+            "Network Policy"
+          ]
+        },
+        {
+          "path": "/network-policies/{id}/ssids/:remove",
+          "method": "POST",
+          "operationId": "deleteSsidsFromNetworkPolicy",
+          "summary": "Removes SSIDs from the network policy",
+          "tags": [
+            "Network Policy"
+          ]
+        },
+        {
+          "path": "/network-policies/{id}/ssids/:add",
+          "method": "POST",
+          "operationId": "addSsidsToNetworkPolicy",
+          "summary": "Add SSIDs to a network policy",
+          "tags": [
+            "Network Policy"
+          ]
+        },
+        {
+          "path": "/mac-object-profiles",
+          "method": "GET",
+          "operationId": "listMacObjectProfiles",
+          "summary": "List mac object profiles",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/mac-object-profiles",
+          "method": "POST",
+          "operationId": "createMacObject",
+          "summary": "Create a mac object",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/mac-firewall-policies",
+          "method": "GET",
+          "operationId": "listMacFirewallPolicies",
+          "summary": "List MAC Firewall policies",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/mac-firewall-policies",
+          "method": "POST",
+          "operationId": "createMacFirewallPolicy",
+          "summary": "Create MAC Firewall policy",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/mac-firewall-policies/{id}/mac-firewall-rule/:detach",
+          "method": "POST",
+          "operationId": "detachServiceToMacFirewallPolicy",
+          "summary": "Detach MAC Firewall Rule from MAC Firewall policy",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/mac-firewall-policies/{id}/mac-firewall-rule/:attach",
+          "method": "POST",
+          "operationId": "attachServiceToMacFirewallPolicy",
+          "summary": "Attach MAC Firewall Rule to MAC Firewall policy",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/logs/audit/reports",
+          "method": "POST",
+          "operationId": "auditLogsReport",
+          "summary": "[LRO] Create audit logs report",
+          "tags": [
+            "Log"
+          ]
+        },
+        {
+          "path": "/logout",
+          "method": "POST",
+          "operationId": "logout",
+          "summary": "User logout (Revoke the current access token)",
+          "tags": [
+            "Authentication"
+          ]
+        },
+        {
+          "path": "/login",
+          "method": "POST",
+          "operationId": "login",
+          "summary": "User login with username and password",
+          "tags": [
+            "Authentication"
+          ]
+        },
+        {
+          "path": "/locations",
+          "method": "POST",
+          "operationId": "createLocation",
+          "summary": "Create a location",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/wall/type",
+          "method": "GET",
+          "operationId": "getWallType",
+          "summary": "Get wall types",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/wall/type",
+          "method": "POST",
+          "operationId": "createWallType",
+          "summary": "Create a wall type",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/site",
+          "method": "GET",
+          "operationId": "listSites",
+          "summary": "List sites",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/site",
+          "method": "POST",
+          "operationId": "createSite",
+          "summary": "Create a site",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/import/ekahau",
+          "method": "POST",
+          "operationId": "startEkahauImport",
+          "summary": "[LRO] Import one or more floors from an Ekahau archive",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/floorplan",
+          "method": "POST",
+          "operationId": "uploadFloorplan",
+          "summary": "Upload floorplan",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/floor",
+          "method": "GET",
+          "operationId": "listFloors",
+          "summary": "List floors",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/floor",
+          "method": "POST",
+          "operationId": "createFloor",
+          "summary": "Create a floor",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/building",
+          "method": "GET",
+          "operationId": "listBuildings",
+          "summary": "List buildings",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/building",
+          "method": "POST",
+          "operationId": "createBuilding",
+          "summary": "Create a building",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/:init",
+          "method": "POST",
+          "operationId": "initializeLocation",
+          "summary": "Initialize organization location",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/ldap-servers",
+          "method": "GET",
+          "operationId": "listLdapServers",
+          "summary": "List LDAP servers",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/ldap-servers",
+          "method": "POST",
+          "operationId": "createLdapServer",
+          "summary": "Create LDAP server",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/l3-address-profiles",
+          "method": "GET",
+          "operationId": "listL3AddressProfiles",
+          "summary": "List L3 address profiles",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/l3-address-profiles",
+          "method": "POST",
+          "operationId": "createL3AddressProfile",
+          "summary": "Create a L3 address profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ip-firewall-policies",
+          "method": "GET",
+          "operationId": "listIpFirewallPolicies",
+          "summary": "List IP Firewall policies",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ip-firewall-policies",
+          "method": "POST",
+          "operationId": "createIpFirewallPolicy",
+          "summary": "Create IP Firewall policy",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ip-firewall-policies/{id}/ip-firewall-rule/:detach",
+          "method": "POST",
+          "operationId": "detachServiceToIpFirewallPolicy",
+          "summary": "Detach IP Firewall Rule from IP Firewall policy",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ip-firewall-policies/{id}/ip-firewall-rule/:attach",
+          "method": "POST",
+          "operationId": "attachServiceToIpFirewallPolicy",
+          "summary": "Attach IP Firewall Rule to IP Firewall policy",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/iot-profiles",
+          "method": "GET",
+          "operationId": "listIotProfiles",
+          "summary": "List IoT profiles",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/iot-profiles",
+          "method": "POST",
+          "operationId": "createIotProfile",
+          "summary": "Create a IoT profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/hotspot-service-provider-profiles",
+          "method": "GET",
+          "operationId": "listHotspotServiceProviderProfiles",
+          "summary": "List Hotspot Service Provider profiles",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/hotspot-service-provider-profiles",
+          "method": "POST",
+          "operationId": "createHotspotServiceProviderProfile",
+          "summary": "Create a Hotspot Service Provider profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/hotspot-profiles",
+          "method": "GET",
+          "operationId": "listHotspotProfiles",
+          "summary": "List Hotspot profiles",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/hotspot-profiles",
+          "method": "POST",
+          "operationId": "createHotspotProfile",
+          "summary": "Create a Hotspot profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/hiq/organizations",
+          "method": "GET",
+          "operationId": "listOrganizations",
+          "summary": "List all organizations",
+          "tags": [
+            "HIQ"
+          ]
+        },
+        {
+          "path": "/hiq/organizations",
+          "method": "POST",
+          "operationId": "createOrganization",
+          "summary": "Create a new organization",
+          "tags": [
+            "HIQ"
+          ]
+        },
+        {
+          "path": "/hiq/organizations/{id}/:rename",
+          "method": "POST",
+          "operationId": "renameOrganization",
+          "summary": "Rename an existing organization",
+          "tags": [
+            "HIQ"
+          ]
+        },
+        {
+          "path": "/endusers",
+          "method": "GET",
+          "operationId": "listEndUsers",
+          "summary": "List end users",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/endusers",
+          "method": "POST",
+          "operationId": "createEndUser",
+          "summary": "Create an end user",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/endusers/{id}/:regenerate-password",
+          "method": "POST",
+          "operationId": "regenerateEndUserPassword",
+          "summary": "Regenerate a new password for the end user",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/endusers/client/unlock",
+          "method": "POST",
+          "operationId": "unlockClients",
+          "summary": "Unlock locked clients",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/devices/{id}/thread/commissioner/:stop",
+          "method": "POST",
+          "operationId": "stopThreadCommissioner",
+          "summary": "Stop Thread Commissioner",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/thread/commissioner/:start",
+          "method": "POST",
+          "operationId": "startThreadCommissioner",
+          "summary": "Start Thread Commissioner",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/ssid/status/:change",
+          "method": "POST",
+          "operationId": "changeDeviceLevelSsidStatus",
+          "summary": "Enable or disable SSID for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/ssid/:override",
+          "method": "POST",
+          "operationId": "overrideDeviceLevelSsid",
+          "summary": "Override SSID for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/monitor/:refresh",
+          "method": "POST",
+          "operationId": "monitorRefreshDevice",
+          "summary": "Monitor refresh a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/iot/:enable",
+          "method": "POST",
+          "operationId": "enableIotOnDevice",
+          "summary": "Enable IoT Wireless Interface settings on device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/iot/:disable",
+          "method": "POST",
+          "operationId": "disableIotOnDevice",
+          "summary": "Disable IoT Wireless Interface settings on device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/bounce-port",
+          "method": "POST",
+          "operationId": "bounceDevicePort",
+          "summary": "Bounce port of a device (EXOS, VOSS and SR Switches",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/:unmanage",
+          "method": "POST",
+          "operationId": "changeDeviceStatusToUnmanage",
+          "summary": "Change admin state to 'Unmanaged' for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/:reset",
+          "method": "POST",
+          "operationId": "resetDevice",
+          "summary": "[LRO] Reset a device to factory default",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/:reboot",
+          "method": "POST",
+          "operationId": "rebootDevice",
+          "summary": "Reboot a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/:manage",
+          "method": "POST",
+          "operationId": "changeDeviceStatusToManage",
+          "summary": "Change admin state to 'Managed' for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/:cli",
+          "method": "POST",
+          "operationId": "sendCliToDevice",
+          "summary": "Send CLI to a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/validate-device-action",
+          "method": "POST",
+          "operationId": "validateDeviceAction",
+          "summary": "validate device action metadata",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/thread/commissioner/stop",
+          "method": "POST",
+          "operationId": "stopThreadCommissionerByBuildings",
+          "summary": "Stop Thread Commissioner by Buildings",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/thread/commissioner/start",
+          "method": "POST",
+          "operationId": "startThreadCommissionerByBuildings",
+          "summary": "Start Thread Commissioner by Buildings",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/rm-devices-page",
+          "method": "POST",
+          "operationId": "rmDeviceList",
+          "summary": "[LRO] RM Device Page",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/rm-devices-page/export",
+          "method": "POST",
+          "operationId": "exportRmDevicesToCsv",
+          "summary": "[LRO] Export RM devices data to CSV",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/rm-devices-metadata",
+          "method": "POST",
+          "operationId": "getDeviceListMetadata",
+          "summary": "Get Device List Metadata",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/rm-devices-connection-status",
+          "method": "POST",
+          "operationId": "getDeviceConnectionStatus",
+          "summary": "Get Device Connection Status",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/os/:change",
+          "method": "POST",
+          "operationId": "changeDevicesOsMode",
+          "summary": "Change device OS mode",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/network-policy/:revoke",
+          "method": "POST",
+          "operationId": "revokeDevicesNetworkPolicy",
+          "summary": "Revoke network policy for multiple devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/network-policy/:query",
+          "method": "POST",
+          "operationId": "queryDevicesNetworkPolicy",
+          "summary": "Query network policy for multiple devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/network-policy/:assign",
+          "method": "POST",
+          "operationId": "assignDevicesNetworkPolicy",
+          "summary": "Assign network policy to multiple devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/location/:revoke",
+          "method": "POST",
+          "operationId": "revokeDevicesLocation",
+          "summary": "Revoke location for multiple devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/location/:query",
+          "method": "POST",
+          "operationId": "queryDevicesLocation",
+          "summary": "Query location for multiple devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/location/:assign",
+          "method": "POST",
+          "operationId": "assignDevicesLocation",
+          "summary": "Assign location to multiple devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/country-code/:assign",
+          "method": "POST",
+          "operationId": "assignDevicesCountryCode",
+          "summary": "Assign a country code to devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/client-monitor/:revoke",
+          "method": "POST",
+          "operationId": "revokeDevicesClientMonitor",
+          "summary": "Revoke client monitor setting for multiple devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/client-monitor/:query",
+          "method": "POST",
+          "operationId": "queryDevicesClientMonitor",
+          "summary": "Query client monitor setting for multiple devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/client-monitor/:assign",
+          "method": "POST",
+          "operationId": "assignDevicesClientMonitor",
+          "summary": "Assign client monitor setting to multiple devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/anchor/revoke",
+          "method": "POST",
+          "operationId": "revokeDevicesAsAnchor",
+          "summary": "Revoke Anchor capability for multiple devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/anchor/assign",
+          "method": "POST",
+          "operationId": "assignDevicesAsAnchor",
+          "summary": "Assign AP5050 devices as Anchor devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/actions-support-metadata",
+          "method": "POST",
+          "operationId": "getDeviceActionSupportMetadata",
+          "summary": "Get Actions Support metadata",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/:unmanage",
+          "method": "POST",
+          "operationId": "changeStatusToUnmanage",
+          "summary": "Change status to Unmanaged",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/:ssh-active-sessions",
+          "method": "POST",
+          "operationId": "listSshActiveSessions",
+          "summary": "List SSH active sessions",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/:reset",
+          "method": "POST",
+          "operationId": "resetDevices",
+          "summary": "[LRO] Reset devices to factory default",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/:reboot",
+          "method": "POST",
+          "operationId": "rebootDevices",
+          "summary": "Reboot devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/:onboard",
+          "method": "POST",
+          "operationId": "onboardDevices",
+          "summary": "Onboard Devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/:manage",
+          "method": "POST",
+          "operationId": "changeStatusToManage",
+          "summary": "Change status to Managed",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/:delete",
+          "method": "POST",
+          "operationId": "deleteDevices",
+          "summary": "Delete devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/:cli",
+          "method": "POST",
+          "operationId": "sendCliToDevices",
+          "summary": "[LRO] Send CLI to devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/:check-ownership",
+          "method": "POST",
+          "operationId": "checkDeviceOwnership",
+          "summary": "Check caller is allowed to access the device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/:advanced-onboard",
+          "method": "POST",
+          "operationId": "advancedOnboardDevices",
+          "summary": "[LRO] Advanced Onboard Devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/deployments",
+          "method": "GET",
+          "operationId": "getListOfDeployments",
+          "summary": "Get list of deployments",
+          "tags": [
+            "Configuration - Deployment"
+          ]
+        },
+        {
+          "path": "/deployments",
+          "method": "POST",
+          "operationId": "deployConfig",
+          "summary": "[LRO] Push configuration and upgrade firmware",
+          "tags": [
+            "Configuration - Deployment"
+          ]
+        },
+        {
+          "path": "/deployments/firmware-metadatas",
+          "method": "POST",
+          "operationId": "getDeviceFirmwareMetadatas",
+          "summary": "Get device firmware metadatas",
+          "tags": [
+            "Configuration - Deployment"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/usage-capacity/grid",
+          "method": "POST",
+          "operationId": "getUsageCapacityGrid",
+          "summary": "Wireless usage & capacity grid",
+          "tags": [
+            "Dashboard Wireless Usage and Capacity"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/usage-capacity/export",
+          "method": "POST",
+          "operationId": "exportToCsv_1",
+          "summary": "Export all Wireless Usage Capacity Data to CSV",
+          "tags": [
+            "Dashboard Wireless Usage and Capacity"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/usage-capacity/excessive-utilization",
+          "method": "POST",
+          "operationId": "getWirelessUsageCapacityExcessiveUtilization",
+          "summary": "Count of APs with excessive utilization",
+          "tags": [
+            "Dashboard Wireless Usage and Capacity"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/usage-capacity/excessive-retries",
+          "method": "POST",
+          "operationId": "getCountExcessiveRetries",
+          "summary": "Count of APs with excessive retries",
+          "tags": [
+            "Dashboard Wireless Usage and Capacity"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/usage-capacity/excessive-packet-loss",
+          "method": "POST",
+          "operationId": "getPacketLossExcessiveResponse",
+          "summary": "Count of APs with excessive packet loss",
+          "tags": [
+            "Dashboard Wireless Usage and Capacity"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/device-health/summary",
+          "method": "POST",
+          "operationId": "getDeviceSummary",
+          "summary": "Device health summary for wireless devices",
+          "tags": [
+            "Dashboard Wireless Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/device-health/issues/poe-usage-issues",
+          "method": "POST",
+          "operationId": "getDevicePoeUsageIssuesCount",
+          "summary": "PoE usage issues for wireless devices",
+          "tags": [
+            "Dashboard Wireless Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/device-health/issues/memory-usage-issues",
+          "method": "POST",
+          "operationId": "getDeviceMemoryUsageIssueCount",
+          "summary": "Memory usage issues for wireless devices",
+          "tags": [
+            "Dashboard Wireless Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/device-health/issues/cpu-usage-issues",
+          "method": "POST",
+          "operationId": "getDeviceCpuUsageIssueCount",
+          "summary": "CPU usage issues for wireless devices",
+          "tags": [
+            "Dashboard Wireless Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/device-health/grid",
+          "method": "POST",
+          "operationId": "getDeviceHealthGrid",
+          "summary": "Wireless device health grid",
+          "tags": [
+            "Dashboard Wireless Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/device-health/export",
+          "method": "POST",
+          "operationId": "exportToCsv_2",
+          "summary": "Export all Wireless Device Health Data to CSV",
+          "tags": [
+            "Dashboard Wireless Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/dashboard/criteria",
+          "method": "GET",
+          "operationId": "getWirelessDiagnosticsDashboardCriteriaParam",
+          "summary": "Criteria for Wireless Diagnostics Dashboard",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/client-health/roaming-issues",
+          "method": "POST",
+          "operationId": "getClientHealthRoamingIssues",
+          "summary": "Wireless clients count with roaming issues",
+          "tags": [
+            "Dashboard Wireless Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/client-health/issue/roaming",
+          "method": "POST",
+          "operationId": "getClientRoamingIssues",
+          "summary": "Roaming issue for wireless client",
+          "tags": [
+            "Dashboard Wireless Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/client-health/issue/ipaddress",
+          "method": "POST",
+          "operationId": "getClientIpAddressIssues",
+          "summary": "Ip Address issue for Wireless client",
+          "tags": [
+            "Dashboard Wireless Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/client-health/issue/authentication",
+          "method": "POST",
+          "operationId": "getClientAuthIssues",
+          "summary": "Authentication issue for wireless client",
+          "tags": [
+            "Dashboard Wireless Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/client-health/issue/association",
+          "method": "POST",
+          "operationId": "getClientAssociationIssues",
+          "summary": "Association issue for wireless client",
+          "tags": [
+            "Dashboard Wireless Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/client-health/grid",
+          "method": "POST",
+          "operationId": "getClientHealthGrid",
+          "summary": "Wireless client health grid",
+          "tags": [
+            "Dashboard Wireless Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/client-health/frequency-distribution",
+          "method": "POST",
+          "operationId": "getClientFrequencyDistribution",
+          "summary": "Wireless clients count with frequency distribution",
+          "tags": [
+            "Dashboard Wireless Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/client-health/filter-metadata",
+          "method": "POST",
+          "operationId": "getClientHealthGridFilterMetadata",
+          "summary": "Filter Metadata for Wireless Client Health Grid",
+          "tags": [
+            "Dashboard Wireless Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/client-health/export",
+          "method": "POST",
+          "operationId": "exportToCsv_3",
+          "summary": "Export all Client Health Data to CSV",
+          "tags": [
+            "Dashboard Wireless Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/client-health/connectivity-issues",
+          "method": "POST",
+          "operationId": "getClientHealthConnectivityIssues",
+          "summary": "Wireless clients count with connectivity issues",
+          "tags": [
+            "Dashboard Wireless Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/usage-capacity/wired-throughput",
+          "method": "POST",
+          "operationId": "getWiredUsageCapacityThroughput",
+          "summary": "Wired devices throughput",
+          "tags": [
+            "Dashboard Wired Usage and Capacity"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/usage-capacity/wired-congestion",
+          "method": "POST",
+          "operationId": "getWiredUsageCapacityCongestion",
+          "summary": "Wired devices congestion",
+          "tags": [
+            "Dashboard Wired Usage and Capacity"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/usage-capacity/usage-utilization",
+          "method": "POST",
+          "operationId": "getWiredUsageCapacityUsageUtilization",
+          "summary": "Wired devices total utilized bandwidth",
+          "tags": [
+            "Dashboard Wired Usage and Capacity"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/usage-capacity/grid",
+          "method": "POST",
+          "operationId": "getWiredUsageCapacityGrid",
+          "summary": "Wired Usage and Capacity grid",
+          "tags": [
+            "Dashboard Wired Usage and Capacity"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/device-health/temperature-status",
+          "method": "POST",
+          "operationId": "getWiredDeviceHealthTempStatus",
+          "summary": "Wired Device Health Temperature Status",
+          "tags": [
+            "Dashboard Wired Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/device-health/temperature-issues",
+          "method": "POST",
+          "operationId": "getWiredDeviceHealthTemp",
+          "summary": "Wired Device Health Temperature Issues",
+          "tags": [
+            "Dashboard Wired Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/device-health/summary",
+          "method": "POST",
+          "operationId": "getWiredDeviceHealthSummary",
+          "summary": "Wired Device Health Summary",
+          "tags": [
+            "Dashboard Wired Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/device-health/psu-status",
+          "method": "POST",
+          "operationId": "getWiredDeviceHealthPsuStatus",
+          "summary": "Wired Device Health PSU Status",
+          "tags": [
+            "Dashboard Wired Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/device-health/psu-issues",
+          "method": "POST",
+          "operationId": "getWiredDeviceHealthPsu",
+          "summary": "Wired Device Health PSU Issues",
+          "tags": [
+            "Dashboard Wired Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/device-health/poe-usage-status",
+          "method": "POST",
+          "operationId": "getWiredDeviceHealthPoeUsageStatus",
+          "summary": "Wired Device Health PoE Usage Status",
+          "tags": [
+            "Dashboard Wired Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/device-health/poe-usage-issues",
+          "method": "POST",
+          "operationId": "getWiredDeviceHealthPoe",
+          "summary": "Wired Device Health PoE Usage Issues",
+          "tags": [
+            "Dashboard Wired Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/device-health/memory-usage-issues",
+          "method": "POST",
+          "operationId": "getWiredDeviceHealthMem",
+          "summary": "Wired Device Health Memory Usage Issues",
+          "tags": [
+            "Dashboard Wired Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/device-health/grid",
+          "method": "POST",
+          "operationId": "getWiredDeviceHealthGrid",
+          "summary": "Wired Device Health Grid",
+          "tags": [
+            "Dashboard Wired Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/device-health/fan-status",
+          "method": "POST",
+          "operationId": "getWiredDeviceHealthFanStatus",
+          "summary": "Wired Device Health Fan Status",
+          "tags": [
+            "Dashboard Wired Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/device-health/fan-issues",
+          "method": "POST",
+          "operationId": "getWiredDeviceHealthFan",
+          "summary": "Wired Device Health Fan Issues",
+          "tags": [
+            "Dashboard Wired Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/device-health/cpu-usage-issues",
+          "method": "POST",
+          "operationId": "getWiredDeviceHealthCpu",
+          "summary": "Wired Device Health CPU Usage Issues",
+          "tags": [
+            "Dashboard Wired Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/client-health/traffic-anomalies",
+          "method": "POST",
+          "operationId": "getTrafficAnomalies",
+          "summary": "Wired clients count with traffic anomalies",
+          "tags": [
+            "Dashboard Wired Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/client-health/port-errors",
+          "method": "POST",
+          "operationId": "getPortErrors",
+          "summary": "Wired clients count with port errors",
+          "tags": [
+            "Dashboard Wired Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/client-health/port-congestion",
+          "method": "POST",
+          "operationId": "getPortCongestion",
+          "summary": "Wired clients count with port congestion issues",
+          "tags": [
+            "Dashboard Wired Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/client-health/ip-connectivity-issues",
+          "method": "POST",
+          "operationId": "getIpConnectivityIssues",
+          "summary": "Wired clients count with IP connectivity issues",
+          "tags": [
+            "Dashboard Wired Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wired/client-health/grid",
+          "method": "POST",
+          "operationId": "getWiredClientHealthGrid",
+          "summary": "Wired client health grid",
+          "tags": [
+            "Dashboard Wired Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/usage-capacity",
+          "method": "POST",
+          "operationId": "getUsageAndCapacityDiagnostics",
+          "summary": "Usage & capacity statistics",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/dashboard/sites-with-issues",
+          "method": "POST",
+          "operationId": "getSitesWithIssuesDiagnostics",
+          "summary": "Sites with issues",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/dashboard/export",
+          "method": "POST",
+          "operationId": "exportToCsv_4",
+          "summary": "Export all dashboard data to CSV",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/dashboard/devices",
+          "method": "POST",
+          "operationId": "getDeviceHealthDiagnostics",
+          "summary": "Device health statistics",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/dashboard/clients",
+          "method": "POST",
+          "operationId": "getClientHealthDiagnostics",
+          "summary": "Client health statistics",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/dashboard/assets",
+          "method": "POST",
+          "operationId": "getAssetDiagnostics",
+          "summary": "Asset statistics",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/dashboard/alerts",
+          "method": "POST",
+          "operationId": "getAlertDiagnostics",
+          "summary": "Alert statistics",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/d360/wireless/surrounding-aps",
+          "method": "POST",
+          "operationId": "getSurroundingAps",
+          "summary": "Get a list of SurroundingAps",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/d360/client/grid",
+          "method": "POST",
+          "operationId": "getClientStatsGrid",
+          "summary": "Get Client Grid",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/d360/client/graph",
+          "method": "POST",
+          "operationId": "getClientGraph",
+          "summary": "List a list of connected clients for Device 360 API",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/credential-distribution-groups",
+          "method": "GET",
+          "operationId": "listCredentialDistributionGroups",
+          "summary": "List Credential Distribution Groups",
+          "tags": [
+            "Administration"
+          ]
+        },
+        {
+          "path": "/credential-distribution-groups",
+          "method": "POST",
+          "operationId": "createCredentialDistributionGroup",
+          "summary": "Create a Credential Distribution Group",
+          "tags": [
+            "Administration"
+          ]
+        },
+        {
+          "path": "/credential-distribution-groups",
+          "method": "DELETE",
+          "operationId": "deleteCredentialDistributionGroup",
+          "summary": "Delete Credential Distribution Group by ID",
+          "tags": [
+            "Administration"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/exclude-vlans",
+          "method": "POST",
+          "operationId": "updateMissingVlanExcludedVlanList",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/exclude-vlans-csv",
+          "method": "POST",
+          "operationId": "updateMissingVlanExcludedVlanCsv",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/clients/disconnect",
+          "method": "POST",
+          "operationId": "disconnectClients",
+          "summary": "Disconnect the clients",
+          "tags": [
+            "Client"
+          ]
+        },
+        {
+          "path": "/client-monitor-profiles",
+          "method": "GET",
+          "operationId": "listClientMonitorProfiles",
+          "summary": "List client monitor profiles",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/client-monitor-profiles",
+          "method": "POST",
+          "operationId": "createClientMonitorProfile",
+          "summary": "Create a client monitor profile",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/classification-rules",
+          "method": "GET",
+          "operationId": "listClassificationRules",
+          "summary": "List classification rules",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/classification-rules",
+          "method": "POST",
+          "operationId": "createClassificationRule",
+          "summary": "Create classification rule",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/certificates/import",
+          "method": "POST",
+          "operationId": "importCertificate",
+          "summary": "Import Certificate",
+          "tags": [
+            "Configuration - Certificate"
+          ]
+        },
+        {
+          "path": "/certificate-bundles",
+          "method": "GET",
+          "operationId": "listCertificateBundles",
+          "summary": "List Certificate Bundles",
+          "tags": [
+            "Configuration - Certificate"
+          ]
+        },
+        {
+          "path": "/certificate-bundles",
+          "method": "POST",
+          "operationId": "createCertificateBundle",
+          "summary": "Create a Certificate Bundle",
+          "tags": [
+            "Configuration - Certificate"
+          ]
+        },
+        {
+          "path": "/ccgs",
+          "method": "GET",
+          "operationId": "listCloudConfigGroups",
+          "summary": "[LRO] List clould config groups",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/ccgs",
+          "method": "POST",
+          "operationId": "createCloudConfigGroup",
+          "summary": "Create new cloud config group",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/backup/history/:restore",
+          "method": "POST",
+          "operationId": "restoreBackup",
+          "summary": "Backup History Restore",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/auth/permissions/:check",
+          "method": "POST",
+          "operationId": "checkPermissions",
+          "summary": "Check permissions",
+          "tags": [
+            "Authorization"
+          ]
+        },
+        {
+          "path": "/auth/apitoken",
+          "method": "POST",
+          "operationId": "generateApiToken",
+          "summary": "Generate new API token",
+          "tags": [
+            "Authorization"
+          ]
+        },
+        {
+          "path": "/auth/apitoken/:validate",
+          "method": "POST",
+          "operationId": "validateApiToken",
+          "summary": "Validate API token",
+          "tags": [
+            "Authorization"
+          ]
+        },
+        {
+          "path": "/aps/afc/update",
+          "method": "POST",
+          "operationId": "postApsManualAfcSpectrum",
+          "summary": "Manual Spectrum request for device(s)",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/aps/afc/query/",
+          "method": "GET",
+          "operationId": "getApsAfcSummaryInfo",
+          "summary": "Get AFC APs Summary Data",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/aps/afc/query/",
+          "method": "POST",
+          "operationId": "getApsAfcSummaryInfoWithFilter",
+          "summary": "Get AFC APs Summary Data",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/applications/usage/summary",
+          "method": "POST",
+          "operationId": "listApplicationUsageSummary",
+          "summary": "List the application usage summary",
+          "tags": [
+            "Application"
+          ]
+        },
+        {
+          "path": "/applications/usage/summary/export",
+          "method": "POST",
+          "operationId": "exportApplicationUsageSummary",
+          "summary": "Export the application usage summary",
+          "tags": [
+            "Application"
+          ]
+        },
+        {
+          "path": "/ap/spectrum/",
+          "method": "POST",
+          "operationId": "getAfcSpectrumPerAp",
+          "summary": "No summary",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/alerts/reports",
+          "method": "POST",
+          "operationId": "createAlertReport",
+          "summary": "[LRO] Create the alerts report",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alerts/:acknowledge",
+          "method": "POST",
+          "operationId": "acknowledgeAlerts",
+          "summary": "Acknowledge the alerts",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/webhooks",
+          "method": "GET",
+          "operationId": "listAlertWebhookSubscriptions",
+          "summary": "List alert webhook subscriptions",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/webhooks",
+          "method": "POST",
+          "operationId": "createAlertWebhookSubscription",
+          "summary": "Create alert webhook subscription",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/webhooks/:delete",
+          "method": "POST",
+          "operationId": "deleteBulkAlertSubscriptionWebhook",
+          "summary": "Delete alert webhook subscription in bulk",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/servicenow",
+          "method": "GET",
+          "operationId": "listServiceNowSubscriptions",
+          "summary": "List ServiceNow subscriptions",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/servicenow",
+          "method": "POST",
+          "operationId": "createServiceNowSubscription",
+          "summary": "Create ServiceNow subscription",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/servicenow/:delete",
+          "method": "POST",
+          "operationId": "deleteBulkAlertSubscriptionServiceNow",
+          "summary": "Delete alert ServiceNow subscription in bulk",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/emails",
+          "method": "GET",
+          "operationId": "listAlertEmailSubscriptions",
+          "summary": "List alert email subscriptions",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/emails",
+          "method": "POST",
+          "operationId": "createAlertEmailSubscription",
+          "summary": "Create alert email subscription",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/emails/{id}/:verify",
+          "method": "POST",
+          "operationId": "verifySubscriptionEmail",
+          "summary": "Email Verification",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-subscriptions/emails/:delete",
+          "method": "POST",
+          "operationId": "deleteBulkAlertSubscriptionEmail",
+          "summary": "Delete alert email subscription in bulk",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-policies",
+          "method": "GET",
+          "operationId": "listAlertPolicies",
+          "summary": "List all alert policies",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-policies",
+          "method": "POST",
+          "operationId": "createAlertPolicy",
+          "summary": "Create a site based alert policy",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-policies/{policyId}/rules/{ruleId}/:enable",
+          "method": "POST",
+          "operationId": "enableAlertRule",
+          "summary": "Enable a rule from an alert policy",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-policies/{policyId}/rules/{ruleId}/:disable",
+          "method": "POST",
+          "operationId": "disableAlertRule",
+          "summary": "Disable a rule from an alert policy",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/airrm/ap/radioInfo/",
+          "method": "POST",
+          "operationId": "getDevicesRadioInfo",
+          "summary": "Get Devices Radio Information",
+          "tags": [
+            "airrm-endpoint"
+          ]
+        },
+        {
+          "path": "/afc/rm-devices-page",
+          "method": "POST",
+          "operationId": "rmDeviceList_1",
+          "summary": "[LRO] RM AFC Device Page",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/afc/recalculateSite/{id}",
+          "method": "POST",
+          "operationId": "recalculateSite",
+          "summary": "No summary",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/afc/mobileapp/apcandidates",
+          "method": "POST",
+          "operationId": "getMobileappApcandidates",
+          "summary": "List of AP candidates that may be used as anchors",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/afc/filter-metadata",
+          "method": "POST",
+          "operationId": "getAfcGridFilterMetadata",
+          "summary": "RM AFC Device Metadata Page",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/afc/export",
+          "method": "POST",
+          "operationId": "rmDeviceListExport",
+          "summary": "[LRO] RM AFC Device export",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/afc/aps/reportFtm",
+          "method": "POST",
+          "operationId": "requestAfcFtmData",
+          "summary": "No summary",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/acct-api-token",
+          "method": "GET",
+          "operationId": "listApiAccessTokens",
+          "summary": "List API Access tokens",
+          "tags": [
+            "Administration"
+          ]
+        },
+        {
+          "path": "/acct-api-token",
+          "method": "POST",
+          "operationId": "createApiAccessToken",
+          "summary": "Create an API Access token",
+          "tags": [
+            "Administration"
+          ]
+        },
+        {
+          "path": "/account/viq/import",
+          "method": "POST",
+          "operationId": "importViq",
+          "summary": "[LRO] Import VIQ data",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/viq/export",
+          "method": "POST",
+          "operationId": "exportViq",
+          "summary": "[LRO] Export VIQ data",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/viq/:reset",
+          "method": "POST",
+          "operationId": "resetViq",
+          "summary": "Reset VIQ",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/viq/:backup",
+          "method": "POST",
+          "operationId": "backupViq",
+          "summary": "Backup VIQ",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/:switch",
+          "method": "POST",
+          "operationId": "switchAccount",
+          "summary": "Switch to another ExtremeCloud IQ account",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/vlan-profiles/{id}",
+          "method": "GET",
+          "operationId": "getVlanProfile",
+          "summary": "Get a VLAN profile",
+          "tags": [
+            "Configuration - Basic"
+          ]
+        },
+        {
+          "path": "/vlan-profiles/{id}",
+          "method": "DELETE",
+          "operationId": "deleteVlanProfile",
+          "summary": "Delete a VLAN profile",
+          "tags": [
+            "Configuration - Basic"
+          ]
+        },
+        {
+          "path": "/vlan-profiles/{id}",
+          "method": "PATCH",
+          "operationId": "updateVlanProfile",
+          "summary": "Update a VLAN profile",
+          "tags": [
+            "Configuration - Basic"
+          ]
+        },
+        {
+          "path": "/users/{id}",
+          "method": "GET",
+          "operationId": "getUser",
+          "summary": "Get user info by ID",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users/{id}",
+          "method": "DELETE",
+          "operationId": "deleteUser",
+          "summary": "Delete user by ID",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users/{id}",
+          "method": "PATCH",
+          "operationId": "updateUser",
+          "summary": "Update user info",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users/external/{id}",
+          "method": "GET",
+          "operationId": "getExternalUser",
+          "summary": "Get external access info",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users/external/{id}",
+          "method": "DELETE",
+          "operationId": "revokeExternalUser",
+          "summary": "Revoke external access",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users/external/{id}",
+          "method": "PATCH",
+          "operationId": "updateExternalUser",
+          "summary": "Update external access info",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/{reportScheduleId}",
+          "method": "PATCH",
+          "operationId": "enableDisableReportSchedule",
+          "summary": "Enable or Disable Report Schedule",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/acct-api-token/{id}",
+          "method": "DELETE",
+          "operationId": "deleteApiAccessToken",
+          "summary": "Delete API Access token by ID",
+          "tags": [
+            "Administration"
+          ]
+        },
+        {
+          "path": "/acct-api-token/{id}",
+          "method": "PATCH",
+          "operationId": "updateApiAccessToken",
+          "summary": "Update API Access token by ID",
+          "tags": [
+            "Administration"
+          ]
+        },
+        {
+          "path": "/users/reports/{id}",
+          "method": "GET",
+          "operationId": "downloadUsersReport",
+          "summary": "Download the  report",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/users/me",
+          "method": "GET",
+          "operationId": "getCurrentUser",
+          "summary": "Get current user info",
+          "tags": [
+            "User"
+          ]
+        },
+        {
+          "path": "/usergroups/:unique",
+          "method": "GET",
+          "operationId": "listUniqueUserGroupNames",
+          "summary": "List unique user group names",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/user-profile-assignments/{id}",
+          "method": "GET",
+          "operationId": "getUserProfileAssignment",
+          "summary": "Get user profile assignment by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/user-profile-assignments/{id}",
+          "method": "DELETE",
+          "operationId": "deleteUserProfileAssignment",
+          "summary": "Delete an user profile assignment by ID",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/user-folder-preferences",
+          "method": "GET",
+          "operationId": "queryUserFolderPreferences",
+          "summary": "Query user folder preferences",
+          "tags": [
+            "Use Folder Preferences"
+          ]
+        },
+        {
+          "path": "/ucp/{id}/engines/installed",
+          "method": "GET",
+          "operationId": "getUcpEngines",
+          "summary": "Get UCP Engines by ID",
+          "tags": [
+            "Universal Compute Platform"
+          ]
+        },
+        {
+          "path": "/thread/topology",
+          "method": "GET",
+          "operationId": "getThreadNetworkTopology",
+          "summary": "Get thread network topology",
+          "tags": [
+            "Thread"
+          ]
+        },
+        {
+          "path": "/thread/routers",
+          "method": "GET",
+          "operationId": "getThreadRouters",
+          "summary": "List thread routers",
+          "tags": [
+            "Thread"
+          ]
+        },
+        {
+          "path": "/thread/networks",
+          "method": "GET",
+          "operationId": "getThreadNetworks",
+          "summary": "Get active thread networks",
+          "tags": [
+            "Thread"
+          ]
+        },
+        {
+          "path": "/subscriptions/webhook/export",
+          "method": "GET",
+          "operationId": "exportToCsv_5",
+          "summary": "Export all webhook subscriptions to CSV",
+          "tags": [
+            "Notification"
+          ]
+        },
+        {
+          "path": "/ssids",
+          "method": "GET",
+          "operationId": "listSsids",
+          "summary": "List SSIDs",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/sms-templates",
+          "method": "GET",
+          "operationId": "listSmsTemplates",
+          "summary": "List SMS templates",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/radius-servers/internal/devices",
+          "method": "GET",
+          "operationId": "listInternalRadiusDevices",
+          "summary": "List all internal RADIUS devices",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radius-proxies/devices",
+          "method": "GET",
+          "operationId": "listRadiusProxyDevices",
+          "summary": "List Radius proxy devices",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/radio-operating-modes/{productType}",
+          "method": "GET",
+          "operationId": "getRadioOperatingModes",
+          "summary": "Get Radio Operating Modes by product type",
+          "tags": [
+            "Configuration - Policy"
+          ]
+        },
+        {
+          "path": "/packetcaptures/{id}",
+          "method": "GET",
+          "operationId": "getPacketCapture",
+          "summary": "Get a packet capture session",
+          "tags": [
+            "Packet Capture"
+          ]
+        },
+        {
+          "path": "/packetcaptures/{id}",
+          "method": "DELETE",
+          "operationId": "deletePacketCapture",
+          "summary": "Delete a packet capture session",
+          "tags": [
+            "Packet Capture"
+          ]
+        },
+        {
+          "path": "/packetcaptures/files",
+          "method": "GET",
+          "operationId": "getPacketCaptureFile",
+          "summary": "Get an AP packet capture file",
+          "tags": [
+            "Packet Capture"
+          ]
+        },
+        {
+          "path": "/operations/{operationId}",
+          "method": "GET",
+          "operationId": "getOperation",
+          "summary": "Get Long-Running Operation (LRO) status and result",
+          "tags": [
+            "Operation"
+          ]
+        },
+        {
+          "path": "/operations/{operationId}",
+          "method": "DELETE",
+          "operationId": "deleteOperation",
+          "summary": "Delete Long-Running Operation (LRO)",
+          "tags": [
+            "Operation"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/runs/{reportRunId}/recipients",
+          "method": "GET",
+          "operationId": "getRecipientsForReportRun",
+          "summary": "Get Recipients for Report Run",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/reports/download",
+          "method": "GET",
+          "operationId": "downloadScheduledReportFile",
+          "summary": "Download or Preview Scheduled Report File",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/pci-compliance",
+          "method": "GET",
+          "operationId": "getPciComplianceReports",
+          "summary": "Get PCI Compliance Reports",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/network-summary",
+          "method": "GET",
+          "operationId": "getNetworkSummaryReports",
+          "summary": "Get Network Summary Reports",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/custom/{reportScheduleId}/runs",
+          "method": "GET",
+          "operationId": "getReportRunsForSchedule",
+          "summary": "Get report runs for a schedule",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/ng-reports/information/{metrics}",
+          "method": "GET",
+          "operationId": "qOeDiagnosticsHelp",
+          "summary": "Information about QoE-Diagnostics Metrics",
+          "tags": [
+            "NG Reports (Ondemand)"
+          ]
+        },
+        {
+          "path": "/ng-reports/information/",
+          "method": "GET",
+          "operationId": "qOeDiagnosticsHelp_1",
+          "summary": "Information about QoE-Diagnostics Metrics",
+          "tags": [
+            "NG Reports (Ondemand)"
+          ]
+        },
+        {
+          "path": "/ng-reports/download/reports/{id}",
+          "method": "GET",
+          "operationId": "downloadReport",
+          "summary": "Download the Reports by ID",
+          "tags": [
+            "NG Reports (Ondemand)"
+          ]
+        },
+        {
+          "path": "/network-scorecard/wifiHealth/{locationId}",
+          "method": "GET",
+          "operationId": "getWifiHealth",
+          "summary": "Get the overall wifi health score",
+          "tags": [
+            "Network Scorecard"
+          ]
+        },
+        {
+          "path": "/network-scorecard/servicesHealth/{locationId}",
+          "method": "GET",
+          "operationId": "getServicesHealth",
+          "summary": "Get the overall services health score",
+          "tags": [
+            "Network Scorecard"
+          ]
+        },
+        {
+          "path": "/network-scorecard/networkHealth/{locationId}",
+          "method": "GET",
+          "operationId": "getNetworkHealth",
+          "summary": "Get the overall network health score",
+          "tags": [
+            "Network Scorecard"
+          ]
+        },
+        {
+          "path": "/network-scorecard/deviceHealth/{locationId}",
+          "method": "GET",
+          "operationId": "getDeviceHealth",
+          "summary": "Get the overall device health score",
+          "tags": [
+            "Network Scorecard"
+          ]
+        },
+        {
+          "path": "/network-scorecard/clientHealth/{locationId}",
+          "method": "GET",
+          "operationId": "getClientHealth",
+          "summary": "Get the overall client health score",
+          "tags": [
+            "Network Scorecard"
+          ]
+        },
+        {
+          "path": "/network-policies/{id}/ssids",
+          "method": "GET",
+          "operationId": "listSsidsByNetworkPolicy",
+          "summary": "List SSIDs for a network policy",
+          "tags": [
+            "Network Policy"
+          ]
+        },
+        {
+          "path": "/logs/sms",
+          "method": "GET",
+          "operationId": "listSmsLogs",
+          "summary": "List SMS logs",
+          "tags": [
+            "Log"
+          ]
+        },
+        {
+          "path": "/logs/email",
+          "method": "GET",
+          "operationId": "listEmailLogs",
+          "summary": "List Email logs",
+          "tags": [
+            "Log"
+          ]
+        },
+        {
+          "path": "/logs/credential",
+          "method": "GET",
+          "operationId": "listCredentialLogs",
+          "summary": "List credential logs",
+          "tags": [
+            "Log"
+          ]
+        },
+        {
+          "path": "/logs/auth",
+          "method": "GET",
+          "operationId": "listAuthLogs",
+          "summary": "List auth logs",
+          "tags": [
+            "Log"
+          ]
+        },
+        {
+          "path": "/logs/audit",
+          "method": "GET",
+          "operationId": "listAuditLogs",
+          "summary": "List audit logs",
+          "tags": [
+            "Log"
+          ]
+        },
+        {
+          "path": "/logs/audit/reports/{id}",
+          "method": "GET",
+          "operationId": "downloadAuditLogsReport",
+          "summary": "Download audit logs",
+          "tags": [
+            "Log"
+          ]
+        },
+        {
+          "path": "/logs/audit/full-descriptions/{id}",
+          "method": "GET",
+          "operationId": "getAuditLogFullDescriptions",
+          "summary": "Get audit log full descriptions",
+          "tags": [
+            "Log"
+          ]
+        },
+        {
+          "path": "/logs/accounting",
+          "method": "GET",
+          "operationId": "listAccountingLogs",
+          "summary": "List accounting logs",
+          "tags": [
+            "Log"
+          ]
+        },
+        {
+          "path": "/locations/wall/type/references/{id}",
+          "method": "GET",
+          "operationId": "findWallTypeReferences",
+          "summary": "Find references of a wall type",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/tree",
+          "method": "GET",
+          "operationId": "getLocationTree",
+          "summary": "Get location tree",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/tree/maps",
+          "method": "GET",
+          "operationId": "getLocationMapsList",
+          "summary": "Get maps on the location hierarchy.",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/tree/devices",
+          "method": "GET",
+          "operationId": "getLocationDevicesList",
+          "summary": "Get devices on the location hierarchy.",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/folder/{folderId}/zones",
+          "method": "GET",
+          "operationId": "getZonesInFolder",
+          "summary": "Get all zones in folder",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/hiq/status",
+          "method": "GET",
+          "operationId": "getHiqStatus",
+          "summary": "Get HIQ status",
+          "tags": [
+            "HIQ"
+          ]
+        },
+        {
+          "path": "/geo-view",
+          "method": "GET",
+          "operationId": "getGeoViewData",
+          "summary": "Get GeoView Data",
+          "tags": [
+            "Geo View"
+          ]
+        },
+        {
+          "path": "/essentials/eloc/clients/{clientMac}/last-known-location",
+          "method": "GET",
+          "operationId": "getClientLastLocation",
+          "summary": "Get the last known location of the client",
+          "tags": [
+            "Essentials - ExtremeLocation"
+          ]
+        },
+        {
+          "path": "/essentials/eloc/clients/location/path-in-interval-on-floor",
+          "method": "GET",
+          "operationId": "getClientPath",
+          "summary": "Get the path of the client in the specified interval",
+          "tags": [
+            "Essentials - ExtremeLocation"
+          ]
+        },
+        {
+          "path": "/essentials/eloc/clients/location/last-known-location-in-interval-on-floor",
+          "method": "GET",
+          "operationId": "getClientLastKnownLocationInInterval",
+          "summary": "Get the last known location of the client in the specified interval",
+          "tags": [
+            "Essentials - ExtremeLocation"
+          ]
+        },
+        {
+          "path": "/essentials/eloc/clients/location/density-map-data",
+          "method": "GET",
+          "operationId": "getClientDensityMapData",
+          "summary": "Get the client density map data",
+          "tags": [
+            "Essentials - ExtremeLocation"
+          ]
+        },
+        {
+          "path": "/essentials/eloc/clients/location/current-on-floor",
+          "method": "GET",
+          "operationId": "getClientCurrentLocation",
+          "summary": "Get the current location of the client",
+          "tags": [
+            "Essentials - ExtremeLocation"
+          ]
+        },
+        {
+          "path": "/essentials/eloc/clients/location/current-of-all-on-floor",
+          "method": "GET",
+          "operationId": "getCurrentLocationOfAllClientsOnFloor",
+          "summary": "Get all connected clients on a floor",
+          "tags": [
+            "Essentials - ExtremeLocation"
+          ]
+        },
+        {
+          "path": "/endusers/client/locked-list",
+          "method": "GET",
+          "operationId": "lockedClients",
+          "summary": "List locked clients",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/email-templates",
+          "method": "GET",
+          "operationId": "listEmailTemplates",
+          "summary": "List Email templates",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/devices",
+          "method": "GET",
+          "operationId": "listDevices",
+          "summary": "[LRO] List devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}",
+          "method": "GET",
+          "operationId": "getDevice_1",
+          "summary": "Get device info for a specific device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}",
+          "method": "DELETE",
+          "operationId": "deleteDevice",
+          "summary": "Delete a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/ssid/status",
+          "method": "GET",
+          "operationId": "getDeviceLevelSsidStatus",
+          "summary": "Get SSID status for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/monitor/refresh/status",
+          "method": "GET",
+          "operationId": "monitorRefreshDeviceStatus",
+          "summary": "Monitor refresh a device status ",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/iot",
+          "method": "GET",
+          "operationId": "getDeviceIot",
+          "summary": "Get the device IoT Wireless Interface settings",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/interfaces/wifi",
+          "method": "GET",
+          "operationId": "getDeviceWifiInterface",
+          "summary": "Get the device WiFi interfaces stats",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/installation-report",
+          "method": "GET",
+          "operationId": "getXiqDeviceInstallationReport",
+          "summary": "Get device installation report",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/ibeacon",
+          "method": "GET",
+          "operationId": "getDeviceIbeacon",
+          "summary": "Get the device iBeacon setting",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/history/cpu-mem",
+          "method": "GET",
+          "operationId": "getDeviceCpuMemoryHistory",
+          "summary": "Get device CPU/memory usage history",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/geolocation",
+          "method": "GET",
+          "operationId": "getDeviceGeolocation",
+          "summary": "Get Geolocation for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/gallery-image",
+          "method": "GET",
+          "operationId": "downloadDeviceGalleryImage",
+          "summary": "Download device gallery image.",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/{id}/alarms",
+          "method": "GET",
+          "operationId": "listDeviceAlarm",
+          "summary": "List alarms for a device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/stats",
+          "method": "GET",
+          "operationId": "getDeviceStats",
+          "summary": "Get device stats",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/rm-devices-stack/{stackId}",
+          "method": "GET",
+          "operationId": "getStackMemberInfo",
+          "summary": "Get Stack Member Info for a given stack id",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/reports/{id}",
+          "method": "GET",
+          "operationId": "downloadExportCsvFile",
+          "summary": "Download the Export CSV file",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/radio-information",
+          "method": "GET",
+          "operationId": "listDevicesRadioInformation",
+          "summary": "Get Devices Radio Information",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/network-policy/{policyId}",
+          "method": "GET",
+          "operationId": "listDevicesByNetworkPolicy",
+          "summary": "List assigned devices for network policy",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/devices/digital-twin",
+          "method": "GET",
+          "operationId": "listDigitalTwinProducts",
+          "summary": "List Digital Twin product information.",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/deployments/{deploymentId}/status",
+          "method": "GET",
+          "operationId": "getDeploymentByIdStatus",
+          "summary": "[LRO] Get firmware deployment status by ID",
+          "tags": [
+            "Configuration - Deployment"
+          ]
+        },
+        {
+          "path": "/deployments/status",
+          "method": "GET",
+          "operationId": "getDeployStatus",
+          "summary": "Get configuration deployment status",
+          "tags": [
+            "Configuration - Deployment"
+          ]
+        },
+        {
+          "path": "/deployments/overview",
+          "method": "GET",
+          "operationId": "getDeployOverview",
+          "summary": "Get configuration deployment overview",
+          "tags": [
+            "Configuration - Deployment"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/usage-capacity/reports/{id}",
+          "method": "GET",
+          "operationId": "downloadUsageAndCapacityReport",
+          "summary": "Download the  report",
+          "tags": [
+            "Dashboard Wireless Usage and Capacity"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/device-health/reports/{id}",
+          "method": "GET",
+          "operationId": "downloadDeviceHealthReport",
+          "summary": "Download the  report",
+          "tags": [
+            "Dashboard Wireless Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/device-health/reboot/summary",
+          "method": "GET",
+          "operationId": "getDeviceRebootSummary",
+          "summary": "Device reboot summary for wireless device",
+          "tags": [
+            "Dashboard Wireless Device Health"
+          ]
+        },
+        {
+          "path": "/dashboard/wireless/client-health/reports/{id}",
+          "method": "GET",
+          "operationId": "downloadClientHealthReport",
+          "summary": "Download the report",
+          "tags": [
+            "Dashboard Wireless Client Health"
+          ]
+        },
+        {
+          "path": "/dashboard/reports/{id}",
+          "method": "GET",
+          "operationId": "downloadSiteWithIssueReport",
+          "summary": "Download the  report",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/dashboard/device-types",
+          "method": "GET",
+          "operationId": "getAllDiagnosticsDeviceTypes",
+          "summary": "Get all diagnostics device types",
+          "tags": [
+            "Dashboard"
+          ]
+        },
+        {
+          "path": "/d360/wireless/interfaces-stats",
+          "method": "GET",
+          "operationId": "getWirelessWifi",
+          "summary": "Get Wifi Information",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/d360/wireless/interfaces-graph",
+          "method": "GET",
+          "operationId": "getWirelessInterfaceGraph",
+          "summary": "Get Wireless Interface Graph",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/d360/wired/queue-grid",
+          "method": "GET",
+          "operationId": "getWiredQueueGrid",
+          "summary": "Wired QOS queue grid",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/d360/ssid-metadata",
+          "method": "GET",
+          "operationId": "getSsidMetadata",
+          "summary": "Get SSID Metadata",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/d360/overview/devices-summary",
+          "method": "GET",
+          "operationId": "getDeviceSummary_1",
+          "summary": "List the summary of device details",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/d360/event/graph",
+          "method": "GET",
+          "operationId": "getEventsGraph",
+          "summary": "Get Client Grid Filter Metadata",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/d360/device/stats",
+          "method": "GET",
+          "operationId": "getDeviceStats_1",
+          "summary": "Get Device Stats",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/d360/device/metadata",
+          "method": "GET",
+          "operationId": "getDeviceMetaData",
+          "summary": "Get Device MetaData",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/d360/device/issues",
+          "method": "GET",
+          "operationId": "getDeviceIssues",
+          "summary": "Get Device Issues",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/d360/device/interfaces",
+          "method": "GET",
+          "operationId": "getWifiInterfacePerDevice",
+          "summary": "Get Wifi Interfaces Per Device Information",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/d360/client/stats",
+          "method": "GET",
+          "operationId": "getClientStats",
+          "summary": "Get Client Stats Information",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/d360/client/grid/metadata",
+          "method": "GET",
+          "operationId": "getClientGridMetadata",
+          "summary": "Get Client Grid Filter Metadata",
+          "tags": [
+            "D360"
+          ]
+        },
+        {
+          "path": "/cwps",
+          "method": "GET",
+          "operationId": "listCaptiveWebPortals",
+          "summary": "List captive web portals",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/countries",
+          "method": "GET",
+          "operationId": "getCountryList",
+          "summary": "Get country list",
+          "tags": [
+            "Misc"
+          ]
+        },
+        {
+          "path": "/countries/{countryCode}/:validate",
+          "method": "GET",
+          "operationId": "validateCountryCode",
+          "summary": "Validate country code",
+          "tags": [
+            "Misc"
+          ]
+        },
+        {
+          "path": "/countries/{countryAlpha2Code}/states",
+          "method": "GET",
+          "operationId": "getStateListByCountryCode",
+          "summary": "Get state list by country code",
+          "tags": [
+            "Misc"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wireless/views",
+          "method": "GET",
+          "operationId": "getWirelessViews",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wireless/time-to-connect",
+          "method": "GET",
+          "operationId": "getWirelessTimeToConnect",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wireless/quality-index",
+          "method": "GET",
+          "operationId": "getWirelessQualityIndex",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wireless/performance",
+          "method": "GET",
+          "operationId": "getWirelessPerformance",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wireless/locations/time-to-connect",
+          "method": "GET",
+          "operationId": "getWirelessTimeToConnectByLocation",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wireless/locations/quality-index",
+          "method": "GET",
+          "operationId": "getWirelessQualityIndexByLocation",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wireless/locations/performance",
+          "method": "GET",
+          "operationId": "getWirelessPerformanceByLocation",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wireless/locations/events",
+          "method": "GET",
+          "operationId": "getWirelessEventsByLocation",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wireless/experience",
+          "method": "GET",
+          "operationId": "getWirelessConnectivityExperience",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wireless/events",
+          "method": "GET",
+          "operationId": "getWirelessEvents",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wireless/apps",
+          "method": "GET",
+          "operationId": "getWirelessApps",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wired/quality-index",
+          "method": "GET",
+          "operationId": "getWiredQualityIndex",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wired/locations/hardware",
+          "method": "GET",
+          "operationId": "getWiredHardwareByLocation",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wired/hardware",
+          "method": "GET",
+          "operationId": "getWiredHardware",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wired/experience",
+          "method": "GET",
+          "operationId": "getWiredConnectivityExperience",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/wired/events",
+          "method": "GET",
+          "operationId": "getWiredEvents",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/locations",
+          "method": "GET",
+          "operationId": "getConnectivityDetailsByLocations",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/connectivity/client-type",
+          "method": "GET",
+          "operationId": "getConnectivityDetailsByClientType",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Connectivity Experience"
+          ]
+        },
+        {
+          "path": "/copilot/assurance-scans/overview",
+          "method": "GET",
+          "operationId": "getAssuranceScansOverviewData",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/wifi-efficiency/stats",
+          "method": "GET",
+          "operationId": "getWifiEfficiencyStats",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/wifi-efficiency/client-list",
+          "method": "GET",
+          "operationId": "getWifiEfficiencyClientList",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/wifi-capacity/stats",
+          "method": "GET",
+          "operationId": "getWifiCapacityStats",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/wifi-capacity/client-list",
+          "method": "GET",
+          "operationId": "getWifiCapacityClientList",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/report",
+          "method": "GET",
+          "operationId": "getAnomaliesReport",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/port-efficiency/stats",
+          "method": "GET",
+          "operationId": "getPortEfficiencyStats",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/port-efficiency/speed-duplex-stats",
+          "method": "GET",
+          "operationId": "getPortEfficiencySpeedDuplexStats",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/poeflapping/trends",
+          "method": "GET",
+          "operationId": "getPoeFlappingTrends",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/poeflapping/stats",
+          "method": "GET",
+          "operationId": "getPoeFlappingStats",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/poeflapping/lldp-cdp-info",
+          "method": "GET",
+          "operationId": "getLldpCdpInfo",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/notifications",
+          "method": "GET",
+          "operationId": "getAnomaliesNotifications",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/missing-vlan/count",
+          "method": "GET",
+          "operationId": "getMissingVlanAnomaliesCount",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/locations",
+          "method": "GET",
+          "operationId": "listAnomalyLocations",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/hardware-health/stats",
+          "method": "GET",
+          "operationId": "getHardwareHealthStats",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/hardware-health/cpu-mem-stats",
+          "method": "GET",
+          "operationId": "getHardwareHealthCpuMemStats",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/hardware-health/client-list",
+          "method": "GET",
+          "operationId": "getHardwareHealthClientList",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/excluded-vlans-list",
+          "method": "GET",
+          "operationId": "getMissingVlanExcludedVlanList",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/dfs-recurrence/count-stats",
+          "method": "GET",
+          "operationId": "getDfsRecurrenceCountStats",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/dfs-recurrence/channel-stats",
+          "method": "GET",
+          "operationId": "getDfsRecurrenceChannelStats",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/devices-with-locations",
+          "method": "GET",
+          "operationId": "getCopilotDevicesWithLocations",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/devices-by-location",
+          "method": "GET",
+          "operationId": "getDevicesByLocation",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/anomalies-by-category",
+          "method": "GET",
+          "operationId": "getCopilotAnomaliesbyCategory",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/adverse-traffic/packet-counts",
+          "method": "GET",
+          "operationId": "getAtpPacketCounts",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/copilot/anomalies/adverse-traffic/device-stats",
+          "method": "GET",
+          "operationId": "getAtpDeviceStats",
+          "summary": "No summary",
+          "tags": [
+            "Copilot - Anomalies"
+          ]
+        },
+        {
+          "path": "/clients/{id}",
+          "method": "GET",
+          "operationId": "getClient",
+          "summary": "Get client info",
+          "tags": [
+            "Client"
+          ]
+        },
+        {
+          "path": "/clients/usage",
+          "method": "GET",
+          "operationId": "getClientUsage",
+          "summary": "Get usage per client",
+          "tags": [
+            "Client"
+          ]
+        },
+        {
+          "path": "/clients/summary",
+          "method": "GET",
+          "operationId": "getClientSummary",
+          "summary": "Get client summary metrics",
+          "tags": [
+            "Client"
+          ]
+        },
+        {
+          "path": "/clients/byMac/{clientMac}",
+          "method": "GET",
+          "operationId": "getClientByMac",
+          "summary": "Get client info by mac",
+          "tags": [
+            "Client"
+          ]
+        },
+        {
+          "path": "/clients/byMac/{clientMac}",
+          "method": "DELETE",
+          "operationId": "disconnectClient",
+          "summary": "Disconnect the client",
+          "tags": [
+            "Client"
+          ]
+        },
+        {
+          "path": "/clients/active",
+          "method": "GET",
+          "operationId": "listActiveClients",
+          "summary": "List active clients",
+          "tags": [
+            "Client"
+          ]
+        },
+        {
+          "path": "/clients/active/count",
+          "method": "GET",
+          "operationId": "getActiveClientsCount",
+          "summary": "Get active clients count",
+          "tags": [
+            "Client"
+          ]
+        },
+        {
+          "path": "/client-details/topology/client-trail/{macAddress}",
+          "method": "GET",
+          "operationId": "getConnectionTrail",
+          "summary": "No summary",
+          "tags": [
+            "Client - Details"
+          ]
+        },
+        {
+          "path": "/client-details/overview/info/{clientId}",
+          "method": "GET",
+          "operationId": "getClientDetailsInfo",
+          "summary": "Get Client Details Info",
+          "tags": [
+            "Client - Details"
+          ]
+        },
+        {
+          "path": "/client-details/overview/chart-data/{clientId}",
+          "method": "GET",
+          "operationId": "getClientChartData",
+          "summary": "Get Client chart data",
+          "tags": [
+            "Client - Details"
+          ]
+        },
+        {
+          "path": "/client-details/client-trail/roaming-trail/grid/{clientId}",
+          "method": "GET",
+          "operationId": "getRoamingTrail",
+          "summary": "Get roaming trail grid",
+          "tags": [
+            "Client - Details"
+          ]
+        },
+        {
+          "path": "/client-details/client-trail/roaming-trail/count/{clientId}",
+          "method": "GET",
+          "operationId": "getRoamingCount",
+          "summary": "Get roaming trail count",
+          "tags": [
+            "Client - Details"
+          ]
+        },
+        {
+          "path": "/client-details/client-trail/connectivity-experience/{clientId}",
+          "method": "GET",
+          "operationId": "getConnectivityExperienceGrid",
+          "summary": "Get connectivity experience grid",
+          "tags": [
+            "Client - Details"
+          ]
+        },
+        {
+          "path": "/certificates",
+          "method": "GET",
+          "operationId": "listCertificates",
+          "summary": "List certificates",
+          "tags": [
+            "Configuration - Certificate"
+          ]
+        },
+        {
+          "path": "/backup/history/grid",
+          "method": "GET",
+          "operationId": "listBackupHistory",
+          "summary": "List backup history grid",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/auth/permissions",
+          "method": "GET",
+          "operationId": "listPermissions",
+          "summary": "Get permissions for current login user",
+          "tags": [
+            "Authorization"
+          ]
+        },
+        {
+          "path": "/auth/apitoken/info",
+          "method": "GET",
+          "operationId": "getCurrentApiTokenInfo",
+          "summary": "Get current API token details",
+          "tags": [
+            "Authorization"
+          ]
+        },
+        {
+          "path": "/applications",
+          "method": "GET",
+          "operationId": "listApplications",
+          "summary": "List the applications",
+          "tags": [
+            "Application"
+          ]
+        },
+        {
+          "path": "/applications/{id}/clients/top{n}",
+          "method": "GET",
+          "operationId": "listApplicationTopClientsUsage",
+          "summary": "List the TopN clients for a application",
+          "tags": [
+            "Application"
+          ]
+        },
+        {
+          "path": "/applications/usage/summary/meta-data",
+          "method": "GET",
+          "operationId": "listAppUsageSummaryMetaData",
+          "summary": "Application usage summary meta data",
+          "tags": [
+            "Application"
+          ]
+        },
+        {
+          "path": "/applications/top{n}",
+          "method": "GET",
+          "operationId": "listTopApplicationsUsage",
+          "summary": "List the TopN applications",
+          "tags": [
+            "Application"
+          ]
+        },
+        {
+          "path": "/applications/reports/{id}",
+          "method": "GET",
+          "operationId": "downloadExportCsvFile_1",
+          "summary": "Download the Export CSV file",
+          "tags": [
+            "Application"
+          ]
+        },
+        {
+          "path": "/ap/afc/interface/details/{sn}",
+          "method": "GET",
+          "operationId": "getApsAfcInfo",
+          "summary": "Get Afc Summary Data",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/ap/afc/floorReport/{deviceId}",
+          "method": "GET",
+          "operationId": "getAfcGeolocaitonFloorReport",
+          "summary": "No summary",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/ap/afc/diagnostics/{id}",
+          "method": "GET",
+          "operationId": "getApsAfcDiagnostics",
+          "summary": "No summary",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/alerts",
+          "method": "GET",
+          "operationId": "listAlerts",
+          "summary": "List the alerts",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alerts/reports/{id}",
+          "method": "GET",
+          "operationId": "downloadAlertReport",
+          "summary": "Download the alerts report",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alerts/count-by-{group}",
+          "method": "GET",
+          "operationId": "countAlertsByGroup",
+          "summary": "Count the alerts by different grouping",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/alert-policies/available-sites",
+          "method": "GET",
+          "operationId": "listAvailableSites",
+          "summary": "The list of current owner's available sites",
+          "tags": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "/airrm/site/{airrmId}",
+          "method": "GET",
+          "operationId": "getSiteDeviceRegulatoryConfigAfcSpectrum",
+          "summary": "Get Site Device Regulatory Config and AFC Spectrum",
+          "tags": [
+            "airrm-endpoint"
+          ]
+        },
+        {
+          "path": "/airrm/radio/apInfo/{radioMac}",
+          "method": "GET",
+          "operationId": "getDeviceApInfo",
+          "summary": "Get Device AP Information",
+          "tags": [
+            "airrm-endpoint"
+          ]
+        },
+        {
+          "path": "/airrm/device/{serialNumber}",
+          "method": "GET",
+          "operationId": "getDeviceRegulatoryConfigAfcSpectrum",
+          "summary": "Get Device Regulatory Config and AFC Spectrum",
+          "tags": [
+            "airrm-endpoint"
+          ]
+        },
+        {
+          "path": "/afcserver",
+          "method": "GET",
+          "operationId": "listAfcServers",
+          "summary": "Get Afc Server list and their status",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/afcserver/{server_id}",
+          "method": "GET",
+          "operationId": "getAfcServer",
+          "summary": "Get Afc Server data",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/afcserver/statistics/{server_id}",
+          "method": "GET",
+          "operationId": "getAfcServerStatistics",
+          "summary": "Get AFC server Statistics",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/afc/reports/{id}",
+          "method": "GET",
+          "operationId": "downloadHealthReport",
+          "summary": "Download the  report",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/ad-servers",
+          "method": "GET",
+          "operationId": "listActiveDirectoryServers",
+          "summary": "List active directory servers",
+          "tags": [
+            "Configuration - Authentication"
+          ]
+        },
+        {
+          "path": "/acct-api-token/export",
+          "method": "GET",
+          "operationId": "exportToCsv_6",
+          "summary": "Export all API access tokens to CSV",
+          "tags": [
+            "Administration"
+          ]
+        },
+        {
+          "path": "/account/viq",
+          "method": "GET",
+          "operationId": "getViqInfo",
+          "summary": "Get VIQ Info",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/viq/export-import-status",
+          "method": "GET",
+          "operationId": "exportImportStatus",
+          "summary": "Get running export/import status ",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/viq/download",
+          "method": "GET",
+          "operationId": "downloadViqReport",
+          "summary": "Download VIQ data file and logs",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/viq/backup/status",
+          "method": "GET",
+          "operationId": "get_viq_backup_status",
+          "summary": "Get VIQ Backup Status",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/vhm/status",
+          "method": "GET",
+          "operationId": "getVhmStatus",
+          "summary": "Get Vhm Status",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/vhm/setting",
+          "method": "GET",
+          "operationId": "getVhmSetting",
+          "summary": "Get Vhm Setting",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/third-party-applications",
+          "method": "GET",
+          "operationId": "getApiAccessTokens",
+          "summary": "List Third Party Applications",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/home",
+          "method": "GET",
+          "operationId": "getHomeAccount",
+          "summary": "Get home ExtremeCloud IQ account info",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/account/external",
+          "method": "GET",
+          "operationId": "listExternalAccounts",
+          "summary": "List accessible external guest accounts",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/subscriptions/webhook/:delete",
+          "method": "DELETE",
+          "operationId": "deleteSubscription",
+          "summary": "Delete webhook subscription",
+          "tags": [
+            "Notification"
+          ]
+        },
+        {
+          "path": "/rtts/{id}",
+          "method": "DELETE",
+          "operationId": "DeleteRttsSession",
+          "summary": "No summary",
+          "tags": [
+            "rtts-endpoint"
+          ]
+        },
+        {
+          "path": "/pcgs/key-based/network-policy-{policyId}",
+          "method": "DELETE",
+          "operationId": "deletePcg",
+          "summary": "Delete Private Client Group from a network policy",
+          "tags": [
+            "Configuration - User Management"
+          ]
+        },
+        {
+          "path": "/ng-reports/scheduled/runs",
+          "method": "DELETE",
+          "operationId": "deleteReportRuns",
+          "summary": "Delete report runs",
+          "tags": [
+            "NG Reports (Scheduled)"
+          ]
+        },
+        {
+          "path": "/network-services/{id}",
+          "method": "DELETE",
+          "operationId": "deleteNetworkService",
+          "summary": "Delete Network Services",
+          "tags": [
+            "Configuration - Network"
+          ]
+        },
+        {
+          "path": "/locations/folder/zone/{id}",
+          "method": "DELETE",
+          "operationId": "deleteZone",
+          "summary": "Delete a zone by ID",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/locations/floor/{floorId}/label/{labelId}",
+          "method": "DELETE",
+          "operationId": "deleteFloorMapLabel",
+          "summary": "Deletes one floor map label",
+          "tags": [
+            "Location"
+          ]
+        },
+        {
+          "path": "/hiq/organizations/{id}",
+          "method": "DELETE",
+          "operationId": "deleteOrganization",
+          "summary": "Delete an existing organization",
+          "tags": [
+            "HIQ"
+          ]
+        },
+        {
+          "path": "/floor/afc/details/{id}",
+          "method": "DELETE",
+          "operationId": "deleteFloorAfcDetails",
+          "summary": "No summary",
+          "tags": [
+            "afc-endpoint"
+          ]
+        },
+        {
+          "path": "/devices/radius-proxy/:revoke",
+          "method": "DELETE",
+          "operationId": "revokeDevicesRadiusProxy",
+          "summary": "Revoke RADIUS proxy from multiple devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/certificates/{id}",
+          "method": "DELETE",
+          "operationId": "deleteCertificate",
+          "summary": "Delete Certificate by ID",
+          "tags": [
+            "Configuration - Certificate"
+          ]
+        },
+        {
+          "path": "/backup/history/delete",
+          "method": "DELETE",
+          "operationId": "deleteBackup",
+          "summary": "Backup History Delete",
+          "tags": [
+            "Account"
+          ]
+        },
+        {
+          "path": "/acct-api-token/:delete",
+          "method": "DELETE",
+          "operationId": "bulkDeleteApiAccessToken",
+          "summary": "Bulk Delete API Access token by ID",
+          "tags": [
+            "Administration"
+          ]
+        }
+      ],
+      "specFile": "specs/extremecloud-iq/openapi.yaml"
+    },
+    {
       "id": "device-lifecycle-management",
       "title": "Extreme Platform ONE REST API - Device Lifecycle Management",
       "description": "The Extreme Platform ONE\u2122 Device Lifecycle Management API provides comprehensive\nautomation and orchestration for the complete network device lifecycle, from \ninitial discovery and zero-touch onboarding through operational management \nand secure decommissioning.\n\n**\ud83d\udd04 Complete Lifecycle Management:**\n\n\u2022 **Zero-Touch Device Onboarding** - Fully automated provisioning for wireless \ndevices (IQEngine/XIQ) and wired devices (EXOS/VOSS) with intelligent \nconfiguration validation and compliance checking\n\n\u2022 **Intelligent Bulk Operations** - Enterprise-scale batch processing with \nExcel-based import/export, template-driven workflows, and automated \nvalidation for efficient mass device management\n\n\u2022 **Advanced Device Discovery** - Device detection and classification \nwith automatic product compatibility checking and network topology analysis\n\n\u2022 **Subscription & License Management** - Automated tracking and lifecycle \nmanagement of device subscriptions, software licenses, and service entitlements\n\n\u2022 **Secure Lifecycle Transitions** - Complete device state management from \nonboarding through operational phases to secure decommissioning with audit trails\n\n\n**\ud83c\udfe2 Enterprise Integration & Scale:**\n\nBuilt for enterprise environments with seamless integration capabilities,\ncomprehensive audit trails, high-performance batch processing, and \nenterprise-grade security controls for large-scale network deployments.",
