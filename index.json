@@ -682,6 +682,352 @@
       "specFile": "specs/iam/openapi.yaml"
     },
     {
+      "id": "device-lifecycle-management",
+      "title": "Extreme Platform ONE REST API - Device Lifecycle Management",
+      "description": "The Extreme Platform ONE™ Device Lifecycle Management API provides comprehensive\nautomation and orchestration for the complete network device lifecycle, from \ninitial discovery and zero-touch onboarding through operational management \nand secure decommissioning.\n\n**🔄 Complete Lifecycle Management:**\n\n• **Zero-Touch Device Onboarding** - Fully automated provisioning for wireless \ndevices (IQEngine/XIQ) and wired devices (EXOS/VOSS) with intelligent \nconfiguration validation and compliance checking\n\n• **Intelligent Bulk Operations** - Enterprise-scale batch processing with \nExcel-based import/export, template-driven workflows, and automated \nvalidation for efficient mass device management\n\n• **Advanced Device Discovery** - Device detection and classification \nwith automatic product compatibility checking and network topology analysis\n\n• **Subscription & License Management** - Automated tracking and lifecycle \nmanagement of device subscriptions, software licenses, and service entitlements\n\n• **Secure Lifecycle Transitions** - Complete device state management from \nonboarding through operational phases to secure decommissioning with audit trails\n\n\n**🏢 Enterprise Integration & Scale:**\n\nBuilt for enterprise environments with seamless integration capabilities,\ncomprehensive audit trails, high-performance batch processing, and \nenterprise-grade security controls for large-scale network deployments.",
+      "version": "25.11.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/device-lifecycle",
+      "tags": [
+        "Device"
+      ],
+      "endpoints": [
+        {
+          "path": "/v1/devices",
+          "method": "POST",
+          "operationId": "listDevices",
+          "summary": "Get list of all devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/:export",
+          "method": "POST",
+          "operationId": "exportDevicesList",
+          "summary": "Export Devices List",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/:delete",
+          "method": "POST",
+          "operationId": "deleteDevices",
+          "summary": "Delete devices from management",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/:status",
+          "method": "GET",
+          "operationId": "getDeviceStatus",
+          "summary": "Get status of delete device operation",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/discovery/{device_sn}/:add",
+          "method": "POST",
+          "operationId": "addDiscoveredDevice",
+          "summary": "Add Discovered Device to Management System",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/discovery/{device_sn}/:result",
+          "method": "GET",
+          "operationId": "getDeviceDiscoveryResultList",
+          "summary": "Get Discovered Devices for a Device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/discovery/{device_sn}/:result",
+          "method": "POST",
+          "operationId": "getDeviceDiscoveryResult",
+          "summary": "Get Discovered Devices for a Device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/discovery/{device_sn}/filters",
+          "method": "GET",
+          "operationId": "getDeviceDiscoveryResultFilter",
+          "summary": "Get Device Discovery Filter Values",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/discovery/{device_sn}/:settings",
+          "method": "GET",
+          "operationId": "getDeviceDiscoverySettings",
+          "summary": "Device Discovery Settings",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/discovery/{device_sn}/:start",
+          "method": "POST",
+          "operationId": "startDeviceDiscovery",
+          "summary": "Start Discovery for a Device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/discovery/{device_sn}/:status",
+          "method": "GET",
+          "operationId": "getDeviceDiscoveryStatus",
+          "summary": "Get Device Discovery Status",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/discovery/{device_sn}/:stop",
+          "method": "POST",
+          "operationId": "stopDeviceDiscovery",
+          "summary": "Stop Discovery for a Device",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/filters",
+          "method": "GET",
+          "operationId": "listDeviceFilters",
+          "summary": "Get all available device filters",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/filters",
+          "method": "POST",
+          "operationId": "listDeviceFilterMetadata",
+          "summary": "Get device filter metadata",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/images/:download",
+          "method": "GET",
+          "operationId": "downloadOvaImage",
+          "summary": "Download Deployment Image",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/images/:retrieve",
+          "method": "GET",
+          "operationId": "getDeploymentImageDetails",
+          "summary": "Retrieve Deployment Image Details",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/onboard/appliance",
+          "method": "POST",
+          "operationId": "onboardAppliances",
+          "summary": "Onboard appliances to management platform",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/onboard/device-info",
+          "method": "GET",
+          "operationId": "getDeviceInfo",
+          "summary": "Product Info for Devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/onboard/import-xlsx",
+          "method": "POST",
+          "operationId": "importXlsx",
+          "summary": "Onboarding of Bulk Devices",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/onboard/import-xlsx/:sample",
+          "method": "GET",
+          "operationId": "downloadXlsxTemplate",
+          "summary": "Download device onboarding XLSX template",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/onboard/status",
+          "method": "GET",
+          "operationId": "getStatus",
+          "summary": "Retrieve device onboarding status by task key",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/onboard/controller",
+          "method": "POST",
+          "operationId": "onboardControllers",
+          "summary": "Onboard controllers to management platform",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/onboard/wired",
+          "method": "POST",
+          "operationId": "onboardWiredDevices",
+          "summary": "Onboard wired devices to management platform",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/onboard/wireless",
+          "method": "POST",
+          "operationId": "onboardWirelessDevices",
+          "summary": "Onboard wireless devices to IQEngine",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/onboard/controller-managed",
+          "method": "POST",
+          "operationId": "onboardControllerManagedDevices",
+          "summary": "Onboard controller managed devices to Platform One",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/rulesengine/action-types",
+          "method": "GET",
+          "operationId": "getActionTypes",
+          "summary": "Get rules engine action types",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/rulesengine/condition-fields",
+          "method": "GET",
+          "operationId": "getConditionFields",
+          "summary": "Get rules engine condition fields",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/rulesengine/operation-types",
+          "method": "GET",
+          "operationId": "getOperationTypes",
+          "summary": "Get rules engine operation types",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/rulesengine/rules",
+          "method": "POST",
+          "operationId": "createRules",
+          "summary": "Create a new rules engine rule",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/rulesengine/rules/:delete",
+          "method": "POST",
+          "operationId": "deleteRules",
+          "summary": "Delete rules engine rules",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/rulesengine/rules/:list",
+          "method": "GET",
+          "operationId": "getRulesList",
+          "summary": "Get a paginated list of rules engine rules",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/rulesengine/rules/:reorder",
+          "method": "PUT",
+          "operationId": "reorderRules",
+          "summary": "Reorder rules engine rules",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/rulesengine/rules/{id}",
+          "method": "GET",
+          "operationId": "getRules",
+          "summary": "Get a rules engine rule by ID",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/rulesengine/rules/{id}",
+          "method": "PUT",
+          "operationId": "updateRules",
+          "summary": "Update a rules engine rule by ID",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/token/:activate",
+          "method": "POST",
+          "operationId": "activateToken",
+          "summary": "Activate Registration Token",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/devices/token/:register",
+          "method": "POST",
+          "operationId": "getOrCreateToken",
+          "summary": "Get Registration Token",
+          "tags": [
+            "Device"
+          ]
+        },
+        {
+          "path": "/v1/supported-features",
+          "method": "GET",
+          "operationId": "getSupportedFeatures",
+          "summary": "Get status of supported features(enabled/disabled)",
+          "tags": [
+            "Device"
+          ]
+        }
+      ],
+      "specFile": "specs/device-lifecycle-management/openapi.yaml"
+    },
+    {
       "id": "audit-log",
       "title": "Extreme Platform ONE REST API - Audit Log",
       "description": "Extreme Platform ONE&trade; Audit Log API provides comprehensive tracking of user activities within Extreme Platform ONE, ensuring transparency, traceability, and accountability across all applications.",
