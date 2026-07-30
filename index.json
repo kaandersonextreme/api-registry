@@ -1770,6 +1770,2689 @@
       "specFile": "specs/iam/openapi.yaml"
     },
     {
+      "id": "extremecloud-sdwan",
+      "title": "ExtremeCloud SD-WAN API",
+      "description": "ExtremeCloud SD-WAN API allows customers and partners to configure solutions for the management, monitoring, and provisioning of their SD-WAN environment.",
+      "version": "26.1.0.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/sdwan",
+      "tags": [
+        "Authentication",
+        "Sites",
+        "Policy Configuration",
+        "Security Configuration",
+        "Templates",
+        "Overlay Configuration",
+        "Application Performance",
+        "Onboarding",
+        "Appliance Configuration",
+        "Appliance 360",
+        "Site 360",
+        "Application 360",
+        "WAN 360",
+        "Topology",
+        "Alarms",
+        "Alarm Notification Rules",
+        "Troubleshooting",
+        "Scripts",
+        "Dashboard Domain Analysis",
+        "Audit",
+        "RVC Configuration",
+        "SaaS Configuration",
+        "RTG",
+        "Flows",
+        "Reports"
+      ],
+      "endpoints": [
+        {
+          "path": "/login",
+          "method": "POST",
+          "operationId": "login",
+          "summary": "User login with username and password",
+          "tags": [
+            "Authentication"
+          ]
+        },
+        {
+          "path": "/logout",
+          "method": "POST",
+          "operationId": "logout",
+          "summary": "User logout (Revoke the current access token)",
+          "tags": [
+            "Authentication"
+          ]
+        },
+        {
+          "path": "/locations/site",
+          "method": "GET",
+          "operationId": "clsGetSites",
+          "summary": "List sites",
+          "tags": [
+            "Sites"
+          ]
+        },
+        {
+          "path": "/locations/site",
+          "method": "POST",
+          "operationId": "clsCreateSite",
+          "summary": "Create site",
+          "tags": [
+            "Sites"
+          ]
+        },
+        {
+          "path": "/locations/site/{id}",
+          "method": "GET",
+          "operationId": "xiqLocationGetSiteById",
+          "summary": "Get site by ID",
+          "tags": [
+            "Sites"
+          ]
+        },
+        {
+          "path": "/locations/site/{id}",
+          "method": "PUT",
+          "operationId": "updateSite",
+          "summary": "Update site by ID",
+          "tags": [
+            "Sites"
+          ]
+        },
+        {
+          "path": "/locations/site/{id}",
+          "method": "DELETE",
+          "operationId": "deleteSite",
+          "summary": "Delete site by ID",
+          "tags": [
+            "Sites"
+          ]
+        },
+        {
+          "path": "/countries",
+          "method": "GET",
+          "operationId": "getCountryList",
+          "summary": "Get country list",
+          "tags": [
+            "Sites"
+          ]
+        },
+        {
+          "path": "/alarms/v1/alarms",
+          "method": "GET",
+          "operationId": "getSdwanAlarms",
+          "summary": "Get alarms with their configuration status",
+          "tags": [
+            "Alarms"
+          ]
+        },
+        {
+          "path": "/alarms/v1/alarms/active-counts",
+          "method": "GET",
+          "operationId": "getSdwanAlarmsActiveCounts",
+          "summary": "Get active alarms count per severity",
+          "tags": [
+            "Alarms"
+          ]
+        },
+        {
+          "path": "/alarms/v1/alarms/notification-rules",
+          "method": "GET",
+          "operationId": "getNotificationRules",
+          "summary": "Get alarm notification rules",
+          "tags": [
+            "Alarm Notification Rules"
+          ]
+        },
+        {
+          "path": "/alarms/v1/alarms/notification-rules",
+          "method": "POST",
+          "operationId": "createNotificationRules",
+          "summary": "Create alarm notification rule",
+          "tags": [
+            "Alarm Notification Rules"
+          ]
+        },
+        {
+          "path": "/alarms/v1/alarms/notification-rules/{id}",
+          "method": "PUT",
+          "operationId": "updateNotificationRules",
+          "summary": "Update alarm notification rule",
+          "tags": [
+            "Alarm Notification Rules"
+          ]
+        },
+        {
+          "path": "/alarms/v1/alarms/notification-rules/{id}",
+          "method": "DELETE",
+          "operationId": "deleteNotificationRules",
+          "summary": "Delete alarm notification rule",
+          "tags": [
+            "Alarm Notification Rules"
+          ]
+        },
+        {
+          "path": "/alarms/v1/alarms/sites",
+          "method": "GET",
+          "operationId": "getSdwanAlarmsSites",
+          "summary": "Sites Summary",
+          "tags": [
+            "Alarms"
+          ]
+        },
+        {
+          "path": "/alarms/v1/alarms/filters",
+          "method": "GET",
+          "operationId": "getAlarmsFilters",
+          "summary": "Get alarm filter values",
+          "tags": [
+            "Alarms"
+          ]
+        },
+        {
+          "path": "/alarms/v1/alarms/timeline",
+          "method": "GET",
+          "operationId": "getAlarmsTimeline",
+          "summary": "Get alarms timeline chart data",
+          "tags": [
+            "Alarms"
+          ]
+        },
+        {
+          "path": "/alarms/v1/alarms/notification-rules/filters",
+          "method": "GET",
+          "operationId": "getAlarmsNotificationRulesFilters",
+          "summary": "Get alarm notification rules filters",
+          "tags": [
+            "Alarm Notification Rules"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/dashboard/sites-summary",
+          "method": "GET",
+          "operationId": "getSdwanSitesSummary",
+          "summary": "Get Sites Summary",
+          "tags": [
+            "Topology"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/dashboard/appliances-summary",
+          "method": "GET",
+          "operationId": "getSdwanApplianceSummary",
+          "summary": "Get Appliance Summary Information",
+          "tags": [
+            "Topology"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/dashboard/wans-summary",
+          "method": "GET",
+          "operationId": "getSdwanWansSummary",
+          "summary": "Get WANs Summary",
+          "tags": [
+            "Topology"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/dashboard/applications-summary",
+          "method": "GET",
+          "operationId": "applicationsSummary",
+          "summary": "Get Applications Summary",
+          "tags": [
+            "Topology"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/dashboard/site/status",
+          "method": "GET",
+          "operationId": "sitesAlarms",
+          "summary": "Get Site Alarms and Appliances status",
+          "tags": [
+            "Topology"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/dashboard/site/metrics",
+          "method": "GET",
+          "operationId": "dashboardSitesEqs",
+          "summary": "Get Site Eqs and Throughput",
+          "tags": [
+            "Topology"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/connections",
+          "method": "GET",
+          "operationId": "getSdwanConnections",
+          "summary": "Get Connection Details",
+          "tags": [
+            "Topology"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/connections/sites",
+          "method": "GET",
+          "operationId": "getSdwanConnectionsSites",
+          "summary": "Get Connection Sites",
+          "tags": [
+            "Topology"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/connections/appliances/{id}",
+          "method": "GET",
+          "operationId": "connectionApplianceInfo",
+          "summary": "Get Appliance Connection Details",
+          "tags": [
+            "Topology"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/connections/underlays",
+          "method": "GET",
+          "operationId": "getUnderlayConnection",
+          "summary": "Get Underlay Connection",
+          "tags": [
+            "Topology"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/connections/filters",
+          "method": "GET",
+          "operationId": "getConnectionsFilters",
+          "summary": "Get Connection Filters",
+          "tags": [
+            "Topology"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/applications/metrics/summary",
+          "method": "GET",
+          "operationId": "getSdwanApplianceMetricsSummary",
+          "summary": "Get application overview Summary API",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/applications/eqs/timeseries",
+          "method": "GET",
+          "operationId": "eqsInfo",
+          "summary": "Get Eqs Evolution API",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/applications/volume/top",
+          "method": "GET",
+          "operationId": "volumeInfo",
+          "summary": "Get Top 10 Volume API",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/applications/eqs/worst",
+          "method": "GET",
+          "operationId": "worstEqsInfo",
+          "summary": "Get worst 10 Eqs API",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/applications/throughput/timeseries",
+          "method": "GET",
+          "operationId": "throughputInfo",
+          "summary": "Get Throughput Evolution API",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/saasapplications",
+          "method": "GET",
+          "operationId": "saasApplicationsList",
+          "summary": "Get Active SaaS Applications API",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/saasapplications/filters",
+          "method": "GET",
+          "operationId": "saasApplicationsFilters",
+          "summary": "Get Active SaaS Applications API filters",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/dpiapplications",
+          "method": "GET",
+          "operationId": "dpiApplicationsList",
+          "summary": "Get Discovered DPI Applications API",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/dpiapplications/filters",
+          "method": "GET",
+          "operationId": "dpiApplicationsFilters",
+          "summary": "Get DPI Applications filters",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/compression-metrics/stats/applications",
+          "method": "GET",
+          "operationId": "compressionStatsByApplication",
+          "summary": "Get Compression Metrics Per Application",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/compression-metrics/stats/sites",
+          "method": "GET",
+          "operationId": "compressionStatsBySite",
+          "summary": "Get Compression Metrics Per Site",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/compression-metrics/time-charts",
+          "method": "GET",
+          "operationId": "compressionStatsTimeCharts",
+          "summary": "Get Compression Metrics Time Charts",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/compression-metrics/stats",
+          "method": "GET",
+          "operationId": "compressionStats",
+          "summary": "Get Compression Metrics Stats",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/compression-metrics/filters",
+          "method": "GET",
+          "operationId": "compressionStatsFilters",
+          "summary": "Get Compression Metrics filters",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/applications/performance/filters",
+          "method": "GET",
+          "operationId": "applicationsPerformanceFilters",
+          "summary": "Get Application Performance filters",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/applications/overview/filters",
+          "method": "GET",
+          "operationId": "applicationsOverviewFilters",
+          "summary": "Get Application Overview filters",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/applications/eqs/worst/timeseries",
+          "method": "GET",
+          "operationId": "worstEqsInfoTimeSeries",
+          "summary": "Get Eqs Evolution by worst 10 application API",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/applications/throughput/top/timeseries",
+          "method": "GET",
+          "operationId": "application360TopApplicationThroughputInfo",
+          "summary": "Get Throughput Evolution by Top 10 application API",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/adrapplications",
+          "method": "GET",
+          "operationId": "applicationsList",
+          "summary": "Get Discovered Applications API",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/adrapplications/filters",
+          "method": "GET",
+          "operationId": "applicationsFilters",
+          "summary": "Get Applications filters",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/overview",
+          "method": "GET",
+          "operationId": "getSdwanSitesOverview",
+          "summary": "Get Sites Overview",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/metrics/wans",
+          "method": "GET",
+          "operationId": "site360WanServicesInfo",
+          "summary": "Get Wan Services Informations API",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/eqs/worst",
+          "method": "GET",
+          "operationId": "site360WorstEqsInfo",
+          "summary": "Get worst 10 Eqs API",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/eqs/worst/timeseries",
+          "method": "GET",
+          "operationId": "site360WorstEqsTimeSeriesInfo",
+          "summary": "Get Eqs Evolution by worst 10 application API",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/volume/top",
+          "method": "GET",
+          "operationId": "site360VolumeInfo",
+          "summary": "Get Top 10 Volume API",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/metrics/wans/throughput",
+          "method": "GET",
+          "operationId": "site360WanServicesThroughput",
+          "summary": "Get WAN throughput evolution API",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/metrics/wans/eqs",
+          "method": "GET",
+          "operationId": "site360WanServicesEqs",
+          "summary": "Get WAN EQS evolution API",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/metrics/timeseries",
+          "method": "GET",
+          "operationId": "metricsInfo",
+          "summary": "Get Monitoring metrics Evolution API",
+          "tags": [
+            "Appliance 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/throughput/timeseries",
+          "method": "GET",
+          "operationId": "site360ThroughputInfo",
+          "summary": "Get Throughput Evolution API",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/eqs/timeseries",
+          "method": "GET",
+          "operationId": "site360EqsInfo",
+          "summary": "Get Eqs Evolution API",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/throughput/top/timeseries",
+          "method": "GET",
+          "operationId": "topApplicationthroughputInfo",
+          "summary": "Get Throughput Evolution by Top 10 application API",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/application-groups",
+          "method": "GET",
+          "operationId": "sitesApplicationGroups",
+          "summary": "Get Application Groups",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/flows",
+          "method": "GET",
+          "operationId": "flowsView",
+          "summary": "Get Flows View",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/flows/filters",
+          "method": "GET",
+          "operationId": "flowslist",
+          "summary": "Get Flows Filters",
+          "tags": [
+            "Application 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/metrics/summary",
+          "method": "GET",
+          "operationId": "site360ApplicationSummaryInfo",
+          "summary": "Get Site 360 application overview Summary API",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/jitter",
+          "method": "GET",
+          "operationId": "sitesJitter",
+          "summary": "Get jitter evolution for a site",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/delay-jitter",
+          "method": "GET",
+          "operationId": "sitesDelayJitter",
+          "summary": "Get TCP delay and jitter evolution for a site",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/average-sessions",
+          "method": "GET",
+          "operationId": "sitesAverageSessions",
+          "summary": "Get TCP session evolution for a site",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/rtt-srt",
+          "method": "GET",
+          "operationId": "sitesRttSrt",
+          "summary": "Get TCP RTT and SRT evolution for a site",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/throughput",
+          "method": "GET",
+          "operationId": "sitesThroughput",
+          "summary": "Get the throughput evolution for a site",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/packet-retransmission",
+          "method": "GET",
+          "operationId": "sitesPacketRetransmission",
+          "summary": "Get TCP packets retransmission",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/packet-loss",
+          "method": "GET",
+          "operationId": "sitesPacketLoss",
+          "summary": "Get TCP packets loss evolution for a site",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/eqs",
+          "method": "GET",
+          "operationId": "sitesEqs",
+          "summary": "Get the EQS evolution for a site",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/delay",
+          "method": "GET",
+          "operationId": "sitesDelay",
+          "summary": "Get TCP delay evolution for a site",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/rtt",
+          "method": "GET",
+          "operationId": "sitesRtt",
+          "summary": "Get TCP RTT evolution for a site",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/srt",
+          "method": "GET",
+          "operationId": "sitesSrt",
+          "summary": "Get SRT evolution for a site",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/{id}/appliances-wans",
+          "method": "GET",
+          "operationId": "site360AppliacesWansInfo",
+          "summary": "Get appliances-wans for a site",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/overview/filters",
+          "method": "GET",
+          "operationId": "site360ApplicationOverviewFilter",
+          "summary": "Get Site 360 Filters API",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/sites/performance/filters",
+          "method": "GET",
+          "operationId": "performanceFilters",
+          "summary": "Get Site performance Filters API",
+          "tags": [
+            "Site 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/metrics/wans/throughput",
+          "method": "GET",
+          "operationId": "wanServicesThroughput",
+          "summary": "Get throughput evolution API",
+          "tags": [
+            "WAN 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/metrics/wans",
+          "method": "GET",
+          "operationId": "wanServicesInfo",
+          "summary": "Get Wan Services Informations API",
+          "tags": [
+            "WAN 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/metrics/wans/local/availability",
+          "method": "GET",
+          "operationId": "wanLocalAvailability",
+          "summary": "Get local availability and EQS API",
+          "tags": [
+            "WAN 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/metrics/wans/end-end/availability",
+          "method": "GET",
+          "operationId": "wanEndAvailability",
+          "summary": "Get end to end availabilty and EQS API",
+          "tags": [
+            "WAN 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/metrics/wans/eqs",
+          "method": "GET",
+          "operationId": "wanServicesEqs",
+          "summary": "Get EQS evolution API",
+          "tags": [
+            "WAN 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/wans/filters",
+          "method": "GET",
+          "operationId": "wanFiltersServices",
+          "summary": "Get Wan Overview Filters API",
+          "tags": [
+            "WAN 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/appliances/status",
+          "method": "GET",
+          "operationId": "getSdwanApplianceStatusList",
+          "summary": "Get Appliance Status List",
+          "tags": [
+            "Appliance 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/appliances/{id}/status",
+          "method": "GET",
+          "operationId": "getApplianceStatus",
+          "summary": "Get Appliance Status",
+          "tags": [
+            "Appliance 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/appliances/{id}/cpu-usage",
+          "method": "GET",
+          "operationId": "getApplianceCpuUsage",
+          "summary": "Get Appliance CPU Usage",
+          "tags": [
+            "Appliance 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/appliances/{id}/fabric-peers",
+          "method": "GET",
+          "operationId": "getApplianceFabricPeerStatus",
+          "summary": "Get Appliance's Fabric Peer Status",
+          "tags": [
+            "Appliance 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/appliances/{id}/system-usage",
+          "method": "GET",
+          "operationId": "getApplianceSystemUsage",
+          "summary": "Get Appliance System Usage",
+          "tags": [
+            "Appliance 360"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/network-analysis/metrics",
+          "method": "GET",
+          "operationId": "networkAnalysisMetrics",
+          "summary": "Get network analysis metrics",
+          "tags": [
+            "Dashboard Domain Analysis"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/network-analysis/summary",
+          "method": "GET",
+          "operationId": "networkAnalysisSummary",
+          "summary": "Get network analysis summary",
+          "tags": [
+            "Dashboard Domain Analysis"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/network-analysis/filters",
+          "method": "GET",
+          "operationId": "networkAnalysisFilters",
+          "summary": "Get network analysis filters",
+          "tags": [
+            "Dashboard Domain Analysis"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/network-analysis/ethernet-throughput",
+          "method": "GET",
+          "operationId": "ethernetThroughputMetrics",
+          "summary": "Get ethernet throughput metrics",
+          "tags": [
+            "Dashboard Domain Analysis"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/network-analysis/ip-throughput",
+          "method": "GET",
+          "operationId": "ipThroughputMetrics",
+          "summary": "Get IP throughput metrics",
+          "tags": [
+            "Dashboard Domain Analysis"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/flows/live/sessions",
+          "method": "POST",
+          "operationId": "flowsCreateRealTimeMonitoringSession",
+          "summary": "Create Real Time Monitoring Session",
+          "tags": [
+            "Flows"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/flows/live/sessions/create",
+          "method": "POST",
+          "operationId": "flowsRealTimeMonitoringSessionCreate",
+          "summary": "Create Real Time Monitoring Session",
+          "tags": [
+            "Flows"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/flows/live/sessions/{id}",
+          "method": "GET",
+          "operationId": "flowsGetRealTimeMonitoringSession",
+          "summary": "Get Real Time Monitoring data",
+          "tags": [
+            "Flows"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/flows/live/sessions/{id}",
+          "method": "DELETE",
+          "operationId": "flowsDeleteRealTimeMonitoringSession",
+          "summary": "Delete Real Time Monitoring Session",
+          "tags": [
+            "Flows"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/rtg/sessions",
+          "method": "POST",
+          "operationId": "rtgCreateRealTimeMonitoringSession",
+          "summary": "Create Real Time Monitoring Session",
+          "tags": [
+            "RTG"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/rtg/sessions/create",
+          "method": "POST",
+          "operationId": "rtgRealTimeMonitoringSessionCreate",
+          "summary": "Create Real Time Monitoring Session",
+          "tags": [
+            "RTG"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/rtg/sessions/{id}",
+          "method": "GET",
+          "operationId": "rtgGetRealTimeMonitoringSession",
+          "summary": "Get Real Time Monitoring data",
+          "tags": [
+            "RTG"
+          ]
+        },
+        {
+          "path": "/monitoring/v1/rtg/sessions/{id}",
+          "method": "DELETE",
+          "operationId": "rtgDeleteRealTimeMonitoringSession",
+          "summary": "Delete Real Time Monitoring Session",
+          "tags": [
+            "RTG"
+          ]
+        },
+        {
+          "path": "/configuration/v1/manage/devices",
+          "method": "GET",
+          "operationId": "getSdwanManageableDevices",
+          "summary": "Get devices with their configuration status",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/manage/devices/{applianceId}",
+          "method": "GET",
+          "operationId": "getSdwanManageableDeviceByApplianceId",
+          "summary": "Get Device by Appliance Id",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/vpn-zones",
+          "method": "GET",
+          "operationId": "getVpnZones",
+          "summary": "Get VPN Zones",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/vpn-zones",
+          "method": "POST",
+          "operationId": "addVpnZones",
+          "summary": "Add VPN Zones",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/vpn-zones",
+          "method": "PUT",
+          "operationId": "updateVpnZones",
+          "summary": "Update VPN Zones",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/vpn-zones",
+          "method": "DELETE",
+          "operationId": "deleteVpnZones",
+          "summary": "Delete VPN Zones",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/vpn-zones/{id}",
+          "method": "GET",
+          "operationId": "getVpnZone",
+          "summary": "Get a VPN Zone",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/overlays",
+          "method": "GET",
+          "operationId": "getOverlay",
+          "summary": "Get Overlay Configuration",
+          "tags": [
+            "Overlay Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/overlays",
+          "method": "DELETE",
+          "operationId": "deleteOverlay",
+          "summary": "Delete Overlay Configuration",
+          "tags": [
+            "Overlay Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/overlays/hub-and-spokes",
+          "method": "POST",
+          "operationId": "createHubAndSpokeOverlays",
+          "summary": "Create Hub and Spoke Overlay Configuration",
+          "tags": [
+            "Overlay Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/overlays/hub-and-spokes",
+          "method": "PUT",
+          "operationId": "updateHubAndSpokeOverlays",
+          "summary": "Update Hub and Spoke Overlay Configuration",
+          "tags": [
+            "Overlay Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/overlays/third-party-vpns",
+          "method": "POST",
+          "operationId": "createThirdPartyVpnOverlays",
+          "summary": "Create Third Party Vpn Configuration",
+          "tags": [
+            "Overlay Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/overlays/third-party-vpns",
+          "method": "PUT",
+          "operationId": "updateThirdPartyVpnOverlays",
+          "summary": "Update Third Party Vpn Configuration",
+          "tags": [
+            "Overlay Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/overlays/{id}",
+          "method": "GET",
+          "operationId": "getOverlayById",
+          "summary": "Get Overlay Configuration by Id",
+          "tags": [
+            "Overlay Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/overlays/associations",
+          "method": "GET",
+          "operationId": "getOverlayWithAssociations",
+          "summary": "Get Overlay with Hub/Spoke/WAN Associations",
+          "tags": [
+            "Overlay Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/application-groups",
+          "method": "GET",
+          "operationId": "getApplicationGroups",
+          "summary": "Get application groups",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/application-groups",
+          "method": "POST",
+          "operationId": "addApplicationGroups",
+          "summary": "Create application groups",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/application-groups",
+          "method": "PUT",
+          "operationId": "updateApplicationGroups",
+          "summary": "Update application groups",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/application-groups",
+          "method": "DELETE",
+          "operationId": "deleteApplicationGroups",
+          "summary": "Delete application groups",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/application-groups/{id}",
+          "method": "GET",
+          "operationId": "getApplicationGroup",
+          "summary": "Get an application group",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances",
+          "method": "GET",
+          "operationId": "getOnboardedAppliances",
+          "summary": "Get Appliances",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances",
+          "method": "POST",
+          "operationId": "onboardAppliances",
+          "summary": "Onboard Appliances",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances",
+          "method": "DELETE",
+          "operationId": "deleteAppliance",
+          "summary": "Trigger deletion of appliances",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}",
+          "method": "GET",
+          "operationId": "getOnboardedAppliance",
+          "summary": "Get Appliance by Appliance Id",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}",
+          "method": "PATCH",
+          "operationId": "patchAppliancesNameAndSerialNumber",
+          "summary": "Patch an appliance's name and serial number",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances-csv",
+          "method": "POST",
+          "operationId": "onboardAppliancesCsv",
+          "summary": "Onboard Appliances by uploading CSV",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/serial-number/{serialNumber}",
+          "method": "GET",
+          "operationId": "getOnboardedApplianceBySerialNumber",
+          "summary": "Get Appliance by Serial Number",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/templates",
+          "method": "GET",
+          "operationId": "getApplianceTemplate",
+          "summary": "Get Appliance Template",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/templates",
+          "method": "POST",
+          "operationId": "createApplianceTemplate",
+          "summary": "Create Appliance Template",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/templates",
+          "method": "PUT",
+          "operationId": "updateApplianceTemplate",
+          "summary": "Update Appliance Template",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/templates",
+          "method": "DELETE",
+          "operationId": "deleteApplianceTemplate",
+          "summary": "Delete Appliance Template",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/templates/{id}",
+          "method": "GET",
+          "operationId": "getApplianceTemplateById",
+          "summary": "Get Appliance Template by Id",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/templates/associations",
+          "method": "GET",
+          "operationId": "getApplianceTemplateWithAssociations",
+          "summary": "Get Templates with Associations",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/general-settings",
+          "method": "GET",
+          "operationId": "getGeneralSettings",
+          "summary": "Get general settings of an appliance",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/general-settings",
+          "method": "PUT",
+          "operationId": "updateGeneralSettings",
+          "summary": "Update general settings of an appliance",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/general-settings/reset-to-template",
+          "method": "POST",
+          "operationId": "resetGeneralSettings",
+          "summary": "Reset general settings to template default",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/lan-settings",
+          "method": "GET",
+          "operationId": "getLanSettings",
+          "summary": "Get LAN settings of an appliance",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/lan-settings",
+          "method": "PUT",
+          "operationId": "updateLanSettings",
+          "summary": "Update LAN settings for an appliance",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/lan-settings/reset-to-template",
+          "method": "POST",
+          "operationId": "resetLanSettings",
+          "summary": "Reset LAN settings to template default",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/wan-settings",
+          "method": "GET",
+          "operationId": "getAllWanSettings",
+          "summary": "Get all WAN settings of an appliance",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/wan-settings/reset-to-template",
+          "method": "POST",
+          "operationId": "resetAllWanSettings",
+          "summary": "Reset WAN settings to template default",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/wan-settings/{name}",
+          "method": "PUT",
+          "operationId": "updateWanSettings",
+          "summary": "Update WAN settings of an appliance WAN settings",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/wan-settings/{name}",
+          "method": "GET",
+          "operationId": "getWanSettings",
+          "summary": "Get WAN settings of appliance by interface's name",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies",
+          "method": "GET",
+          "operationId": "getSdwanPolicy",
+          "summary": "Get SD-WAN Policy",
+          "tags": [
+            "Policy Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies",
+          "method": "POST",
+          "operationId": "createSdwanPolicy",
+          "summary": "Create SD-WAN Policy",
+          "tags": [
+            "Policy Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies",
+          "method": "PUT",
+          "operationId": "updateSdwanPolicy",
+          "summary": "Update SD-WAN Policy",
+          "tags": [
+            "Policy Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{id}",
+          "method": "GET",
+          "operationId": "getNetworkPolicyById",
+          "summary": "Get Network Policy by Id",
+          "tags": [
+            "Policy Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/active-policy",
+          "method": "GET",
+          "operationId": "getActiveSdwanPolicy",
+          "summary": "Get Active SD-WAN Policy",
+          "tags": [
+            "Policy Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/common-objects/vlans",
+          "method": "GET",
+          "operationId": "getVlans",
+          "summary": "Get all VLAN",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/common-objects/vlans",
+          "method": "POST",
+          "operationId": "addVlans",
+          "summary": "Add new VLANs",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/common-objects/vlans",
+          "method": "PUT",
+          "operationId": "updateVlans",
+          "summary": "Update VLAN",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/common-objects/vlans",
+          "method": "DELETE",
+          "operationId": "deleteVlans",
+          "summary": "Delete VLAN",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/common-objects/vlans/{id}",
+          "method": "GET",
+          "operationId": "getVlanById",
+          "summary": "Get VLAN by Id",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/lans",
+          "method": "GET",
+          "operationId": "getLans",
+          "summary": "Get all LANs",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/lans",
+          "method": "POST",
+          "operationId": "addLans",
+          "summary": "Create new LANs",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/lans",
+          "method": "PUT",
+          "operationId": "updateLans",
+          "summary": "Update LANs",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/lans",
+          "method": "DELETE",
+          "operationId": "deleteLans",
+          "summary": "Delete LANs",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/lans/{id}",
+          "method": "GET",
+          "operationId": "getLanById",
+          "summary": "Get LAN by Id",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/transport-networks",
+          "method": "GET",
+          "operationId": "getTransportNetworks",
+          "summary": "Get transport networks",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/transport-networks",
+          "method": "POST",
+          "operationId": "addTransportNetworks",
+          "summary": "Add transport networks",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/transport-networks",
+          "method": "PUT",
+          "operationId": "updateTransportNetworks",
+          "summary": "Update transport networks",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/transport-networks",
+          "method": "DELETE",
+          "operationId": "deleteTransportNetworks",
+          "summary": "Delete transport networks",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/transport-networks/{id}",
+          "method": "GET",
+          "operationId": "getTransportNetwork",
+          "summary": "Get a transport network",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/wans",
+          "method": "GET",
+          "operationId": "getApplianceTemplateWan",
+          "summary": "Get WAN Configuration",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/wans",
+          "method": "POST",
+          "operationId": "createApplianceTemplateWan",
+          "summary": "Create WAN Configuration",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/wans",
+          "method": "PUT",
+          "operationId": "updateApplianceTemplateWan",
+          "summary": "Update WAN Configuration",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/wans",
+          "method": "DELETE",
+          "operationId": "deleteApplianceTemplateWan",
+          "summary": "Delete WAN Configuration",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/wans/{id}",
+          "method": "GET",
+          "operationId": "getApplianceTemplateWanById",
+          "summary": "Get WAN Configuration by Id",
+          "tags": [
+            "Templates"
+          ]
+        },
+        {
+          "path": "/configuration/v1/sites",
+          "method": "GET",
+          "operationId": "getSites",
+          "summary": "Get all Sites",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/sites/{siteId}",
+          "method": "GET",
+          "operationId": "getSite",
+          "summary": "Get Site by Site ID",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/sites/assign-appliances",
+          "method": "POST",
+          "operationId": "assignAppliances",
+          "summary": "Assign Appliances to Sites",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/sites/associations",
+          "method": "GET",
+          "operationId": "getSitesWithStats",
+          "summary": "Get Sites with statistics",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/manage/configuration/validate",
+          "method": "POST",
+          "operationId": "validateConfiguration",
+          "summary": "Request current configuration validation",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/manage/configuration/validation-status/{snapshotId}",
+          "method": "GET",
+          "operationId": "configurationValidationStatus",
+          "summary": "Configuration validation status",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/manage/configuration/deploy",
+          "method": "POST",
+          "operationId": "deployConfiguration",
+          "summary": "Validate and deploy Configuration",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/manage/configuration/deploy/{id}",
+          "method": "POST",
+          "operationId": "deployConfigurationById",
+          "summary": "Deploy pre-validated Configuration by ID",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/manage/configuration/async-validation",
+          "method": "POST",
+          "operationId": "asyncConfigurationValidation",
+          "summary": "Trigger an asynchronous validation",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/manage/configuration/async-validation/{snapshotId}",
+          "method": "GET",
+          "operationId": "asyncConfigurationValidationResult",
+          "summary": "Asynchronous configuration validation result",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/vpn-policies",
+          "method": "GET",
+          "operationId": "getVpnPolicies",
+          "summary": "Get VPN Policies",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/vpn-policies",
+          "method": "PUT",
+          "operationId": "updateVpnPolicies",
+          "summary": "Update VPN Policies",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/vpn-policies/{id}",
+          "method": "GET",
+          "operationId": "getVpnPolicy",
+          "summary": "Get a VPN Policy",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/port-based-application-sets",
+          "method": "GET",
+          "operationId": "getPortBasedApplicationSets",
+          "summary": "Get Port Based Application Sets",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/port-based-application-sets",
+          "method": "POST",
+          "operationId": "createPortBasedApplicationSets",
+          "summary": "Create Port Based Application Sets",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/port-based-application-sets",
+          "method": "PUT",
+          "operationId": "updatePortBasedApplicationSets",
+          "summary": "Port Based Application Sets",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/port-based-application-sets",
+          "method": "DELETE",
+          "operationId": "deletePortBasedApplicationSets",
+          "summary": "Delete Port Based Application Sets",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/port-based-application-sets/{id}",
+          "method": "GET",
+          "operationId": "getPortBasedApplicationSet",
+          "summary": "Get a Port Based Application Set",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/internet-access-policies",
+          "method": "GET",
+          "operationId": "getInternetAccessPolicies",
+          "summary": "Get Internet Access Policies",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/internet-access-policies",
+          "method": "PUT",
+          "operationId": "updateInternetAccessPolicies",
+          "summary": "Update Internet Access Policies",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/internet-access-policies/{id}",
+          "method": "GET",
+          "operationId": "getInternetAccessPolicy",
+          "summary": "Get a Internet Access Policy",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/saas-application-sets",
+          "method": "GET",
+          "operationId": "getSaasApplicationSets",
+          "summary": "Get Saas Application Sets",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/saas-application-sets",
+          "method": "POST",
+          "operationId": "createSaasApplicationSets",
+          "summary": "Saas Application Sets",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/saas-application-sets",
+          "method": "PUT",
+          "operationId": "updateSaasApplicationSets",
+          "summary": "Saas Application Sets",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/saas-application-sets",
+          "method": "DELETE",
+          "operationId": "deleteSaaApplicationSets",
+          "summary": "Delete Saas Application Sets",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/saas-application-sets/{id}",
+          "method": "GET",
+          "operationId": "getSaasApplicationSet",
+          "summary": "Get a Saas Application Set",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/secure-web-gateways",
+          "method": "GET",
+          "operationId": "getSecureWebGateway",
+          "summary": "Get Secure Web Gateway",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/secure-web-gateways",
+          "method": "POST",
+          "operationId": "createSecureWebGateway",
+          "summary": "Create Secure Web Gateway",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/secure-web-gateways",
+          "method": "PUT",
+          "operationId": "updateSecureWebGateway",
+          "summary": "Update Secure Web Gateway",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/secure-web-gateways",
+          "method": "DELETE",
+          "operationId": "deleteSecureWebGateway",
+          "summary": "Delete Secure Web Gateway",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/secure-web-gateways/{id}",
+          "method": "GET",
+          "operationId": "getSecureWebGatewayById",
+          "summary": "Get Secure Web Gateway by secure web gateway id",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/vpn-sites",
+          "method": "GET",
+          "operationId": "getVpnSites",
+          "summary": "Get all User Sites",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/vpn-sites/{siteId}",
+          "method": "GET",
+          "operationId": "getVpnSiteById",
+          "summary": "Get any User Site by ID",
+          "tags": [
+            "Security Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/applications",
+          "method": "GET",
+          "operationId": "getApplications",
+          "summary": "Get applications",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/applications",
+          "method": "POST",
+          "operationId": "addApplications",
+          "summary": "Add applications",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/applications",
+          "method": "PUT",
+          "operationId": "updateApplications",
+          "summary": "Update applications",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/applications",
+          "method": "DELETE",
+          "operationId": "deleteApplications",
+          "summary": "Delete applications",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/applications/{id}",
+          "method": "GET",
+          "operationId": "getApplication",
+          "summary": "Get an application",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/applications/inventory",
+          "method": "GET",
+          "operationId": "getApplicationsInventory",
+          "summary": "Get applications inventory",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/saas-applications",
+          "method": "GET",
+          "operationId": "getSaasApplications",
+          "summary": "Get SaaS Applications",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/saas-applications",
+          "method": "POST",
+          "operationId": "addSaasApplications",
+          "summary": "Create SaaS Applications",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/saas-applications",
+          "method": "PUT",
+          "operationId": "updateSaasApplications",
+          "summary": "Update SaaS applications",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/saas-applications",
+          "method": "DELETE",
+          "operationId": "deleteSaasApplications",
+          "summary": "Delete SaaS Applications",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/saas-applications/{id}",
+          "method": "GET",
+          "operationId": "getSaasApplication",
+          "summary": "Get a SaaS Application by ID",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/qos-profiles",
+          "method": "GET",
+          "operationId": "getQosProfiles",
+          "summary": "Get QoS profiles",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/qos-profiles",
+          "method": "POST",
+          "operationId": "addQosProfiles",
+          "summary": "Add QoS profiles",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/qos-profiles",
+          "method": "PUT",
+          "operationId": "updateQosProfiles",
+          "summary": "Update QoS profiles",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/qos-profiles",
+          "method": "DELETE",
+          "operationId": "deleteQosProfiles",
+          "summary": "Delete QoS profiles",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/qos-profiles/{id}",
+          "method": "GET",
+          "operationId": "getQosProfile",
+          "summary": "Get a QoS profile",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/dws-policies",
+          "method": "GET",
+          "operationId": "getDwsPolicies",
+          "summary": "Get DWS policies",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/dws-policies",
+          "method": "POST",
+          "operationId": "addDwsPolicies",
+          "summary": "Add DWS policies",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/dws-policies",
+          "method": "PUT",
+          "operationId": "updateDwsPolicies",
+          "summary": "Update DWS policies",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/dws-policies",
+          "method": "DELETE",
+          "operationId": "deleteDwsPolicies",
+          "summary": "Delete DWS policies",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/dws-policies/{id}",
+          "method": "GET",
+          "operationId": "getDwsPolicy",
+          "summary": "Get a DWS policy",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/fabric-settings",
+          "method": "GET",
+          "operationId": "getAllFabricAppliances",
+          "summary": "Get all configured fabric appliances",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/fabric-settings",
+          "method": "PUT",
+          "operationId": "updateFabricAppliances",
+          "summary": "Configured fabric appliances",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/common-objects/dhcp-services",
+          "method": "GET",
+          "operationId": "getDhcpServices",
+          "summary": "Get all DHCP Services",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/common-objects/dhcp-services",
+          "method": "POST",
+          "operationId": "addDhcpServices",
+          "summary": "Add DHCP Service",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/common-objects/dhcp-services",
+          "method": "PUT",
+          "operationId": "updateDhcpServices",
+          "summary": "Update DHCP Services",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/common-objects/dhcp-services",
+          "method": "DELETE",
+          "operationId": "deleteDhcpServices",
+          "summary": "Delete DHCP Services",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/common-objects/dhcp-services/{id}",
+          "method": "GET",
+          "operationId": "getDhcpServiceById",
+          "summary": "Get DHCP Service by Id",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/available-bgp-peer-appliances",
+          "method": "GET",
+          "operationId": "getAllBgpPeerAvailable",
+          "summary": "Get all BGP peer appliances of an appliance",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/ihap-profiles",
+          "method": "GET",
+          "operationId": "getIhapProfiles",
+          "summary": "Get all IHAP Profiles",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/ihap-profiles",
+          "method": "POST",
+          "operationId": "addIhapProfiles",
+          "summary": "Add IHAP Profile",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/ihap-profiles",
+          "method": "PUT",
+          "operationId": "updateIhapProfiles",
+          "summary": "Update IHAP Profiles",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/ihap-profiles",
+          "method": "DELETE",
+          "operationId": "deleteIhapProfiles",
+          "summary": "Delete IHAP Profiles",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/ihap-profiles/{id}",
+          "method": "GET",
+          "operationId": "getIhapProfileById",
+          "summary": "Get IHAP Profile by Id",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/vrrp-profiles",
+          "method": "GET",
+          "operationId": "getVrrpProfiles",
+          "summary": "Get all VRRP Profiles",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/vrrp-profiles",
+          "method": "POST",
+          "operationId": "addVrrpProfiles",
+          "summary": "Add VRRP Profile",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/vrrp-profiles",
+          "method": "PUT",
+          "operationId": "updateVrrpProfiles",
+          "summary": "Update VRRP Profiles",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/vrrp-profiles",
+          "method": "DELETE",
+          "operationId": "deleteVrrpProfiles",
+          "summary": "Delete VRRP Profiles",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/application-performance/vrrp-profiles/{id}",
+          "method": "GET",
+          "operationId": "getVrrpProfileById",
+          "summary": "Get VRRP Profile by Id",
+          "tags": [
+            "Application Performance"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/wan-settings/connections",
+          "method": "GET",
+          "operationId": "getDeviceExternalConnections",
+          "summary": "Get WAN External Connections",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/wan-settings/{name}/connections",
+          "method": "GET",
+          "operationId": "getDeviceExternalConnectionsByName",
+          "summary": "Get WAN External Connections By Wan Name",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/wan-settings/{name}/connections/hub-and-spoke-synthesis",
+          "method": "GET",
+          "operationId": "getWanHubSpokeConnectionsCount",
+          "summary": "Get WAN Hub and Spoke Connections Synthesis",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/wan-settings/{name}/connections/{type}",
+          "method": "GET",
+          "operationId": "getDeviceExternalConnectionsByType",
+          "summary": "Get WAN External Connections By Type",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/appliances/{applianceId}/wan-settings/{name}/available-site-to-site-endpoints",
+          "method": "GET",
+          "operationId": "getDeviceWanRemoteEndpoints",
+          "summary": "Get Available Remote Site to Site Endpoints",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/sites/{siteId}/appliances",
+          "method": "GET",
+          "operationId": "getApplianceBySite",
+          "summary": "Get appliances by Site ID",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/common-objects/protocols",
+          "method": "GET",
+          "operationId": "getProtocols",
+          "summary": "Get protocols",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/common-objects/protocols/{id}",
+          "method": "GET",
+          "operationId": "getProtocolById",
+          "summary": "Get Protocol by Id",
+          "tags": [
+            "Appliance Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/routing/settings",
+          "method": "GET",
+          "operationId": "getRoutingSettings",
+          "summary": "Get routing settings",
+          "tags": [
+            "Policy Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/routing/settings",
+          "method": "PUT",
+          "operationId": "updateRoutingSettings",
+          "summary": "Update routing settings",
+          "tags": [
+            "Policy Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/network-policies/{policyId}/routing/settings/{id}",
+          "method": "GET",
+          "operationId": "getRoutingSettingsById",
+          "summary": "Get a routing settings",
+          "tags": [
+            "Policy Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/policy-advanced-settings",
+          "method": "GET",
+          "operationId": "getAdvancedSettings",
+          "summary": "Get advanced settings",
+          "tags": [
+            "Policy Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/policy-advanced-settings",
+          "method": "POST",
+          "operationId": "createAdvancedSettings",
+          "summary": "Create advanced settings",
+          "tags": [
+            "Policy Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/policy-advanced-settings",
+          "method": "PUT",
+          "operationId": "updateAdvancedSettings",
+          "summary": "Update advanced settings",
+          "tags": [
+            "Policy Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/policy-advanced-settings",
+          "method": "DELETE",
+          "operationId": "deleteAdvancedSettings",
+          "summary": "Delete advanced settings",
+          "tags": [
+            "Policy Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/policy-advanced-settings/{id}",
+          "method": "GET",
+          "operationId": "getAdvancedSettingsById",
+          "summary": "Get an advanced settings",
+          "tags": [
+            "Policy Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/rvc-destinations",
+          "method": "GET",
+          "operationId": "getRvcDestinations",
+          "summary": "Get RVC destinations",
+          "tags": [
+            "RVC Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/rvc-destinations",
+          "method": "POST",
+          "operationId": "addRvcDestinations",
+          "summary": "Add RVC destinations",
+          "tags": [
+            "RVC Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/rvc-destinations",
+          "method": "PUT",
+          "operationId": "updateRvcDestinations",
+          "summary": "Update RVC destinations",
+          "tags": [
+            "RVC Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/rvc-destinations",
+          "method": "DELETE",
+          "operationId": "deleteRvcDestinations",
+          "summary": "Delete RVC Destinations",
+          "tags": [
+            "RVC Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/rvc-destinations/{id}",
+          "method": "GET",
+          "operationId": "getRvcDestination",
+          "summary": "Get a RVC destination",
+          "tags": [
+            "RVC Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/saas-catalog",
+          "method": "GET",
+          "operationId": "getSaasCatalog",
+          "summary": "Get SaaS catalog",
+          "tags": [
+            "SaaS Configuration"
+          ]
+        },
+        {
+          "path": "/configuration/v1/saas-catalog/info",
+          "method": "GET",
+          "operationId": "getSaasCatalogInfo",
+          "summary": "Get SaaS catalog info",
+          "tags": [
+            "SaaS Configuration"
+          ]
+        },
+        {
+          "path": "/tools/v1/upgrade/catalog",
+          "method": "GET",
+          "operationId": "getFirmware",
+          "summary": "Firmware catalog",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/tools/v1/upgrade/activate",
+          "method": "POST",
+          "operationId": "postUpgrade",
+          "summary": "Activate upgrade",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/tools/v1/upgrade/status",
+          "method": "GET",
+          "operationId": "getUpgrade",
+          "summary": "Upgrade status",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/tools/v1/upgrade/cancel",
+          "method": "DELETE",
+          "operationId": "cancelUpgrade",
+          "summary": "Cancel a scheduled upgrade",
+          "tags": [
+            "Onboarding"
+          ]
+        },
+        {
+          "path": "/tools/v1/troubleshooting/start",
+          "method": "POST",
+          "operationId": "troubleshootstart",
+          "summary": "Start Appliance troubleshooting",
+          "tags": [
+            "Troubleshooting"
+          ]
+        },
+        {
+          "path": "/tools/v1/troubleshooting/stats",
+          "method": "GET",
+          "operationId": "troubleshootstats",
+          "summary": "Appliance troubleshooting stats",
+          "tags": [
+            "Troubleshooting"
+          ]
+        },
+        {
+          "path": "/tools/v1/troubleshooting/graph",
+          "method": "GET",
+          "operationId": "troubleshootgraph",
+          "summary": "Appliance troubleshooting graph",
+          "tags": [
+            "Troubleshooting"
+          ]
+        },
+        {
+          "path": "/tools/v1/troubleshooting/stop/{request_id}",
+          "method": "POST",
+          "operationId": "troubleshootstop",
+          "summary": "Stop Appliance troubleshooting",
+          "tags": [
+            "Troubleshooting"
+          ]
+        },
+        {
+          "path": "/tools/v1/scripts/catalog",
+          "method": "GET",
+          "operationId": "appliancescripts",
+          "summary": "Get scripts catalog",
+          "tags": [
+            "Scripts"
+          ]
+        },
+        {
+          "path": "/tools/v1/scripts/execute/{script_name}",
+          "method": "POST",
+          "operationId": "toolsRunScript",
+          "summary": "Run a script",
+          "tags": [
+            "Scripts"
+          ]
+        },
+        {
+          "path": "/tools/v1/scripts/status",
+          "method": "GET",
+          "operationId": "getScriptStatus",
+          "summary": "Get script status",
+          "tags": [
+            "Scripts"
+          ]
+        },
+        {
+          "path": "/tools/v1/scripts/result",
+          "method": "GET",
+          "operationId": "scriptsresult",
+          "summary": "Get script result(s)",
+          "tags": [
+            "Scripts"
+          ]
+        },
+        {
+          "path": "/tools/v1/scripts/result/delete",
+          "method": "POST",
+          "operationId": "deleteApplianceResult",
+          "summary": "Delete result(s)",
+          "tags": [
+            "Scripts"
+          ]
+        },
+        {
+          "path": "/tools/v1/scripts/result/download",
+          "method": "GET",
+          "operationId": "scriptsResultDownload",
+          "summary": "Download script result",
+          "tags": [
+            "Scripts"
+          ]
+        },
+        {
+          "path": "/system/v1/audit/records",
+          "method": "GET",
+          "operationId": "getAuditRecords",
+          "summary": "Get All Audit Records",
+          "tags": [
+            "Audit"
+          ]
+        },
+        {
+          "path": "/system/v1/audit/records/{id}",
+          "method": "GET",
+          "operationId": "getAuditRecordDetails",
+          "summary": "Get Audit Record Details",
+          "tags": [
+            "Audit"
+          ]
+        },
+        {
+          "path": "/system/v1/audit/filters",
+          "method": "GET",
+          "operationId": "getAuditRecordFilters",
+          "summary": "Get Audit Record Filters",
+          "tags": [
+            "Audit"
+          ]
+        },
+        {
+          "path": "/reporting/v1/reports/config",
+          "method": "POST",
+          "operationId": "createConfig",
+          "summary": "Create report API",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reporting/v1/reports",
+          "method": "GET",
+          "operationId": "generatedReportList",
+          "summary": "Get all report configs with generated report list",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reporting/v1/reports",
+          "method": "DELETE",
+          "operationId": "removeReports",
+          "summary": "Delete Report/Reports",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reporting/v1/reports/{config_id}",
+          "method": "PUT",
+          "operationId": "updateReport",
+          "summary": "Put update report config API",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reporting/v1/reports/{report_id}/download",
+          "method": "GET",
+          "operationId": "downloadData",
+          "summary": "download report",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reporting/v1/reports/components",
+          "method": "GET",
+          "operationId": "reportComponents",
+          "summary": "Report Widget list API",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reporting/v1/reports/templates",
+          "method": "GET",
+          "operationId": "templateList",
+          "summary": "Template List API",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reporting/v1/reports/templates",
+          "method": "POST",
+          "operationId": "saveTemplate",
+          "summary": "Save template API",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reporting/v1/reports/templates",
+          "method": "DELETE",
+          "operationId": "deleteTemplateList",
+          "summary": "Template Delete API",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reporting/v1/reports/templates/{template_id}",
+          "method": "GET",
+          "operationId": "templateData",
+          "summary": "Template metadata API",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reporting/v1/reports/templates/{template_id}",
+          "method": "PUT",
+          "operationId": "updateTemplate",
+          "summary": "Update template API",
+          "tags": [
+            "Reports"
+          ]
+        },
+        {
+          "path": "/reporting/v1/reports/templates/clone",
+          "method": "POST",
+          "operationId": "cloneTemplate",
+          "summary": "Clone Template",
+          "tags": [
+            "Reports"
+          ]
+        }
+      ],
+      "specFile": "specs/extremecloud-sdwan/openapi.yaml"
+    },
+    {
       "id": "extremecloud-iq",
       "title": "ExtremeCloud IQ API",
       "description": "ExtremeCloud IQ RESTful API for external and internal applications.",
