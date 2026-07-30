@@ -1,16 +1,352 @@
 {
   "apis": [
     {
+      "id": "subscriptions",
+      "title": "Extreme Platform ONE REST API - Subscriptions & Licensing",
+      "description": "The Extreme Platform ONE™ License API provides comprehensive management of software licenses, subscriptions, and entitlements across your Extreme network infrastructure, enabling centralized visibility and control over all licensing aspects from trial activation through operational management.",
+      "version": "25.11.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/subscription/v1",
+      "tags": [
+        "Setting",
+        "Link and Unlink",
+        "License Management",
+        "MSP License Management",
+        "Trial License",
+        "Xiq",
+        "License Operation"
+      ],
+      "endpoints": [
+        {
+          "path": "/setting",
+          "method": "GET",
+          "operationId": "getLicenseSetting",
+          "summary": "Get License Settings",
+          "tags": [
+            "Setting"
+          ]
+        },
+        {
+          "path": "/license-types",
+          "method": "GET",
+          "operationId": "listLicenseTypes",
+          "summary": "List License Types",
+          "tags": [
+            "License Management"
+          ]
+        },
+        {
+          "path": "/summary",
+          "method": "GET",
+          "operationId": "getLicenseSummary",
+          "summary": "Get License Summary",
+          "tags": [
+            "License Management"
+          ]
+        },
+        {
+          "path": "/portal/link-url",
+          "method": "POST",
+          "operationId": "RequestPortalLinkUrl",
+          "summary": "Get Portal Link URL",
+          "tags": [
+            "Link and Unlink"
+          ]
+        },
+        {
+          "path": "/portal/:unlink",
+          "method": "POST",
+          "operationId": "unlinkPortal",
+          "summary": "Unlink Portal Account",
+          "tags": [
+            "Link and Unlink"
+          ]
+        },
+        {
+          "path": "/license/apps",
+          "method": "GET",
+          "operationId": "getApps",
+          "summary": "List Licensed Applications",
+          "tags": [
+            "License Management"
+          ]
+        },
+        {
+          "path": "/entitlements",
+          "method": "GET",
+          "operationId": "listEntitlements",
+          "summary": "List License Entitlements",
+          "tags": [
+            "License Management"
+          ]
+        },
+        {
+          "path": "/license-details",
+          "method": "GET",
+          "operationId": "listLicenseDetails",
+          "summary": "List License Details",
+          "tags": [
+            "License Management"
+          ]
+        },
+        {
+          "path": "/license/report",
+          "method": "GET",
+          "operationId": "downloadLicenseReport",
+          "summary": "Download License Report",
+          "tags": [
+            "License Management"
+          ]
+        },
+        {
+          "path": "/license/:synchronize",
+          "method": "POST",
+          "operationId": "synchronizeLicense",
+          "summary": "Synchronize Licenses",
+          "tags": [
+            "License Management"
+          ]
+        },
+        {
+          "path": "/trial-licenses/:request",
+          "method": "POST",
+          "operationId": "requestTrialLicenses",
+          "summary": "Request Trial Licenses",
+          "tags": [
+            "Trial License"
+          ]
+        },
+        {
+          "path": "/nac-entitlements/allocations",
+          "method": "GET",
+          "operationId": "getNacEntitlementAllocations",
+          "summary": "Get NAC Entitlement Allocations",
+          "tags": [
+            "Xiq"
+          ]
+        },
+        {
+          "path": "/nac-entitlements/allocations",
+          "method": "PUT",
+          "operationId": "setNacEntitlementAllocations",
+          "summary": "Set NAC Entitlement Allocations",
+          "tags": [
+            "Xiq"
+          ]
+        },
+        {
+          "path": "/nac-entitlements/stats",
+          "method": "GET",
+          "operationId": "getNacEntitlementStats",
+          "summary": "Get NAC Entitlement Statistics",
+          "tags": [
+            "Xiq"
+          ]
+        }
+      ],
+      "specFile": "specs/subscriptions/openapi.yaml"
+    },
+    {
+      "id": "iam",
+      "title": "Extreme Platform ONE REST API - IAM",
+      "description": "Extreme Platform ONE™ IAM (Identity and Access Management) API allows users to manage organization setting, user profile, identities, roles, external Identity Providers (IDPs), Multi-Factor Authentication (MFA), API Keys, etc.",
+      "version": "25.11.0",
+      "baseUrl": "https://cloudapi.extremecloudiq.com/iam/v1",
+      "tags": [
+        "My Account",
+        "My Organization",
+        "Security",
+        "SAML",
+        "Application",
+        "Identity",
+        "API Keys",
+        "Redirect",
+        "Misc",
+        "My MSP"
+      ],
+      "endpoints": [
+        {
+          "path": "/myaccount",
+          "method": "GET",
+          "operationId": "getMyAccount",
+          "summary": "Get my account information",
+          "tags": [
+            "My Account"
+          ]
+        },
+        {
+          "path": "/myaccount",
+          "method": "PUT",
+          "operationId": "updateMyAccount",
+          "summary": "Update my account information",
+          "tags": [
+            "My Account"
+          ]
+        },
+        {
+          "path": "/users",
+          "method": "GET",
+          "operationId": "getUserList",
+          "summary": "Get page of users",
+          "tags": [
+            "Identity"
+          ]
+        },
+        {
+          "path": "/users",
+          "method": "POST",
+          "operationId": "createUser",
+          "summary": "Create new user",
+          "tags": [
+            "Identity"
+          ]
+        },
+        {
+          "path": "/users/{id}",
+          "method": "GET",
+          "operationId": "getUser",
+          "summary": "Get user detail",
+          "tags": [
+            "Identity"
+          ]
+        },
+        {
+          "path": "/users/{id}",
+          "method": "PUT",
+          "operationId": "updateUser",
+          "summary": "Update user detail",
+          "tags": [
+            "Identity"
+          ]
+        },
+        {
+          "path": "/api-keys",
+          "method": "POST",
+          "operationId": "createApiKey",
+          "summary": "Create a new API key",
+          "tags": [
+            "API Keys"
+          ]
+        },
+        {
+          "path": "/api-keys",
+          "method": "GET",
+          "operationId": "listAllApiKeys",
+          "summary": "Fetch all API keys",
+          "tags": [
+            "API Keys"
+          ]
+        },
+        {
+          "path": "/api-keys/{id}",
+          "method": "GET",
+          "operationId": "getApiKey",
+          "summary": "Get an API key",
+          "tags": [
+            "API Keys"
+          ]
+        },
+        {
+          "path": "/api-keys/{id}",
+          "method": "PATCH",
+          "operationId": "updateApiKey",
+          "summary": "Update an existing API key",
+          "tags": [
+            "API Keys"
+          ]
+        },
+        {
+          "path": "/api-keys/{id}",
+          "method": "DELETE",
+          "operationId": "deleteApiKey",
+          "summary": "Delete an API key",
+          "tags": [
+            "API Keys"
+          ]
+        },
+        {
+          "path": "/roles",
+          "method": "GET",
+          "operationId": "listRoles",
+          "summary": "List roles",
+          "tags": [
+            "Identity"
+          ]
+        },
+        {
+          "path": "/roles",
+          "method": "POST",
+          "operationId": "createRole",
+          "summary": "Create a new role",
+          "tags": [
+            "Identity"
+          ]
+        },
+        {
+          "path": "/user-groups",
+          "method": "GET",
+          "operationId": "listUserGroups",
+          "summary": "List user groups",
+          "tags": [
+            "Identity"
+          ]
+        },
+        {
+          "path": "/user-groups",
+          "method": "POST",
+          "operationId": "createUserGroup",
+          "summary": "Create new user group",
+          "tags": [
+            "Identity"
+          ]
+        },
+        {
+          "path": "/saml2/asserting-parties",
+          "method": "GET",
+          "operationId": "listAssertingParties",
+          "summary": "List external IdPs",
+          "tags": [
+            "SAML"
+          ]
+        },
+        {
+          "path": "/saml2/asserting-parties",
+          "method": "POST",
+          "operationId": "createAssertingParty",
+          "summary": "Create new external IdP",
+          "tags": [
+            "SAML"
+          ]
+        },
+        {
+          "path": "/apps",
+          "method": "GET",
+          "operationId": "listApps",
+          "summary": "List applications",
+          "tags": [
+            "Application"
+          ]
+        },
+        {
+          "path": "/security/mfa",
+          "method": "GET",
+          "operationId": "authenticators",
+          "summary": "Get MFA authenticators",
+          "tags": [
+            "Security"
+          ]
+        }
+      ],
+      "specFile": "specs/iam/openapi.yaml"
+    },
+    {
       "id": "audit-log",
       "title": "Extreme Platform ONE REST API - Audit Log",
-      "description": "Extreme Platform ONE™ Audit Log API provides comprehensive tracking of user activities within Extreme Platform ONE, ensuring transparency, traceability, and accountability across all applications.",
+      "description": "Extreme Platform ONE&trade; Audit Log API provides comprehensive tracking of user activities within Extreme Platform ONE, ensuring transparency, traceability, and accountability across all applications.",
       "version": "25.11.0",
       "baseUrl": "https://cloudapi.extremecloudiq.com/auditlog/v1",
       "tags": [
-        "audit",
-        "compliance",
-        "user-activity",
-        "logging"
+        "User Activity Audit Logs",
+        "Audit Log Metadata"
       ],
       "endpoints": [
         {

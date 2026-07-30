@@ -1,0 +1,458 @@
+openapi: 3.0.3
+info:
+  title: Extreme Platform ONE REST API - IAM
+  description: Extreme Platform ONE™ IAM (Identity and Access Management)
+    API allows users to manage organization setting, user profile, identities,
+    roles, external Identity Providers (IDPs), Multi-Factor Authentication
+    (MFA), API Keys, etc.
+  termsOfService: https://www.extremenetworks.com/company/legal/terms-of-use/
+  contact:
+    name: Extreme Networks Support
+    url: https://www.extremenetworks.com/support
+    email: support@extremenetworks.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 25.11.0
+servers:
+  - url: https://cloudapi.extremecloudiq.com/iam/v1
+    description: Extreme Platform ONE REST API - IAM (Identity and Access Management)
+tags:
+  - name: My Account
+    description: My Account Management
+  - name: My Organization
+    description: My Organization Management
+  - name: Security
+    description: Multi-Factor Authentication (MFA)
+  - name: SAML
+    description: External Identity Provider/Service Provider/Certificate
+  - name: Application
+    description: ExtremeCloud Application Management
+  - name: Identity
+    description: Identity management, such as users, user groups and roles.
+  - name: API Keys
+    description: ExtremeCloud API Keys Management
+  - name: Redirect
+    description: ExtremeCloud Redirect Management
+  - name: Misc
+    description: Miscellaneous
+  - name: My MSP
+    description: My MSP Management
+paths:
+  /myaccount:
+    get:
+      tags:
+        - My Account
+      summary: Get my account information
+      description: Get my account information.
+      operationId: getMyAccount
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+    put:
+      tags:
+        - My Account
+      summary: Update my account information
+      description: Update my account information.
+      operationId: updateMyAccount
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /users:
+    get:
+      tags:
+        - Identity
+      summary: Get page of users
+      description: Get page of users.
+      operationId: getUserList
+      parameters:
+        - name: keyword
+          in: query
+          description: This field is used to filter users
+          required: false
+          schema:
+            maxLength: 64
+            type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Identity
+      summary: Create new user
+      description: Create/Add a new user.
+      operationId: createUser
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /users/{id}:
+    get:
+      tags:
+        - Identity
+      summary: Get user detail
+      description: Get user detail by ID.
+      operationId: getUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+    put:
+      tags:
+        - Identity
+      summary: Update user detail
+      description: Update user detail.
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /api-keys:
+    post:
+      tags:
+        - API Keys
+      summary: Create a new API key
+      description: Create a new API key to access resources.
+      operationId: createApiKey
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+    get:
+      tags:
+        - API Keys
+      summary: Fetch all API keys
+      description: Fetch all API keys belonging to a customer.
+      operationId: listAllApiKeys
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /api-keys/{id}:
+    get:
+      tags:
+        - API Keys
+      summary: Get an API key
+      description: Fetch metadata of an existing API key.
+      operationId: getApiKey
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+    patch:
+      tags:
+        - API Keys
+      summary: Update an existing API key
+      description: Updates metadata of an existing API key.
+      operationId: updateApiKey
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - API Keys
+      summary: Delete an API key
+      description: Deletes an API key so that access is no longer allowed.
+      operationId: deleteApiKey
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /roles:
+    get:
+      tags:
+        - Identity
+      summary: List roles
+      description: List available roles.
+      operationId: listRoles
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Identity
+      summary: Create a new role
+      description: Create a new custom role.
+      operationId: createRole
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /user-groups:
+    get:
+      tags:
+        - Identity
+      summary: List user groups
+      description: List available user groups.
+      operationId: listUserGroups
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Identity
+      summary: Create new user group
+      description: Create a new custom user group.
+      operationId: createUserGroup
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /saml2/asserting-parties:
+    get:
+      tags:
+        - SAML
+      summary: List external IdPs
+      description: List external IdP configurations.
+      operationId: listAssertingParties
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - SAML
+      summary: Create new external IdP
+      description: Create a new external IdP configuration.
+      operationId: createAssertingParty
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /apps:
+    get:
+      tags:
+        - Application
+      summary: List applications
+      description: List available applications.
+      operationId: listApps
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /security/mfa:
+    get:
+      tags:
+        - Security
+      summary: Get MFA authenticators
+      description: Get MFA authenticators.
+      operationId: authenticators
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Enter your API Key as a Bearer Token

@@ -1,0 +1,367 @@
+openapi: 3.0.3
+info:
+  title: Extreme Platform ONE REST API - Subscriptions & Licensing
+  description: >-
+    The Extreme Platform ONE™ License API provides comprehensive management of
+    software licenses, subscriptions, and entitlements across your Extreme
+    network infrastructure, enabling centralized visibility and control over all
+    licensing aspects from trial activation through operational management.
+  termsOfService: https://www.extremenetworks.com/company/legal/terms-of-use/
+  contact:
+    name: Extreme Networks Support
+    url: https://www.extremenetworks.com/support
+    email: support@extremenetworks.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 25.11.0
+servers:
+  - url: https://cloudapi.extremecloudiq.com/subscription/v1
+    description: Extreme Platform ONE REST API - Subscriptions & Licensing
+tags:
+  - name: Setting
+    description: The Global Setting of Common License API.
+  - name: Link and Unlink
+    description: Link/Unlink the Extreme Portal account.
+  - name: License Management
+    description: Management the Licenses.
+  - name: MSP License Management
+    description: License Management for MSPs.
+  - name: Trial License
+    description: Request Trial License.
+  - name: Xiq
+    description: For Xiq only.
+  - name: License Operation
+    description: License Operation
+paths:
+  /setting:
+    get:
+      tags:
+        - Setting
+      summary: Get License Settings
+      description: Retrieves the license settings for this account, including the
+        default trial subscription period in days.
+      operationId: getLicenseSetting
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /license-types:
+    get:
+      tags:
+        - License Management
+      summary: List License Types
+      description: Retrieves the catalog of supported license types, optionally
+        filtered by application. Returns license type metadata including names
+        and descriptions for each license type.
+      operationId: listLicenseTypes
+      parameters:
+        - name: app
+          in: query
+          description: The application name filter
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /summary:
+    get:
+      tags:
+        - License Management
+      summary: Get License Summary
+      description: Retrieves the shared CUID and legacy entitlements information, as
+        well as portal link related information.
+      operationId: getLicenseSummary
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /portal/link-url:
+    post:
+      tags:
+        - Link and Unlink
+      summary: Get Portal Link URL
+      description: Generates a link_url for initiating the ExtremeCloud IQ account
+        linking process with an Extreme Portal account.
+      operationId: RequestPortalLinkUrl
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /portal/:unlink:
+    post:
+      tags:
+        - Link and Unlink
+      summary: Unlink Portal Account
+      description: Disconnects the ExtremeCloud IQ account from the linked Extreme
+        Portal account.
+      operationId: unlinkPortal
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /license/apps:
+    get:
+      tags:
+        - License Management
+      summary: List Licensed Applications
+      description: Retrieves the list of current applications and their license status
+        for the VIQ.
+      operationId: getApps
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /entitlements:
+    get:
+      tags:
+        - License Management
+      summary: List License Entitlements
+      description: Retrieves license entitlements with optional filtering by
+        application and keyword search.
+      operationId: listEntitlements
+      parameters:
+        - name: app
+          in: query
+          description: The application name filter
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /license-details:
+    get:
+      tags:
+        - License Management
+      summary: List License Details
+      description: Retrieves detailed information for licenses of a specific type.
+      operationId: listLicenseDetails
+      parameters:
+        - name: licenseType
+          in: query
+          description: The license type identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /license/report:
+    get:
+      tags:
+        - License Management
+      summary: Download License Report
+      description: Generates and downloads a license report as a ZIP file.
+      operationId: downloadLicenseReport
+      parameters:
+        - name: app
+          in: query
+          description: The application name filter
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /license/:synchronize:
+    post:
+      tags:
+        - License Management
+      summary: Synchronize Licenses
+      description: Triggers an on-demand synchronization of license information from
+        Extreme Portal.
+      operationId: synchronizeLicense
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /trial-licenses/:request:
+    post:
+      tags:
+        - Trial License
+      summary: Request Trial Licenses
+      description: Submits a request for trial licenses to evaluate Extreme platform
+        features.
+      operationId: requestTrialLicenses
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /nac-entitlements/allocations:
+    get:
+      tags:
+        - Xiq
+      summary: Get NAC Entitlement Allocations
+      description: Retrieves the current allocation of Network Access Control (NAC)
+        license entitlements across organizational units.
+      operationId: getNacEntitlementAllocations
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+    put:
+      tags:
+        - Xiq
+      summary: Set NAC Entitlement Allocations
+      description: Configures the allocation of Network Access Control (NAC) license
+        entitlements across organizational units.
+      operationId: setNacEntitlementAllocations
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /nac-entitlements/stats:
+    get:
+      tags:
+        - Xiq
+      summary: Get NAC Entitlement Statistics
+      description: Retrieves statistics for Network Access Control (NAC) license
+        entitlements.
+      operationId: getNacEntitlementStats
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "500":
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Enter your API Key as a Bearer Token
