@@ -3,7 +3,7 @@
     {
       "id": "subscriptions",
       "title": "Extreme Platform ONE REST API - Subscriptions & Licensing",
-      "description": "The Extreme Platform ONE™ License API provides comprehensive management of software licenses, subscriptions, and entitlements across your Extreme network infrastructure, enabling centralized visibility and control over all licensing aspects from trial activation through operational management.",
+      "description": "The Extreme Platform ONE\u2122 License API provides comprehensive management of software licenses, subscriptions, and entitlements across your Extreme network infrastructure, enabling centralized visibility and control over all licensing aspects from trial activation through operational management.",
       "version": "25.11.0",
       "baseUrl": "https://cloudapi.extremecloudiq.com/subscription/v1",
       "tags": [
@@ -491,7 +491,7 @@
     {
       "id": "notification",
       "title": "Extreme Platform ONE REST API - Notification",
-      "description": "The Extreme Platform ONE™ Notification API provides comprehensive management\nof notification subscriptions and delivery rules, enabling automated alerting\nacross multiple channels to keep your team informed of critical network events,\nsubscription lifecycle changes, and contract milestones.\n\n**📬 Multi-Channel Notification Delivery:**\n\n• **Email Notifications** - Configure email recipients for alert notifications\nwith built-in verification workflow to ensure delivery to valid addresses\n\n• **Webhook Integration** - Set up HTTP endpoints to receive real-time JSON\npayloads with optional HMAC signature verification for secure integrations\n\n• **ServiceNow Integration** - Automatically create incidents in ServiceNow\nwhen alerts trigger, streamlining IT service management workflows\n\n• **Mobile Push Notifications** - Deliver instant notifications to mobile\napplications via APNs (iOS) and FCM (Android) for on-the-go alerting\n\n\n**📋 Intelligent Notification Rules:**\n\n• **Subscription Lifecycle Rules** - Timeline-based and event-based triggers\nfor license expiration warnings, renewal reminders, and activation notifications\n\n• **Contract Lifecycle Rules** - Automated notifications for hardware support\ncontract milestones, warranty expirations, and renewal deadlines\n\n• **Flexible Rule Configuration** - Predefined system rules plus custom\nuser-defined rules with per-application filtering\n\n\n**🏢 Enterprise Management:**\n\nBuilt for enterprise environments with bulk operations for managing multiple\nsubscriptions, organization-wide notification policies, and comprehensive\naudit trails for compliance and operational visibility.",
+      "description": "The Extreme Platform ONE\u2122 Notification API provides comprehensive management\nof notification subscriptions and delivery rules, enabling automated alerting\nacross multiple channels to keep your team informed of critical network events,\nsubscription lifecycle changes, and contract milestones.\n\n**\ud83d\udcec Multi-Channel Notification Delivery:**\n\n\u2022 **Email Notifications** - Configure email recipients for alert notifications\nwith built-in verification workflow to ensure delivery to valid addresses\n\n\u2022 **Webhook Integration** - Set up HTTP endpoints to receive real-time JSON\npayloads with optional HMAC signature verification for secure integrations\n\n\u2022 **ServiceNow Integration** - Automatically create incidents in ServiceNow\nwhen alerts trigger, streamlining IT service management workflows\n\n\u2022 **Mobile Push Notifications** - Deliver instant notifications to mobile\napplications via APNs (iOS) and FCM (Android) for on-the-go alerting\n\n\n**\ud83d\udccb Intelligent Notification Rules:**\n\n\u2022 **Subscription Lifecycle Rules** - Timeline-based and event-based triggers\nfor license expiration warnings, renewal reminders, and activation notifications\n\n\u2022 **Contract Lifecycle Rules** - Automated notifications for hardware support\ncontract milestones, warranty expirations, and renewal deadlines\n\n\u2022 **Flexible Rule Configuration** - Predefined system rules plus custom\nuser-defined rules with per-application filtering\n\n\n**\ud83c\udfe2 Enterprise Management:**\n\nBuilt for enterprise environments with bulk operations for managing multiple\nsubscriptions, organization-wide notification policies, and comprehensive\naudit trails for compliance and operational visibility.",
       "version": "25.11.0",
       "baseUrl": "https://cloudapi.extremecloudiq.com/notification/v1",
       "tags": [
@@ -863,7 +863,7 @@
     {
       "id": "iam",
       "title": "Extreme Platform ONE REST API - IAM",
-      "description": "Extreme Platform ONE™ IAM (Identity and Access Management) API allows users to manage organization setting, user profile, identities, roles, external Identity Providers (IDPs), Multi-Factor Authentication (MFA), API Keys, etc.",
+      "description": "Extreme Platform ONE\u2122 IAM (Identity and Access Management) API allows users to manage organization setting, user profile, identities, roles, external Identity Providers (IDPs), Multi-Factor Authentication (MFA), API Keys, etc.",
       "version": "25.11.0",
       "baseUrl": "https://cloudapi.extremecloudiq.com/iam/v1",
       "tags": [
@@ -1056,7 +1056,7 @@
     {
       "id": "device-lifecycle-management",
       "title": "Extreme Platform ONE REST API - Device Lifecycle Management",
-      "description": "The Extreme Platform ONE™ Device Lifecycle Management API provides comprehensive\nautomation and orchestration for the complete network device lifecycle, from \ninitial discovery and zero-touch onboarding through operational management \nand secure decommissioning.\n\n**🔄 Complete Lifecycle Management:**\n\n• **Zero-Touch Device Onboarding** - Fully automated provisioning for wireless \ndevices (IQEngine/XIQ) and wired devices (EXOS/VOSS) with intelligent \nconfiguration validation and compliance checking\n\n• **Intelligent Bulk Operations** - Enterprise-scale batch processing with \nExcel-based import/export, template-driven workflows, and automated \nvalidation for efficient mass device management\n\n• **Advanced Device Discovery** - Device detection and classification \nwith automatic product compatibility checking and network topology analysis\n\n• **Subscription & License Management** - Automated tracking and lifecycle \nmanagement of device subscriptions, software licenses, and service entitlements\n\n• **Secure Lifecycle Transitions** - Complete device state management from \nonboarding through operational phases to secure decommissioning with audit trails\n\n\n**🏢 Enterprise Integration & Scale:**\n\nBuilt for enterprise environments with seamless integration capabilities,\ncomprehensive audit trails, high-performance batch processing, and \nenterprise-grade security controls for large-scale network deployments.",
+      "description": "The Extreme Platform ONE\u2122 Device Lifecycle Management API provides comprehensive\nautomation and orchestration for the complete network device lifecycle, from \ninitial discovery and zero-touch onboarding through operational management \nand secure decommissioning.\n\n**\ud83d\udd04 Complete Lifecycle Management:**\n\n\u2022 **Zero-Touch Device Onboarding** - Fully automated provisioning for wireless \ndevices (IQEngine/XIQ) and wired devices (EXOS/VOSS) with intelligent \nconfiguration validation and compliance checking\n\n\u2022 **Intelligent Bulk Operations** - Enterprise-scale batch processing with \nExcel-based import/export, template-driven workflows, and automated \nvalidation for efficient mass device management\n\n\u2022 **Advanced Device Discovery** - Device detection and classification \nwith automatic product compatibility checking and network topology analysis\n\n\u2022 **Subscription & License Management** - Automated tracking and lifecycle \nmanagement of device subscriptions, software licenses, and service entitlements\n\n\u2022 **Secure Lifecycle Transitions** - Complete device state management from \nonboarding through operational phases to secure decommissioning with audit trails\n\n\n**\ud83c\udfe2 Enterprise Integration & Scale:**\n\nBuilt for enterprise environments with seamless integration capabilities,\ncomprehensive audit trails, high-performance batch processing, and \nenterprise-grade security controls for large-scale network deployments.",
       "version": "25.11.0",
       "baseUrl": "https://cloudapi.extremecloudiq.com/device-lifecycle",
       "tags": [
@@ -1575,7 +1575,7 @@
     {
       "id": "asset-management",
       "title": "Extreme Platform ONE REST API - Asset Management",
-      "description": "The Extreme Platform ONE™ Asset Management API provides comprehensive\nautomation and intelligent orchestration for enterprise network asset lifecycle \nmanagement, enabling seamless device inventory tracking, contract management, \nand automated compliance monitoring across complex network infrastructures.",
+      "description": "The Extreme Platform ONE\u2122 Asset Management API provides comprehensive\nautomation and intelligent orchestration for enterprise network asset lifecycle \nmanagement, enabling seamless device inventory tracking, contract management, \nand automated compliance monitoring across complex network infrastructures.",
       "version": "25.11.0",
       "baseUrl": "https://cloudapi.extremecloudiq.com/assets/v1",
       "tags": [
@@ -1797,7 +1797,7 @@
     {
       "id": "alert",
       "title": "Extreme Platform ONE REST API - Alert",
-      "description": "The Extreme Platform ONE™ Alert API provides comprehensive monitoring and\nmanagement of network alerts, enabling proactive detection of issues across\nyour Extreme network infrastructure through configurable alert policies\nand intelligent rule-based alerting.\n\n**🔔 Intelligent Alert Management:**\n\n• **Real-Time Alert Monitoring** - Centralized visibility into network alerts\nwith filtering by severity, category, site, device, and acknowledgment status\nfor rapid issue identification and triage\n\n• **Flexible Alert Policies** - Global policies for organization-wide alerting\nwith optional site-specific policy overrides for customized alerting behavior\nper location\n\n• **Configurable Alert Rules** - Event-based and metric-based rules with\nmultiple trigger types (immediate, deferred, and repeated) to match your\noperational requirements\n\n• **Alert Analytics & Reporting** - Statistical analysis by device, location,\nseverity, and category with exportable reports for compliance and trending\n\n• **Alert Acknowledgment Workflow** - Track alert review status to coordinate\nteam response and filter out already-addressed alerts from active monitoring\n\n\n**🏢 Enterprise-Scale Operations:**\n\nBuilt for enterprise environments with support for multi-site deployments,\nhierarchical location-based alerting, bulk alert operations, and\ncomprehensive audit trails for large-scale network monitoring.",
+      "description": "The Extreme Platform ONE\u2122 Alert API provides comprehensive monitoring and\nmanagement of network alerts, enabling proactive detection of issues across\nyour Extreme network infrastructure through configurable alert policies\nand intelligent rule-based alerting.\n\n**\ud83d\udd14 Intelligent Alert Management:**\n\n\u2022 **Real-Time Alert Monitoring** - Centralized visibility into network alerts\nwith filtering by severity, category, site, device, and acknowledgment status\nfor rapid issue identification and triage\n\n\u2022 **Flexible Alert Policies** - Global policies for organization-wide alerting\nwith optional site-specific policy overrides for customized alerting behavior\nper location\n\n\u2022 **Configurable Alert Rules** - Event-based and metric-based rules with\nmultiple trigger types (immediate, deferred, and repeated) to match your\noperational requirements\n\n\u2022 **Alert Analytics & Reporting** - Statistical analysis by device, location,\nseverity, and category with exportable reports for compliance and trending\n\n\u2022 **Alert Acknowledgment Workflow** - Track alert review status to coordinate\nteam response and filter out already-addressed alerts from active monitoring\n\n\n**\ud83c\udfe2 Enterprise-Scale Operations:**\n\nBuilt for enterprise environments with support for multi-site deployments,\nhierarchical location-based alerting, bulk alert operations, and\ncomprehensive audit trails for large-scale network monitoring.",
       "version": "25.11.0",
       "baseUrl": "https://cloudapi.extremecloudiq.com/alert/v1",
       "tags": [
@@ -2060,6 +2060,193 @@
         }
       ],
       "specFile": "specs/alert/openapi.yaml"
+    },
+    {
+      "id": "alert-correlation-engine",
+      "title": "Alert Correlation Engine API",
+      "description": "Intelligent alert correlation and root cause analysis engine for Extreme Networks.\nIdentifies relationships between alerts using multiple correlation strategies:\n- Rule-based pattern matching\n- Time-window temporal grouping\n- ML anomaly detection\n- Configuration change correlation\n",
+      "version": "1.0.0",
+      "baseUrl": "http://localhost:3000",
+      "tags": [
+        "Alerts",
+        "Correlation",
+        "Root Cause Analysis",
+        "Network Topology",
+        "Machine Learning"
+      ],
+      "endpoints": [
+        {
+          "path": "/health",
+          "method": "GET",
+          "operationId": "getHealth",
+          "summary": "Health check endpoint",
+          "tags": [
+            "Health & Status"
+          ]
+        },
+        {
+          "path": "/api/registry/status",
+          "method": "GET",
+          "operationId": "getRegistryStatus",
+          "summary": "API registry status",
+          "tags": [
+            "Health & Status"
+          ]
+        },
+        {
+          "path": "/api/alerts",
+          "method": "POST",
+          "operationId": "createAlert",
+          "summary": "Ingest a new alert",
+          "tags": [
+            "Alerts"
+          ]
+        },
+        {
+          "path": "/api/alerts",
+          "method": "GET",
+          "operationId": "getAlerts",
+          "summary": "Get alerts",
+          "tags": [
+            "Alerts"
+          ]
+        },
+        {
+          "path": "/api/correlations",
+          "method": "GET",
+          "operationId": "getAllCorrelations",
+          "summary": "Get all correlations",
+          "tags": [
+            "Correlations"
+          ]
+        },
+        {
+          "path": "/api/correlations/rule-based",
+          "method": "GET",
+          "operationId": "getRuleBasedCorrelations",
+          "summary": "Get rule-based correlations",
+          "tags": [
+            "Correlations"
+          ]
+        },
+        {
+          "path": "/api/correlations/time-window",
+          "method": "GET",
+          "operationId": "getTimeWindowCorrelations",
+          "summary": "Get time-window correlations",
+          "tags": [
+            "Correlations"
+          ]
+        },
+        {
+          "path": "/api/correlations/anomalies",
+          "method": "GET",
+          "operationId": "getAnomalies",
+          "summary": "Get ML anomalies",
+          "tags": [
+            "Correlations"
+          ]
+        },
+        {
+          "path": "/api/rules",
+          "method": "POST",
+          "operationId": "createRule",
+          "summary": "Create a correlation rule",
+          "tags": [
+            "Rules"
+          ]
+        },
+        {
+          "path": "/api/rules",
+          "method": "GET",
+          "operationId": "getRules",
+          "summary": "Get all correlation rules",
+          "tags": [
+            "Rules"
+          ]
+        },
+        {
+          "path": "/api/config-changes",
+          "method": "POST",
+          "operationId": "createConfigChange",
+          "summary": "Record a configuration change",
+          "tags": [
+            "Configuration"
+          ]
+        },
+        {
+          "path": "/api/config-changes",
+          "method": "GET",
+          "operationId": "getConfigChanges",
+          "summary": "Get configuration changes",
+          "tags": [
+            "Configuration"
+          ]
+        },
+        {
+          "path": "/api/topology/devices",
+          "method": "POST",
+          "operationId": "addDevice",
+          "summary": "Add a network device",
+          "tags": [
+            "Network Topology"
+          ]
+        },
+        {
+          "path": "/api/topology/dependencies",
+          "method": "POST",
+          "operationId": "addDependency",
+          "summary": "Add a network dependency",
+          "tags": [
+            "Network Topology"
+          ]
+        },
+        {
+          "path": "/api/topology/cascading-alerts/{deviceId}",
+          "method": "GET",
+          "operationId": "getCascadingAlerts",
+          "summary": "Get cascading alerts for a device",
+          "tags": [
+            "Network Topology"
+          ]
+        },
+        {
+          "path": "/api/ml/train",
+          "method": "POST",
+          "operationId": "trainMLModel",
+          "summary": "Train ML model",
+          "tags": [
+            "Machine Learning"
+          ]
+        },
+        {
+          "path": "/api/ml/patterns",
+          "method": "GET",
+          "operationId": "getMLPatterns",
+          "summary": "Get learned ML patterns",
+          "tags": [
+            "Machine Learning"
+          ]
+        },
+        {
+          "path": "/api/demo-data/load",
+          "method": "POST",
+          "operationId": "loadDemoData",
+          "summary": "Load demo data",
+          "tags": [
+            "Demo Data"
+          ]
+        },
+        {
+          "path": "/api/demo-data/clear",
+          "method": "POST",
+          "operationId": "clearDemoData",
+          "summary": "Clear all demo data",
+          "tags": [
+            "Demo Data"
+          ]
+        }
+      ]
     }
   ]
 }
