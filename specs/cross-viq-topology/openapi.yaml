@@ -1,0 +1,372 @@
+openapi: 3.0.3
+info:
+  title: Cross-VIQ Topology API (Beta)
+  description: |
+    Unified network topology API for aggregating topology across multiple
+    ExtremeCloud IQ VIQ instances using Tenant Tagging. Enables multi-VIQ
+    network visibility and management through a single API endpoint.
+
+    **Status: BETA** - This API is in beta and depends on MSP device management
+    capabilities that are coming soon. Tenant Tagging integration is required.
+  version: 0.1.0-beta.1
+  contact:
+    name: Extreme Networks Support
+    url: https://www.extremenetworks.com/support
+    email: support@extremenetworks.com
+  license:
+    name: Apache License 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  - url: https://cloudapi.extremecloudiq.com
+    description: Extreme Cloud API Gateway
+
+tags:
+  - name: Topology
+    description: Cross-VIQ unified topology queries
+
+paths:
+  /api/topology/cross-viq:
+    get:
+      tags:
+        - Topology
+      summary: Get unified topology for all VIQs tagged with a tenant tag
+      description: |
+        Retrieves aggregated fabric and physical topology from all VIQs
+        associated with the specified tenant tag. Returns unified topology
+        with VIQ context metadata for each device and link.
+      operationId: getTaggedViqTopology
+      parameters:
+        - name: tag
+          in: query
+          description: |
+            Tenant tag name that groups multiple VIQs together.
+            Example: "network-group-prod", "customer-ABC-sites"
+          required: true
+          schema:
+            type: string
+          example: network-group-prod
+        - name: topologyType
+          in: query
+          description: |
+            Type of topology to retrieve. Default is fabric.
+            - fabric: Fabric attach infrastructure links
+            - physical: Physical device connections
+            - service: Service layer topology
+            - both: Combined fabric and physical
+          required: false
+          schema:
+            type: string
+            enum:
+              - fabric
+              - physical
+              - service
+              - both
+            default: fabric
+          example: fabric
+      responses:
+        '200':
+          description: Successfully retrieved cross-VIQ topology
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrossViqTopologyResponse'
+        '400':
+          description: Bad request - missing or invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Missing required parameter: tag"
+        '401':
+          description: Unauthorized - invalid or expired API token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Tenant tag not found or has no associated VIQs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Tag 'network-group-prod' not found or has no entities"
+        '500':
+          description: Server error - failed to aggregate topology
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    CrossViqTopologyResponse:
+      type: object
+      description: Unified topology response for multiple VIQs
+      required:
+        - tag
+        - topology
+      properties:
+        tag:
+          type: string
+          description: The tenant tag used to query the topology
+          example: network-group-prod
+        topology:
+          $ref: '#/components/schemas/UnifiedTopology'
+        entities:
+          type: array
+          description: List of VIQs and other entities tagged with this tenant tag
+          items:
+            $ref: '#/components/schemas/TaggedEntity'
+          maxItems: 100
+
+    UnifiedTopology:
+      type: object
+      description: Aggregated topology from multiple VIQs
+      required:
+        - nodes
+        - edges
+        - metadata
+      properties:
+        nodes:
+          type: array
+          description: Network devices from all tagged VIQs
+          items:
+            $ref: '#/components/schemas/TopologyNode'
+        edges:
+          type: array
+          description: Network links (fabric, physical, service) from all tagged VIQs
+          items:
+            $ref: '#/components/schemas/TopologyEdge'
+        metadata:
+          $ref: '#/components/schemas/TopologyMetadata'
+
+    TopologyNode:
+      type: object
+      description: Network device in the topology with VIQ context
+      required:
+        - id
+        - name
+        - type
+        - viqId
+      properties:
+        id:
+          type: string
+          description: Unique device identifier
+          example: device-abc123
+        name:
+          type: string
+          description: Device hostname or display name
+          example: switch-core-1
+        type:
+          type: string
+          description: Device type
+          enum:
+            - switch
+            - ap
+            - router
+            - firewall
+            - controller
+            - unknown
+          example: switch
+        viqId:
+          type: string
+          description: VIQ ID this device belongs to
+          example: viq-abc123def456
+        viqTag:
+          type: string
+          description: Tenant tag this device is associated with
+          example: network-group-prod
+        serialNumber:
+          type: string
+          description: Device serial number
+          example: ABC1234567
+        ipAddress:
+          type: string
+          description: Management IP address
+          example: 10.0.1.100
+        status:
+          type: string
+          description: Device operational status
+          enum:
+            - online
+            - offline
+            - unknown
+          example: online
+        metadata:
+          type: object
+          description: Additional device metadata from VIQ
+          additionalProperties: true
+          example:
+            location: "Building A, Floor 2"
+            siteId: "site-123"
+            building: "Building A"
+
+    TopologyEdge:
+      type: object
+      description: Network link between devices with VIQ context
+      required:
+        - source
+        - target
+        - type
+        - viqId
+      properties:
+        source:
+          type: string
+          description: Source device ID
+          example: device-abc123
+        target:
+          type: string
+          description: Target device ID
+          example: device-def456
+        type:
+          type: string
+          description: Link type
+          enum:
+            - fabric
+            - physical
+            - service
+            - bgp
+            - ospf
+          example: fabric
+        viqId:
+          type: string
+          description: VIQ ID this link belongs to
+          example: viq-abc123def456
+        viqTag:
+          type: string
+          description: Tenant tag this link is associated with
+          example: network-group-prod
+        sourcePort:
+          type: string
+          description: Source device port
+          example: "1/1"
+        targetPort:
+          type: string
+          description: Target device port
+          example: "1/1"
+        bandwidth:
+          type: string
+          description: Link bandwidth capacity
+          example: "10Gbps"
+        status:
+          type: string
+          description: Link operational status
+          enum:
+            - up
+            - down
+            - unknown
+          example: up
+        metadata:
+          type: object
+          description: Additional link metadata
+          additionalProperties: true
+
+    TopologyMetadata:
+      type: object
+      description: Metadata about the aggregated topology
+      required:
+        - viqCount
+        - deviceCount
+        - topologyType
+      properties:
+        viqCount:
+          type: integer
+          description: Number of VIQs included in this topology
+          example: 3
+        deviceCount:
+          type: integer
+          description: Number of unique devices across all VIQs
+          example: 25
+        totalNodes:
+          type: integer
+          description: Total node count in aggregated topology
+          example: 45
+        totalEdges:
+          type: integer
+          description: Total edge count in aggregated topology
+          example: 38
+        entityCount:
+          type: integer
+          description: Total tagged entities
+          example: 3
+        topologyType:
+          type: string
+          description: Type of topology aggregated
+          enum:
+            - fabric
+            - physical
+            - service
+            - mixed
+          example: fabric
+        lastUpdated:
+          type: string
+          format: date-time
+          description: Timestamp when topology was last retrieved
+          example: "2024-08-26T19:00:00Z"
+        aggregatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when topology was aggregated
+          example: "2024-08-26T19:00:05Z"
+
+    TaggedEntity:
+      type: object
+      description: Entity (VIQ or device) associated with a tenant tag
+      properties:
+        name:
+          type: string
+          description: Entity name
+          example: VIQ-1
+        id:
+          type: string
+          description: Entity ID
+          example: viq-abc123def456
+        type:
+          type: string
+          description: Entity type
+          enum:
+            - viq
+            - device
+            - site
+            - organization
+          example: viq
+        owner:
+          type: string
+          description: Owner or organization
+          example: team-a
+        metadata:
+          type: object
+          description: Additional entity metadata
+          additionalProperties: true
+
+    ErrorResponse:
+      type: object
+      description: Error response
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: "Missing required parameter: tag"
+        errorCode:
+          type: string
+          description: Error code for programmatic handling
+          example: MISSING_PARAMETER
+        details:
+          type: object
+          description: Additional error details
+          additionalProperties: true
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer token for API authentication
+
+security:
+  - bearerAuth: []

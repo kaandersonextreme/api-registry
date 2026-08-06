@@ -1,0 +1,527 @@
+openapi: 3.0.3
+info:
+  title: Extreme Networks Common Infrastructure API
+  description: >
+    # Common Infrastructure REST API
+
+
+    This comprehensive API provides access to the Common Infrastructure services
+    for Extreme Networks' network management platform.
+
+    The API enables programmatic access to topology management, device
+    management, service management, and network visualization capabilities.
+
+
+    ## Key Features
+
+    - **Topology Management**: Retrieve and manage network topologies (physical,
+    fabric, service layers)
+
+    - **Device Management**: Access device information, interfaces, neighbors,
+    and fabric details
+
+    - **Service Management**: Manage L2/L3 VSN, VLAN, and VRF services
+
+    - **User Preferences**: Store and retrieve user-specific preferences
+
+    - **Real-time Updates**: WebSocket notifications for topology and device
+    changes
+
+    - **Service Probing**: VLAN service probe utilities for network validation
+
+
+    ## API Design
+
+    This API follows RESTful principles and supports JSON payloads. Most
+    operations use POST methods with detailed criteria objects
+
+    to provide flexible filtering and querying capabilities suitable for complex
+    network topologies.
+
+
+    ## Authentication
+
+    This API is designed to be integrated with MCP (Model Context Protocol)
+    servers and other automation tools.
+
+    Authentication and authorization should be handled at the infrastructure
+    level.
+
+
+    ## MCP Server Integration
+
+    This API is optimized for MCP (Model Context Protocol) server integration
+    with the following features:
+
+
+    **AI-Friendly Design:**
+
+    - Comprehensive endpoint descriptions with use cases and examples
+
+    - Structured error responses for better error handling
+
+    - Detailed parameter descriptions for automated API consumption
+
+    - Response schemas optimized for AI interpretation
+
+
+    **Automation Support:**
+
+    - API Key authentication recommended for MCP servers
+
+    - Asynchronous operations with proper status tracking
+
+    - Bulk operations where applicable
+
+    - Consistent data formats across endpoints
+
+
+    **Rate Limiting Considerations:**
+
+    - Recommended rate limit: 60 requests per minute
+
+    - Burst allowance: 10 requests
+
+    - Consider caching for topology and device data
+
+
+    ## Rate Limiting
+
+    API calls should be rate-limited appropriately to prevent system overload,
+    especially for large topology queries.
+  termsOfService: https://www.extremenetworks.com/legal/terms-of-use/
+  contact:
+    name: Extreme Networks API Support
+    url: https://www.extremenetworks.com/support/
+    email: api-support@extremenetworks.com
+  license:
+    name: Extreme Networks Software License
+    url: https://www.extremenetworks.com/legal/software-license/
+  version: 3.0.0
+  x-api-id: common-infra-api
+  x-audience: internal
+  x-maturity: stable
+  x-mcp-server:
+    enabled: true
+    description: Extreme Networks Common Infrastructure API optimized for MCP server
+      integration
+    capabilities:
+      - network-topology-management
+      - device-information-retrieval
+      - service-management
+      - network-monitoring
+      - vlan-service-probing
+    usage-patterns:
+      - pattern: topology-discovery
+        description: Retrieve and analyze network topology for AI-driven network insights
+        endpoints:
+          - /retrieve-topology
+          - /retrieve-topology/device
+          - /retrieve-topology/link
+      - pattern: device-monitoring
+        description: Monitor device health, interfaces, and performance metrics
+        endpoints:
+          - /device/physical
+          - /device/fabric
+          - /device/ports
+          - /device/lldp-cdp-neighbors
+      - pattern: service-analysis
+        description: Analyze network services and their configurations
+        endpoints:
+          - /retrieve-services
+          - /services/retrieve-vlans
+          - /services/retrieve-vrfs
+      - pattern: network-validation
+        description: Perform network validation and troubleshooting operations
+        endpoints:
+          - /utilities/service-probe-vlan/start
+          - /utilities/service-probe-vlan/probe-data
+    automation-friendly: true
+    rate-limiting:
+      recommended-requests-per-minute: 60
+      burst-limit: 10
+servers:
+  - url: https://cloudapi.extremecloudiq.com/nvo/v1
+    description: Extreme Platform ONE REST API - Network Visualization
+security:
+  - BearerAuth: []
+tags:
+  - name: Topology Management
+    description: >
+      Operations for retrieving and managing network topologies across different
+      layers (physical, fabric, service).
+
+      Includes functionality for topology visualization, custom positioning, and
+      group hierarchy management.
+  - name: User Preferences
+    description: >
+      User-specific preference storage and retrieval for personalized experience
+      across the network management interface.
+  - name: Custom logging
+    description: >
+      Dynamic logging configuration management for debugging and monitoring
+      purposes across different services.
+  - name: Device Management
+    description: >
+      Comprehensive device information access including physical details, fabric
+      information, interfaces, neighbors,
+
+      and link details. Supports device synchronization and discovery status
+      monitoring.
+  - name: Service Management
+    description: >
+      Management of network services including L2/L3 VSN, VLAN, and VRF services
+      with detailed endpoint information
+
+      and service topology data.
+  - name: Service Probe Vlan
+    description: >
+      VLAN service probing utilities for network validation and troubleshooting.
+      Supports starting, stopping,
+
+      and monitoring probe operations with detailed status reporting.
+  - name: Schemas
+    description: >
+      Schema information and metadata for API features, particularly useful for
+      dynamic form generation
+
+      and validation in client applications.
+  - name: General
+    description: >
+      General utility operations including search suggestions and
+      auto-completion features.
+  - name: Hide Node or Link Management
+    description: >
+      Operations to hide network nodes or links from topology views for cleaner
+      visualization and focus.
+  - name: Unhide Node or Link Management
+    description: >
+      Operations to restore visibility of previously hidden network nodes or
+      links in topology views.
+  - name: Tag Management
+    description: |
+      Deprecated tag management operations.
+paths:
+  /retrieve-topology:
+    post:
+      tags:
+        - Topology Management
+      summary: Retrieve Network Topology
+      description: >
+        Retrieves comprehensive network topology data including nodes, edges,
+        and custom positioning information.
+
+
+        This endpoint supports multiple topology types (physical, fabric,
+        service) and view types (map, abstract, list).
+
+        The response includes hierarchical node structures with detailed device
+        and group information, interconnection
+
+        data through edges, and user-customized positioning for visualization
+        purposes.
+
+
+        **Use Cases:**
+
+        - Initial topology loading for network visualization
+
+        - Refreshing topology data after network changes
+
+        - Filtering topology by specific criteria (search, node states, etc.)
+
+        - Supporting different visualization views (map-based, abstract
+        diagrams)
+
+
+        **Performance Considerations:**
+
+        - Large topologies may require pagination or filtering
+
+        - Consider using specific topology types to reduce response size
+
+        - Custom positions are cached and updated incrementally
+      operationId: RetrieveTopology
+      x-mcp-operation:
+        category: topology-management
+        ai-description: Primary endpoint for retrieving network topology data. Essential
+          for network discovery and visualization tasks.
+        use-cases:
+          - Generate network topology diagrams
+          - Analyze network connectivity patterns
+          - Identify network bottlenecks and optimization opportunities
+          - Support network troubleshooting workflows
+        response-size: large
+        caching-recommended: true
+        automation-priority: high
+      requestBody:
+        description: >
+          Criteria for topology retrieval including topology type, view
+          preferences, search filters,
+
+          and visualization options. All fields are optional, with defaults
+          providing a complete topology view.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TopologyCriteria"
+            examples:
+              basic_physical_topology:
+                summary: Basic physical topology request
+                description: Retrieve complete physical topology with default settings
+                value:
+                  generalCriteria:
+                    type: physical
+                    viewType: abstract
+                    verboseType: Verbose
+              filtered_fabric_topology:
+                summary: Filtered fabric topology with search
+                description: Retrieve fabric topology filtered by device search criteria
+                value:
+                  generalCriteria:
+                    type: fabric
+                    viewType: map
+                    searchCriteria:
+                      type: device
+                      field: name
+                      key: switch
+              service_topology_by_group:
+                summary: Service topology for specific group
+                description: Retrieve service topology focused on a specific building or group
+                value:
+                  generalCriteria:
+                    type: service
+                    nodeID: 5b3da8f6-bfc8-4776-ae72-a388db060000
+                    action: expand
+      responses:
+        "200":
+          description: >
+            Successfully retrieved topology data. The response contains nodes
+            representing network devices and groups,
+
+            edges representing connections between nodes, and custom positioning
+            data for visualization.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/topology"
+              examples:
+                sample_topology_response:
+                  summary: Sample topology with devices and links
+                  description: Example response showing typical topology structure
+                  value:
+                    nodes:
+                      - id: device-001
+                        attributes:
+                          text:
+                            content: Core Switch 1
+                        data:
+                          type: Device
+                          deviceAttribute:
+                            name: core-sw-001
+                            ipAddress: 192.168.1.10
+                            deviceType: switch
+                    edges:
+                      - id: link-001
+                        source: device-001
+                        target: device-002
+                        data:
+                          type: physicalLink
+                    customPositions:
+                      device-001:
+                        x: 100
+                        y: 200
+        "400":
+          description: |
+            Bad Request - Invalid criteria provided. This can occur when:
+            - Invalid topology type specified
+            - Conflicting view type and topology type combination
+            - Invalid UUID format for nodeID
+            - Malformed search criteria
+            - Invalid JSON in request body
+            - Missing required fields in criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorModel"
+              examples:
+                invalid_topology_type:
+                  summary: Invalid topology type error
+                  value:
+                    code: 400
+                    message: "Invalid topology type 'invalid'. Supported types: physical, fabric,
+                      service, accessLayer, physicalAndFabric"
+                    timestamp: 2023-10-01T12:00:00Z
+                    path: /retrieve-topology
+                malformed_request:
+                  summary: Malformed request body
+                  value:
+                    code: 400
+                    message: Invalid JSON format in request body
+                    timestamp: 2023-10-01T12:00:00Z
+                    path: /retrieve-topology
+                    details:
+                      field: generalCriteria
+                      issue: Expected object, received string
+                invalid_uuid:
+                  summary: Invalid UUID format
+                  value:
+                    code: 400
+                    message: "Invalid UUID format for nodeID. Expected format:
+                      xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                    timestamp: 2023-10-01T12:00:00Z
+                    path: /retrieve-topology
+                    details:
+                      field: nodeID
+                      provided: invalid-uuid-123
+        "500":
+          description: |
+            Internal Server Error - Unexpected error during topology retrieval.
+            This occurs when:
+            - Database connectivity issues
+            - Internal service failures
+            - Topology calculation errors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorModel"
+              examples:
+                internal_error:
+                  summary: Internal server error
+                  value:
+                    code: 500
+                    message: Internal server error occurred while retrieving topology data
+                    timestamp: 2023-10-01T12:00:00Z
+                    path: /retrieve-topology
+                    correlationId: req-12345-67890
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Enter your API Key as a Bearer Token
+  schemas:
+    ErrorModel:
+      type: object
+      description: Standardized error response format
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: Resource not found
+        timestamp:
+          type: string
+          format: date-time
+          example: 2023-10-01T12:00:00Z
+        path:
+          type: string
+          example: /retrieve-topology
+        correlationId:
+          type: string
+          example: req-12345-67890
+        details:
+          type: object
+    TopologyCriteria:
+      type: object
+      properties:
+        generalCriteria:
+          $ref: "#/components/schemas/GeneralCriteria"
+    GeneralCriteria:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - physical
+            - fabric
+            - service
+            - accessLayer
+            - physicalAndFabric
+        viewType:
+          type: string
+          enum:
+            - map
+            - abstract
+            - list
+        verboseType:
+          type: string
+          enum:
+            - Verbose
+            - NonVerbose
+        chartHash:
+          type: string
+        nodeID:
+          type: string
+        action:
+          type: string
+          enum:
+            - expand
+            - collapse
+            - collapse-all
+            - snapshot
+            - search
+        searchCriteria:
+          $ref: "#/components/schemas/SearchCriteria"
+    SearchCriteria:
+      type: object
+      properties:
+        type:
+          type: string
+        field:
+          type: string
+        key:
+          type: string
+    topology:
+      type: object
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: "#/components/schemas/node"
+        edges:
+          type: array
+          items:
+            $ref: "#/components/schemas/edge"
+        customPositions:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/customPosition"
+    node:
+      type: object
+      properties:
+        id:
+          type: string
+        attributes:
+          type: object
+        data:
+          type: object
+    edge:
+      type: object
+      properties:
+        id:
+          type: string
+        source:
+          type: string
+        target:
+          type: string
+        attributes:
+          type: object
+        data:
+          type: object
+    customPosition:
+      type: object
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+        x1:
+          type: number
+        y1:
+          type: number

@@ -1,0 +1,595 @@
+openapi: 3.0.3
+info:
+  title: Extreme Platform ONE REST API - Reporting
+  description: Extreme Platform ONE™ Reporting API provides comprehensive reporting
+    and analytics capabilities for generating, scheduling, and exporting reports
+    on network performance, security, device health, and operational metrics.
+  termsOfService: https://www.extremenetworks.com/company/legal/terms-of-use/
+  contact:
+    name: Extreme Networks Support
+    url: https://www.extremenetworks.com/support
+    email: support@extremenetworks.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 25.11.0
+servers:
+  - url: https://cloudapi.extremecloudiq.com/reporting/v1
+    description: Extreme Platform ONE REST API - Reporting
+security:
+  - BearerAuth: []
+tags:
+  - name: Reports
+    description: Operations for managing, generating, and retrieving reports
+  - name: Report Templates
+    description: Pre-defined report templates and custom template management
+  - name: Scheduled Reports
+    description: Operations for scheduling and managing automated report generation
+  - name: Report Data
+    description: Direct access to raw reporting data and metrics
+paths:
+  /reports:
+    get:
+      summary: List all reports
+      description: Retrieve a list of all available reports with pagination support
+      operationId: listReports
+      tags:
+        - Reports
+      parameters:
+        - $ref: '#/components/parameters/pageToken'
+        - $ref: '#/components/parameters/limit'
+        - in: query
+          name: type
+          description: Filter by report type
+          required: false
+          schema:
+            type: string
+            enum:
+              - performance
+              - security
+              - device-health
+              - network-usage
+              - compliance
+        - in: query
+          name: status
+          description: Filter by report status
+          required: false
+          schema:
+            type: string
+            enum:
+              - pending
+              - generating
+              - ready
+              - failed
+      responses:
+        '200':
+          description: List of reports retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportList'
+        '400':
+          $ref: '#/components/responses/400ErrorResponse'
+        '401':
+          $ref: '#/components/responses/401ErrorResponse'
+        '403':
+          $ref: '#/components/responses/403ErrorResponse'
+    post:
+      summary: Create a new report
+      description: Create a new report with specified parameters and data sources
+      operationId: createReport
+      tags:
+        - Reports
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReportRequest'
+      responses:
+        '201':
+          description: Report created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+        '400':
+          $ref: '#/components/responses/400ErrorResponse'
+        '401':
+          $ref: '#/components/responses/401ErrorResponse'
+        '403':
+          $ref: '#/components/responses/403ErrorResponse'
+  /reports/{reportId}:
+    get:
+      summary: Get report details
+      description: Retrieve detailed information about a specific report
+      operationId: getReport
+      tags:
+        - Reports
+      parameters:
+        - name: reportId
+          in: path
+          required: true
+          description: The unique identifier of the report
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Report details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+        '400':
+          $ref: '#/components/responses/400ErrorResponse'
+        '401':
+          $ref: '#/components/responses/401ErrorResponse'
+        '403':
+          $ref: '#/components/responses/403ErrorResponse'
+        '404':
+          $ref: '#/components/responses/404ErrorResponse'
+    delete:
+      summary: Delete a report
+      description: Delete a specific report and all associated data
+      operationId: deleteReport
+      tags:
+        - Reports
+      parameters:
+        - name: reportId
+          in: path
+          required: true
+          description: The unique identifier of the report
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Report deleted successfully
+        '401':
+          $ref: '#/components/responses/401ErrorResponse'
+        '403':
+          $ref: '#/components/responses/403ErrorResponse'
+        '404':
+          $ref: '#/components/responses/404ErrorResponse'
+  /reports/{reportId}/download:
+    get:
+      summary: Download report
+      description: Download report in specified format (PDF, CSV, Excel, JSON)
+      operationId: downloadReport
+      tags:
+        - Reports
+      parameters:
+        - name: reportId
+          in: path
+          required: true
+          description: The unique identifier of the report
+          schema:
+            type: string
+        - in: query
+          name: format
+          description: Download format
+          required: true
+          schema:
+            type: string
+            enum:
+              - pdf
+              - csv
+              - xlsx
+              - json
+      responses:
+        '200':
+          description: Report downloaded successfully
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            text/csv:
+              schema:
+                type: string
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/401ErrorResponse'
+        '403':
+          $ref: '#/components/responses/403ErrorResponse'
+        '404':
+          $ref: '#/components/responses/404ErrorResponse'
+  /templates:
+    get:
+      summary: List report templates
+      description: Retrieve available report templates
+      operationId: listTemplates
+      tags:
+        - Report Templates
+      parameters:
+        - $ref: '#/components/parameters/pageToken'
+        - $ref: '#/components/parameters/limit'
+        - in: query
+          name: category
+          description: Filter templates by category
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of templates retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateList'
+        '401':
+          $ref: '#/components/responses/401ErrorResponse'
+        '403':
+          $ref: '#/components/responses/403ErrorResponse'
+  /scheduled-reports:
+    get:
+      summary: List scheduled reports
+      description: Retrieve list of scheduled report generation tasks
+      operationId: listScheduledReports
+      tags:
+        - Scheduled Reports
+      parameters:
+        - $ref: '#/components/parameters/pageToken'
+        - $ref: '#/components/parameters/limit'
+        - in: query
+          name: status
+          description: Filter by schedule status
+          required: false
+          schema:
+            type: string
+            enum:
+              - active
+              - paused
+              - disabled
+      responses:
+        '200':
+          description: List of scheduled reports retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduledReportList'
+        '401':
+          $ref: '#/components/responses/401ErrorResponse'
+        '403':
+          $ref: '#/components/responses/403ErrorResponse'
+    post:
+      summary: Schedule a report
+      description: Schedule automated report generation at specified intervals
+      operationId: createScheduledReport
+      tags:
+        - Scheduled Reports
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduledReportRequest'
+      responses:
+        '201':
+          description: Scheduled report created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduledReport'
+        '400':
+          $ref: '#/components/responses/400ErrorResponse'
+        '401':
+          $ref: '#/components/responses/401ErrorResponse'
+        '403':
+          $ref: '#/components/responses/403ErrorResponse'
+  /metrics:
+    get:
+      summary: Get available metrics
+      description: Retrieve list of available metrics for reporting
+      operationId: getMetrics
+      tags:
+        - Report Data
+      parameters:
+        - in: query
+          name: category
+          description: Filter metrics by category
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Available metrics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricsList'
+        '401':
+          $ref: '#/components/responses/401ErrorResponse'
+        '403':
+          $ref: '#/components/responses/403ErrorResponse'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    pageToken:
+      name: pageToken
+      in: query
+      description: Token for pagination
+      required: false
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: Number of results to return
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+  schemas:
+    Report:
+      type: object
+      required:
+        - id
+        - name
+        - type
+        - status
+        - createdAt
+      properties:
+        id:
+          type: string
+          description: Unique report identifier
+        name:
+          type: string
+          description: Report name
+        description:
+          type: string
+          description: Report description
+        type:
+          type: string
+          enum:
+            - performance
+            - security
+            - device-health
+            - network-usage
+            - compliance
+          description: Report type
+        status:
+          type: string
+          enum:
+            - pending
+            - generating
+            - ready
+            - failed
+          description: Current report status
+        createdAt:
+          type: string
+          format: date-time
+          description: Report creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        dataSourceIds:
+          type: array
+          items:
+            type: string
+          description: Associated data sources
+        params:
+          type: object
+          description: Report-specific parameters
+    ReportList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Report'
+        pageToken:
+          type: string
+          description: Token for next page
+        hasMore:
+          type: boolean
+          description: Whether more results are available
+    CreateReportRequest:
+      type: object
+      required:
+        - name
+        - type
+        - dataSourceIds
+      properties:
+        name:
+          type: string
+          description: Report name
+        description:
+          type: string
+          description: Report description
+        type:
+          type: string
+          enum:
+            - performance
+            - security
+            - device-health
+            - network-usage
+            - compliance
+          description: Report type
+        dataSourceIds:
+          type: array
+          items:
+            type: string
+          description: Data sources to include in report
+        params:
+          type: object
+          description: Report-specific parameters
+    Template:
+      type: object
+      required:
+        - id
+        - name
+        - type
+      properties:
+        id:
+          type: string
+          description: Template identifier
+        name:
+          type: string
+          description: Template name
+        description:
+          type: string
+          description: Template description
+        type:
+          type: string
+          description: Report type
+        category:
+          type: string
+          description: Template category
+        previewImage:
+          type: string
+          format: uri
+          description: Preview image URL
+    TemplateList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Template'
+        pageToken:
+          type: string
+    ScheduledReport:
+      type: object
+      required:
+        - id
+        - reportId
+        - schedule
+      properties:
+        id:
+          type: string
+          description: Scheduled report identifier
+        reportId:
+          type: string
+          description: Associated report ID
+        schedule:
+          type: string
+          description: Cron expression for schedule
+        status:
+          type: string
+          enum:
+            - active
+            - paused
+            - disabled
+          description: Schedule status
+        recipients:
+          type: array
+          items:
+            type: string
+          description: Email recipients for scheduled reports
+        lastRun:
+          type: string
+          format: date-time
+          description: Last execution timestamp
+        nextRun:
+          type: string
+          format: date-time
+          description: Next scheduled execution
+    ScheduledReportList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduledReport'
+        pageToken:
+          type: string
+    ScheduledReportRequest:
+      type: object
+      required:
+        - reportId
+        - schedule
+      properties:
+        reportId:
+          type: string
+          description: Report to schedule
+        schedule:
+          type: string
+          description: Cron expression
+        recipients:
+          type: array
+          items:
+            type: string
+          description: Email recipients
+        status:
+          type: string
+          enum:
+            - active
+            - paused
+    MetricsList:
+      type: object
+      properties:
+        metrics:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              description:
+                type: string
+              type:
+                type: string
+              category:
+                type: string
+              unit:
+                type: string
+  responses:
+    400ErrorResponse:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    401ErrorResponse:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    403ErrorResponse:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+    404ErrorResponse:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string

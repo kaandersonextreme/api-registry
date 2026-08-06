@@ -1,0 +1,1875 @@
+openapi: 3.0.1
+info:
+  title: ExtremeCloud MSP API
+  description: ExtremeCloud MSP RESTful API for external and internal applications.
+  termsOfService: https://www.extremenetworks.com/support
+  contact:
+    email: support@extremenetworks.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: "2.9"
+servers:
+  - url: https://cloudapi.extremecloudiq.com/msp/v1
+    description: Extreme Platform ONE REST API - MSP
+security:
+  - BearerAuth: []
+tags:
+  - name: MSP Login Workflow
+    description: This API initiates the login workflow for MSP.
+  - name: Deployed - Data Centers
+    description: Data Centers
+  - name: Customer Management
+    description: Customer accounts management
+  - name: Billing [Beta]
+    description: Billing usage info. These APIs are in beta and may change in the future.
+  - name: Customer
+    description: Customer accounts management
+  - name: Customer
+    description: Customer data
+  - name: License management - MSP
+    description: Link license accounts and manage them for customer's VIQ
+  - name: Admin Group Management
+    description: Admin group management. Add MSP admins into groups and assign to customers.
+paths:
+  /msp-login-workflow:
+    post:
+      tags:
+        - MSP Login Workflow
+      summary: Login Workflow
+      operationId: iamLoginWorkflow
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginWorkflowApiResponseVoidString"
+        "400":
+          description: Bad Request
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponseObjectString"
+  /customer/v2/add:
+    post:
+      tags:
+        - Customer Management
+      summary: Create a customer
+      description: Create a customer. Assign teams and licenses to the customer.
+      operationId: createCustomerV2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCustomerV2Request"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCustomerV2Response"
+        "206":
+          description: Partial content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCustomerV2Response"
+        "400":
+          description: Bad Request
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponseObjectString"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCustomerV2Response"
+        "424":
+          description: Failed dependency
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCustomerV2Response"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCustomerV2Response"
+  /admingroups:
+    get:
+      tags:
+        - Admin Group Management
+      summary: List admin groups
+      description: List the admin groups created by MSP.
+      operationId: listUserGroups
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MSPAdminGroupListResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+      security:
+        - BearerAuth: []
+  /customer/v2/edit/{customerOwnerId}:
+    patch:
+      tags:
+        - Customer Management
+      summary: Edit a customer
+      description: Edit a customer. Add/Remove admin group's access to VIQ.
+        Link/Unlink a VIQ to a license.
+      operationId: editCustomerV2
+      parameters:
+        - name: customerOwnerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditCustomerV2Request"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EditCustomerV2Response"
+        "206":
+          description: Partial content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EditCustomerV2Response"
+        "400":
+          description: Bad Request
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponseObjectString"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EditCustomerV2Response"
+        "424":
+          description: Failed dependency
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EditCustomerV2Response"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EditCustomerV2Response"
+  /licenses-added-to-msp:
+    get:
+      tags:
+        - License management - MSP
+      summary: Get hard-linked licenses to MSP
+      description: |
+        MSP - hard-linked license list.
+      operationId: getLicensesAddedToMsp
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseLinkedToMsp"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseLinkedToMsp"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseLinkedToMsp"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseLinkedToMsp"
+      security:
+        - BearerAuth: []
+  /license/name-for-customers:
+    get:
+      tags:
+        - License management - MSP
+      summary: Get softlink license name of given accountIDs
+      description: |
+        Get softlink license name of given accountIDs
+      operationId: getSoftlinkLicenseNameFromDB
+      parameters:
+        - name: accountIds
+          in: query
+          description: Account IDs
+          required: false
+          schema:
+            type: string
+            default: ""
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseAssignedNameResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseAssignedNameResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseAssignedNameResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseAssignedNameResponse"
+      security:
+        - BearerAuth: []
+  /license/customer-info:
+    get:
+      tags:
+        - License management - MSP
+      summary: Get License Info for an MSP
+      description: |
+        Get license info for an MSP linked with Extreme licensing account
+      operationId: getLicenseInfo
+      parameters:
+        - name: licenseAccountName
+          in: query
+          description: The license account name
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: isSdwan
+          in: query
+          description: isSdwan
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: isUz
+          in: query
+          description: isUz
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: search
+          in: query
+          description: General search in all fields
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseCustomerInfoResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseCustomerInfoResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseCustomerInfoResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseCustomerInfoResponse"
+      security:
+        - BearerAuth: []
+  /deployments/datacenters:
+    get:
+      tags:
+        - Deployed - Data Centers
+      summary: Get available data centers
+      description: Get available RDCs for creating VIQ instance.
+      operationId: getDataCenters
+      parameters:
+        - name: isSdwan
+          in: query
+          description: Whether to get list of SD-WAN enabled data centers.
+          required: false
+          schema:
+            type: string
+            enum:
+              - "FALSE"
+              - "TRUE"
+        - name: isZtna
+          in: query
+          description: Whether to get list of ZTNA-enabled data centers.
+          required: false
+          schema:
+            type: string
+            enum:
+              - "FALSE"
+              - "TRUE"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataCenterApiResponse"
+        "400":
+          description: Bad Request
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponseObjectString"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataCenterApiResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataCenterApiResponse"
+      security:
+        - BearerAuth: []
+  /customers/v2:
+    get:
+      tags:
+        - Customer
+      summary: Get customer accounts v2
+      description: Get customer accounts with filter and pagination
+      operationId: getUserAccountsV2
+      parameters:
+        - name: id
+          in: query
+          description: Filter by Account Id
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: name
+          in: query
+          description: Filter by Account Name
+          required: false
+          schema:
+            type: string
+            default: ""
+        - name: page
+          in: query
+          description: Zero-based page index (0..N)
+          required: false
+          schema:
+            minimum: 0
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          description: The size of the page to be returned
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            default: 20
+        - name: sort
+          in: query
+          description: "Sorting criteria in the format: property,(asc|desc). Default sort
+            order is ascending. Multiple sort criteria are supported."
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountApiV2Response"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountApiV2Response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountApiV2Response"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountApiV2Response"
+      security:
+        - BearerAuth: []
+  /customers/list:
+    get:
+      tags:
+        - Customer
+      summary: Get list of all available customers for MSP admin
+      description: Get list of all available customers for MSP admin.
+      operationId: getCustomerList
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerListResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+  /billing/monthly:
+    get:
+      tags:
+        - Billing [Beta]
+      operationId: getMonthlyUsage
+      parameters:
+        - name: licenseAccountName
+          in: query
+          description: License account name
+          required: true
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          description: Invoice creation date range - From Date(mm/dd/yyyy)
+          required: true
+          schema:
+            type: string
+        - name: endDate
+          in: query
+          description: Invoice creation date range - To Date(mm/dd/yyyy)
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: query
+          description: Filtering by Tenant
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: featureGroup
+          in: query
+          description: Filtering by License Feature Group or Subgroup
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InfoBillingUsageInfo"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+  /billing/daily:
+    get:
+      tags:
+        - Billing [Beta]
+      operationId: getDailyUsage
+      parameters:
+        - name: licenseAccountName
+          in: query
+          description: License account name
+          required: true
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          description: Usage date range - From Date(mm/dd/yyyy)
+          required: true
+          schema:
+            type: string
+        - name: endDate
+          in: query
+          description: Usage date range - To Date(mm/dd/yyyy)
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: query
+          description: Filtering by Tenant
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: featureGroup
+          in: query
+          description: Filtering by License Feature Group or Subgroup
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InfoBillingUsageInfo"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+  /customer/delete/{customerOwnerId}:
+    delete:
+      tags:
+        - Customer Management
+      summary: Delete a customer
+      description: Delete a customer. A successful operation of this API marks the
+        customer as soft delete and additional steps need to be taken to
+        actually delete the respective VIQ from the CloudOps team.
+      operationId: deleteCustomer
+      parameters:
+        - name: customerOwnerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDeleteResponse"
+        "400":
+          description: Bad Request
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponseObjectString"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDeleteResponse"
+        "406":
+          description: Not Acceptable operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDeleteResponse"
+        "424":
+          description: Failed dependency
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDeleteResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDeleteResponse"
+components:
+  schemas:
+    ApiErrorResponseObjectString:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          type: object
+        errors:
+          $ref: "#/components/schemas/ErrorString"
+    ErrorString:
+      type: object
+      properties:
+        message:
+          type: string
+        details:
+          type: string
+      description: Error details
+    LoginWorkflowApiResponseVoidString:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          type: object
+        errors:
+          $ref: "#/components/schemas/ErrorString"
+    CreateCustomerV2Request:
+      required:
+        - country
+        - customerDomain
+        - customerName
+        - datacenter
+        - generateDummyCustomerAdmin
+        - state
+      type: object
+      properties:
+        customerName:
+          type: string
+          description: Customer name
+          example: customerName
+        mspCustomerId:
+          type: string
+          description: MSP Customer ID
+          example: mspCustomerId
+        customerDomain:
+          type: string
+          description: Customer domain
+          example: customerDomain
+        notes1:
+          type: string
+          description: Notes about customer
+          example: notes1
+        notes2:
+          type: string
+          description: Notes about customer
+          example: notes2
+        industry:
+          type: string
+          description: Industry
+          example: industry
+        generateDummyCustomerAdmin:
+          type: boolean
+          description: Generate dummy customer admin.
+          example: true
+        firstName:
+          type: string
+          description: Customer first name
+          example: firstName
+        lastName:
+          type: string
+          description: Customer last name
+          example: lastName
+        email:
+          maxLength: 84
+          minLength: 0
+          type: string
+          description: Customer email
+          example: email
+        password:
+          type: string
+          description: Password
+          example: password
+        datacenter:
+          type: string
+          description: Datacenter from the list of datacenters - put data.name field here
+          example: datacenter
+        phone:
+          type: string
+          description: Phone number
+          example: phone
+        jobTitle:
+          type: string
+          description: Job title
+          example: jobTitle
+        address:
+          type: string
+          description: Address
+          example: address
+        city:
+          type: string
+          description: City
+          example: city
+        state:
+          type: string
+          description: State
+          example: state
+        country:
+          type: string
+          description: Country
+          example: country
+        postalCode:
+          type: string
+          description: Postal code
+          example: postalCode
+        adminGroupIdsToGiveAccess:
+          uniqueItems: true
+          type: array
+          description: Admin group IDs to give access. Get IDs from admin groups API.
+          example:
+            - 1
+            - 2
+            - 3
+          items:
+            type: integer
+            description: Admin group IDs to give access. Get IDs from admin groups API.
+            format: int64
+        licenseAccountName:
+          type: string
+          description: License account name. Get license account name from license
+            accounts API.
+          example: licenseAccountName
+        licenseAccountAllocation:
+          type: array
+          description: License account allocation. Give the allocation configuration for
+            the license account.
+          example:
+            - product_feature: string
+              max_number: 0
+            - product_feature: ""
+              max_number: 0
+          items:
+            $ref: "#/components/schemas/LicenseMaxCapRequest"
+        enableAI:
+          type: boolean
+          description: Enable AI features for the customer. If true, AI features will be
+            enabled for the customer.
+          example: false
+      description: Create customer request body
+    LicenseMaxCapRequest:
+      type: object
+      properties:
+        product_feature:
+          type: string
+        max_number:
+          type: integer
+          format: int32
+      description: Request model - License Max Cap
+      example:
+        - product_feature: string
+          max_number: 0
+        - product_feature: ""
+          max_number: 0
+    AdminGroupAssignmentResult:
+      type: object
+      properties:
+        result:
+          type: string
+          enum:
+            - SUCCESS
+            - PARTIAL_SUCCESS
+            - FAILURE
+            - CONFLICT
+            - NO_OPERATION
+        message:
+          type: string
+        isForceEditNeeded:
+          type: boolean
+        removeAccessForRequestOriginMSP:
+          type: boolean
+      description: Admin group assignment result
+    CreateCustomerV2Response:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          $ref: "#/components/schemas/CreateCustomerV2ResponseData"
+        errors:
+          $ref: "#/components/schemas/ErrorObject"
+    CreateCustomerV2ResponseData:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Overall message
+        customerCreationResult:
+          $ref: "#/components/schemas/CustomerCreationResult"
+        adminGroupAssignmentResult:
+          $ref: "#/components/schemas/AdminGroupAssignmentResult"
+        licenseAssignmentResult:
+          $ref: "#/components/schemas/LicenseAssignmentResult"
+        licenseAllocationResult:
+          $ref: "#/components/schemas/LicenseAllocationResult"
+      description: Create customer v2 response data model
+    CustomerCreationResult:
+      type: object
+      properties:
+        result:
+          type: string
+          enum:
+            - SUCCESS
+            - PARTIAL_SUCCESS
+            - FAILURE
+            - CONFLICT
+            - NO_OPERATION
+        message:
+          type: string
+        suggestedEmail:
+          type: string
+        customerEmail:
+          type: string
+        customerName:
+          type: string
+        customerOwnerId:
+          type: integer
+          format: int64
+        customerVhmid:
+          type: string
+        enableAI:
+          type: boolean
+        industry:
+          type: string
+        shard:
+          type: string
+        vpc:
+          type: string
+        vpcCode:
+          type: string
+        partnerId:
+          type: string
+      description: Customer creation result
+    ErrorObject:
+      type: object
+      properties:
+        message:
+          type: string
+        details:
+          type: object
+      description: Error details
+    LicenseAllocationResult:
+      type: object
+      properties:
+        result:
+          type: string
+          enum:
+            - SUCCESS
+            - PARTIAL_SUCCESS
+            - FAILURE
+            - CONFLICT
+            - NO_OPERATION
+        message:
+          type: string
+      description: License allocation result
+    LicenseAssignmentResult:
+      type: object
+      properties:
+        result:
+          type: string
+          enum:
+            - SUCCESS
+            - PARTIAL_SUCCESS
+            - FAILURE
+            - CONFLICT
+            - NO_OPERATION
+        message:
+          type: string
+      description: License assignment result
+    TeamManagementRequest:
+      required:
+        - adminEmailListToProcess
+        - adminGroupName
+      type: object
+      properties:
+        adminGroupName:
+          type: string
+        adminGroupDescription:
+          type: string
+        adminEmailListToProcess:
+          type: array
+          items:
+            type: string
+        customerList:
+          type: array
+          items:
+            type: integer
+            format: int64
+      description: Create admin group request body
+    ApiErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          type: object
+        errors:
+          $ref: "#/components/schemas/ErrorObject"
+    Account:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        mspCustomerId:
+          type: string
+        customerDomain:
+          type: string
+        notes1:
+          type: string
+        notes2:
+          type: string
+        alias:
+          type: string
+        active:
+          type: boolean
+        type:
+          type: string
+        vhmId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        deleteRequestedAt:
+          type: string
+          format: date-time
+        customerId:
+          type: integer
+          format: int64
+        enableAiData:
+          type: boolean
+        industry:
+          type: string
+        shard:
+          type: string
+        vpc:
+          type: string
+        vpcCode:
+          type: string
+        partnerId:
+          type: string
+        complianceStatus:
+          type: string
+    MSPAdminGroupResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          $ref: "#/components/schemas/MSPUserGroup"
+        errors:
+          $ref: "#/components/schemas/ErrorObject"
+      description: Response object for updating an admin user
+    MSPUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        displayName:
+          type: string
+        loginName:
+          type: string
+        homeAccountId:
+          type: integer
+          format: int64
+        type:
+          type: string
+        isPrivilegedAccessValidated:
+          type: boolean
+        adminGroupAdminMappings:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: "#/components/schemas/UserGroupUserMapping"
+      description: MSP User data model
+    MSPUserGroup:
+      type: object
+      properties:
+        adminGroupData:
+          $ref: "#/components/schemas/UserGroup"
+        admins:
+          type: array
+          items:
+            $ref: "#/components/schemas/MSPUser"
+        customers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Account"
+      description: MSP User data model
+    UserGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        homeAccountId:
+          type: integer
+          format: int64
+        adminGroupName:
+          type: string
+        adminGroupDescription:
+          type: string
+    UserGroupUserMapping:
+      required:
+        - adminGroup
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        adminGroup:
+          $ref: "#/components/schemas/UserGroup"
+    EditCustomerV2Request:
+      type: object
+      properties:
+        mspCustomerId:
+          type: string
+          description: MSP Customer ID
+          example: mspCustomerId
+        customerDomain:
+          type: string
+          description: Customer domain
+          example: customerDomain
+        notes1:
+          type: string
+          description: Notes about customer
+          example: notes1
+        notes2:
+          type: string
+          description: Notes about customer
+          example: notes2
+        adminGroupIdsToGiveAccess:
+          uniqueItems: true
+          type: array
+          description: Admin group IDs to give access. Get IDs from admin groups API.
+          example:
+            - 1
+            - 2
+            - 3
+          items:
+            type: integer
+            description: Admin group IDs to give access. Get IDs from admin groups API.
+            format: int64
+        licenseAccountName:
+          type: string
+          description: License account name. Get license account name from license
+            accounts API.
+          example: licenseAccountName
+        licenseAccountAllocation:
+          type: array
+          description: License account allocation. Give the allocation configuration for
+            the license account.
+          example:
+            - product_feature: string
+              max_number: 0
+            - product_feature: ""
+              max_number: 0
+          items:
+            $ref: "#/components/schemas/LicenseMaxCapRequest"
+        forceUpdate:
+          type: boolean
+          description: boolean flag for force update
+          example: false
+        enableAI:
+          type: boolean
+          description: Enable AI features for the customer. If true, AI features will be
+            enabled for the customer.
+          example: false
+      description: Edit customer request body
+    CustomerEditAIResult:
+      type: object
+      properties:
+        enableAIResult:
+          type: boolean
+        result:
+          type: string
+          enum:
+            - SUCCESS
+            - PARTIAL_SUCCESS
+            - FAILURE
+            - CONFLICT
+            - NO_OPERATION
+        message:
+          type: string
+      description: Customer enable AI flag
+    CustomerEditV2Result:
+      type: object
+      properties:
+        result:
+          type: string
+          enum:
+            - SUCCESS
+            - PARTIAL_SUCCESS
+            - FAILURE
+            - CONFLICT
+            - NO_OPERATION
+        message:
+          type: string
+        editingHomeViq:
+          type: boolean
+      description: Customer edit result
+    EditCustomerV2Response:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          $ref: "#/components/schemas/EditCustomerV2ResponseData"
+        errors:
+          $ref: "#/components/schemas/ErrorObject"
+    EditCustomerV2ResponseData:
+      type: object
+      properties:
+        enableAI:
+          $ref: "#/components/schemas/CustomerEditAIResult"
+        editCustomerResult:
+          $ref: "#/components/schemas/CustomerEditV2Result"
+        adminGroupAssignmentResult:
+          $ref: "#/components/schemas/AdminGroupAssignmentResult"
+        licenseAssignmentResult:
+          $ref: "#/components/schemas/LicenseAssignmentResult"
+        licenseAllocationResult:
+          $ref: "#/components/schemas/LicenseAllocationResult"
+      description: Edit customer v2 response data model
+    LicenseLinkedToMsp:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/LicensesAddedToMsp"
+        errors:
+          $ref: "#/components/schemas/ErrorObject"
+    LicensesAddedToMsp:
+      type: object
+      properties:
+        mspId:
+          type: string
+          description: mspid of current MSP account.
+          example: MSP-ABCDEFK
+        cuid:
+          type: string
+          description: cuid of license account linked.
+          example: 0906232AiP5AExLoIOlLLOA
+        licenseAccountName:
+          type: string
+          description: assigned license Account name
+          example: license1
+    LicenseAssignedNameResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          $ref: "#/components/schemas/LicenseNameFromDbResponse"
+        errors:
+          $ref: "#/components/schemas/ErrorObject"
+    LicenseNameFromDbResponse:
+      type: object
+      properties:
+        softlink_license_name:
+          type: array
+          description: assigned license Account name
+          example: license1
+          items:
+            $ref: "#/components/schemas/SoftLinkLicenseName"
+        run_id:
+          type: string
+        response_message:
+          type: string
+      description: Response model - soft-link License name from msp db.
+    SoftLinkLicenseName:
+      type: object
+      properties:
+        account_id:
+          type: string
+        license_account_name:
+          type: string
+      description: assigned license Account name
+      example: license1
+    HttpResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: HTTP status
+          example: Unauthorized
+        code:
+          type: string
+          description: HTTP error code
+          example: "401"
+        message:
+          type: string
+          description: HTTP message
+          example: Expired credentials
+    HttpResponseError:
+      type: object
+      properties:
+        error:
+          $ref: "#/components/schemas/HttpResponse"
+    LicenseAccount:
+      type: object
+      properties:
+        license_features:
+          type: array
+          items:
+            $ref: "#/components/schemas/LicenseFeature"
+        license_features_with_group:
+          type: array
+          items:
+            $ref: "#/components/schemas/LicenseFeatureWithGroup"
+        account_name:
+          type: string
+        account_id:
+          type: integer
+          format: int32
+        system_cuid:
+          type: string
+        shared_cuid:
+          type: string
+        license_linking_status:
+          type: string
+          enum:
+            - LINKING
+            - LINKED
+            - UNLINKED
+            - PARTIAL_CONTENT
+      description: Response model - LicenseAccount
+    LicenseAccountInfoResponse:
+      type: object
+      properties:
+        license_accounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/LicenseAccount"
+        run_id:
+          type: string
+        response_json:
+          $ref: "#/components/schemas/HttpResponseError"
+        response_message:
+          type: string
+      description: Response model - Link License Portal
+    LicenseCustomerInfoResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          $ref: "#/components/schemas/LicenseAccountInfoResponse"
+        errors:
+          $ref: "#/components/schemas/ErrorObject"
+    LicenseFeature:
+      type: object
+      properties:
+        license_Info:
+          type: array
+          items:
+            $ref: "#/components/schemas/LicenseInfo"
+        id:
+          type: integer
+          format: int32
+        feature_name:
+          type: string
+        feature_total_quantity:
+          type: integer
+          format: int32
+        feature_available_quantity:
+          type: integer
+          format: int32
+        feature_used_quantity:
+          type: integer
+          format: int32
+      description: Response model - LicenseFeature
+    LicenseFeatureWithGroup:
+      type: object
+      properties:
+        license_features:
+          type: array
+          items:
+            $ref: "#/components/schemas/LicenseFeature"
+        license_group_name:
+          type: string
+          enum:
+            - WIRED_WIRELESS
+            - SD_WAN
+            - SECURITY
+            - CREDITS
+    LicenseInfo:
+      type: object
+      properties:
+        total_quantity:
+          type: integer
+          format: int32
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        system_cuid:
+          type: string
+        available_quantity:
+          type: integer
+          format: int32
+        eid:
+          type: string
+        pkid:
+          type: string
+        entitlement_status:
+          type: string
+          enum:
+            - EXPIRED
+            - ACTIVE
+            - INACTIVE
+        used_quantity:
+          type: integer
+          format: int32
+      description: Response model - License Info
+    DataCenterApiResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/IamDataCenter"
+        errors:
+          $ref: "#/components/schemas/ErrorRestApiError"
+    ErrorRestApiError:
+      type: object
+      properties:
+        message:
+          type: string
+        details:
+          $ref: "#/components/schemas/RestApiError"
+      description: Error details
+    IamDataCenter:
+      type: object
+      properties:
+        name:
+          type: string
+        unlimited:
+          type: boolean
+        enabled_app_types:
+          type: array
+          items:
+            type: string
+    RestApiError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        status:
+          type: string
+          enum:
+            - "100"
+            - "101"
+            - "102"
+            - "103"
+            - "200"
+            - "201"
+            - "202"
+            - "203"
+            - "204"
+            - "205"
+            - "206"
+            - "207"
+            - "208"
+            - "226"
+            - "300"
+            - "301"
+            - "302"
+            - "303"
+            - "304"
+            - "305"
+            - "307"
+            - "308"
+            - "400"
+            - "401"
+            - "402"
+            - "403"
+            - "404"
+            - "405"
+            - "406"
+            - "407"
+            - "408"
+            - "409"
+            - "410"
+            - "411"
+            - "412"
+            - "413"
+            - "414"
+            - "415"
+            - "416"
+            - "417"
+            - "418"
+            - "419"
+            - "420"
+            - "421"
+            - "422"
+            - "423"
+            - "424"
+            - "426"
+            - "428"
+            - "429"
+            - "431"
+            - "451"
+            - "500"
+            - "501"
+            - "502"
+            - "503"
+            - "504"
+            - "505"
+            - "506"
+            - "507"
+            - "508"
+            - "509"
+            - "510"
+            - "511"
+    AccountApiV2Response:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomerDTO"
+        errors:
+          $ref: "#/components/schemas/ErrorRestApiError"
+        homeAccountId:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+    CustomerDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        mspCustomerId:
+          type: string
+        customerDomain:
+          type: string
+        notes1:
+          type: string
+        notes2:
+          type: string
+        alias:
+          type: string
+        active:
+          type: boolean
+        vhmId:
+          type: string
+        isSdwan:
+          type: boolean
+        enableAiData:
+          type: boolean
+        industry:
+          type: string
+        shard:
+          type: string
+        vpc:
+          type: string
+        vpcCode:
+          type: string
+        complianceStatus:
+          type: string
+        licenseAccountName:
+          type: string
+        adminGroupMappings:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomerUserGroupMapping"
+    CustomerUserGroupMapping:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        id:
+          type: integer
+          format: int64
+        adminGroup:
+          $ref: "#/components/schemas/UserGroup"
+    CustomerListResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          $ref: "#/components/schemas/CustomerListResponseData"
+        errors:
+          $ref: "#/components/schemas/ErrorObject"
+    CustomerListResponseData:
+      type: object
+      properties:
+        homeAccountId:
+          type: integer
+          format: int64
+        username:
+          type: string
+        displayName:
+          type: string
+        acsRole:
+          type: integer
+          format: int64
+        accounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomerListData"
+      description: Customers list response data model
+    BillingUsageData:
+      type: object
+      properties:
+        deploymentId:
+          type: string
+        resellerCountry:
+          type: string
+        productFeature:
+          type: string
+        noOfLicense:
+          type: string
+        resellerId:
+          type: string
+        usageDate:
+          type: string
+        endUserName:
+          type: string
+        endCustomerId:
+          type: string
+        consumptionId:
+          type: string
+        totalusageQty:
+          type: string
+        resellerName:
+          type: string
+        endCustomerDomain:
+          type: string
+        associatedVIQ:
+          type: string
+        featureName:
+          type: string
+        groupCode:
+          type: string
+        groupName:
+          type: string
+        subGroupCode:
+          type: string
+        subGroupName:
+          type: string
+    BillingUsageTenant:
+      type: object
+      properties:
+        ownerId:
+          type: integer
+          format: int64
+        tenantName:
+          type: string
+        tenantId:
+          type: string
+        vhmId:
+          type: string
+        feature:
+          type: string
+        usage:
+          type: string
+        usageDate:
+          type: string
+    InfoBillingUsageInfo:
+      type: object
+      properties:
+        usageInfo:
+          type: array
+          items:
+            $ref: "#/components/schemas/BillingUsageData"
+        tenantList:
+          type: array
+          items:
+            $ref: "#/components/schemas/BillingUsageTenant"
+    MSPAdminGroupListResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserGroup"
+        errors:
+          $ref: "#/components/schemas/ErrorObject"
+      description: Response object for updating an admin user
+    CustomerDeleteResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          description: Response code
+          example: SUCCESS, FAILURE, PARTIAL_SUCCESS, INPUT_VALIDATION_ERROR, CONFLICT
+          enum:
+            - SUCCESS
+            - FAILURE
+            - PARTIAL_SUCCESS
+            - INPUT_VALIDATION_ERROR
+            - CONFLICT
+        data:
+          $ref: "#/components/schemas/CustomerDeleteResponseData"
+        errors:
+          $ref: "#/components/schemas/ErrorObject"
+    CustomerDeleteResponseData:
+      type: object
+      properties:
+        run_id:
+          type: string
+        response_message:
+          type: string
+      description: MSP customer delete API response
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Enter your API Key as a Bearer Token
