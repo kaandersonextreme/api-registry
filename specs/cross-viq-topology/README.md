@@ -1,5 +1,7 @@
 # Cross-VIQ Topology API
 
+⚠️ **Status: BETA** - This API is in beta and depends on MSP device management capabilities that are coming soon. Functionality and endpoint structure may change.
+
 ## Overview
 
 The Cross-VIQ Topology API enables unified network topology visualization and management across multiple ExtremeCloud IQ Virtual IQ (VIQ) instances using Tenant Tagging. This API aggregates fabric and physical topology information from all VIQs associated with a specific tenant tag, providing a single unified view of a multi-VIQ network environment.
@@ -24,6 +26,25 @@ https://cloudapi.extremecloudiq.com
 
 - **Method**: Bearer Token
 - Requires valid ExtremeCloud IQ API token with Tag Management and Common Infrastructure permissions
+
+## Prerequisites and Maturity
+
+### Current Status: Beta
+This API is currently in **beta** and has the following prerequisites:
+
+- **Tenant Tagging**: MSP Tenant Tagging feature must be available in your ExtremeCloud IQ deployment
+- **Tag Management API**: Functional Tag Management API for entity association
+- **Multiple VIQs**: At least one tenant tag must be associated with multiple VIQs
+- **Future Dependency**: MSP device management and monitoring capabilities (coming soon) will enhance multi-VIQ device federation
+
+### Expected Changes
+As MSP features complete, this API will support:
+- Direct device federation across VIQs (without requiring topology aggregation)
+- Unified device management operations
+- Cross-VIQ policy enforcement
+- Enhanced multi-tenant isolation controls
+
+Users should not rely on this API for production deployments until it exits beta and full MSP device management support is available.
 
 ## Main Endpoints
 

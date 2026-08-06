@@ -3212,6 +3212,30 @@
       ]
     },
     {
+      "id": "cross-viq-topology",
+      "title": "Cross-VIQ Topology API (Beta)",
+      "description": "Unified network topology API for aggregating topology across multiple ExtremeCloud IQ VIQ instances using Tenant Tagging. Enables multi-VIQ network visibility and management through a single API endpoint.\n\nStatus: BETA - This API is in beta and depends on MSP device management capabilities that are coming soon. Tenant Tagging integration is required.",
+      "version": "0.1.0-beta.1",
+      "baseUrl": "https://cloudapi.extremecloudiq.com",
+      "tags": [
+        "Topology",
+        "Multi-VIQ",
+        "Tenant Tagging",
+        "MSP"
+      ],
+      "endpoints": [
+        {
+          "path": "/api/topology/cross-viq",
+          "method": "GET",
+          "operationId": "getTaggedViqTopology",
+          "summary": "Get unified topology for all VIQs tagged with a tenant tag",
+          "tags": [
+            "Topology"
+          ]
+        }
+      ]
+    },
+    {
       "id": "device-lifecycle-management",
       "title": "Extreme Platform ONE REST API - Device Lifecycle Management",
       "description": "The Extreme Platform ONE\u2122 Device Lifecycle Management API provides comprehensive\nautomation and orchestration for the complete network device lifecycle, from \ninitial discovery and zero-touch onboarding through operational management \nand secure decommissioning.\n\n**\ud83d\udd04 Complete Lifecycle Management:**\n\n\u2022 **Zero-Touch Device Onboarding** - Fully automated provisioning for wireless \ndevices (IQEngine/XIQ) and wired devices (EXOS/VOSS) with intelligent \nconfiguration validation and compliance checking\n\n\u2022 **Intelligent Bulk Operations** - Enterprise-scale batch processing with \nExcel-based import/export, template-driven workflows, and automated \nvalidation for efficient mass device management\n\n\u2022 **Advanced Device Discovery** - Device detection and classification \nwith automatic product compatibility checking and network topology analysis\n\n\u2022 **Subscription & License Management** - Automated tracking and lifecycle \nmanagement of device subscriptions, software licenses, and service entitlements\n\n\u2022 **Secure Lifecycle Transitions** - Complete device state management from \nonboarding through operational phases to secure decommissioning with audit trails\n\n\n**\ud83c\udfe2 Enterprise Integration & Scale:**\n\nBuilt for enterprise environments with seamless integration capabilities,\ncomprehensive audit trails, high-performance batch processing, and \nenterprise-grade security controls for large-scale network deployments.",

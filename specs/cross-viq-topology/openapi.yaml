@@ -1,11 +1,14 @@
 openapi: 3.0.3
 info:
-  title: Cross-VIQ Topology API
+  title: Cross-VIQ Topology API (Beta)
   description: |
     Unified network topology API for aggregating topology across multiple
     ExtremeCloud IQ VIQ instances using Tenant Tagging. Enables multi-VIQ
     network visibility and management through a single API endpoint.
-  version: 1.0.0
+
+    **Status: BETA** - This API is in beta and depends on MSP device management
+    capabilities that are coming soon. Tenant Tagging integration is required.
+  version: 0.1.0-beta.1
   contact:
     name: Extreme Networks Support
     url: https://www.extremenetworks.com/support
